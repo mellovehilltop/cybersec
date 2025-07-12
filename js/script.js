@@ -579,4 +579,242 @@ window.debugCheck = function() {
     console.log("CompleteMission function exists:", typeof completeMission);
 };
 
+// Certificate generation functions
+function generateCertificate() {
+    const agentName = document.getElementById('agent-name').value.trim();
+    
+    if (!agentName) {
+        alert('Please enter your name to generate the certificate.');
+        return;
+    }
+    
+    // Show certificate section
+    const certSection = document.getElementById('certificate-section');
+    if (certSection) {
+        certSection.classList.remove('hidden');
+    }
+    
+    // Generate the certificate
+    drawCertificate(agentName);
+    
+    // Save completion to localStorage
+    const completionData = {
+        name: agentName,
+        completedDate: new Date().toLocaleDateString('en-GB'),
+        completedTime: new Date().toLocaleTimeString('en-GB'),
+        trainingType: 'Project: Digital Shield - Cybersecurity Training'
+    };
+    
+    localStorage.setItem('digitalShieldCompletion', JSON.stringify(completionData));
+    
+    // Scroll to certificate
+    certSection.scrollIntoView({ behavior: 'smooth' });
+}
+
+function drawCertificate(agentName) {
+    const canvas = document.getElementById('certificate-canvas');
+    const ctx = canvas.getContext('2d');
+    
+    // Set canvas size for high quality
+    canvas.width = 800;
+    canvas.height = 600;
+    
+    // Clear canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    // Background gradient
+    const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+    gradient.addColorStop(0, '#1a1a2e');
+    gradient.addColorStop(0.5, '#16213e');
+    gradient.addColorStop(1, '#0f3460');
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+    // Border
+    ctx.strokeStyle = '#00ffff';
+    ctx.lineWidth = 8;
+    ctx.strokeRect(20, 20, canvas.width - 40, canvas.height - 40);
+    
+    // Inner border
+    ctx.strokeStyle = '#f39c12';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(35, 35, canvas.width - 70, canvas.height - 70);
+    
+    // Company logo area (placeholder)
+    ctx.fillStyle = '#00ffff';
+    ctx.font = 'bold 24px Arial';
+    ctx.textAlign = 'center';
+    ctx.fillText('HILLTOP HONEY LTD', canvas.width / 2, 80);
+    
+    // Certificate title
+    ctx.fillStyle = '#ffffff';
+    ctx.font = 'bold 36px Arial';
+    ctx.fillText('CERTIFICATE OF COMPLETION', canvas.width / 2, 140);
+    
+    // Project title
+    ctx.fillStyle = '#00ff00';
+    ctx.font = 'bold 28px Arial';
+    ctx.fillText('PROJECT: DIGITAL SHIELD', canvas.width / 2, 180);
+    
+    // Subtitle
+    ctx.fillStyle = '#ffffff';
+    ctx.font = '18px Arial';
+    ctx.fillText('Cybersecurity Training Program', canvas.width / 2, 210);
+    
+    // This certifies text
+    ctx.fillStyle = '#cccccc';
+    ctx.font = '20px Arial';
+    ctx.fillText('This certifies that', canvas.width / 2, 260);
+    
+    // Agent name
+    ctx.fillStyle = '#f39c12';
+    ctx.font = 'bold 32px Arial';
+    ctx.fillText(agentName.toUpperCase(), canvas.width / 2, 310);
+    
+    // Completion text
+    ctx.fillStyle = '#cccccc';
+    ctx.font = '18px Arial';
+    ctx.fillText('has successfully completed the Digital Shield cybersecurity training', canvas.width / 2, 350);
+    ctx.fillText('and demonstrated competency in:', canvas.width / 2, 375);
+    
+    // Skills list
+    ctx.fillStyle = '#00ffff';
+    ctx.font = '14px Arial';
+    ctx.textAlign = 'left';
+    const skills = [
+        '• Email Security & Phishing Detection',
+        '• Password Security Best Practices',
+        '• Safe Internet & WiFi Usage',
+        '• Physical Security & Clear Desk Policy',
+        '• GDPR Data Protection & PII Handling'
+    ];
+    
+    skills.forEach((skill, index) => {
+        ctx.fillText(skill, 150, 410 + (index * 20));
+    });
+    
+    // Date and signature area
+    const currentDate = new Date().toLocaleDateString('en-GB');
+    ctx.textAlign = 'center';
+    ctx.fillStyle = '#ffffff';
+    ctx.font = '16px Arial';
+    ctx.fillText(`Completed: ${currentDate}`, canvas.width / 2, 540);
+    
+    // Security badge
+    ctx.fillStyle = '#ff0066';
+    ctx.font = 'bold 12px Arial';
+    ctx.fillText('🛡️ CERTIFIED DIGITAL SHIELD AGENT 🛡️', canvas.width / 2, 570);
+}
+
+function downloadCertificate() {
+    const canvas = document.getElementById('certificate-canvas');
+    const agentName = document.getElementById('agent-name').value.trim();
+    
+    // Create download link
+    const link = document.createElement('a');
+    link.download = `Digital_Shield_Certificate_${agentName.replace(/\s+/g, '_')}_${new Date().toISOString().split('T')[0]}.png`;
+    link.href = canvas.toDataURL('image/png', 1.0);
+    
+    // Trigger download
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    
+    // Track completion
+    console.log(`Certificate downloaded for: ${agentName}`);
+}
+
+function printCertificate() {
+    const canvas = document.getElementById('certificate-canvas');
+    
+    // Create a new window for printing
+    const printWindow = window.open('', '_blank');
+    printWindow.document.write(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Digital Shield Certificate</title>
+            <style>
+                body { 
+                    margin: 0; 
+                    padding: 20px; 
+                    text-align: center; 
+                    background: white;
+                }
+                img { 
+                    max-width: 100%; 
+                    height: auto; 
+                    border: 2px solid #333;
+                }
+                @media print {
+                    body { padding: 0; }
+                    img { border: none; }
+                }
+            </style>
+        </head>
+        <body>
+            <img src="${canvas.toDataURL()}" alt="Digital Shield Certificate">
+        </body>
+        </html>
+    `);
+    
+    printWindow.document.close();
+    
+    // Wait for image to load, then print
+    setTimeout(() => {
+        printWindow.print();
+        printWindow.close();
+    }, 1000);
+}
+
+function emailCertificate() {
+    const agentName = document.getElementById('agent-name').value.trim();
+    const currentDate = new Date().toLocaleDateString('en-GB');
+    
+    // Create email content
+    const subject = `Cybersecurity Training Completion - ${agentName}`;
+    const body = `Dear Manager,
+
+I am pleased to inform you that ${agentName} has successfully completed the "Project: Digital Shield" cybersecurity training program on ${currentDate}.
+
+Training Completed:
+✅ Email Security & Phishing Detection
+✅ Password Security Best Practices  
+✅ Safe Internet & WiFi Usage
+✅ Physical Security & Clear Desk Policy
+✅ GDPR Data Protection & PII Handling
+
+${agentName} has demonstrated competency in all areas and is now certified as a Digital Shield Agent.
+
+A certificate has been generated and can be downloaded from the training portal.
+
+Best regards,
+${agentName}
+Digital Shield Training System`;
+
+    // Create mailto link
+    const mailtoLink = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    
+    // Open email client
+    window.location.href = mailtoLink;
+    
+    // Also provide a backup option
+    setTimeout(() => {
+        if (confirm('Email client opened. Would you like to copy the message to clipboard as backup?')) {
+            navigator.clipboard.writeText(`${subject}\n\n${body}`).then(() => {
+                alert('Message copied to clipboard!');
+            }).catch(() => {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = `${subject}\n\n${body}`;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                alert('Message copied to clipboard!');
+            });
+        }
+    }, 2000);
+}
+
 console.log("Digital Shield script loaded successfully!");
