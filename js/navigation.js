@@ -475,4 +475,32 @@ window.digitalShieldNavigation = {
     showNotification
 };
 
+// Admin panel functions for file system
+function toggleAdminPanel() {
+    const panel = document.getElementById('admin-panel');
+    if (panel) {
+        panel.classList.toggle('hidden');
+    }
+}
+
+// Complete module from admin panel (for testing)
+function completeModule(moduleNumber) {
+    if (window.digitalShieldProgress && window.digitalShieldProgress.completeModule) {
+        window.digitalShieldProgress.completeModule(moduleNumber, 100);
+        updateProgressDisplay();
+        console.log(`Admin: Completed module ${moduleNumber}`);
+    }
+}
+
+// Reset all progress (for testing)  
+function resetAllProgress() {
+    if (confirm('🚨 SECURITY WARNING 🚨\n\nThis will permanently delete all training progress and cannot be undone.\n\nProceed with system reset?')) {
+        if (window.digitalShieldProgress && window.digitalShieldProgress.resetAllProgress) {
+            window.digitalShieldProgress.resetAllProgress();
+            updateProgressDisplay();
+            alert('✅ SYSTEM RESET COMPLETE\n\nAll training data has been cleared.');
+        }
+    }
+}
+
 console.log('Digital Shield Navigation System loaded');
