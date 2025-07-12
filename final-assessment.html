@@ -1,1 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project: Digital Shield - Cybersecurity Training</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Mission 00: Your Briefing -->
+    <section id="mission-00" class="mission-section visible">
+        <div class="container">
+            <div class="mission-header">
+                <span class="classification">TOP SECRET</span>
+                <h1>PROJECT: DIGITAL SHIELD</h1>
+                <div class="company-badge">HILLTOP HONEY LTD</div>
+            </div>
+            <div class="briefing-content">
+                <h2>AGENT BRIEFING</h2>
+                <p>Welcome, Agent. Your mission is to master the arts of digital defence and protect our honey manufacturing operations from cyber threats.</p>
+                <p>Recent intelligence shows increasing attacks on food manufacturing sites. Our production systems, customer data, and proprietary honey processing methods need protection.</p>
+                <p>Complete each mission to become a certified digital defence agent and help keep Hilltop Honey secure.</p>
+                <div class="policy-reference">
+                    <small>Training aligns with ITPOL 1.0 Acceptable Use Policy</small>
+                </div>
+            </div>
+            <button class="mission-btn" onclick="completeMission(0)">ACCEPT MISSION</button>
+        </div>
+    </section>
+
+    <!-- Mission 01: The Interrogation Room -->
+    <section id="mission-01" class="mission-section hidden">
+        <div class="container">
+            <div class="mission-header">
+                <h1>MISSION 01: THE INTERROGATION ROOM</h1>
+                <p class="mission-subtitle">Identifying Suspicious Emails</p>
+            </div>
+            <div class="email-interface">
+                <div class="inbox-header">
+                    <h3>📧 Hilltop Honey Email Security Simulator</h3>
+                    <p>Analyse each email carefully. Spot the threats before they reach our honey production systems.</p>
+                </div>
+                <div id="email-viewer">
+                    <!-- Email content will be populated by JavaScript -->
+                </div>
+                <div class="email-controls">
+                    <button id="trust-btn" class="email-action trust">TRUST & ALLOW</button>
+                    <button id="delete-btn" class="email-action delete">DELETE THREAT</button>
+                </div>
+                <div id="email-feedback" class="feedback-area"></div>
+            </div>
+            <button id="mission-01-complete" class="mission-btn hidden" onclick="completeMission(1)">MISSION COMPLETE</button>
+        </div>
+    </section>
+
+    <!-- Mission 02: The Vault -->
+    <section id="mission-02" class="mission-section hidden">
+        <div class="container">
+            <div class="mission-header">
+                <h1>MISSION 02: THE VAULT</h1>
+                <p class="mission-subtitle">Password Security Protocol</p>
+            </div>
+            <div class="vault-interface">
+                <div class="vault-display">
+                    <h3>🔐 SECURITY VAULT ACCESS</h3>
+                    <p>Create a password strong enough to protect our honey production data</p>
+                </div>
+                <div class="password-tester">
+                    <label for="password-input">Enter your password:</label>
+                    <input type="password" id="password-input" placeholder="Type your password here...">
+                    <div class="strength-meter">
+                        <div id="strength-bar" class="strength-bar"></div>
+                        <span id="strength-text">WEAK</span>
+                    </div>
+                    <div class="requirements-checklist">
+                        <div class="requirement" id="req-length">
+                            <span class="checkbox">☐</span> 12+ Characters
+                        </div>
+                        <div class="requirement" id="req-case">
+                            <span class="checkbox">☐</span> Upper & Lower Case
+                        </div>
+                        <div class="requirement" id="req-number">
+                            <span class="checkbox">☐</span> Number
+                        </div>
+                        <div class="requirement" id="req-symbol">
+                            <span class="checkbox">☐</span> Symbol
+                        </div>
+                    </div>
+                    <div id="vault-status" class="vault-status"></div>
+                </div>
+            </div>
+            <button id="mission-02-complete" class="mission-btn hidden" onclick="completeMission(2)">MISSION COMPLETE</button>
+        </div>
+    </section>
+
+    <!-- Mission 03: Field Operations -->
+    <section id="mission-03" class="mission-section hidden">
+        <div class="container">
+            <div class="mission-header">
+                <h1>MISSION 03: FIELD OPERATIONS</h1>
+                <p class="mission-subtitle">Safe Internet Operations</p>
+            </div>
+            <div class="scenario-interface">
+                <div id="scenario-content">
+                    <!-- Scenario content populated by JavaScript -->
+                </div>
+                <div id="scenario-choices" class="choice-buttons">
+                    <!-- Choices populated by JavaScript -->
+                </div>
+                <div id="scenario-feedback" class="feedback-area"></div>
+            </div>
+            <button id="mission-03-complete" class="mission-btn hidden" onclick="completeMission(3)">MISSION COMPLETE</button>
+        </div>
+    </section>
+
+    <!-- Mission 04: Secure Your Safehouse -->
+    <section id="mission-04" class="mission-section hidden">
+        <div class="container">
+            <div class="mission-header">
+                <h1>MISSION 04: SECURE YOUR SAFEHOUSE</h1>
+                <p class="mission-subtitle">Clear Desk & Computer Policy</p>
+            </div>
+            <div class="spy-game-interface">
+                <h3>🕵️ SECURITY AUDIT: Find all 4 security risks</h3>
+                <p>Your mission: Identify security vulnerabilities in this workspace</p>
+                <div class="office-scene">
+                    <!-- Placeholder for office image with clickable security risks -->
+                    <div class="office-image-placeholder">
+                        <div class="risk-item" id="risk-1" data-risk="unlocked-computer">
+                            <div class="computer">💻</div>
+                            <span class="risk-label">Unlocked Computer</span>
+                        </div>
+                        <div class="risk-item" id="risk-2" data-risk="sticky-note">
+                            <div class="sticky-note">📝</div>
+                            <span class="risk-label">Password on Sticky Note</span>
+                        </div>
+                        <div class="risk-item" id="risk-3" data-risk="confidential-docs">
+                            <div class="document">📄</div>
+                            <span class="risk-label">Confidential Documents Visible</span>
+                        </div>
+                        <div class="risk-item" id="risk-4" data-risk="mobile-phone">
+                            <div class="phone">📱</div>
+                            <span class="risk-label">Unattended Mobile Device</span>
+                        </div>
+                    </div>
+                    <div id="risks-found" class="risks-counter">
+                        Risks Found: <span id="risk-count">0</span>/4
+                    </div>
+                    <div id="risk-explanations" class="explanations-area"></div>
+                </div>
+            </div>
+            <button id="mission-04-complete" class="mission-btn hidden" onclick="completeMission(4)">MISSION COMPLETE</button>
+        </div>
+    </section>
+
+    <!-- Mission 05: The Redaction Protocol -->
+    <section id="mission-05" class="mission-section hidden">
+        <div class="container">
+            <div class="mission-header">
+                <h1>MISSION 05: THE REDACTION PROTOCOL</h1>
+                <p class="mission-subtitle">GDPR Data Protection</p>
+            </div>
+            <div class="redaction-interface">
+                <h3>🗃️ SENSITIVE INTEL PROTECTION</h3>
+                <p>Identify and redact all personal data in this customer service email. Click on any personal information to redact it.</p>
+                <div class="policy-reminder">
+                    <small>Remember: GDPR protects personal data. Reference: GDPR Quick Guide for Hilltop Honey</small>
+                </div>
+                <div class="document-to-redact" id="redaction-document">
+                    <div class="email-header">
+                        <strong>Subject:</strong> Order Inquiry - Batch #2024-HH-1247<br>
+                        <strong>From:</strong> customer.service@hilltophoney.co.uk<br>
+                        <strong>To:</strong> production@hilltophoney.co.uk
+                    </div>
+                    <div class="email-body">
+                        <p>Dear Production Team,</p>
+                        <p>We've received an inquiry from <span class="pii-item" data-type="name">Sarah Johnson</span> regarding her recent order. Her contact details are:</p>
+                        <ul>
+                            <li>Email: <span class="pii-item" data-type="email">sarah.johnson@email.co.uk</span></li>
+                            <li>Phone: <span class="pii-item" data-type="phone">01234 567890</span></li>
+                            <li>Address: <span class="pii-item" data-type="address">15 Oak Street, Witham, Essex, CM8 2JY</span></li>
+                        </ul>
+                        <p>She mentioned she has a severe <span class="pii-item" data-type="health">nut allergy</span> and wants to confirm our honey production processes don't cross-contaminate with nuts.</p>
+                        <p>Her order number is ORD-2024-1247 and her <span class="pii-item" data-type="payment">credit card ending in 4567</span> was charged £24.99.</p>
+                        <p>Please confirm our nut-free processes so we can respond appropriately.</p>
+                        <p>Thanks,<br>Customer Service Team</p>
+                    </div>
+                </div>
+                <div id="redaction-status" class="redaction-status">
+                    Personal Data Found: <span id="pii-count">0</span>/6
+                </div>
+            </div>
+            <button id="mission-05-complete" class="mission-btn hidden" onclick="completeMission(5)">MISSION COMPLETE</button>
+        </div>
+    </section>
+
+    <!-- Final Module: Emergency Protocols -->
+    <section id="final-module" class="mission-section hidden">
+        <div class="container">
+            <div class="mission-header">
+                <h1>EMERGENCY PROTOCOLS</h1>
+                <p class="mission-subtitle">What to Do If You're a Victim</p>
+            </div>
+            <div class="emergency-protocols">
+                <div class="protocol-section">
+                    <h3>🚨 Report to Action Fraud</h3>
+                    <p><strong>Phone:</strong> 0300 123 2040</p>
+                    <p><strong>Online:</strong> actionfraud.police.uk</p>
+                    <p>Report any cyber crime or fraud immediately</p>
+                </div>
+                <div class="protocol-section">
+                    <h3>💬 Seek Support</h3>
+                    <p>Contact your line manager immediately</p>
+                    <p>IT Support: Follow ITPOL escalation procedures</p>
+                    <p>Don't panic - quick reporting helps limit damage</p>
+                </div>
+                <div class="protocol-section">
+                    <h3>🔒 Update Security</h3>
+                    <p>Change all passwords immediately</p>
+                    <p>Run full system virus scan</p>
+                    <p>Monitor accounts for suspicious activity</p>
+                </div>
+            </div>
+            <div class="certification-section">
+                <h2>🎖️ MISSION ACCOMPLISHED</h2>
+                <p>Congratulations, Agent. You have completed your field training. You are now certified to help protect Hilltop Honey's digital assets.</p>
+                <p>Proceed to the final certification exam to complete your training.</p>
+                <a href="https://forms.office.com/YourQuizHere" class="final-exam-btn" target="_blank">
+                    PROCEED TO FINAL CERTIFICATION EXAM
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
 
