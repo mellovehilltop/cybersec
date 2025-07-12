@@ -3,304 +3,373 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mission Control - Digital Shield Training</title>
+    <title>Digital Shield - Classified Training Files</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/modules.css">
 </head>
-<body class="landing-page">
+<body class="file-system-page">
     <!-- Header Section -->
-    <header class="mission-control-header">
+    <header class="classified-header">
         <div class="container">
-            <div class="agency-badge">
-                <img src="images/interface/hilltop-shield-logo.png" alt="Hilltop Shield" class="agency-logo">
-                <div class="agency-info">
-                    <h1>MISSION CONTROL</h1>
-                    <p class="classification">DIGITAL SHIELD TRAINING CENTRE</p>
-                </div>
+            <div class="classification-banner">
+                <span class="classification-level">CLASSIFIED</span>
+                <h1>DIGITAL SHIELD TRAINING ARCHIVE</h1>
+                <span class="classification-level">HILLTOP HONEY LTD</span>
             </div>
-            <div class="agent-status">
-                <div class="agent-avatar">
-                    <img src="images/characters/agent-avatar.png" alt="Agent Avatar" id="agent-photo">
+            <div class="agent-terminal">
+                <div class="terminal-info">
+                    <span class="terminal-prompt">AGENT:</span>
+                    <span class="agent-name" id="agent-name">[CLASSIFIED]</span>
+                    <span class="clearance-level">TRAINEE CLEARANCE</span>
                 </div>
-                <div class="agent-details">
-                    <h3 id="agent-name">Agent [CLASSIFIED]</h3>
-                    <p class="agent-rank" id="agent-rank">Trainee Agent</p>
-                    <div class="progress-summary">
-                        <span id="modules-completed">0</span>/5 Modules Complete
-                    </div>
+                <div class="progress-display">
+                    <span class="progress-label">TRAINING PROGRESS:</span>
+                    <span class="progress-value" id="overall-progress">0%</span>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- Mission Briefing Section -->
-    <section class="mission-briefing">
+    <!-- File Cabinet Section -->
+    <section class="file-cabinet">
         <div class="container">
-            <div class="briefing-screen">
-                <div class="screen-header">
-                    <span class="status-indicator active"></span>
-                    <h2>OPERATION BRIEFING</h2>
-                    <span class="timestamp" id="current-time"></span>
-                </div>
-                <div class="briefing-content">
-                    <h3>Welcome to Digital Shield Training, Agent</h3>
-                    <p>Cyber threats to food manufacturing operations have increased by 400% this year. Your mission is to become Hilltop Honey's first line of digital defence.</p>
-                    <p>Complete all training modules to unlock the final assessment and earn your Digital Shield certification.</p>
-                    
-                    <div class="mission-objectives">
-                        <h4>🎯 TRAINING OBJECTIVES</h4>
-                        <ul>
-                            <li>Master email security and phishing detection</li>
-                            <li>Implement robust password security protocols</li>
-                            <li>Understand safe internet and network practices</li>
-                            <li>Apply physical security and clear desk policies</li>
-                            <li>Ensure GDPR compliance and data protection</li>
-                        </ul>
+            <div class="cabinet-header">
+                <h2>📁 TRAINING DOSSIERS</h2>
+                <p class="access-notice">⚠️ ACCESS RESTRICTED TO AUTHORIZED PERSONNEL ONLY</p>
+            </div>
+
+            <div class="file-cabinet-grid">
+                <div class="filing-drawer">
+                    <div class="drawer-label">CYBERSECURITY PROTOCOLS</div>
+                    <div class="file-folders">
+                        
+                        <!-- File 1: Email Security -->
+                        <div class="file-folder" data-module="1" id="file-1">
+                            <div class="folder-tab">
+                                <div class="tab-info">
+                                    <span class="file-number">001</span>
+                                    <span class="classification-stamp">CONFIDENTIAL</span>
+                                </div>
+                                <div class="status-indicator" id="status-1">
+                                    <span class="status-badge new">NEW</span>
+                                </div>
+                            </div>
+                            <div class="folder-content">
+                                <div class="file-icon">📧</div>
+                                <div class="file-details">
+                                    <h3>EMAIL SECURITY PROTOCOLS</h3>
+                                    <p class="file-subtitle">Operation: Interceptor</p>
+                                    <p class="file-description">Classification of email-based threats and defensive countermeasures.</p>
+                                    <div class="file-metadata">
+                                        <span class="duration">⏱️ 15 min</span>
+                                        <span class="difficulty">🔒 LEVEL 3</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="folder-actions">
+                                <button class="file-btn" onclick="openFile(1)" id="btn-1">
+                                    OPEN FILE
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- File 2: Password Security -->
+                        <div class="file-folder locked" data-module="2" id="file-2">
+                            <div class="folder-tab">
+                                <div class="tab-info">
+                                    <span class="file-number">002</span>
+                                    <span class="classification-stamp">RESTRICTED</span>
+                                </div>
+                                <div class="status-indicator" id="status-2">
+                                    <span class="status-badge locked">🔒 LOCKED</span>
+                                </div>
+                            </div>
+                            <div class="folder-content">
+                                <div class="file-icon">🔐</div>
+                                <div class="file-details">
+                                    <h3>PASSWORD SECURITY PROTOCOLS</h3>
+                                    <p class="file-subtitle">Operation: Vault Guardian</p>
+                                    <p class="file-description">Advanced authentication and credential protection systems.</p>
+                                    <div class="file-metadata">
+                                        <span class="duration">⏱️ 12 min</span>
+                                        <span class="difficulty">🔒 LEVEL 2</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="folder-actions">
+                                <button class="file-btn" onclick="openFile(2)" id="btn-2" disabled>
+                                    CLEARANCE REQUIRED
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- File 3: Internet Security -->
+                        <div class="file-folder locked" data-module="3" id="file-3">
+                            <div class="folder-tab">
+                                <div class="tab-info">
+                                    <span class="file-number">003</span>
+                                    <span class="classification-stamp">RESTRICTED</span>
+                                </div>
+                                <div class="status-indicator" id="status-3">
+                                    <span class="status-badge locked">🔒 LOCKED</span>
+                                </div>
+                            </div>
+                            <div class="folder-content">
+                                <div class="file-icon">🌐</div>
+                                <div class="file-details">
+                                    <h3>INTERNET SECURITY PROTOCOLS</h3>
+                                    <p class="file-subtitle">Operation: Navigator</p>
+                                    <p class="file-description">Secure browsing and network protection procedures.</p>
+                                    <div class="file-metadata">
+                                        <span class="duration">⏱️ 18 min</span>
+                                        <span class="difficulty">🔒 LEVEL 3</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="folder-actions">
+                                <button class="file-btn" onclick="openFile(3)" id="btn-3" disabled>
+                                    CLEARANCE REQUIRED
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- File 4: Physical Security -->
+                        <div class="file-folder locked" data-module="4" id="file-4">
+                            <div class="folder-tab">
+                                <div class="tab-info">
+                                    <span class="file-number">004</span>
+                                    <span class="classification-stamp">CONFIDENTIAL</span>
+                                </div>
+                                <div class="status-indicator" id="status-4">
+                                    <span class="status-badge locked">🔒 LOCKED</span>
+                                </div>
+                            </div>
+                            <div class="folder-content">
+                                <div class="file-icon">🏢</div>
+                                <div class="file-details">
+                                    <h3>PHYSICAL SECURITY PROTOCOLS</h3>
+                                    <p class="file-subtitle">Operation: Safehouse</p>
+                                    <p class="file-description">Workspace security and information protection measures.</p>
+                                    <div class="file-metadata">
+                                        <span class="duration">⏱️ 10 min</span>
+                                        <span class="difficulty">🔒 LEVEL 2</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="folder-actions">
+                                <button class="file-btn" onclick="openFile(4)" id="btn-4" disabled>
+                                    CLEARANCE REQUIRED
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- File 5: GDPR -->
+                        <div class="file-folder locked" data-module="5" id="file-5">
+                            <div class="folder-tab">
+                                <div class="tab-info">
+                                    <span class="file-number">005</span>
+                                    <span class="classification-stamp">TOP SECRET</span>
+                                </div>
+                                <div class="status-indicator" id="status-5">
+                                    <span class="status-badge locked">🔒 LOCKED</span>
+                                </div>
+                            </div>
+                            <div class="folder-content">
+                                <div class="file-icon">📋</div>
+                                <div class="file-details">
+                                    <h3>DATA PROTECTION PROTOCOLS</h3>
+                                    <p class="file-subtitle">Operation: Classified Intel</p>
+                                    <p class="file-description">GDPR compliance and personal data safeguarding procedures.</p>
+                                    <div class="file-metadata">
+                                        <span class="duration">⏱️ 20 min</span>
+                                        <span class="difficulty">🔒 LEVEL 4</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="folder-actions">
+                                <button class="file-btn" onclick="openFile(5)" id="btn-5" disabled>
+                                    CLEARANCE REQUIRED
+                                </button>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Training Modules Grid -->
-    <section class="training-modules">
+    <!-- Special Operations File (Final Assessment) -->
+    <section class="special-operations">
         <div class="container">
-            <h2 class="section-title">TRAINING MODULES</h2>
-            <div class="modules-grid">
-                
-                <!-- Module 1: Email Security -->
-                <div class="module-card" data-module="1">
-                    <div class="module-header">
-                        <img src="images/content/email-security-icon.png" alt="Email Security" class="module-icon">
-                        <div class="module-status" id="module-1-status">
-                            <span class="status-badge locked">LOCKED</span>
+            <div class="special-file-container">
+                <div class="special-file locked" id="final-assessment-file">
+                    <div class="special-header">
+                        <div class="classification-stripe">
+                            <span class="class-label">EYES ONLY</span>
+                            <span class="class-label">FINAL ASSESSMENT</span>
+                            <span class="class-label">OPERATION: DIGITAL SHIELD</span>
                         </div>
                     </div>
-                    <div class="module-content">
-                        <h3>MODULE 01: EMAIL SECURITY</h3>
-                        <p class="module-subtitle">The Interceptor Protocol</p>
-                        <p class="module-description">Learn to identify and neutralise email-based threats, including phishing attacks and social engineering tactics.</p>
-                        <div class="module-stats">
-                            <span class="duration">⏱️ 15 minutes</span>
-                            <span class="difficulty">🔘🔘🔘⚪⚪</span>
+                    <div class="special-content">
+                        <div class="special-icon">🎯</div>
+                        <div class="special-details">
+                            <h2>FINAL FIELD ASSESSMENT</h2>
+                            <p class="special-subtitle">Comprehensive Security Evaluation</p>
+                            <p class="special-description">Classified field simulation testing all acquired cybersecurity protocols. Access granted only upon completion of all training dossiers.</p>
+                            
+                            <div class="clearance-requirements">
+                                <h4>📋 CLEARANCE REQUIREMENTS</h4>
+                                <div class="requirements-list" id="clearance-requirements">
+                                    <div class="requirement incomplete" data-module="1">
+                                        <span class="req-status">❌</span>
+                                        <span class="req-text">Complete Email Security Training</span>
+                                    </div>
+                                    <div class="requirement incomplete" data-module="2">
+                                        <span class="req-status">❌</span>
+                                        <span class="req-text">Complete Password Security Training</span>
+                                    </div>
+                                    <div class="requirement incomplete" data-module="3">
+                                        <span class="req-status">❌</span>
+                                        <span class="req-text">Complete Internet Security Training</span>
+                                    </div>
+                                    <div class="requirement incomplete" data-module="4">
+                                        <span class="req-status">❌</span>
+                                        <span class="req-text">Complete Physical Security Training</span>
+                                    </div>
+                                    <div class="requirement incomplete" data-module="5">
+                                        <span class="req-status">❌</span>
+                                        <span class="req-text">Complete Data Protection Training</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <button class="module-btn" onclick="startModule(1)" id="module-1-btn">
-                            START TRAINING
+                    </div>
+                    <div class="special-actions">
+                        <button class="special-btn" onclick="openFinalAssessment()" id="final-btn" disabled>
+                            🔒 ACCESS DENIED
                         </button>
                     </div>
-                </div>
-
-                <!-- Module 2: Password Security -->
-                <div class="module-card" data-module="2">
-                    <div class="module-header">
-                        <img src="images/content/password-security-icon.png" alt="Password Security" class="module-icon">
-                        <div class="module-status" id="module-2-status">
-                            <span class="status-badge locked">LOCKED</span>
-                        </div>
-                    </div>
-                    <div class="module-content">
-                        <h3>MODULE 02: PASSWORD SECURITY</h3>
-                        <p class="module-subtitle">The Vault Guardian System</p>
-                        <p class="module-description">Master the creation and management of secure passwords and authentication systems.</p>
-                        <div class="module-stats">
-                            <span class="duration">⏱️ 12 minutes</span>
-                            <span class="difficulty">🔘🔘⚪⚪⚪</span>
-                        </div>
-                        <button class="module-btn" onclick="startModule(2)" id="module-2-btn" disabled>
-                            TRAINING LOCKED
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Module 3: Safe Internet -->
-                <div class="module-card" data-module="3">
-                    <div class="module-header">
-                        <img src="images/content/internet-security-icon.png" alt="Internet Security" class="module-icon">
-                        <div class="module-status" id="module-3-status">
-                            <span class="status-badge locked">LOCKED</span>
-                        </div>
-                    </div>
-                    <div class="module-content">
-                        <h3>MODULE 03: INTERNET SECURITY</h3>
-                        <p class="module-subtitle">The Navigator Protocol</p>
-                        <p class="module-description">Secure browsing, WiFi safety, and protecting data during online operations.</p>
-                        <div class="module-stats">
-                            <span class="duration">⏱️ 18 minutes</span>
-                            <span class="difficulty">🔘🔘🔘⚪⚪</span>
-                        </div>
-                        <button class="module-btn" onclick="startModule(3)" id="module-3-btn" disabled>
-                            TRAINING LOCKED
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Module 4: Physical Security -->
-                <div class="module-card" data-module="4">
-                    <div class="module-header">
-                        <img src="images/content/physical-security-icon.png" alt="Physical Security" class="module-icon">
-                        <div class="module-status" id="module-4-status">
-                            <span class="status-badge locked">LOCKED</span>
-                        </div>
-                    </div>
-                    <div class="module-content">
-                        <h3>MODULE 04: PHYSICAL SECURITY</h3>
-                        <p class="module-subtitle">The Safehouse Protocol</p>
-                        <p class="module-description">Secure your workspace and protect sensitive information from physical threats.</p>
-                        <div class="module-stats">
-                            <span class="duration">⏱️ 10 minutes</span>
-                            <span class="difficulty">🔘🔘⚪⚪⚪</span>
-                        </div>
-                        <button class="module-btn" onclick="startModule(4)" id="module-4-btn" disabled>
-                            TRAINING LOCKED
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Module 5: GDPR -->
-                <div class="module-card" data-module="5">
-                    <div class="module-header">
-                        <img src="images/content/gdpr-security-icon.png" alt="GDPR Security" class="module-icon">
-                        <div class="module-status" id="module-5-status">
-                            <span class="status-badge locked">LOCKED</span>
-                        </div>
-                    </div>
-                    <div class="module-content">
-                        <h3>MODULE 05: DATA PROTECTION</h3>
-                        <p class="module-subtitle">The Classified Intel Protocol</p>
-                        <p class="module-description">GDPR compliance and protecting personal data in all operations.</p>
-                        <div class="module-stats">
-                            <span class="duration">⏱️ 20 minutes</span>
-                            <span class="difficulty">🔘🔘🔘🔘⚪</span>
-                        </div>
-                        <button class="module-btn" onclick="startModule(5)" id="module-5-btn" disabled>
-                            TRAINING LOCKED
-                        </button>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- Final Assessment Section -->
-    <section class="final-assessment">
-        <div class="container">
-            <div class="assessment-card locked" id="final-assessment-card">
-                <div class="assessment-header">
-                    <img src="images/content/final-assessment-icon.png" alt="Final Assessment" class="assessment-icon">
-                    <div class="assessment-status">
-                        <span class="status-badge locked" id="assessment-status">LOCKED</span>
-                    </div>
-                </div>
-                <div class="assessment-content">
-                    <h2>FINAL FIELD ASSESSMENT</h2>
-                    <p class="assessment-subtitle">Operation Digital Shield</p>
-                    <p class="assessment-description">Put your training to the test in this comprehensive field simulation. Complete all training modules to unlock.</p>
-                    <div class="assessment-requirements">
-                        <h4>📋 REQUIREMENTS</h4>
-                        <ul id="assessment-requirements-list">
-                            <li class="requirement incomplete" data-module="1">✗ Complete Email Security Training</li>
-                            <li class="requirement incomplete" data-module="2">✗ Complete Password Security Training</li>
-                            <li class="requirement incomplete" data-module="3">✗ Complete Internet Security Training</li>
-                            <li class="requirement incomplete" data-module="4">✗ Complete Physical Security Training</li>
-                            <li class="requirement incomplete" data-module="5">✗ Complete Data Protection Training</li>
-                        </ul>
-                    </div>
-                    <button class="assessment-btn" onclick="startFinalAssessment()" id="final-assessment-btn" disabled>
-                        ASSESSMENT LOCKED
-                    </button>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Progress Dashboard -->
-    <section class="progress-dashboard">
+    <!-- Terminal Status Bar -->
+    <footer class="terminal-footer">
         <div class="container">
-            <h2 class="section-title">TRAINING PROGRESS</h2>
-            <div class="progress-cards">
-                <div class="progress-card">
-                    <div class="progress-icon">📊</div>
-                    <div class="progress-info">
-                        <h3 id="overall-progress">0%</h3>
-                        <p>Overall Progress</p>
-                    </div>
+            <div class="terminal-status">
+                <div class="status-left">
+                    <span class="terminal-prompt">SYSTEM STATUS:</span>
+                    <span class="system-status online">ONLINE</span>
+                    <span class="session-info">SESSION: <span id="session-time">00:00:00</span></span>
                 </div>
-                <div class="progress-card">
-                    <div class="progress-icon">⏱️</div>
-                    <div class="progress-info">
-                        <h3 id="time-invested">0 min</h3>
-                        <p>Time Invested</p>
-                    </div>
+                <div class="status-center">
+                    <span class="files-accessed">FILES ACCESSED: <span id="files-completed">0</span>/5</span>
+                    <span class="security-level">SECURITY LEVEL: TRAINEE</span>
                 </div>
-                <div class="progress-card">
-                    <div class="progress-icon">🏆</div>
-                    <div class="progress-info">
-                        <h3 id="badges-earned">0</h3>
-                        <p>Badges Earned</p>
-                    </div>
-                </div>
-                <div class="progress-card">
-                    <div class="progress-icon">🎯</div>
-                    <div class="progress-info">
-                        <h3 id="next-objective">Start Module 1</h3>
-                        <p>Next Objective</p>
-                    </div>
+                <div class="status-right">
+                    <button onclick="toggleAdminPanel()" class="admin-access" title="System Administration">🔧</button>
+                    <span class="timestamp" id="current-timestamp"></span>
                 </div>
             </div>
         </div>
-    </section>
+    </footer>
 
     <!-- Admin Testing Panel (Hidden by default) -->
     <section class="admin-panel hidden" id="admin-panel">
         <div class="container">
-            <h3>🔧 TESTING CONTROLS</h3>
-            <div class="admin-controls">
-                <button onclick="resetAllProgress()" class="admin-btn reset">Reset All Progress</button>
-                <button onclick="completeModule(1)" class="admin-btn">Complete Module 1</button>
-                <button onclick="completeModule(2)" class="admin-btn">Complete Module 2</button>
-                <button onclick="completeModule(3)" class="admin-btn">Complete Module 3</button>
-                <button onclick="completeModule(4)" class="admin-btn">Complete Module 4</button>
-                <button onclick="completeModule(5)" class="admin-btn">Complete Module 5</button>
-                <button onclick="toggleAdminPanel()" class="admin-btn">Hide Panel</button>
+            <div class="admin-terminal">
+                <div class="terminal-header">
+                    <span class="terminal-title">SYSTEM ADMINISTRATION CONSOLE</span>
+                    <button onclick="toggleAdminPanel()" class="terminal-close">×</button>
+                </div>
+                <div class="terminal-body">
+                    <div class="admin-commands">
+                        <h3>TESTING COMMANDS:</h3>
+                        <div class="command-buttons">
+                            <button onclick="resetAllProgress()" class="cmd-btn danger">RESET_ALL_PROGRESS</button>
+                            <button onclick="completeModule(1)" class="cmd-btn">COMPLETE_FILE_001</button>
+                            <button onclick="completeModule(2)" class="cmd-btn">COMPLETE_FILE_002</button>
+                            <button onclick="completeModule(3)" class="cmd-btn">COMPLETE_FILE_003</button>
+                            <button onclick="completeModule(4)" class="cmd-btn">COMPLETE_FILE_004</button>
+                            <button onclick="completeModule(5)" class="cmd-btn">COMPLETE_FILE_005</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="mission-footer">
-        <div class="container">
-            <p>&copy; 2024 Hilltop Honey Ltd - Digital Shield Training Programme</p>
-            <p>Classified Training Material - For Authorized Personnel Only</p>
-            <button onclick="toggleAdminPanel()" class="admin-trigger" title="Admin Controls">⚙️</button>
-        </div>
-    </footer>
-
     <script src="js/progress.js"></script>
     <script src="js/navigation.js"></script>
     <script>
-        // Initialize landing page
-        document.addEventListener('DOMContentLoaded', function() {
-            updateProgressDisplay();
-            updateTimestamp();
-            setInterval(updateTimestamp, 1000);
-        });
+        // File system specific functions
+        function openFile(moduleNumber) {
+            if (window.digitalShieldProgress.isModuleUnlocked(moduleNumber)) {
+                window.location.href = `module${moduleNumber}.html`;
+            } else {
+                showAccessDenied();
+            }
+        }
 
+        function openFinalAssessment() {
+            if (window.digitalShieldProgress && window.digitalShieldProgress.getProgressStats().completedModules === 5) {
+                window.location.href = 'final-assessment.html';
+            } else {
+                showAccessDenied();
+            }
+        }
+
+        function showAccessDenied() {
+            alert('🔒 ACCESS DENIED\n\nClearance level insufficient. Complete prerequisite training files to gain access.');
+        }
+
+        // Session timer
+        let sessionStartTime = Date.now();
+        function updateSessionTimer() {
+            const elapsed = Date.now() - sessionStartTime;
+            const hours = Math.floor(elapsed / 3600000);
+            const minutes = Math.floor((elapsed % 3600000) / 60000);
+            const seconds = Math.floor((elapsed % 60000) / 1000);
+            
+            const timeString = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            const sessionElement = document.getElementById('session-time');
+            if (sessionElement) {
+                sessionElement.textContent = timeString;
+            }
+        }
+
+        // Update timestamp
         function updateTimestamp() {
             const now = new Date();
             const timestamp = now.toLocaleString('en-GB', {
                 day: '2-digit',
-                month: '2-digit', 
+                month: '2-digit',
                 year: 'numeric',
                 hour: '2-digit',
                 minute: '2-digit',
                 second: '2-digit'
             });
-            const timeElement = document.getElementById('current-time');
-            if (timeElement) {
-                timeElement.textContent = timestamp;
+            const timestampElement = document.getElementById('current-timestamp');
+            if (timestampElement) {
+                timestampElement.textContent = timestamp;
             }
         }
+
+        // Initialize file system
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof updateProgressDisplay === 'function') {
+                updateProgressDisplay();
+            }
+            
+            // Start timers
+            setInterval(updateSessionTimer, 1000);
+            setInterval(updateTimestamp, 1000);
+            updateTimestamp();
+            
+            console.log('Digital Shield File System loaded');
+        });
     </script>
 </body>
 </html>
