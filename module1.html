@@ -1,1 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 1: Email Security - Digital Shield Training</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/modules.css">
+</head>
+<body class="module-page">
+    <!-- Header Navigation -->
+    <header class="module-header">
+        <div class="container">
+            <div class="module-nav">
+                <button onclick="returnToMissionControl()" class="nav-btn back">
+                    <img src="images/interface/navigation-back.png" alt="Back"> Mission Control
+                </button>
+                <div class="module-info">
+                    <h1>MODULE 01: EMAIL SECURITY</h1>
+                    <p class="module-subtitle">The Interceptor Protocol</p>
+                </div>
+                <div class="module-progress-nav">
+                    <span class="progress-text">Progress: <span id="module-progress">0%</span></span>
+                </div>
+            </div>
+        </div>
+    </header>
 
+    <!-- Mission Briefing Section -->
+    <section id="briefing-section" class="training-section active">
+        <div class="container">
+            <div class="section-header">
+                <img src="images/content/email-security-icon.png" alt="Email Security" class="section-icon">
+                <h2>MISSION BRIEFING</h2>
+                <p>Intelligence Report: Email-Based Threats</p>
+            </div>
+            
+            <div class="briefing-content">
+                <div class="threat-assessment">
+                    <h3>🚨 THREAT LEVEL: HIGH</h3>
+                    <p>Email attacks represent <strong>95% of all cybersecurity breaches</strong> in the food manufacturing sector. Recent intelligence shows increasing sophistication in attacks targeting companies like Hilltop Honey.</p>
+                </div>
+
+                <div class="learning-objectives">
+                    <h3>🎯 MISSION OBJECTIVES</h3>
+                    <ul>
+                        <li>Identify common email-based threats and attack vectors</li>
+                        <li>Recognize phishing attempts and social engineering tactics</li>
+                        <li>Apply safe email practices in daily operations</li>
+                        <li>Respond appropriately to suspicious communications</li>
+                        <li>Protect Hilltop Honey's sensitive information</li>
+                    </ul>
+                </div>
+
+                <div class="instructor-message">
+                    <div class="instructor-avatar">
+                        <img src="images/characters/instructor-avatar.png" alt="Training Instructor">
+                    </div>
+                    <div class="message-content">
+                        <h4>Agent Training Instructions</h4>
+                        <p>Welcome to the Interceptor Protocol, Agent. Email security is your first line of defence. Master these skills and you'll protect not just yourself, but our entire honey production operation.</p>
+                        <p><strong>Remember:</strong> Every email could be a potential threat. Stay alert, stay secure.</p>
+                    </div>
+                </div>
+
+                <button onclick="startTraining()" class="section-btn primary">
+                    BEGIN TRAINING
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Training Phase 1: Understanding Email Threats -->
+    <section id="training-phase-1" class="training-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>PHASE 1: KNOW YOUR ENEMY</h2>
+                <p>Understanding Email-Based Threats</p>
+                <div class="phase-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 25%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="learning-cards">
+                <div class="threat-card" data-threat="phishing">
+                    <div class="threat-header">
+                        <div class="threat-icon">📧</div>
+                        <h3>PHISHING ATTACKS</h3>
+                        <span class="threat-level high">HIGH RISK</span>
+                    </div>
+                    <div class="threat-content">
+                        <p><strong>Method:</strong> Fraudsters impersonate trusted sources to steal credentials or sensitive data.</p>
+                        <p><strong>Target:</strong> Employee login details, customer information, financial data.</p>
+                        <p><strong>Warning Signs:</strong></p>
+                        <ul>
+                            <li>Generic greetings ("Dear Customer")</li>
+                            <li>Urgent language and time pressure</li>
+                            <li>Suspicious sender addresses</li>
+                            <li>Requests for personal information</li>
+                        </ul>
+                        <button onclick="showExample('phishing')" class="learn-btn">See Example</button>
+                    </div>
+                </div>
+
+                <div class="threat-card" data-threat="spear-phishing">
+                    <div class="threat-header">
+                        <div class="threat-icon">🎯</div>
+                        <h3>SPEAR PHISHING</h3>
+                        <span class="threat-level critical">CRITICAL</span>
+                    </div>
+                    <div class="threat-content">
+                        <p><strong>Method:</strong> Highly targeted attacks using personal information about you or Hilltop Honey.</p>
+                        <p><strong>Target:</strong> Specific employees, often management or finance teams.</p>
+                        <p><strong>Warning Signs:</strong></p>
+                        <ul>
+                            <li>Uses your name and job title</li>
+                            <li>References company projects or colleagues</li>
+                            <li>Appears to come from senior management</li>
+                            <li>Requests urgent financial transactions</li>
+                        </ul>
+                        <button onclick="showExample('spear-phishing')" class="learn-btn">See Example</button>
+                    </div>
+                </div>
+
+                <div class="threat-card" data-threat="malware">
+                    <div class="threat-header">
+                        <div class="threat-icon">🦠</div>
+                        <h3>MALWARE DELIVERY</h3>
+                        <span class="threat-level high">HIGH RISK</span>
+                    </div>
+                    <div class="threat-content">
+                        <p><strong>Method:</strong> Malicious software delivered through email attachments or links.</p>
+                        <p><strong>Target:</strong> Computer systems, production networks, customer databases.</p>
+                        <p><strong>Warning Signs:</strong></p>
+                        <ul>
+                            <li>Unexpected attachments (.exe, .zip, .scr files)</li>
+                            <li>Links to unfamiliar websites</li>
+                            <li>Emails from unknown senders</li>
+                            <li>Files requiring immediate download</li>
+                        </ul>
+                        <button onclick="showExample('malware')" class="learn-btn">See Example</button>
+                    </div>
+                </div>
+
+                <div class="threat-card" data-threat="business-email">
+                    <div class="threat-header">
+                        <div class="threat-icon">💼</div>
+                        <h3>BUSINESS EMAIL COMPROMISE</h3>
+                        <span class="threat-level critical">CRITICAL</span>
+                    </div>
+                    <div class="threat-content">
+                        <p><strong>Method:</strong> Attackers compromise legitimate business email accounts to conduct fraud.</p>
+                        <p><strong>Target:</strong> Financial transactions, supplier payments, customer orders.</p>
+                        <p><strong>Warning Signs:</strong></p>
+                        <ul>
+                            <li>Unusual payment requests from suppliers</li>
+                            <li>Changes to bank details or payment methods</li>
+                            <li>Urgent requests from "management"</li>
+                            <li>Emails sent outside normal business hours</li>
+                        </ul>
+                        <button onclick="showExample('business-email')" class="learn-btn">See Example</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="phase-completion">
+                <p><strong>Knowledge Check:</strong> Can you identify the four main email threats?</p>
+                <button onclick="completePhase(1)" class="section-btn primary">
+                    PHASE 1 COMPLETE
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Training Phase 2: Red Flags Recognition -->
+    <section id="training-phase-2" class="training-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>PHASE 2: SPOT THE RED FLAGS</h2>
+                <p>Learning to Identify Suspicious Emails</p>
+                <div class="phase-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 50%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="red-flags-training">
+                <div class="training-intro">
+                    <h3>🚩 Critical Red Flags Checklist</h3>
+                    <p>Every agent must memorize these warning signs. When you spot any of these elements, treat the email as suspicious until proven otherwise.</p>
+                </div>
+
+                <div class="red-flags-grid">
+                    <div class="flag-category">
+                        <h4>📧 SENDER ANALYSIS</h4>
+                        <ul class="flag-list">
+                            <li class="flag-item">
+                                <span class="flag-icon">⚠️</span>
+                                <div class="flag-content">
+                                    <strong>Domain Spoofing</strong>
+                                    <p>hiltophonney.co.uk vs hilltophoney.co.uk (missing 'o')</p>
+                                </div>
+                            </li>
+                            <li class="flag-item">
+                                <span class="flag-icon">⚠️</span>
+                                <div class="flag-content">
+                                    <strong>External Domains</strong>
+                                    <p>Gmail, Yahoo, or suspicious domains for business emails</p>
+                                </div>
+                            </li>
+                            <li class="flag-item">
+                                <span class="flag-icon">⚠️</span>
+                                <div class="flag-content">
+                                    <strong>Display Name Tricks</strong>
+                                    <p>"IT Support" but actually from external address</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="flag-category">
+                        <h4>📝 CONTENT ANALYSIS</h4>
+                        <ul class="flag-list">
+                            <li class="flag-item">
+                                <span class="flag-icon">⚠️</span>
+                                <div class="flag-content">
+                                    <strong>Generic Greetings</strong>
+                                    <p>"Dear Customer" instead of your actual name</p>
+                                </div>
+                            </li>
+                            <li class="flag-item">
+                                <span class="flag-icon">⚠️</span>
+                                <div class="flag-content">
+                                    <strong>Urgent Language</strong>
+                                    <p>"IMMEDIATE ACTION REQUIRED" or "Account will be closed"</p>
+                                </div>
+                            </li>
+                            <li class="flag-item">
+                                <span class="flag-icon">⚠️</span>
+                                <div class="flag-content">
+                                    <strong>Poor Grammar</strong>
+                                    <p>Spelling mistakes, awkward phrasing, wrong formatting</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="flag-category">
+                        <h4>🔗 LINK & ATTACHMENT ANALYSIS</h4>
+                        <ul class="flag-list">
+                            <li class="flag-item">
+                                <span class="flag-icon">⚠️</span>
+                                <div class="flag-content">
+                                    <strong>Suspicious URLs</strong>
+                                    <p>Hover to reveal true destination before clicking</p>
+                                </div>
+                            </li>
+                            <li class="flag-item">
+                                <span class="flag-icon">⚠️</span>
+                                <div class="flag-content">
+                                    <strong>Unexpected Attachments</strong>
+                                    <p>.exe, .scr, .zip files from unknown senders</p>
+                                </div>
+                            </li>
+                            <li class="flag-item">
+                                <span class="flag-icon">⚠️</span>
+                                <div class="flag-content">
+                                    <strong>Shortened URLs</strong>
+                                    <p>bit.ly, tinyurl.com hiding real destinations</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="flag-category">
+                        <h4>🎯 REQUEST ANALYSIS</h4>
+                        <ul class="flag-list">
+                            <li class="flag-item">
+                                <span class="flag-icon">⚠️</span>
+                                <div class="flag-content">
+                                    <strong>Information Requests</strong>
+                                    <p>Asking for passwords, personal data, or confidential info</p>
+                                </div>
+                            </li>
+                            <li class="flag-item">
+                                <span class="flag-icon">⚠️</span>
+                                <div class="flag-content">
+                                    <strong>Financial Requests</strong>
+                                    <p>Unexpected invoices, payment changes, or transfers</p>
+                                </div>
+                            </li>
+                            <li class="flag-item">
+                                <span class="flag-icon">⚠️</span>
+                                <div class="flag-content">
+                                    <strong>Bypass Procedures</strong>
+                                    <p>Requests to ignore normal security protocols</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="interactive-training">
+                    <h3>🎯 INTERACTIVE TRAINING: Red Flag Scanner</h3>
+                    <p>Click on each red flag you can identify in this example email:</p>
+                    
+                    <div class="email-scanner" id="email-scanner">
+                        <div class="email-header-scan">
+                            <strong>From:</strong> <span class="scannable suspicious" data-flag="domain">security@hiltophonney.co.uk</span><br>
+                            <strong>To:</strong> production@hilltophoney.co.uk<br>
+                            <strong>Subject:</strong> <span class="scannable suspicious" data-flag="urgent">URGENT: Account Security Update Required</span>
+                        </div>
+                        <div class="email-body-scan">
+                            <p><span class="scannable suspicious" data-flag="generic">Dear Customer</span>,</p>
+                            <p>Your account security has been <span class="scannable suspicious" data-flag="urgent">compromised and requires immediate attention</span>. Please <span class="scannable suspicious" data-flag="request">click here to verify your login details</span> within the next 24 hours.</p>
+                            <p><span class="scannable suspicious" data-flag="link">www.hiltophonney-secure.com/verify</span></p>
+                            <p>Failure to act will result in account suspension.</p>
+                            <p>Best regards,<br>Security Team</p>
+                        </div>
+                    </div>
+
+                    <div class="scanner-feedback" id="scanner-feedback">
+                        <p>Red flags found: <span id="flags-found">0</span>/5</p>
+                        <div id="flag-explanations"></div>
+                    </div>
+                </div>
+
+                <button onclick="completePhase(2)" class="section-btn primary" id="phase-2-btn" disabled>
+                    PHASE 2 COMPLETE
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Training Phase 3: Safe Email Practices -->
+    <section id="training-phase-3" class="training-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>PHASE 3: DEFENSIVE PROTOCOLS</h2>
+                <p>Safe Email Practices for Agents</p>
+                <div class="phase-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 75%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="best-practices">
+                <div class="practice-section">
+                    <h3>✅ BEFORE YOU CLICK</h3>
+                    <div class="practice-grid">
+                        <div class="practice-card">
+                            <div class="practice-icon">👀</div>
+                            <h4>VERIFY THE SENDER</h4>
+                            <p>Check the full email address, not just the display name. When in doubt, contact the sender through a different communication method.</p>
+                        </div>
+                        <div class="practice-card">
+                            <div class="practice-icon">🔍</div>
+                            <h4>HOVER OVER LINKS</h4>
+                            <p>Never click immediately. Hover to see the real destination. Legitimate links should match the claimed source.</p>
+                        </div>
+                        <div class="practice-card">
+                            <div class="practice-icon">🤔</div>
+                            <h4>QUESTION URGENCY</h4>
+                            <p>Legitimate urgent requests rarely come via email alone. Verify through phone or in-person contact.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="practice-section">
+                    <h3>🛡️ SECURE EMAIL HABITS</h3>
+                    <div class="habits-checklist">
+                        <div class="habit-item">
+                            <input type="checkbox" id="habit-1" onchange="checkProgress()">
+                            <label for="habit-1">Use BCC when emailing multiple external recipients to protect privacy</label>
+                        </div>
+                        <div class="habit-item">
+                            <input type="checkbox" id="habit-2" onchange="checkProgress()">
+                            <label for="habit-2">Never share passwords or sensitive information via email</label>
+                        </div>
+                        <div class="habit-item">
+                            <input type="checkbox" id="habit-3" onchange="checkProgress()">
+                            <label for="habit-3">Use encryption for confidential information</label>
+                        </div>
+                        <div class="habit-item">
+                            <input type="checkbox" id="habit-4" onchange="checkProgress()">
+                            <label for="habit-4">Regularly update spam filters and security settings</label>
+                        </div>
+                        <div class="habit-item">
+                            <input type="checkbox" id="habit-5" onchange="checkProgress()">
+                            <label for="habit-5">Report suspicious emails to IT immediately</label>
+                        </div>
+                        <div class="habit-item">
+                            <input type="checkbox" id="habit-6" onchange="checkProgress()">
+                            <label for="habit-6">Think twice before opening attachments from unknown sources</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="incident-response">
+                    <h3>🚨 INCIDENT RESPONSE PROTOCOL</h3>
+                    <div class="response-steps">
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h4>IMMEDIATE ACTION</h4>
+                                <p>Do NOT click any links or download attachments. Do NOT reply to the email.</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h4>ISOLATE</h4>
+                                <p>Mark the email as spam/phishing. Do not delete it yet - IT may need to investigate.</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h4>REPORT</h4>
+                                <p>Forward the suspicious email to IT support immediately. Include your concerns in the message.</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h4>WARN OTHERS</h4>
+                                <p>If the email appears to target your department or colleagues, alert them verbally or through secure channels.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="completePhase(3)" class="section-btn primary" id="phase-3-btn" disabled>
+                    PHASE 3 COMPLETE
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final Assessment Phase -->
+    <section id="assessment-phase" class="training-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>FINAL ASSESSMENT</h2>
+                <p>Email Security Knowledge Test</p>
+                <div class="phase-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 100%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="assessment-content">
+                <div class="assessment-intro">
+                    <h3>🎯 FIELD TEST: Email Threat Assessment</h3>
+                    <p>You will analyze 4 emails and determine which are safe and which are threats. Make your decisions carefully - each choice affects your final score.</p>
+                </div>
+
+                <div class="email-assessment" id="email-assessment">
+                    <!-- Assessment emails will be populated by JavaScript -->
+                </div>
+
+                <div class="assessment-results" id="assessment-results" style="display: none;">
+                    <!-- Results will be shown here -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Example Modal -->
+    <div id="example-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Example Email</h3>
+                <button onclick="closeModal()" class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <!-- Example content will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script src="js/progress.js"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/modules.js"></script>
+    <script>
+        // Initialize Module 1
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeModule1();
+        });
+    </script>
+</body>
+</html>
