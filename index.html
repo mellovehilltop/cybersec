@@ -1,489 +1,237 @@
-// Digital Shield Training - JavaScript
-
-// Global variables for progress tracking
-let currentMission = 0;
-let completedMissions = [];
-
-// Email simulation data
-const emailScenarios = [
-    {
-        subject: "URGENT: Update Your Hilltop Honey Account",
-        from: "security@hiltophonney.co.uk", // Note the misspelling
-        body: "Dear Customer,<br><br>Your account security has been compromised. Please click here immediately to verify your details: <a href='#'>www.hiltophonney-secure.com/verify</a><br><br>Failure to act within 24 hours will result in account suspension.<br><br>Best regards,<br>Security Team",
-        legitimate: false,
-        redFlags: ["Misspelled domain (hiltophonney vs hilltophoney)", "Generic greeting", "Urgent threat language", "Suspicious link"]
-    },
-    {
-        subject: "Weekly Production Report - Week 28",
-        from: "production@hilltophoney.co.uk",
-        body: "Hi Team,<br><br>Please find attached this week's production summary:<br>- Honey processed: 2,847 litres<br>- Quality control passed: 100%<br>- Next week's schedule attached<br><br>Any questions, please let me know.<br><br>Best,<br>Production Manager",
-        legitimate: true,
-        redFlags: []
-    },
-    {
-        subject: "You've Won £5000!",
-        from: "winner@lottery-uk.net",
-        body: "Congratulations! You are the lucky winner of our monthly draw. To claim your prize, please provide your bank details by replying to this email. Reference: WIN-2024-UK-7891<br><br>Claim within 48 hours or forfeit your winnings!",
-        legitimate: false,
-        redFlags: ["Unexpected prize claim", "Requesting bank details", "External domain", "Time pressure tactics"]
-    },
-    {
-        subject: "IT Policy Update - ITPOL 3.0",
-        from: "m.teece@hilltophoney.co.uk",
-        body: "Dear All,<br><br>Please be aware that our antivirus policy (ITPOL 3.0) has been updated. The new version is available on SharePoint.<br><br>Key changes include automatic update frequencies and new scanning requirements.<br><br>Please review and acknowledge receipt.<br><br>Thanks,<br>M Teece",
-        legitimate: true,
-        redFlags: []
-    }
-];
-
-// Current email index for simulation
-let currentEmailIndex = 0;
-let emailsAnalyzed = 0;
-
-// Password strength requirements
-const passwordRequirements = {
-    length: 12,
-    hasUpperCase: /[A-Z]/,
-    hasLowerCase: /[a-z]/,
-    hasNumber: /\d/,
-    hasSymbol: /[!@#$%^&*(),.?":{}|<>]/
-};
-
-// Scenario data for Mission 03
-const scenarios = [
-    {
-        text: "You're at a coffee shop and need to access your work emails. You see two WiFi networks: 'Free_Public_WiFi' and your phone's 'SecureHotspot'. Which do you choose?",
-        choices: [
-            { text: "Connect to Free_Public_WiFi", correct: false },
-            { text: "Use my phone's SecureHotspot", correct: true }
-        ],
-        feedback: {
-            correct: "Excellent choice! Using your phone's hotspot is much safer than public WiFi, which can be monitored by attackers.",
-            incorrect: "Public WiFi is risky! Attackers can intercept your data. Always use your phone's secure hotspot when possible."
-        }
-    },
-    {
-        text: "You need to download a PDF from a website for work. The URL starts with 'http://' (not https://). What should you do?",
-        choices: [
-            { text: "Proceed with the download", correct: false },
-            { text: "Leave the site and find a secure alternative", correct: true }
-        ],
-        feedback: {
-            correct: "Well done! HTTPS encrypts your connection. HTTP sites are not secure for downloading files or entering sensitive data.",
-            incorrect: "HTTP sites are not secure! The 'S' in HTTPS means your connection is encrypted. Always look for the padlock icon."
-        }
-    },
-    {
-        text: "You receive a work file via email from a colleague, but it's a .exe file instead of the expected .pdf. What do you do?",
-        choices: [
-            { text: "Open it immediately", correct: false },
-            { text: "Contact the colleague to verify before opening", correct: true }
-        ],
-        feedback: {
-            correct: "Perfect! Always verify unexpected file types with the sender. Email accounts can be compromised.",
-            incorrect: "Never open unexpected .exe files! They could be malware. Always verify with the sender first."
-        }
-    }
-];
-
-let currentScenario = 0;
-
-// Security risks data for Mission 04
-const securityRisks = {
-    'unlocked-computer': 'An unlocked computer allows anyone to access confidential data. Always lock your screen when stepping away (Windows + L).',
-    'sticky-note': 'Writing passwords on sticky notes defeats the purpose of having passwords. Use a secure password manager instead.',
-    'confidential-docs': 'Confidential documents should never be left visible. File them away or lock them in a secure drawer.',
-    'mobile-phone': 'Unattended devices can be stolen or accessed by unauthorized people. Keep personal devices secure.'
-};
-
-let risksFound = 0;
-let foundRisks = new Set();
-
-// PII tracking for Mission 05
-let piiItemsFound = 0;
-const totalPiiItems = 6;
-
-// Initialize the training when page loads
-document.addEventListener('DOMContentLoaded', function() {
-    loadProgress();
-    initializeMissions();
-});
-
-// Load progress from localStorage
-function loadProgress() {
-    const saved = localStorage.getItem('digitalShieldProgress');
-    if (saved) {
-        const progress = JSON.parse(saved);
-        currentMission = progress.currentMission || 0;
-        completedMissions = progress.completedMissions || [];
-    }
-    
-    // Show appropriate mission based on progress
-    showMission(currentMission);
-}
-
-// Save progress to localStorage
-function saveProgress() {
-    const progress = {
-        currentMission: currentMission,
-        completedMissions: completedMissions
-    };
-    localStorage.setItem('digitalShieldProgress', JSON.stringify(progress));
-}
-
-// Show specific mission
-function showMission(missionNumber) {
-    // Hide all missions
-    document.querySelectorAll('.mission-section').forEach(section => {
-        section.classList.remove('visible');
-        section.classList.add('hidden');
-    });
-    
-    // Show target mission
-    const targetMission = document.getElementById(`mission-${missionNumber < 6 ? '0' + missionNumber : 'final-module'}`);
-    if (targetMission) {
-        targetMission.classList.remove('hidden');
-        targetMission.classList.add('visible');
-        
-        // Scroll to top
-        window.scrollTo(0, 0);
-        
-        // Initialize mission-specific functionality
-        switch(missionNumber) {
-            case 1:
-                initializeEmailSimulation();
-                break;
-            case 2:
-                initializePasswordTester();
-                break;
-            case 3:
-                initializeScenarios();
-                break;
-            case 4:
-                initializeSpyGame();
-                break;
-            case 5:
-                initializeRedactionGame();
-                break;
-        }
-    }
-}
-
-// Complete mission and move to next
-function completeMission(missionNumber) {
-    if (!completedMissions.includes(missionNumber)) {
-        completedMissions.push(missionNumber);
-    }
-    
-    currentMission = missionNumber + 1;
-    saveProgress();
-    
-    // Show next mission with a small delay for better UX
-    setTimeout(() => {
-        showMission(currentMission);
-    }, 1000);
-}
-
-// Initialize all missions
-function initializeMissions() {
-    // Mission-specific initializations will be called when showing each mission
-}
-
-// MISSION 01: Email Simulation
-function initializeEmailSimulation() {
-    currentEmailIndex = 0;
-    emailsAnalyzed = 0;
-    showNextEmail();
-    
-    // Add event listeners for email actions
-    document.getElementById('trust-btn').addEventListener('click', () => handleEmailAction(true));
-    document.getElementById('delete-btn').addEventListener('click', () => handleEmailAction(false));
-}
-
-function showNextEmail() {
-    if (currentEmailIndex >= emailScenarios.length) {
-        // All emails analyzed
-        document.getElementById('mission-01-complete').classList.remove('hidden');
-        return;
-    }
-    
-    const email = emailScenarios[currentEmailIndex];
-    const emailViewer = document.getElementById('email-viewer');
-    
-    emailViewer.innerHTML = `
-        <div class="email-header">
-            <strong>From:</strong> ${email.from}<br>
-            <strong>Subject:</strong> ${email.subject}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project: Digital Shield - Cybersecurity Training</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Mission 00: Your Briefing -->
+    <section id="mission-00" class="mission-section visible">
+        <div class="container">
+            <div class="mission-header">
+                <span class="classification">TOP SECRET</span>
+                <h1>PROJECT: DIGITAL SHIELD</h1>
+                <div class="company-badge">HILLTOP HONEY LTD</div>
+            </div>
+            <div class="briefing-content">
+                <h2>AGENT BRIEFING</h2>
+                <p>Welcome, Agent. Your mission is to master the arts of digital defence and protect our honey manufacturing operations from cyber threats.</p>
+                <p>Recent intelligence shows increasing attacks on food manufacturing sites. Our production systems, customer data, and proprietary honey processing methods need protection.</p>
+                <p>Complete each mission to become a certified digital defence agent and help keep Hilltop Honey secure.</p>
+                <div class="policy-reference">
+                    <small>Training aligns with ITPOL 1.0 Acceptable Use Policy</small>
+                </div>
+            </div>
+            <button class="mission-btn" onclick="completeMission(0)">ACCEPT MISSION</button>
         </div>
-        <div class="email-body">
-            ${email.body}
+    </section>
+
+    <!-- Mission 01: The Interrogation Room -->
+    <section id="mission-01" class="mission-section hidden">
+        <div class="container">
+            <div class="mission-header">
+                <h1>MISSION 01: THE INTERROGATION ROOM</h1>
+                <p class="mission-subtitle">Identifying Suspicious Emails</p>
+            </div>
+            <div class="email-interface">
+                <div class="inbox-header">
+                    <h3>📧 Hilltop Honey Email Security Simulator</h3>
+                    <p>Analyse each email carefully. Spot the threats before they reach our honey production systems.</p>
+                </div>
+                <div id="email-viewer">
+                    <!-- Email content will be populated by JavaScript -->
+                </div>
+                <div class="email-controls">
+                    <button id="trust-btn" class="email-action trust">TRUST & ALLOW</button>
+                    <button id="delete-btn" class="email-action delete">DELETE THREAT</button>
+                </div>
+                <div id="email-feedback" class="feedback-area"></div>
+            </div>
+            <button id="mission-01-complete" class="mission-btn hidden" onclick="completeMission(1)">MISSION COMPLETE</button>
         </div>
-    `;
-    
-    // Clear previous feedback
-    document.getElementById('email-feedback').innerHTML = '';
-}
+    </section>
 
-function handleEmailAction(trusted) {
-    const email = emailScenarios[currentEmailIndex];
-    const feedbackArea = document.getElementById('email-feedback');
-    
-    // Determine if action was correct
-    const correct = (trusted && email.legitimate) || (!trusted && !email.legitimate);
-    
-    if (correct) {
-        feedbackArea.className = 'feedback-area correct';
-        feedbackArea.innerHTML = trusted ? 
-            'Correct! This email appears legitimate and safe.' :
-            'Correct! This email was suspicious and should be deleted.';
-    } else {
-        feedbackArea.className = 'feedback-area incorrect';
-        if (!email.legitimate) {
-            // Show red flags for fake email
-            feedbackArea.innerHTML = `
-                <strong>THREAT DETECTED!</strong><br>
-                Red flags in this email:<br>
-                <ul style="text-align: left; margin-top: 10px;">
-                    ${email.redFlags.map(flag => `<li>${flag}</li>`).join('')}
-                </ul>
-            `;
-        } else {
-            feedbackArea.innerHTML = 'This was actually a legitimate email from a trusted source.';
-        }
-    }
-    
-    emailsAnalyzed++;
-    currentEmailIndex++;
-    
-    // Show next email after delay
-    setTimeout(() => {
-        showNextEmail();
-    }, 3000);
-}
+    <!-- Mission 02: The Vault -->
+    <section id="mission-02" class="mission-section hidden">
+        <div class="container">
+            <div class="mission-header">
+                <h1>MISSION 02: THE VAULT</h1>
+                <p class="mission-subtitle">Password Security Protocol</p>
+            </div>
+            <div class="vault-interface">
+                <div class="vault-display">
+                    <h3>🔐 SECURITY VAULT ACCESS</h3>
+                    <p>Create a password strong enough to protect our honey production data</p>
+                </div>
+                <div class="password-tester">
+                    <label for="password-input">Enter your password:</label>
+                    <input type="password" id="password-input" placeholder="Type your password here...">
+                    <div class="strength-meter">
+                        <div id="strength-bar" class="strength-bar"></div>
+                        <span id="strength-text">WEAK</span>
+                    </div>
+                    <div class="requirements-checklist">
+                        <div class="requirement" id="req-length">
+                            <span class="checkbox">☐</span> 12+ Characters
+                        </div>
+                        <div class="requirement" id="req-case">
+                            <span class="checkbox">☐</span> Upper & Lower Case
+                        </div>
+                        <div class="requirement" id="req-number">
+                            <span class="checkbox">☐</span> Number
+                        </div>
+                        <div class="requirement" id="req-symbol">
+                            <span class="checkbox">☐</span> Symbol
+                        </div>
+                    </div>
+                    <div id="vault-status" class="vault-status"></div>
+                </div>
+            </div>
+            <button id="mission-02-complete" class="mission-btn hidden" onclick="completeMission(2)">MISSION COMPLETE</button>
+        </div>
+    </section>
 
-// MISSION 02: Password Tester
-function initializePasswordTester() {
-    const passwordInput = document.getElementById('password-input');
-    passwordInput.addEventListener('input', checkPasswordStrength);
-    
-    // Reset password tester
-    passwordInput.value = '';
-    checkPasswordStrength();
-}
+    <!-- Mission 03: Field Operations -->
+    <section id="mission-03" class="mission-section hidden">
+        <div class="container">
+            <div class="mission-header">
+                <h1>MISSION 03: FIELD OPERATIONS</h1>
+                <p class="mission-subtitle">Safe Internet Operations</p>
+            </div>
+            <div class="scenario-interface">
+                <div id="scenario-content">
+                    <!-- Scenario content populated by JavaScript -->
+                </div>
+                <div id="scenario-choices" class="choice-buttons">
+                    <!-- Choices populated by JavaScript -->
+                </div>
+                <div id="scenario-feedback" class="feedback-area"></div>
+            </div>
+            <button id="mission-03-complete" class="mission-btn hidden" onclick="completeMission(3)">MISSION COMPLETE</button>
+        </div>
+    </section>
 
-function checkPasswordStrength() {
-    const password = document.getElementById('password-input').value;
-    const strengthBar = document.getElementById('strength-bar');
-    const strengthText = document.getElementById('strength-text');
-    
-    // Check each requirement
-    const requirements = {
-        length: password.length >= passwordRequirements.length,
-        uppercase: passwordRequirements.hasUpperCase.test(password),
-        lowercase: passwordRequirements.hasLowerCase.test(password),
-        number: passwordRequirements.hasNumber.test(password),
-        symbol: passwordRequirements.hasSymbol.test(password)
-    };
-    
-    // Update requirement checkboxes
-    updateRequirement('req-length', requirements.length);
-    updateRequirement('req-case', requirements.uppercase && requirements.lowercase);
-    updateRequirement('req-number', requirements.number);
-    updateRequirement('req-symbol', requirements.symbol);
-    
-    // Calculate strength
-    const metRequirements = Object.values(requirements).filter(Boolean).length;
-    const strength = metRequirements / 5;
-    
-    // Update strength bar
-    strengthBar.style.width = `${strength * 100}%`;
-    
-    if (strength < 0.4) {
-        strengthBar.style.background = '#e74c3c';
-        strengthText.textContent = 'WEAK';
-        strengthText.style.color = '#e74c3c';
-    } else if (strength < 0.8) {
-        strengthBar.style.background = '#f39c12';
-        strengthText.textContent = 'MEDIUM';
-        strengthText.style.color = '#f39c12';
-    } else {
-        strengthBar.style.background = '#27ae60';
-        strengthText.textContent = 'STRONG';
-        strengthText.style.color = '#27ae60';
-    }
-    
-    // Show vault secured message if all requirements met
-    const vaultStatus = document.getElementById('vault-status');
-    if (metRequirements === 5) {
-        vaultStatus.className = 'vault-status secured';
-        vaultStatus.innerHTML = '🔒 VAULT SECURED! Password meets all security requirements.';
-        document.getElementById('mission-02-complete').classList.remove('hidden');
-    } else {
-        vaultStatus.className = 'vault-status';
-        vaultStatus.innerHTML = '';
-        document.getElementById('mission-02-complete').classList.add('hidden');
-    }
-}
+    <!-- Mission 04: Secure Your Safehouse -->
+    <section id="mission-04" class="mission-section hidden">
+        <div class="container">
+            <div class="mission-header">
+                <h1>MISSION 04: SECURE YOUR SAFEHOUSE</h1>
+                <p class="mission-subtitle">Clear Desk & Computer Policy</p>
+            </div>
+            <div class="spy-game-interface">
+                <h3>🕵️ SECURITY AUDIT: Find all 4 security risks</h3>
+                <p>Your mission: Identify security vulnerabilities in this workspace</p>
+                <div class="office-scene">
+                    <!-- Placeholder for office image with clickable security risks -->
+                    <div class="office-image-placeholder">
+                        <div class="risk-item" id="risk-1" data-risk="unlocked-computer">
+                            <div class="computer">💻</div>
+                            <span class="risk-label">Unlocked Computer</span>
+                        </div>
+                        <div class="risk-item" id="risk-2" data-risk="sticky-note">
+                            <div class="sticky-note">📝</div>
+                            <span class="risk-label">Password on Sticky Note</span>
+                        </div>
+                        <div class="risk-item" id="risk-3" data-risk="confidential-docs">
+                            <div class="document">📄</div>
+                            <span class="risk-label">Confidential Documents Visible</span>
+                        </div>
+                        <div class="risk-item" id="risk-4" data-risk="mobile-phone">
+                            <div class="phone">📱</div>
+                            <span class="risk-label">Unattended Mobile Device</span>
+                        </div>
+                    </div>
+                    <div id="risks-found" class="risks-counter">
+                        Risks Found: <span id="risk-count">0</span>/4
+                    </div>
+                    <div id="risk-explanations" class="explanations-area"></div>
+                </div>
+            </div>
+            <button id="mission-04-complete" class="mission-btn hidden" onclick="completeMission(4)">MISSION COMPLETE</button>
+        </div>
+    </section>
 
-function updateRequirement(elementId, met) {
-    const element = document.getElementById(elementId);
-    const checkbox = element.querySelector('.checkbox');
-    
-    if (met) {
-        element.classList.add('met');
-        checkbox.textContent = '☑';
-    } else {
-        element.classList.remove('met');
-        checkbox.textContent = '☐';
-    }
-}
+    <!-- Mission 05: The Redaction Protocol -->
+    <section id="mission-05" class="mission-section hidden">
+        <div class="container">
+            <div class="mission-header">
+                <h1>MISSION 05: THE REDACTION PROTOCOL</h1>
+                <p class="mission-subtitle">GDPR Data Protection</p>
+            </div>
+            <div class="redaction-interface">
+                <h3>🗃️ SENSITIVE INTEL PROTECTION</h3>
+                <p>Identify and redact all personal data in this customer service email. Click on any personal information to redact it.</p>
+                <div class="policy-reminder">
+                    <small>Remember: GDPR protects personal data. Reference: GDPR Quick Guide for Hilltop Honey</small>
+                </div>
+                <div class="document-to-redact" id="redaction-document">
+                    <div class="email-header">
+                        <strong>Subject:</strong> Order Inquiry - Batch #2024-HH-1247<br>
+                        <strong>From:</strong> customer.service@hilltophoney.co.uk<br>
+                        <strong>To:</strong> production@hilltophoney.co.uk
+                    </div>
+                    <div class="email-body">
+                        <p>Dear Production Team,</p>
+                        <p>We've received an inquiry from <span class="pii-item" data-type="name">Sarah Johnson</span> regarding her recent order. Her contact details are:</p>
+                        <ul>
+                            <li>Email: <span class="pii-item" data-type="email">sarah.johnson@email.co.uk</span></li>
+                            <li>Phone: <span class="pii-item" data-type="phone">01234 567890</span></li>
+                            <li>Address: <span class="pii-item" data-type="address">15 Oak Street, Witham, Essex, CM8 2JY</span></li>
+                        </ul>
+                        <p>She mentioned she has a severe <span class="pii-item" data-type="health">nut allergy</span> and wants to confirm our honey production processes don't cross-contaminate with nuts.</p>
+                        <p>Her order number is ORD-2024-1247 and her <span class="pii-item" data-type="payment">credit card ending in 4567</span> was charged £24.99.</p>
+                        <p>Please confirm our nut-free processes so we can respond appropriately.</p>
+                        <p>Thanks,<br>Customer Service Team</p>
+                    </div>
+                </div>
+                <div id="redaction-status" class="redaction-status">
+                    Personal Data Found: <span id="pii-count">0</span>/6
+                </div>
+            </div>
+            <button id="mission-05-complete" class="mission-btn hidden" onclick="completeMission(5)">MISSION COMPLETE</button>
+        </div>
+    </section>
 
-// MISSION 03: Scenarios
-function initializeScenarios() {
-    currentScenario = 0;
-    showCurrentScenario();
-}
+    <!-- Final Module: Emergency Protocols -->
+    <section id="final-module" class="mission-section hidden">
+        <div class="container">
+            <div class="mission-header">
+                <h1>EMERGENCY PROTOCOLS</h1>
+                <p class="mission-subtitle">What to Do If You're a Victim</p>
+            </div>
+            <div class="emergency-protocols">
+                <div class="protocol-section">
+                    <h3>🚨 Report to Action Fraud</h3>
+                    <p><strong>Phone:</strong> 0300 123 2040</p>
+                    <p><strong>Online:</strong> actionfraud.police.uk</p>
+                    <p>Report any cyber crime or fraud immediately</p>
+                </div>
+                <div class="protocol-section">
+                    <h3>💬 Seek Support</h3>
+                    <p>Contact your line manager immediately</p>
+                    <p>IT Support: Follow ITPOL escalation procedures</p>
+                    <p>Don't panic - quick reporting helps limit damage</p>
+                </div>
+                <div class="protocol-section">
+                    <h3>🔒 Update Security</h3>
+                    <p>Change all passwords immediately</p>
+                    <p>Run full system virus scan</p>
+                    <p>Monitor accounts for suspicious activity</p>
+                </div>
+            </div>
+            <div class="certification-section">
+                <h2>🎖️ MISSION ACCOMPLISHED</h2>
+                <p>Congratulations, Agent. You have completed your field training. You are now certified to help protect Hilltop Honey's digital assets.</p>
+                <p>Proceed to the final certification exam to complete your training.</p>
+                <a href="https://forms.office.com/YourQuizHere" class="final-exam-btn" target="_blank">
+                    PROCEED TO FINAL CERTIFICATION EXAM
+                </a>
+            </div>
+        </div>
+    </section>
 
-function showCurrentScenario() {
-    if (currentScenario >= scenarios.length) {
-        document.getElementById('mission-03-complete').classList.remove('hidden');
-        return;
-    }
-    
-    const scenario = scenarios[currentScenario];
-    document.getElementById('scenario-content').innerHTML = `
-        <h4>Scenario ${currentScenario + 1}</h4>
-        <p>${scenario.text}</p>
-    `;
-    
-    const choicesContainer = document.getElementById('scenario-choices');
-    choicesContainer.innerHTML = '';
-    
-    scenario.choices.forEach((choice, index) => {
-        const button = document.createElement('button');
-        button.className = 'choice-btn';
-        button.textContent = choice.text;
-        button.onclick = () => handleScenarioChoice(choice.correct);
-        choicesContainer.appendChild(button);
-    });
-    
-    // Clear feedback
-    document.getElementById('scenario-feedback').innerHTML = '';
-}
-
-function handleScenarioChoice(correct) {
-    const scenario = scenarios[currentScenario];
-    const feedbackArea = document.getElementById('scenario-feedback');
-    
-    if (correct) {
-        feedbackArea.className = 'feedback-area correct';
-        feedbackArea.innerHTML = scenario.feedback.correct;
-    } else {
-        feedbackArea.className = 'feedback-area incorrect';
-        feedbackArea.innerHTML = scenario.feedback.incorrect;
-    }
-    
-    currentScenario++;
-    
-    // Show next scenario after delay
-    setTimeout(() => {
-        showCurrentScenario();
-    }, 3000);
-}
-
-// MISSION 04: Spy Game
-function initializeSpyGame() {
-    risksFound = 0;
-    foundRisks.clear();
-    
-    // Add click listeners to risk items
-    document.querySelectorAll('.risk-item').forEach(item => {
-        item.addEventListener('click', () => handleRiskClick(item));
-    });
-    
-    updateRiskCounter();
-}
-
-function handleRiskClick(riskElement) {
-    const riskType = riskElement.getAttribute('data-risk');
-    
-    if (!foundRisks.has(riskType)) {
-        foundRisks.add(riskType);
-        risksFound++;
-        riskElement.classList.add('found');
-        
-        // Show explanation
-        showRiskExplanation(riskType);
-        updateRiskCounter();
-        
-        if (risksFound === 4) {
-            setTimeout(() => {
-                document.getElementById('mission-04-complete').classList.remove('hidden');
-                const explanationsArea = document.getElementById('risk-explanations');
-                explanationsArea.innerHTML += '<div class="explanation" style="background: #d5edda; color: #155724; text-align: center; font-weight: bold;">🏆 SAFEHOUSE SECURE! All security risks identified.</div>';
-            }, 1000);
-        }
-    }
-}
-
-function showRiskExplanation(riskType) {
-    const explanationsArea = document.getElementById('risk-explanations');
-    const explanation = securityRisks[riskType];
-    
-    const explanationDiv = document.createElement('div');
-    explanationDiv.className = 'explanation';
-    explanationDiv.innerHTML = `<strong>Security Risk:</strong> ${explanation}`;
-    
-    explanationsArea.appendChild(explanationDiv);
-}
-
-function updateRiskCounter() {
-    document.getElementById('risk-count').textContent = risksFound;
-}
-
-// MISSION 05: Redaction Game
-function initializeRedactionGame() {
-    piiItemsFound = 0;
-    
-    // Add click listeners to PII items
-    document.querySelectorAll('.pii-item').forEach(item => {
-        item.addEventListener('click', () => handlePiiClick(item));
-    });
-    
-    updatePiiCounter();
-}
-
-function handlePiiClick(piiElement) {
-    if (!piiElement.classList.contains('redacted')) {
-        piiElement.classList.add('redacted');
-        piiItemsFound++;
-        updatePiiCounter();
-        
-        if (piiItemsFound === totalPiiItems) {
-            setTimeout(() => {
-                document.getElementById('mission-05-complete').classList.remove('hidden');
-                showCompletionMessage();
-            }, 500);
-        }
-    }
-}
-
-function updatePiiCounter() {
-    document.getElementById('pii-count').textContent = piiItemsFound;
-}
-
-function showCompletionMessage() {
-    const statusElement = document.getElementById('redaction-status');
-    statusElement.innerHTML = '<div style="background: #d5edda; color: #155724; padding: 15px; border-radius: 5px; font-weight: bold;">🛡️ SENSITIVE INTEL PROTECTED! All personal data successfully redacted.</div>';
-}
-
-// Utility function to reset training (for testing)
-function resetTraining() {
-    localStorage.removeItem('digitalShieldProgress');
-    currentMission = 0;
-    completedMissions = [];
-    showMission(0);
-}
-
-// Export reset function to global scope for debugging
-window.resetTraining = resetTraining;
+    <script src="js/script.js"></script>
+</body>
+</html>
