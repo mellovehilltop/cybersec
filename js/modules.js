@@ -209,6 +209,11 @@ function startTraining() {
     showSection('training-phase-1');
     updateModuleProgress(25);
     currentPhase = 1;
+    
+    // Initialize scanner immediately when starting training
+    setTimeout(() => {
+        initializeRedFlagScanner();
+    }, 1000);
 }
 
 // Complete training phase
@@ -219,14 +224,25 @@ function completePhase(phaseNumber) {
     updateModuleProgress(progressValues[phaseNumber] || 0);
     
     if (phaseNumber === 1) {
+        console.log("🚀 Moving to Phase 2 - Red Flag Scanner");
         showSection('training-phase-2');
-        // Re-initialize scanner when Phase 2 becomes visible
+        
+        // Initialize scanner multiple times to ensure it works
         setTimeout(() => {
+            console.log("🔄 Initializing scanner after 500ms...");
             initializeRedFlagScanner();
         }, 500);
+        
+        setTimeout(() => {
+            console.log("🔄 Backup initialization after 1500ms...");
+            initializeRedFlagScanner();
+        }, 1500);
+        
     } else if (phaseNumber === 2) {
+        console.log("🚀 Moving to Phase 3 - Best Practices");
         showSection('training-phase-3');
     } else if (phaseNumber === 3) {
+        console.log("🚀 Moving to Assessment Phase");
         showSection('assessment-phase');
         startAssessment();
     } else if (phaseNumber === 4) {
@@ -501,7 +517,7 @@ window.onclick = function(event) {
     }
 }
 
-// Export functions for global use
+// Export functions for global use and debugging
 window.digitalShieldModules = {
     initializeModule1,
     startTraining,
@@ -510,7 +526,19 @@ window.digitalShieldModules = {
     closeModal,
     checkProgress,
     assessEmail,
-    completeModule1
+    completeModule1,
+    // Add debugging functions
+    initializeRedFlagScanner,
+    resetRedFlagScanner: function() {
+        redFlagsFound = 0;
+        document.querySelectorAll('.scannable-hidden.found').forEach(el => {
+            el.classList.remove('found');
+        });
+        document.getElementById('flags-found').textContent = '0';
+        document.getElementById('flag-explanations').innerHTML = '';
+        console.log("🔄 Red flag scanner reset");
+    }
 };
 
-console.log('Digital Shield Modules loaded successfully');
+console.log('🚀 Digital Shield Modules loaded successfully');
+console.log('🛠️ Debug: Use window.digitalShieldModules.initializeRedFlagScanner() to manually test scanner');
