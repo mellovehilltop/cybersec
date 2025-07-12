@@ -191,11 +191,17 @@ function initializeModule1() {
     // Set up progress tracking
     updateModuleProgress(0);
     
+    // Reset counters
+    redFlagsFound = 0;
+    habitsRevealed = 0;
+    
     // Initialize red flag scanner
     initializeRedFlagScanner();
     
     // Set up assessment
     prepareAssessment();
+    
+    console.log("Module 1 initialization complete");
 }
 
 // Start training from briefing
@@ -214,6 +220,10 @@ function completePhase(phaseNumber) {
     
     if (phaseNumber === 1) {
         showSection('training-phase-2');
+        // Re-initialize scanner when Phase 2 becomes visible
+        setTimeout(() => {
+            initializeRedFlagScanner();
+        }, 500);
     } else if (phaseNumber === 2) {
         showSection('training-phase-3');
     } else if (phaseNumber === 3) {
