@@ -1,8 +1,654 @@
-/* Landing Page & Module-Specific Styles */
-
-.landing-page {
-    background: linear-gradient(135deg, #0c1445 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #001122 100%);
+/* File System Landing Page Styles */
+.file-system-page {
+    background: #1a1a1a;
     min-height: 100vh;
+    color: #ffffff;
+    font-family: 'Courier New', monospace;
+}
+
+/* Classified Header */
+.classified-header {
+    background: #000000;
+    border-bottom: 3px solid #ff0000;
+    padding: 15px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.classification-banner {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.classification-level {
+    background: #ff0000;
+    color: #ffffff;
+    padding: 8px 20px;
+    font-weight: bold;
+    letter-spacing: 3px;
+    border-radius: 3px;
+    margin: 0 10px;
+    font-size: 0.9rem;
+}
+
+.classification-banner h1 {
+    color: #00ff00;
+    font-family: 'Courier New', monospace;
+    font-size: 1.8rem;
+    margin: 15px 0;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px #00ff00;
+}
+
+.agent-terminal {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #333333;
+    border: 2px solid #00ff00;
+    border-radius: 5px;
+    padding: 10px 20px;
+}
+
+.terminal-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.terminal-prompt {
+    color: #00ff00;
+    font-weight: bold;
+}
+
+.agent-name {
+    color: #ffff00;
+    font-weight: bold;
+}
+
+.clearance-level {
+    color: #ff6600;
+    font-size: 0.9rem;
+}
+
+.progress-display {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.progress-label {
+    color: #00ffff;
+}
+
+.progress-value {
+    color: #ffff00;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+/* File Cabinet */
+.file-cabinet {
+    padding: 40px 0;
+    background: linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 100%);
+}
+
+.cabinet-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.cabinet-header h2 {
+    color: #ffffff;
+    font-size: 2rem;
+    margin-bottom: 10px;
+    font-family: 'Courier New', monospace;
+}
+
+.access-notice {
+    color: #ff6600;
+    font-weight: bold;
+    background: #333333;
+    padding: 10px 20px;
+    border-radius: 5px;
+    display: inline-block;
+    border: 1px solid #ff6600;
+}
+
+.file-cabinet-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.filing-drawer {
+    background: #404040;
+    border: 3px solid #666666;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.drawer-label {
+    background: #666666;
+    color: #ffffff;
+    padding: 15px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+    border-bottom: 2px solid #333333;
+}
+
+.file-folders {
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+/* Individual File Folders */
+.file-folder {
+    background: #f5f5f5;
+    border: 2px solid #cccccc;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    position: relative;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.file-folder:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+    border-color: #00ff00;
+}
+
+.file-folder.locked {
+    opacity: 0.6;
+    background: #e0e0e0;
+}
+
+.file-folder.locked:hover {
+    transform: none;
+    border-color: #cccccc;
+}
+
+.folder-tab {
+    background: #d0d0d0;
+    padding: 8px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #bbb;
+}
+
+.tab-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.file-number {
+    background: #333333;
+    color: #ffffff;
+    padding: 3px 8px;
+    border-radius: 3px;
+    font-weight: bold;
+    font-size: 0.8rem;
+}
+
+.classification-stamp {
+    background: #ff0000;
+    color: #ffffff;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.status-indicator {
+    display: flex;
+    align-items: center;
+}
+
+.status-badge {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.status-badge.new {
+    background: #00ff00;
+    color: #000000;
+}
+
+.status-badge.locked {
+    background: #666666;
+    color: #ffffff;
+}
+
+.status-badge.completed {
+    background: #ffff00;
+    color: #000000;
+}
+
+.folder-content {
+    background: #ffffff;
+    padding: 20px;
+    color: #333333;
+}
+
+.file-icon {
+    font-size: 3rem;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.file-details h3 {
+    color: #000000;
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+}
+
+.file-subtitle {
+    color: #666666;
+    font-style: italic;
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+}
+
+.file-description {
+    color: #333333;
+    line-height: 1.4;
+    margin-bottom: 15px;
+    font-size: 0.9rem;
+}
+
+.file-metadata {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: #666666;
+}
+
+.duration {
+    color: #009900;
+}
+
+.difficulty {
+    color: #ff6600;
+}
+
+.folder-actions {
+    background: #f0f0f0;
+    padding: 15px;
+    text-align: center;
+    border-top: 1px solid #ddd;
+}
+
+.file-btn {
+    background: #333333;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    font-family: 'Courier New', monospace;
+    transition: all 0.3s ease;
+    letter-spacing: 1px;
+}
+
+.file-btn:hover:not(:disabled) {
+    background: #00ff00;
+    color: #000000;
+    transform: translateY(-2px);
+}
+
+.file-btn:disabled {
+    background: #999999;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Special Operations (Final Assessment) */
+.special-operations {
+    padding: 40px 0;
+    background: #000000;
+}
+
+.special-file-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.special-file {
+    background: #1a1a1a;
+    border: 3px solid #ff0000;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
+}
+
+.special-file.locked {
+    border-color: #666666;
+    box-shadow: 0 0 30px rgba(102, 102, 102, 0.3);
+}
+
+.special-header {
+    background: #ff0000;
+    padding: 5px 0;
+}
+
+.classification-stripe {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.class-label {
+    background: #000000;
+    color: #ffffff;
+    padding: 5px 15px;
+    font-weight: bold;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+}
+
+.special-content {
+    background: #ffffff;
+    padding: 30px;
+    color: #000000;
+    text-align: center;
+}
+
+.special-icon {
+    font-size: 4rem;
+    margin-bottom: 20px;
+}
+
+.special-details h2 {
+    color: #000000;
+    font-family: 'Courier New', monospace;
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+
+.special-subtitle {
+    color: #666666;
+    font-style: italic;
+    margin-bottom: 15px;
+}
+
+.special-description {
+    color: #333333;
+    line-height: 1.6;
+    margin-bottom: 25px;
+}
+
+.clearance-requirements {
+    background: #f5f5f5;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.clearance-requirements h4 {
+    color: #333333;
+    margin-bottom: 15px;
+    font-family: 'Courier New', monospace;
+}
+
+.requirements-list {
+    text-align: left;
+}
+
+.requirement {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.requirement.incomplete {
+    background: rgba(255, 0, 0, 0.1);
+}
+
+.requirement.complete {
+    background: rgba(0, 255, 0, 0.1);
+}
+
+.req-status {
+    font-size: 1.1rem;
+}
+
+.req-text {
+    color: #333333;
+}
+
+.special-actions {
+    background: #f0f0f0;
+    padding: 20px;
+    text-align: center;
+    border-top: 2px solid #ddd;
+}
+
+.special-btn {
+    background: #333333;
+    color: #ffffff;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-family: 'Courier New', monospace;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    letter-spacing: 1px;
+}
+
+.special-btn:hover:not(:disabled) {
+    background: #ff0000;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 0, 0, 0.4);
+}
+
+.special-btn:disabled {
+    background: #999999;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Terminal Footer */
+.terminal-footer {
+    background: #000000;
+    border-top: 2px solid #00ff00;
+    padding: 10px 0;
+    position: sticky;
+    bottom: 0;
+}
+
+.terminal-status {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+}
+
+.status-left, .status-center, .status-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.terminal-prompt {
+    color: #00ff00;
+    font-weight: bold;
+}
+
+.system-status.online {
+    color: #00ff00;
+    font-weight: bold;
+}
+
+.session-info, .files-accessed, .security-level {
+    color: #ffffff;
+}
+
+.timestamp {
+    color: #ffff00;
+    font-family: 'Courier New', monospace;
+}
+
+.admin-access {
+    background: none;
+    border: 1px solid #666666;
+    color: #666666;
+    padding: 5px 8px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.admin-access:hover {
+    border-color: #ffffff;
+    color: #ffffff;
+}
+
+/* Admin Panel */
+.admin-panel {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(10px);
+    padding: 0;
+    border-radius: 10px;
+    border: 3px solid #ff0000;
+    max-width: 600px;
+    width: 90%;
+}
+
+.admin-terminal {
+    background: #000000;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.terminal-header {
+    background: #ff0000;
+    color: #ffffff;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.terminal-title {
+    font-weight: bold;
+    font-family: 'Courier New', monospace;
+}
+
+.terminal-close {
+    background: none;
+    border: none;
+    color: #ffffff;
+    font-size: 1.5rem;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.terminal-body {
+    padding: 20px;
+    color: #ffffff;
+}
+
+.admin-commands h3 {
+    color: #00ff00;
+    margin-bottom: 15px;
+    font-family: 'Courier New', monospace;
+}
+
+.command-buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+}
+
+.cmd-btn {
+    background: #333333;
+    color: #00ff00;
+    border: 1px solid #00ff00;
+    padding: 8px 12px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.cmd-btn:hover {
+    background: #00ff00;
+    color: #000000;
+}
+
+.cmd-btn.danger {
+    border-color: #ff0000;
+    color: #ff0000;
+}
+
+.cmd-btn.danger:hover {
+    background: #ff0000;
+    color: #ffffff;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .agent-terminal {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+    
+    .terminal-info {
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .file-folders {
+        grid-template-columns: 1fr;
+    }
+    
+    .terminal-status {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+    
+    .status-left, .status-center, .status-right {
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .classification-banner h1 {
+        font-size: 1.4rem;
+    }
+    
+    .command-buttons {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* Header - Mission Control */
