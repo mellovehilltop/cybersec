@@ -1,4 +1,4 @@
-// Digital Shield Training - JavaScript
+// Digital Shield Training - JavaScript (Fixed Version)
 
 // Global variables for progress tracking
 let currentMission = 0;
