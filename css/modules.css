@@ -631,33 +631,1056 @@
     display: none !important;
 }
 
-/* Responsive Design */
+/* Module Page Specific Styles */
+.module-page {
+    background: linear-gradient(135deg, #0c1445 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #001122 100%);
+    min-height: 100vh;
+}
+
+.module-header {
+    background: rgba(0, 20, 40, 0.95);
+    border-bottom: 3px solid #00ffff;
+    padding: 15px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(10px);
+}
+
+.module-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(45deg, #3498db, #2980b9);
+    color: white;
+    border: 2px solid #3498db;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    font-family: 'Orbitron', monospace;
+}
+
+.nav-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+}
+
+.nav-btn img {
+    width: 16px;
+    height: 16px;
+}
+
+.module-info {
+    text-align: center;
+    color: white;
+}
+
+.module-info h1 {
+    font-family: 'Orbitron', monospace;
+    color: #00ffff;
+    font-size: 1.8rem;
+    margin: 0;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+}
+
+.module-subtitle {
+    color: #f39c12;
+    font-size: 1rem;
+    margin: 5px 0 0 0;
+    font-style: italic;
+}
+
+.module-progress-nav {
+    color: #00ff00;
+    font-family: 'Orbitron', monospace;
+    font-weight: bold;
+}
+
+/* Training Sections */
+.training-section {
+    display: none;
+    padding: 40px 0;
+    min-height: 80vh;
+}
+
+.training-section.active {
+    display: block;
+    animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.section-icon {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 20px;
+    filter: drop-shadow(0 0 10px rgba(0, 255, 255, 0.5));
+}
+
+.section-header h2 {
+    color: #00ffff;
+    font-family: 'Orbitron', monospace;
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+}
+
+.section-header p {
+    color: #cccccc;
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+}
+
+.phase-progress {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid #333;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #00ffff, #00ff00);
+    transition: width 0.8s ease;
+    border-radius: 4px;
+}
+
+/* Briefing Content */
+.briefing-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.threat-assessment {
+    background: rgba(255, 0, 0, 0.1);
+    border: 2px solid #ff0000;
+    border-radius: 10px;
+    padding: 25px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.threat-assessment h3 {
+    color: #ff6666;
+    margin-bottom: 15px;
+    font-family: 'Orbitron', monospace;
+}
+
+.threat-assessment p {
+    color: #ffffff;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+.learning-objectives {
+    background: rgba(0, 255, 255, 0.1);
+    border: 2px solid #00ffff;
+    border-radius: 10px;
+    padding: 25px;
+    margin-bottom: 30px;
+}
+
+.learning-objectives h3 {
+    color: #00ffff;
+    margin-bottom: 15px;
+    font-family: 'Orbitron', monospace;
+}
+
+.learning-objectives ul {
+    color: #ffffff;
+    padding-left: 20px;
+}
+
+.learning-objectives li {
+    margin-bottom: 8px;
+    line-height: 1.5;
+}
+
+.instructor-message {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 30px;
+    border-left: 4px solid #f39c12;
+}
+
+.instructor-avatar img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 2px solid #f39c12;
+}
+
+.message-content {
+    flex: 1;
+    color: #ffffff;
+}
+
+.message-content h4 {
+    color: #f39c12;
+    margin-bottom: 10px;
+    font-family: 'Orbitron', monospace;
+}
+
+.message-content p {
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+/* Threat Cards */
+.learning-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    margin-bottom: 40px;
+}
+
+.threat-card {
+    background: rgba(0, 20, 40, 0.9);
+    border: 2px solid #333;
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.threat-card:hover {
+    transform: translateY(-5px);
+    border-color: #ff6666;
+    box-shadow: 0 10px 30px rgba(255, 102, 102, 0.2);
+}
+
+.threat-header {
+    background: linear-gradient(45deg, #2c3e50, #34495e);
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.threat-icon {
+    font-size: 2rem;
+    margin-right: 15px;
+}
+
+.threat-header h3 {
+    color: #ffffff;
+    font-family: 'Orbitron', monospace;
+    font-size: 1.1rem;
+    flex: 1;
+    margin: 0;
+}
+
+.threat-level {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.threat-level.high {
+    background: #e74c3c;
+    color: white;
+}
+
+.threat-level.critical {
+    background: #8e44ad;
+    color: white;
+}
+
+.threat-content {
+    padding: 20px;
+    color: #ffffff;
+}
+
+.threat-content p {
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+.threat-content ul {
+    margin-bottom: 20px;
+    padding-left: 20px;
+}
+
+.threat-content li {
+    margin-bottom: 5px;
+    color: #cccccc;
+}
+
+.learn-btn {
+    background: linear-gradient(45deg, #f39c12, #e67e22);
+    color: #000;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    font-family: 'Orbitron', monospace;
+}
+
+.learn-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(243, 156, 18, 0.4);
+}
+
+/* Red Flags Training */
+.red-flags-training {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.training-intro {
+    background: rgba(255, 0, 0, 0.1);
+    border: 2px solid #ff6666;
+    border-radius: 10px;
+    padding: 25px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.training-intro h3 {
+    color: #ff6666;
+    margin-bottom: 15px;
+    font-family: 'Orbitron', monospace;
+}
+
+.training-intro p {
+    color: #ffffff;
+    font-size: 1.1rem;
+}
+
+.red-flags-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+    margin-bottom: 40px;
+}
+
+.flag-category {
+    background: rgba(0, 20, 40, 0.9);
+    border: 2px solid #333;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.flag-category h4 {
+    color: #00ffff;
+    margin-bottom: 15px;
+    font-family: 'Orbitron', monospace;
+    text-align: center;
+    border-bottom: 1px solid #333;
+    padding-bottom: 10px;
+}
+
+.flag-list {
+    list-style: none;
+    padding: 0;
+}
+
+.flag-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 15px;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+}
+
+.flag-icon {
+    font-size: 1.2rem;
+    margin-top: 2px;
+}
+
+.flag-content {
+    flex: 1;
+}
+
+.flag-content strong {
+    color: #f39c12;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.flag-content p {
+    color: #cccccc;
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+/* Interactive Training */
+.interactive-training {
+    background: rgba(0, 0, 0, 0.5);
+    border: 2px solid #00ffff;
+    border-radius: 15px;
+    padding: 30px;
+    margin-bottom: 30px;
+}
+
+.interactive-training h3 {
+    color: #00ffff;
+    margin-bottom: 15px;
+    font-family: 'Orbitron', monospace;
+    text-align: center;
+}
+
+.interactive-training p {
+    color: #ffffff;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.email-scanner {
+    background: rgba(0, 0, 0, 0.7);
+    border: 2px solid #00ff00;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    font-family: 'Courier New', monospace;
+    color: #ffffff;
+}
+
+.email-header-scan, .email-body-scan {
+    margin-bottom: 15px;
+}
+
+.scannable {
+    padding: 2px 4px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.scannable.suspicious {
+    background: rgba(255, 255, 0, 0.3);
+    border: 1px dashed rgba(255, 255, 0, 0.5);
+}
+
+.scannable.suspicious:hover {
+    background: rgba(255, 255, 0, 0.5);
+    transform: scale(1.02);
+}
+
+.scannable.found {
+    background: rgba(255, 0, 0, 0.3) !important;
+    border: 2px solid #ff0000 !important;
+    color: #ffffff !important;
+}
+
+.scanner-feedback {
+    text-align: center;
+    color: #ffffff;
+}
+
+.scanner-feedback p {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.flag-explanation {
+    background: rgba(0, 255, 0, 0.1);
+    border: 1px solid #00ff00;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    color: #00ff00;
+    text-align: left;
+}
+
+/* Best Practices */
+.best-practices {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.practice-section {
+    margin-bottom: 40px;
+}
+
+.practice-section h3 {
+    color: #00ff00;
+    font-family: 'Orbitron', monospace;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.practice-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.practice-card {
+    background: rgba(0, 255, 0, 0.1);
+    border: 2px solid #00ff00;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+}
+
+.practice-icon {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+}
+
+.practice-card h4 {
+    color: #00ff00;
+    margin-bottom: 10px;
+    font-family: 'Orbitron', monospace;
+}
+
+.practice-card p {
+    color: #ffffff;
+    line-height: 1.5;
+}
+
+.habits-checklist {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    padding: 25px;
+    margin-bottom: 30px;
+}
+
+.habit-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+    padding: 10px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.habit-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.habit-item input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #00ff00;
+}
+
+.habit-item label {
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 1rem;
+    line-height: 1.4;
+}
+
+/* Incident Response */
+.incident-response {
+    background: rgba(255, 0, 0, 0.1);
+    border: 2px solid #ff6666;
+    border-radius: 15px;
+    padding: 30px;
+    margin-bottom: 30px;
+}
+
+.incident-response h3 {
+    color: #ff6666;
+    font-family: 'Orbitron', monospace;
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.response-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.step {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+.step-number {
+    background: linear-gradient(45deg, #e74c3c, #c0392b);
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-family: 'Orbitron', monospace;
+    flex-shrink: 0;
+}
+
+.step-content h4 {
+    color: #ff6666;
+    margin-bottom: 8px;
+    font-family: 'Orbitron', monospace;
+}
+
+.step-content p {
+    color: #ffffff;
+    line-height: 1.4;
+    font-size: 0.9rem;
+}
+
+/* Assessment */
+.assessment-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.assessment-intro {
+    background: rgba(243, 156, 18, 0.1);
+    border: 2px solid #f39c12;
+    border-radius: 10px;
+    padding: 25px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.assessment-intro h3 {
+    color: #f39c12;
+    margin-bottom: 15px;
+    font-family: 'Orbitron', monospace;
+}
+
+.assessment-intro p {
+    color: #ffffff;
+    font-size: 1.1rem;
+}
+
+.assessment-email {
+    background: rgba(0, 20, 40, 0.9);
+    border: 2px solid #333;
+    border-radius: 15px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.email-number {
+    background: linear-gradient(45deg, #34495e, #2c3e50);
+    color: #00ffff;
+    padding: 10px 20px;
+    font-weight: bold;
+    font-family: 'Orbitron', monospace;
+    text-align: center;
+}
+
+.email-viewer {
+    padding: 20px;
+}
+
+.email-header {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    color: #cccccc;
+    font-family: 'Courier New', monospace;
+}
+
+.email-body {
+    color: #ffffff;
+    line-height: 1.6;
+}
+
+.assessment-actions {
+    padding: 20px;
+    border-top: 1px solid #333;
+    text-align: center;
+}
+
+.assessment-actions p {
+    color: #ffffff;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+.assess-btn {
+    padding: 15px 25px;
+    border: 2px solid;
+    border-radius: 10px;
+    font-weight: bold;
+    font-family: 'Orbitron', monospace;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 150px;
+}
+
+.assess-btn.safe {
+    background: linear-gradient(45deg, #00ff00, #33ff33);
+    color: #000;
+    border-color: #00ff00;
+}
+
+.assess-btn.suspicious {
+    background: linear-gradient(45deg, #ff0000, #ff3333);
+    color: #fff;
+    border-color: #ff0000;
+}
+
+.assess-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+}
+
+.assessment-feedback {
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.assessment-feedback.correct {
+    background: rgba(0, 255, 0, 0.2);
+    border: 2px solid #00ff00;
+    color: #00ff00;
+}
+
+.assessment-feedback.incorrect {
+    background: rgba(255, 0, 0, 0.2);
+    border: 2px solid #ff0000;
+    color: #ff6666;
+}
+
+.assessment-feedback h3 {
+    margin-bottom: 10px;
+    font-family: 'Orbitron', monospace;
+}
+
+.explanation {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 15px;
+    text-align: left;
+}
+
+.explanation strong {
+    color: #f39c12;
+}
+
+/* Assessment Results */
+.assessment-completion {
+    text-align: center;
+    padding: 30px;
+}
+
+.results-header h2 {
+    color: #f39c12;
+    font-family: 'Orbitron', monospace;
+    margin-bottom: 20px;
+}
+
+.score-display {
+    margin: 30px 0;
+}
+
+.score-circle {
+    display: inline-block;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 4px solid;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.score-circle.expert {
+    border-color: #00ff00;
+    box-shadow: 0 0 30px rgba(0, 255, 0, 0.3);
+}
+
+.score-circle.proficient {
+    border-color: #3498db;
+    box-shadow: 0 0 30px rgba(52, 152, 219, 0.3);
+}
+
+.score-circle.competent {
+    border-color: #f39c12;
+    box-shadow: 0 0 30px rgba(243, 156, 18, 0.3);
+}
+
+.score-circle.needs-improvement {
+    border-color: #e74c3c;
+    box-shadow: 0 0 30px rgba(231, 76, 60, 0.3);
+}
+
+.score-number {
+    font-size: 2rem;
+    font-weight: bold;
+    font-family: 'Orbitron', monospace;
+    color: inherit;
+}
+
+.grade {
+    font-size: 0.9rem;
+    color: #cccccc;
+    margin-top: 5px;
+}
+
+.results-message {
+    margin: 20px 0;
+}
+
+.results-message p {
+    color: #ffffff;
+    font-size: 1.1rem;
+}
+
+/* Section Buttons */
+.section-btn {
+    padding: 15px 30px;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    font-family: 'Orbitron', monospace;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 10px;
+}
+
+.section-btn.primary {
+    background: linear-gradient(45deg, #f39c12, #e67e22);
+    color: #000;
+    border: 2px solid #f39c12;
+}
+
+.section-btn.secondary {
+    background: linear-gradient(45deg, #3498db, #2980b9);
+    color: #fff;
+    border: 2px solid #3498db;
+}
+
+.section-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+}
+
+.section-btn:disabled {
+    background: #666;
+    color: #999;
+    cursor: not-allowed;
+    border-color: #555;
+    transform: none;
+    box-shadow: none;
+}
+
+.phase-completion {
+    text-align: center;
+    margin-top: 30px;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+}
+
+.phase-completion p {
+    color: #ffffff;
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.8);
+}
+
+.modal-content {
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
+    margin: 5% auto;
+    padding: 0;
+    border: 3px solid #00ffff;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 700px;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0, 255, 255, 0.3);
+}
+
+.modal-header {
+    background: linear-gradient(45deg, #00ffff, #0099cc);
+    color: #000;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h3 {
+    margin: 0;
+    font-family: 'Orbitron', monospace;
+    font-size: 1.3rem;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #000;
+    font-weight: bold;
+}
+
+.close-btn:hover {
+    opacity: 0.7;
+}
+
+.modal-body {
+    padding: 30px;
+    color: #ffffff;
+}
+
+.example-email {
+    font-family: 'Courier New', monospace;
+}
+
+.example-email .email-header {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    border-left: 3px solid #00ffff;
+}
+
+.example-email .email-body {
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.example-analysis {
+    background: rgba(255, 0, 0, 0.1);
+    border: 2px solid #ff6666;
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.example-analysis h4 {
+    color: #ff6666;
+    margin-bottom: 15px;
+    font-family: 'Orbitron', monospace;
+}
+
+.example-analysis ul {
+    color: #ffffff;
+    padding-left: 20px;
+}
+
+.example-analysis li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* Responsive Design for Modules */
 @media (max-width: 768px) {
-    .mission-control-header .container {
+    .module-nav {
         flex-direction: column;
         text-align: center;
     }
     
-    .modules-grid {
+    .learning-cards {
         grid-template-columns: 1fr;
-        gap: 20px;
     }
     
-    .progress-cards {
-        grid-template-columns: 1fr 1fr;
-        gap: 15px;
+    .red-flags-grid {
+        grid-template-columns: 1fr;
     }
     
-    .section-title {
+    .practice-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .response-steps {
+        grid-template-columns: 1fr;
+    }
+    
+    .action-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .assess-btn {
+        width: 100%;
+        max-width: 250px;
+    }
+    
+    .instructor-message {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .section-header h2 {
         font-size: 1.8rem;
     }
     
-    .assessment-content {
-        padding: 25px;
+    .modal-content {
+        width: 95%;
+        margin: 2% auto;
+        max-height: 95vh;
     }
     
-    .admin-controls {
-        flex-direction: column;
-        align-items: center;
+    .modal-body {
+        padding: 20px;
     }
 }
