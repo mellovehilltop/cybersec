@@ -196,148 +196,138 @@ function showBadgeNotification(badge) {
     }, 4000);
 }
 
-// Update the progress display on landing page
+// Update the progress display on file system landing page
 function updateProgressDisplay() {
     // Update overall progress
     const overallProgress = Math.round((trainingProgress.completedModules.length / 5) * 100);
     updateElement('overall-progress', `${overallProgress}%`);
-    updateElement('modules-completed', trainingProgress.completedModules.length);
-    updateElement('time-invested', `${trainingProgress.totalTimeSpent} min`);
-    updateElement('badges-earned', trainingProgress.badgesEarned.length);
+    updateElement('files-completed', trainingProgress.completedModules.length);
     
-    // Update next objective
-    let nextObjective = "Start Module 1";
-    if (trainingProgress.completedModules.length === 5 && !trainingProgress.assessmentCompleted) {
-        nextObjective = "Take Final Assessment";
-    } else if (trainingProgress.completedModules.length < 5) {
-        const nextModule = trainingProgress.completedModules.length + 1;
-        nextObjective = `Complete Module ${nextModule}`;
-    } else if (trainingProgress.assessmentCompleted) {
-        nextObjective = "Training Complete! 🎉";
-    }
-    updateElement('next-objective', nextObjective);
-    
-    // Update module cards
+    // Update file status
     for (let i = 1; i <= 5; i++) {
-        updateModuleCard(i);
+        updateFileStatus(i);
     }
     
-    // Update assessment requirements
-    updateAssessmentRequirements();
+    // Update final assessment requirements
+    updateFinalAssessmentStatus();
     
-    // Update agent rank
-    updateAgentRank();
+    // Update agent rank/clearance
+    updateAgentClearance();
 }
 
-// Update individual module card
-function updateModuleCard(moduleNumber) {
-    const card = document.querySelector(`[data-module="${moduleNumber}"]`);
-    const statusElement = document.getElementById(`module-${moduleNumber}-status`);
-    const buttonElement = document.getElementById(`module-${moduleNumber}-btn`);
+// Update individual file status
+function updateFileStatus(moduleNumber) {
+    const fileElement = document.getElementById(`file-${moduleNumber}`);
+    const statusElement = document.getElementById(`status-${moduleNumber}`);
+    const buttonElement = document.getElementById(`btn-${moduleNumber}`);
     
-    if (!card || !statusElement || !buttonElement) return;
+    if (!fileElement || !statusElement || !buttonElement) return;
     
     const isCompleted = trainingProgress.completedModules.includes(moduleNumber);
     const isUnlocked = isModuleUnlocked(moduleNumber);
     
-    // Update card appearance
-    card.classList.remove('completed', 'locked');
-    if (isCompleted) {
-        card.classList.add('completed');
-    } else if (!isUnlocked) {
-        card.classList.add('locked');
+    // Update file appearance
+    fileElement.classList.remove('locked');
+    if (!isUnlocked) {
+        fileElement.classList.add('locked');
     }
     
     // Update status badge
     const statusBadge = statusElement.querySelector('.status-badge');
     if (isCompleted) {
-        statusBadge.textContent = 'COMPLETED';
+        statusBadge.textContent = '✓ COMPLETED';
         statusBadge.className = 'status-badge completed';
     } else if (isUnlocked) {
         statusBadge.textContent = 'AVAILABLE';
-        statusBadge.className = 'status-badge available';
+        statusBadge.className = 'status-badge new';
     } else {
-        statusBadge.textContent = 'LOCKED';
+        statusBadge.textContent = '🔒 LOCKED';
         statusBadge.className = 'status-badge locked';
     }
     
     // Update button
     if (isCompleted) {
-        buttonElement.textContent = 'REVIEW TRAINING';
+        buttonElement.textContent = 'REVIEW FILE';
         buttonElement.disabled = false;
-        buttonElement.className = 'module-btn completed';
     } else if (isUnlocked) {
-        buttonElement.textContent = 'START TRAINING';
+        buttonElement.textContent = 'OPEN FILE';
         buttonElement.disabled = false;
-        buttonElement.className = 'module-btn';
     } else {
-        buttonElement.textContent = 'TRAINING LOCKED';
+        buttonElement.textContent = 'CLEARANCE REQUIRED';
         buttonElement.disabled = true;
-        buttonElement.className = 'module-btn';
     }
 }
 
-// Update assessment requirements
-function updateAssessmentRequirements() {
-    const assessmentCard = document.getElementById('final-assessment-card');
-    const assessmentBtn = document.getElementById('final-assessment-btn');
-    const assessmentStatus = document.getElementById('assessment-status');
+// Update final assessment status
+function updateFinalAssessmentStatus() {
+    const finalFile = document.getElementById('final-assessment-file');
+    const finalBtn = document.getElementById('final-btn');
+    const requirementsList = document.getElementById('clearance-requirements');
     
-    if (!assessmentCard || !assessmentBtn || !assessmentStatus) return;
+    if (!finalFile || !finalBtn) return;
     
     // Update requirement checkmarks
     for (let i = 1; i <= 5; i++) {
         const requirement = document.querySelector(`.requirement[data-module="${i}"]`);
         if (requirement) {
             const isCompleted = trainingProgress.completedModules.includes(i);
-            requirement.className = `requirement ${isCompleted ? 'complete' : 'incomplete'}`;
-            requirement.innerHTML = isCompleted ? 
-                `✓ Complete ${moduleInfo[i].name} Training` : 
-                `✗ Complete ${moduleInfo[i].name} Training`;
+            const statusSpan = requirement.querySelector('.req-status');
+            
+            if (isCompleted) {
+                requirement.className = 'requirement complete';
+                if (statusSpan) statusSpan.textContent = '✅';
+            } else {
+                requirement.className = 'requirement incomplete';
+                if (statusSpan) statusSpan.textContent = '❌';
+            }
         }
     }
     
-    // Update assessment availability
+    // Update final assessment availability
     if (trainingProgress.assessmentUnlocked) {
-        assessmentCard.classList.remove('locked');
-        assessmentBtn.disabled = false;
-        assessmentBtn.textContent = 'BEGIN ASSESSMENT';
-        assessmentStatus.textContent = 'AVAILABLE';
-        assessmentStatus.className = 'status-badge available';
+        finalFile.classList.remove('locked');
+        finalBtn.disabled = false;
+        finalBtn.textContent = '🎯 BEGIN ASSESSMENT';
     } else {
-        assessmentCard.classList.add('locked');
-        assessmentBtn.disabled = true;
-        assessmentBtn.textContent = 'ASSESSMENT LOCKED';
-        assessmentStatus.textContent = 'LOCKED';
-        assessmentStatus.className = 'status-badge locked';
+        finalFile.classList.add('locked');
+        finalBtn.disabled = true;
+        finalBtn.textContent = '🔒 ACCESS DENIED';
     }
     
     if (trainingProgress.assessmentCompleted) {
-        assessmentBtn.textContent = 'RETAKE ASSESSMENT';
-        assessmentStatus.textContent = 'COMPLETED';
-        assessmentStatus.className = 'status-badge completed';
+        finalBtn.textContent = '🏆 RETAKE ASSESSMENT';
     }
 }
 
-// Update agent rank based on progress
-function updateAgentRank() {
-    const agentRankElement = document.getElementById('agent-rank');
-    if (!agentRankElement) return;
+// Update agent clearance level
+function updateAgentClearance() {
+    const clearanceElement = document.querySelector('.clearance-level');
+    const securityLevelElement = document.querySelector('.security-level');
     
-    let rank = 'Trainee Agent';
+    if (!clearanceElement) return;
+    
+    let clearance = 'TRAINEE CLEARANCE';
+    let securityLevel = 'TRAINEE';
     const completed = trainingProgress.completedModules.length;
     
     if (trainingProgress.assessmentCompleted) {
-        rank = 'Certified Digital Shield Agent';
+        clearance = 'CERTIFIED AGENT';
+        securityLevel = 'CERTIFIED';
     } else if (completed === 5) {
-        rank = 'Senior Trainee Agent';
+        clearance = 'SENIOR TRAINEE';
+        securityLevel = 'SENIOR';
     } else if (completed >= 3) {
-        rank = 'Junior Agent';
+        clearance = 'JUNIOR CLEARANCE';
+        securityLevel = 'JUNIOR';
     } else if (completed >= 1) {
-        rank = 'Recruit Agent';
+        clearance = 'RECRUIT CLEARANCE';
+        securityLevel = 'RECRUIT';
     }
     
-    agentRankElement.textContent = rank;
+    clearanceElement.textContent = clearance;
+    if (securityLevelElement) {
+        securityLevelElement.textContent = `SECURITY LEVEL: ${securityLevel}`;
+    }
 }
 
 // Reset all progress (for testing)
