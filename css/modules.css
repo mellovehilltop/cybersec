@@ -1,1 +1,663 @@
+/* Landing Page & Module-Specific Styles */
 
+.landing-page {
+    background: linear-gradient(135deg, #0c1445 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #001122 100%);
+    min-height: 100vh;
+}
+
+/* Header - Mission Control */
+.mission-control-header {
+    background: rgba(0, 20, 40, 0.95);
+    border-bottom: 3px solid #00ffff;
+    padding: 20px 0;
+    backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.mission-control-header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.agency-badge {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.agency-logo {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 2px solid #00ffff;
+    background: linear-gradient(45deg, #2c3e50, #34495e);
+    padding: 8px;
+}
+
+.agency-info h1 {
+    font-family: 'Orbitron', monospace;
+    color: #00ffff;
+    font-size: 1.8rem;
+    margin: 0;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+}
+
+.classification {
+    color: #00ff00;
+    font-size: 0.9rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin: 0;
+}
+
+.agent-status {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.agent-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid #f39c12;
+    overflow: hidden;
+    background: linear-gradient(45deg, #34495e, #2c3e50);
+}
+
+.agent-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.agent-details h3 {
+    color: #ffffff;
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.agent-rank {
+    color: #f39c12;
+    margin: 0;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.progress-summary {
+    color: #00ffff;
+    font-size: 0.8rem;
+    margin-top: 5px;
+}
+
+/* Mission Briefing */
+.mission-briefing {
+    padding: 40px 0;
+}
+
+.briefing-screen {
+    background: rgba(0, 0, 0, 0.8);
+    border: 2px solid #00ffff;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+}
+
+.screen-header {
+    background: linear-gradient(90deg, #1a1a2e, #16213e);
+    padding: 15px 25px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #00ffff;
+}
+
+.status-indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #ff0000;
+    animation: pulse 2s infinite;
+}
+
+.status-indicator.active {
+    background: #00ff00;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.screen-header h2 {
+    color: #00ffff;
+    margin: 0;
+    font-family: 'Orbitron', monospace;
+    font-size: 1.3rem;
+}
+
+.timestamp {
+    color: #cccccc;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+}
+
+.briefing-content {
+    padding: 30px;
+    color: #ffffff;
+}
+
+.briefing-content h3 {
+    color: #f39c12;
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+}
+
+.briefing-content p {
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+.mission-objectives {
+    background: rgba(0, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    border-left: 4px solid #00ffff;
+    margin-top: 20px;
+}
+
+.mission-objectives h4 {
+    color: #00ffff;
+    margin-bottom: 15px;
+}
+
+.mission-objectives ul {
+    list-style: none;
+    padding: 0;
+}
+
+.mission-objectives li {
+    padding: 5px 0;
+    padding-left: 20px;
+    position: relative;
+}
+
+.mission-objectives li::before {
+    content: '▶';
+    color: #00ff00;
+    position: absolute;
+    left: 0;
+}
+
+/* Training Modules Grid */
+.training-modules {
+    padding: 60px 0;
+}
+
+.section-title {
+    text-align: center;
+    color: #ffffff;
+    font-family: 'Orbitron', monospace;
+    font-size: 2.2rem;
+    margin-bottom: 50px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+}
+
+.modules-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.module-card {
+    background: rgba(0, 20, 40, 0.9);
+    border: 2px solid #333;
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    position: relative;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+}
+
+.module-card:hover {
+    transform: translateY(-5px);
+    border-color: #00ffff;
+    box-shadow: 0 10px 30px rgba(0, 255, 255, 0.2);
+}
+
+.module-card.completed {
+    border-color: #00ff00;
+    background: rgba(0, 40, 20, 0.9);
+}
+
+.module-card.locked {
+    opacity: 0.6;
+    filter: grayscale(50%);
+}
+
+.module-header {
+    position: relative;
+    height: 120px;
+    background: linear-gradient(45deg, #2c3e50, #34495e);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.module-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.1), transparent);
+    animation: scan 3s linear infinite;
+}
+
+@keyframes scan {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+.module-icon {
+    width: 60px;
+    height: 60px;
+    z-index: 2;
+    filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.5));
+}
+
+.module-status {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 3;
+}
+
+.status-badge {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.status-badge.locked {
+    background: #666;
+    color: #ccc;
+}
+
+.status-badge.available {
+    background: #3498db;
+    color: white;
+}
+
+.status-badge.completed {
+    background: #00ff00;
+    color: #000;
+}
+
+.module-content {
+    padding: 25px;
+}
+
+.module-content h3 {
+    color: #00ffff;
+    font-family: 'Orbitron', monospace;
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+}
+
+.module-subtitle {
+    color: #f39c12;
+    font-size: 0.9rem;
+    font-style: italic;
+    margin-bottom: 15px;
+}
+
+.module-description {
+    color: #cccccc;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+.module-stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+}
+
+.duration {
+    color: #00ff00;
+}
+
+.difficulty {
+    color: #f39c12;
+}
+
+.module-btn {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    font-family: 'Orbitron', monospace;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.module-btn:enabled {
+    background: linear-gradient(45deg, #3498db, #2980b9);
+    color: white;
+    border: 2px solid #3498db;
+}
+
+.module-btn:enabled:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+}
+
+.module-btn:disabled {
+    background: #666;
+    color: #999;
+    cursor: not-allowed;
+    border: 2px solid #555;
+}
+
+.module-btn.completed {
+    background: linear-gradient(45deg, #00ff00, #33ff33);
+    color: #000;
+    border: 2px solid #00ff00;
+}
+
+/* Final Assessment */
+.final-assessment {
+    padding: 60px 0;
+}
+
+.assessment-card {
+    max-width: 800px;
+    margin: 0 auto;
+    background: rgba(0, 20, 40, 0.9);
+    border: 3px solid #f39c12;
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 10px 40px rgba(243, 156, 18, 0.3);
+}
+
+.assessment-card.locked {
+    border-color: #666;
+    opacity: 0.7;
+    filter: grayscale(50%);
+}
+
+.assessment-header {
+    height: 150px;
+    background: linear-gradient(45deg, #f39c12, #e67e22);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.assessment-icon {
+    width: 80px;
+    height: 80px;
+    z-index: 2;
+}
+
+.assessment-status {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}
+
+.assessment-content {
+    padding: 40px;
+    text-align: center;
+}
+
+.assessment-content h2 {
+    color: #f39c12;
+    font-family: 'Orbitron', monospace;
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.assessment-subtitle {
+    color: #00ffff;
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+}
+
+.assessment-description {
+    color: #cccccc;
+    margin-bottom: 30px;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+.assessment-requirements {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 25px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    text-align: left;
+}
+
+.assessment-requirements h4 {
+    color: #f39c12;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.assessment-requirements ul {
+    list-style: none;
+    padding: 0;
+}
+
+.requirement {
+    padding: 8px 0;
+    color: #ff6666;
+    transition: color 0.3s ease;
+}
+
+.requirement.complete {
+    color: #00ff00;
+}
+
+.assessment-btn {
+    width: 100%;
+    max-width: 300px;
+    padding: 18px;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    font-family: 'Orbitron', monospace;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.assessment-btn:enabled {
+    background: linear-gradient(45deg, #f39c12, #e67e22);
+    color: #000;
+    border: 2px solid #f39c12;
+}
+
+.assessment-btn:enabled:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(243, 156, 18, 0.4);
+}
+
+.assessment-btn:disabled {
+    background: #666;
+    color: #999;
+    cursor: not-allowed;
+    border: 2px solid #555;
+}
+
+/* Progress Dashboard */
+.progress-dashboard {
+    padding: 60px 0;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.progress-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 25px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.progress-card {
+    background: rgba(0, 20, 40, 0.9);
+    border: 2px solid #333;
+    border-radius: 15px;
+    padding: 25px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.progress-card:hover {
+    border-color: #00ffff;
+    transform: translateY(-5px);
+}
+
+.progress-icon {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+}
+
+.progress-info h3 {
+    color: #00ffff;
+    font-family: 'Orbitron', monospace;
+    font-size: 1.8rem;
+    margin-bottom: 5px;
+}
+
+.progress-info p {
+    color: #cccccc;
+    margin: 0;
+}
+
+/* Admin Panel */
+.admin-panel {
+    padding: 20px 0;
+    background: rgba(255, 0, 0, 0.1);
+    border-top: 2px solid #ff0000;
+}
+
+.admin-panel h3 {
+    color: #ff6666;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.admin-controls {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.admin-btn {
+    padding: 8px 15px;
+    border: 1px solid #666;
+    border-radius: 5px;
+    background: #333;
+    color: #ccc;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.admin-btn:hover {
+    background: #555;
+    border-color: #888;
+}
+
+.admin-btn.reset {
+    background: #cc0000;
+    border-color: #ff0000;
+    color: white;
+}
+
+/* Footer */
+.mission-footer {
+    background: rgba(0, 0, 0, 0.8);
+    border-top: 1px solid #333;
+    padding: 30px 0;
+    text-align: center;
+    color: #666;
+    position: relative;
+}
+
+.admin-trigger {
+    position: absolute;
+    bottom: 10px;
+    right: 20px;
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    opacity: 0.3;
+    transition: opacity 0.3s ease;
+}
+
+.admin-trigger:hover {
+    opacity: 1;
+}
+
+/* Utility Classes */
+.hidden {
+    display: none !important;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .mission-control-header .container {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .modules-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .progress-cards {
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+    }
+    
+    .section-title {
+        font-size: 1.8rem;
+    }
+    
+    .assessment-content {
+        padding: 25px;
+    }
+    
+    .admin-controls {
+        flex-direction: column;
+        align-items: center;
+    }
+}
