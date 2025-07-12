@@ -67,3 +67,25 @@ Below this, add a large button: [PROCEED TO FINAL CERTIFICATION EXAM].
 This button should link externally to your Microsoft Forms quiz. Use the placeholder URL https://forms.office.com/YourQuizHere.
 Include a concluding message: "Congratulations, Agent. You have completed your field training. Proceed to the final exam to earn your certification."
 Please provide the complete code in three separate, clearly-labeled blocks: one for index.html, one for style.css, and one for script.js. Ensure the JavaScript is well-commented to explain the logic for progression and localStorage.
+🗂️ Repository Structure Plan
+cybersec/
+├── index.html              (Landing Page - Mission Control)
+├── module1.html             (Email Security Training)
+├── module2.html             (Password Security Training)
+├── module3.html             (Safe Internet Training)
+├── module4.html             (Physical Security Training)
+├── module5.html             (GDPR Data Protection Training)
+├── final-assessment.html    (Current game as final test)
+├── css/
+│   ├── style.css           (Main styles)
+│   └── modules.css         (Module-specific styles)
+├── js/
+│   ├── progress.js         (Progress tracking across modules)
+│   ├── navigation.js       (Shared navigation functions)
+│   └── modules.js          (Module-specific interactions)
+└── images/
+    ├── backgrounds/        (Scene backgrounds)
+    ├── characters/         (Agent avatars & NPCs)
+    ├── interface/          (Buttons, badges, UI elements)
+    ├── content/            (Training content illustrations)
+    └── certificates/       (Badge/certificate graphics)
