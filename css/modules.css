@@ -1423,89 +1423,218 @@
     border-radius: 4px;
 }
 
-/* Briefing Content */
-.briefing-content {
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-.threat-assessment {
-    background: rgba(255, 0, 0, 0.1);
-    border: 2px solid #ff0000;
+/* Fixed Briefing Content with Better Contrast */
+.threat-assessment-fixed {
+    background: #ffebee;
+    border: 3px solid #d32f2f;
     border-radius: 10px;
     padding: 25px;
     margin-bottom: 30px;
     text-align: center;
 }
 
-.threat-assessment h3 {
-    color: #ff6666;
+.threat-assessment-fixed h3 {
+    color: #d32f2f;
     margin-bottom: 15px;
     font-family: 'Orbitron', monospace;
+    font-size: 1.3rem;
 }
 
-.threat-assessment p {
-    color: #ffffff;
+.threat-assessment-fixed p {
+    color: #000000;
     font-size: 1.1rem;
     line-height: 1.6;
+    font-weight: 500;
 }
 
-.learning-objectives {
-    background: rgba(0, 255, 255, 0.1);
-    border: 2px solid #00ffff;
+.learning-objectives-fixed {
+    background: #e8f5e8;
+    border: 3px solid #2e7d32;
     border-radius: 10px;
     padding: 25px;
     margin-bottom: 30px;
 }
 
-.learning-objectives h3 {
-    color: #00ffff;
+.learning-objectives-fixed h3 {
+    color: #2e7d32;
     margin-bottom: 15px;
     font-family: 'Orbitron', monospace;
+    font-size: 1.3rem;
+    text-align: center;
 }
 
-.learning-objectives ul {
-    color: #ffffff;
+.learning-objectives-fixed ul {
+    color: #000000;
     padding-left: 20px;
 }
 
-.learning-objectives li {
-    margin-bottom: 8px;
-    line-height: 1.5;
+.learning-objectives-fixed li {
+    margin-bottom: 10px;
+    line-height: 1.6;
+    font-weight: 500;
+    color: #1b5e20;
 }
 
-.instructor-message {
+.instructor-message-fixed {
     display: flex;
     align-items: flex-start;
     gap: 20px;
-    background: rgba(0, 0, 0, 0.5);
+    background: #fff3e0;
+    border: 3px solid #f57c00;
     border-radius: 15px;
     padding: 25px;
     margin-bottom: 30px;
-    border-left: 4px solid #f39c12;
 }
 
-.instructor-avatar img {
+.instructor-message-fixed .instructor-avatar img {
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    border: 2px solid #f39c12;
+    border: 3px solid #f57c00;
 }
 
-.message-content {
+.instructor-message-fixed .message-content {
     flex: 1;
-    color: #ffffff;
+    color: #000000;
 }
 
-.message-content h4 {
-    color: #f39c12;
+.instructor-message-fixed .message-content h4 {
+    color: #e65100;
     margin-bottom: 10px;
     font-family: 'Orbitron', monospace;
+    font-size: 1.2rem;
 }
 
-.message-content p {
+.instructor-message-fixed .message-content p {
     line-height: 1.6;
     margin-bottom: 10px;
+    color: #3e2723;
+    font-weight: 500;
+}
+
+/* Hidden Scanner Elements (More Subtle) */
+.scannable-hidden {
+    padding: 2px 4px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    /* Make it look identical to normal text initially */
+    background: transparent;
+    border: none;
+    color: inherit;
+}
+
+.scannable-hidden:hover {
+    background: rgba(255, 255, 0, 0.2);
+    transform: scale(1.02);
+}
+
+.scannable-hidden.found {
+    background: rgba(255, 0, 0, 0.4) !important;
+    border: 2px solid #ff0000 !important;
+    color: #ffffff !important;
+    font-weight: bold;
+}
+
+/* Classified Habits Section */
+.classified-instructions {
+    text-align: center;
+    color: #ffffff;
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+    background: rgba(255, 165, 0, 0.2);
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ff6600;
+}
+
+.habits-classified {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.habit-classified {
+    background: #333333;
+    border: 2px solid #666666;
+    border-radius: 10px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.habit-classified:hover {
+    border-color: #ff6600;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 102, 0, 0.3);
+}
+
+.habit-classified.revealed {
+    background: #e8f5e8;
+    border-color: #2e7d32;
+    color: #000000;
+}
+
+.classified-stamp {
+    background: #ff0000;
+    color: #ffffff;
+    padding: 8px 16px;
+    transform: rotate(-15deg);
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+    border: 2px solid #ffffff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-15deg);
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.classified-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #000000;
+    font-weight: 500;
+    text-align: left;
+    width: 100%;
+}
+
+.classified-content.hidden {
+    display: none;
+}
+
+.habit-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.habit-text {
+    line-height: 1.4;
+}
+
+.habits-progress {
+    text-align: center;
+    color: #ffffff;
+    font-weight: bold;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #333;
+}
+
+.habits-progress span {
+    color: #00ff00;
+    font-family: 'Orbitron', monospace;
 }
 
 /* Threat Cards */
