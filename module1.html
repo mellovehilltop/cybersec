@@ -36,12 +36,12 @@
             </div>
             
             <div class="briefing-content">
-                <div class="threat-assessment">
+                <div class="threat-assessment-fixed">
                     <h3>🚨 THREAT LEVEL: HIGH</h3>
                     <p>Email attacks represent <strong>95% of all cybersecurity breaches</strong> in the food manufacturing sector. Recent intelligence shows increasing sophistication in attacks targeting companies like Hilltop Honey.</p>
                 </div>
 
-                <div class="learning-objectives">
+                <div class="learning-objectives-fixed">
                     <h3>🎯 MISSION OBJECTIVES</h3>
                     <ul>
                         <li>Identify common email-based threats and attack vectors</li>
@@ -52,7 +52,7 @@
                     </ul>
                 </div>
 
-                <div class="instructor-message">
+                <div class="instructor-message-fixed">
                     <div class="instructor-avatar">
                         <img src="images/characters/instructor-avatar.png" alt="Training Instructor">
                     </div>
@@ -305,25 +305,25 @@
 
                 <div class="interactive-training">
                     <h3>🎯 INTERACTIVE TRAINING: Red Flag Scanner</h3>
-                    <p>Click on each red flag you can identify in this example email:</p>
+                    <p>Click on each red flag you can identify in this example email. <strong>All text looks normal - you must identify the suspicious elements:</strong></p>
                     
                     <div class="email-scanner" id="email-scanner">
                         <div class="email-header-scan">
-                            <strong>From:</strong> <span class="scannable suspicious" data-flag="domain">security@hiltophonney.co.uk</span><br>
+                            <strong>From:</strong> <span class="scannable-hidden" data-flag="domain">security@hiltophonney.co.uk</span><br>
                             <strong>To:</strong> production@hilltophoney.co.uk<br>
-                            <strong>Subject:</strong> <span class="scannable suspicious" data-flag="urgent">URGENT: Account Security Update Required</span>
+                            <strong>Subject:</strong> <span class="scannable-hidden" data-flag="urgent">URGENT: Account Security Update Required</span>
                         </div>
                         <div class="email-body-scan">
-                            <p><span class="scannable suspicious" data-flag="generic">Dear Customer</span>,</p>
-                            <p>Your account security has been <span class="scannable suspicious" data-flag="urgent">compromised and requires immediate attention</span>. Please <span class="scannable suspicious" data-flag="request">click here to verify your login details</span> within the next 24 hours.</p>
-                            <p><span class="scannable suspicious" data-flag="link">www.hiltophonney-secure.com/verify</span></p>
+                            <p><span class="scannable-hidden" data-flag="generic">Dear Customer</span>,</p>
+                            <p>Your account security has been <span class="scannable-hidden" data-flag="pressure">compromised and requires immediate attention</span>. Please <span class="scannable-hidden" data-flag="request">click here to verify your login details</span> within the next 24 hours.</p>
+                            <p><span class="scannable-hidden" data-flag="link">www.hiltophonney-secure.com/verify</span></p>
                             <p>Failure to act will result in account suspension.</p>
                             <p>Best regards,<br>Security Team</p>
                         </div>
                     </div>
 
                     <div class="scanner-feedback" id="scanner-feedback">
-                        <p>Red flags found: <span id="flags-found">0</span>/5</p>
+                        <p>Red flags found: <span id="flags-found">0</span>/6</p>
                         <div id="flag-explanations"></div>
                     </div>
                 </div>
@@ -372,31 +372,53 @@
 
                 <div class="practice-section">
                     <h3>🛡️ SECURE EMAIL HABITS</h3>
-                    <div class="habits-checklist">
-                        <div class="habit-item">
-                            <input type="checkbox" id="habit-1" onchange="checkProgress()">
-                            <label for="habit-1">Use BCC when emailing multiple external recipients to protect privacy</label>
+                    <p class="classified-instructions">Click each classified directive to reveal the security protocol:</p>
+                    <div class="habits-classified">
+                        <div class="habit-classified" data-habit="1">
+                            <div class="classified-stamp">CLASSIFIED</div>
+                            <div class="classified-content hidden" id="habit-content-1">
+                                <span class="habit-icon">📧</span>
+                                <span class="habit-text">Use BCC when emailing multiple external recipients to protect privacy</span>
+                            </div>
                         </div>
-                        <div class="habit-item">
-                            <input type="checkbox" id="habit-2" onchange="checkProgress()">
-                            <label for="habit-2">Never share passwords or sensitive information via email</label>
+                        <div class="habit-classified" data-habit="2">
+                            <div class="classified-stamp">CLASSIFIED</div>
+                            <div class="classified-content hidden" id="habit-content-2">
+                                <span class="habit-icon">🔐</span>
+                                <span class="habit-text">Never share passwords or sensitive information via email</span>
+                            </div>
                         </div>
-                        <div class="habit-item">
-                            <input type="checkbox" id="habit-3" onchange="checkProgress()">
-                            <label for="habit-3">Use encryption for confidential information</label>
+                        <div class="habit-classified" data-habit="3">
+                            <div class="classified-stamp">CLASSIFIED</div>
+                            <div class="classified-content hidden" id="habit-content-3">
+                                <span class="habit-icon">🔒</span>
+                                <span class="habit-text">Use encryption for confidential information</span>
+                            </div>
                         </div>
-                        <div class="habit-item">
-                            <input type="checkbox" id="habit-4" onchange="checkProgress()">
-                            <label for="habit-4">Regularly update spam filters and security settings</label>
+                        <div class="habit-classified" data-habit="4">
+                            <div class="classified-stamp">CLASSIFIED</div>
+                            <div class="classified-content hidden" id="habit-content-4">
+                                <span class="habit-icon">🛡️</span>
+                                <span class="habit-text">Regularly update spam filters and security settings</span>
+                            </div>
                         </div>
-                        <div class="habit-item">
-                            <input type="checkbox" id="habit-5" onchange="checkProgress()">
-                            <label for="habit-5">Report suspicious emails to IT immediately</label>
+                        <div class="habit-classified" data-habit="5">
+                            <div class="classified-stamp">CLASSIFIED</div>
+                            <div class="classified-content hidden" id="habit-content-5">
+                                <span class="habit-icon">🚨</span>
+                                <span class="habit-text">Report suspicious emails to IT immediately</span>
+                            </div>
                         </div>
-                        <div class="habit-item">
-                            <input type="checkbox" id="habit-6" onchange="checkProgress()">
-                            <label for="habit-6">Think twice before opening attachments from unknown sources</label>
+                        <div class="habit-classified" data-habit="6">
+                            <div class="classified-stamp">CLASSIFIED</div>
+                            <div class="classified-content hidden" id="habit-content-6">
+                                <span class="habit-icon">⚠️</span>
+                                <span class="habit-text">Think twice before opening attachments from unknown sources</span>
+                            </div>
                         </div>
+                    </div>
+                    <div class="habits-progress">
+                        <p>Directives Revealed: <span id="habits-revealed">0</span>/6</p>
                     </div>
                 </div>
 
