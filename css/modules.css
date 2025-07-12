@@ -1523,6 +1523,7 @@
     background: transparent;
     border: none;
     color: inherit;
+    display: inline;
 }
 
 .scannable-hidden:hover {
@@ -1531,10 +1532,15 @@
 }
 
 .scannable-hidden.found {
-    background: rgba(255, 0, 0, 0.4) !important;
-    border: 2px solid #ff0000 !important;
+    background: #ff0000 !important;
+    border: 3px solid #ffffff !important;
     color: #ffffff !important;
-    font-weight: bold;
+    font-weight: bold !important;
+    padding: 4px 8px !important;
+    border-radius: 5px !important;
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.8) !important;
+    transform: scale(1.1) !important;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.8) !important;
 }
 
 /* Classified Habits Section */
