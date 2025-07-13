@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Digital Shield - Classified Training Files</title>
+    <!-- Link to the single, consolidated stylesheet -->
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/modules.css">
 </head>
 <body class="file-system-page">
+
     <!-- Header Section -->
     <header class="classified-header">
         <div class="container">
@@ -34,15 +35,15 @@
     <section class="file-cabinet">
         <div class="container">
             <div class="cabinet-header">
-                <h2>📁 TRAINING DOSSIERS</h2>
-                <p class="access-notice">⚠️ ACCESS RESTRICTED TO AUTHORIZED PERSONNEL ONLY</p>
+                <h2 aria-hidden="true">📁 TRAINING DOSSIERS</h2>
+                <p class="access-notice" aria-hidden="true">⚠️ ACCESS RESTRICTED TO AUTHORIZED PERSONNEL ONLY</p>
             </div>
 
             <div class="file-cabinet-grid">
                 <div class="filing-drawer">
                     <div class="drawer-label">CYBERSECURITY PROTOCOLS</div>
                     <div class="file-folders">
-                        
+
                         <!-- File 1: Email Security -->
                         <div class="file-folder" data-module="1" id="file-1">
                             <div class="folder-tab">
@@ -55,7 +56,7 @@
                                 </div>
                             </div>
                             <div class="folder-content">
-                                <div class="file-icon">📧</div>
+                                <div class="file-icon" aria-hidden="true">📧</div>
                                 <div class="file-details">
                                     <h3>EMAIL SECURITY PROTOCOLS</h3>
                                     <p class="file-subtitle">Operation: Interceptor</p>
@@ -65,7 +66,10 @@
                                         <span class="difficulty">🔒 LEVEL 3</span>
                                     </div>
                                 </div>
-
+                            </div>
+                            <div class="folder-actions">
+                                <button class="btn btn-primary file-btn" id="btn-1">OPEN FILE</button>
+                            </div>
                         </div>
 
                         <!-- File 2: Password Security -->
@@ -80,7 +84,7 @@
                                 </div>
                             </div>
                             <div class="folder-content">
-                                <div class="file-icon">🔐</div>
+                                <div class="file-icon" aria-hidden="true">🔐</div>
                                 <div class="file-details">
                                     <h3>PASSWORD SECURITY PROTOCOLS</h3>
                                     <p class="file-subtitle">Operation: Vault Guardian</p>
@@ -90,7 +94,10 @@
                                         <span class="difficulty">🔒 LEVEL 2</span>
                                     </div>
                                 </div>
-
+                            </div>
+                            <div class="folder-actions">
+                                <button class="btn btn-primary file-btn" id="btn-2" disabled>CLEARANCE REQUIRED</button>
+                            </div>
                         </div>
 
                         <!-- File 3: Internet Security -->
@@ -105,7 +112,7 @@
                                 </div>
                             </div>
                             <div class="folder-content">
-                                <div class="file-icon">🌐</div>
+                                <div class="file-icon" aria-hidden="true">🌐</div>
                                 <div class="file-details">
                                     <h3>INTERNET SECURITY PROTOCOLS</h3>
                                     <p class="file-subtitle">Operation: Navigator</p>
@@ -115,7 +122,10 @@
                                         <span class="difficulty">🔒 LEVEL 3</span>
                                     </div>
                                 </div>
-
+                            </div>
+                            <div class="folder-actions">
+                                <button class="btn btn-primary file-btn" id="btn-3" disabled>CLEARANCE REQUIRED</button>
+                            </div>
                         </div>
 
                         <!-- File 4: Physical Security -->
@@ -130,7 +140,7 @@
                                 </div>
                             </div>
                             <div class="folder-content">
-                                <div class="file-icon">🏢</div>
+                                <div class="file-icon" aria-hidden="true">🏢</div>
                                 <div class="file-details">
                                     <h3>PHYSICAL SECURITY PROTOCOLS</h3>
                                     <p class="file-subtitle">Operation: Safehouse</p>
@@ -140,7 +150,10 @@
                                         <span class="difficulty">🔒 LEVEL 2</span>
                                     </div>
                                 </div>
- 
+                            </div>
+                            <div class="folder-actions">
+                                <button class="btn btn-primary file-btn" id="btn-4" disabled>CLEARANCE REQUIRED</button>
+                            </div>
                         </div>
 
                         <!-- File 5: GDPR -->
@@ -155,7 +168,7 @@
                                 </div>
                             </div>
                             <div class="folder-content">
-                                <div class="file-icon">📋</div>
+                                <div class="file-icon" aria-hidden="true">📋</div>
                                 <div class="file-details">
                                     <h3>DATA PROTECTION PROTOCOLS</h3>
                                     <p class="file-subtitle">Operation: Classified Intel</p>
@@ -165,8 +178,11 @@
                                         <span class="difficulty">🔒 LEVEL 4</span>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="folder-actions">
+                                <button class="btn btn-primary file-btn" id="btn-5" disabled>CLEARANCE REQUIRED</button>
+                            </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -186,38 +202,26 @@
                         </div>
                     </div>
                     <div class="special-content">
-                        <div class="special-icon">🎯</div>
+                        <div class="special-icon" aria-hidden="true">🎯</div>
                         <div class="special-details">
                             <h2>FINAL FIELD ASSESSMENT</h2>
                             <p class="special-subtitle">Comprehensive Security Evaluation</p>
                             <p class="special-description">Classified field simulation testing all acquired cybersecurity protocols. Access granted only upon completion of all training dossiers.</p>
-                            
                             <div class="clearance-requirements">
-                                <h4>📋 CLEARANCE REQUIREMENTS</h4>
+                                <h4><span aria-hidden="true">📋 </span>CLEARANCE REQUIREMENTS</h4>
                                 <div class="requirements-list" id="clearance-requirements">
-                                    <div class="requirement incomplete" data-module="1">
-                                        <span class="req-status">❌</span>
-                                        <span class="req-text">Complete Email Security Training</span>
-                                    </div>
-                                    <div class="requirement incomplete" data-module="2">
-                                        <span class="req-status">❌</span>
-                                        <span class="req-text">Complete Password Security Training</span>
-                                    </div>
-                                    <div class="requirement incomplete" data-module="3">
-                                        <span class="req-status">❌</span>
-                                        <span class="req-text">Complete Internet Security Training</span>
-                                    </div>
-                                    <div class="requirement incomplete" data-module="4">
-                                        <span class="req-status">❌</span>
-                                        <span class="req-text">Complete Physical Security Training</span>
-                                    </div>
-                                    <div class="requirement incomplete" data-module="5">
-                                        <span class="req-status">❌</span>
-                                        <span class="req-text">Complete Data Protection Training</span>
-                                    </div>
+                                    <div class="requirement incomplete" data-module="1"><span class="req-status">❌</span><span class="req-text">Complete Email Security Training</span></div>
+                                    <div class="requirement incomplete" data-module="2"><span class="req-status">❌</span><span class="req-text">Complete Password Security Training</span></div>
+                                    <div class="requirement incomplete" data-module="3"><span class="req-status">❌</span><span class="req-text">Complete Internet Security Training</span></div>
+                                    <div class="requirement incomplete" data-module="4"><span class="req-status">❌</span><span class="req-text">Complete Physical Security Training</span></div>
+                                    <div class="requirement incomplete" data-module="5"><span class="req-status">❌</span><span class="req-text">Complete Data Protection Training</span></div>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="special-actions">
+                        <button class="btn btn-secondary special-btn" id="final-btn" disabled>🔒 ACCESS DENIED</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -235,6 +239,11 @@
                 <div class="status-center">
                     <span class="files-accessed">FILES ACCESSED: <span id="files-completed">0</span>/5</span>
                     <span class="security-level">SECURITY LEVEL: TRAINEE</span>
+                </div>
+                <div class="status-right">
+                    <button class="admin-access" title="System Administration" aria-label="Open System Administration">🔧</button>
+                    <span class="timestamp" id="current-timestamp"></span>
+                </div>
             </div>
         </div>
     </footer>
@@ -243,15 +252,32 @@
     <section class="admin-panel hidden" id="admin-panel">
         <div class="container">
             <div class="admin-terminal">
+                <div class="terminal-header">
+                    <span class="terminal-title">SYSTEM ADMINISTRATION CONSOLE</span>
+                    <button class="terminal-close" aria-label="Close System Administration">×</button>
+                </div>
+                <div class="terminal-body">
+                    <div class="admin-commands">
+                        <h3>TESTING COMMANDS:</h3>
+                        <div class="command-buttons">
+                            <button data-command="reset" class="cmd-btn danger">RESET_ALL_PROGRESS</button>
+                            <button data-command="complete" data-module="1" class="cmd-btn">COMPLETE_FILE_001</button>
+                            <button data-command="complete" data-module="2" class="cmd-btn">COMPLETE_FILE_002</button>
+                            <button data-command="complete" data-module="3" class="cmd-btn">COMPLETE_FILE_003</button>
+                            <button data-command="complete" data-module="4" class="cmd-btn">COMPLETE_FILE_004</button>
+                            <button data-command="complete" data-module="5" class="cmd-btn">COMPLETE_FILE_005</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <script src="js/progress.js"></script>
-    <script src="js/navigation.js"></script>
- <script src="js/landing.js" defer></script>
-    <script src="js/file-system.js" defer></script> 
+    <!-- SCRIPTS -->
+    <!-- Use 'defer' to ensure scripts load without blocking the page and execute in order -->
+    <script src="js/progress.js" defer></script>
+    <script src="js/navigation.js" defer></script>
+    <script src="js/file-system.js" defer></script>
+
 </body>
 </html>
