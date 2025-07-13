@@ -566,12 +566,12 @@ window.digitalShieldModules = {
     }
 };
 
-console.log('🚀 Digital Shield Modules loaded successfully - VERSION 2.0 with click debugging');
+console.log('🚀 Digital Shield Modules loaded successfully - VERSION 3.0 with forced inline styling');
 console.log('🛠️ Debug commands:');
 console.log('   window.digitalShieldModules.testClick() - Test first element');
 console.log('   window.digitalShieldModules.listElements() - List all elements');
 console.log('   window.digitalShieldModules.initializeRedFlagScanner() - Reinitialize scanner');
 
 // Test if the new version is loaded
-window.digitalShieldVersion = "2.0";
+window.digitalShieldVersion = "3.0";
 console.log("📍 Module version:", window.digitalShieldVersion);
