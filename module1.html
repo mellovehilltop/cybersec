@@ -28,7 +28,7 @@
         </div>
     </header>
 
-    <!-- Mission Briefing Section (starts as active) -->
+    <!-- Mission Briefing Section -->
     <section id="briefing-section" class="training-section active">
         <div class="container">
             <div class="section-header">
@@ -55,42 +55,148 @@
         </div>
     </section>
 
-    <!-- The other sections... -->
+    <!-- Training Phase 1: Understanding Email Threats -->
     <section id="training-phase-1" class="training-section">
-        <!-- All your phase 1 content here... -->
         <div class="container">
-            <div class="section-header"><h2>PHASE 1: KNOW YOUR ENEMY</h2></div>
-            <!-- ... your cards ... -->
+            <div class="section-header">
+                <h2>PHASE 1: KNOW YOUR ENEMY</h2>
+                <p>Understanding Email-Based Threats</p>
+            </div>
+            <!-- CONTENT FOR PHASE 1 -->
+            <div class="learning-cards">
+                <div class="threat-card" data-threat="phishing">
+                    <div class="threat-header">
+                        <img src="images/characters/hacker-silhouette.png" alt="" class="threat-icon-img">
+                        <h3>PHISHING ATTACKS</h3>
+                        <span class="threat-level high">HIGH RISK</span>
+                    </div>
+                    <div class="threat-content">
+                        <p><strong>Method:</strong> Fraudsters impersonate trusted sources to steal credentials or sensitive data.</p>
+                    </div>
+                </div>
+                <div class="threat-card" data-threat="spear-phishing">
+                    <div class="threat-header">
+                        <img src="images/characters/hacker-silhouette.png" alt="" class="threat-icon-img">
+                        <h3>SPEAR PHISHING</h3>
+                        <span class="threat-level critical">CRITICAL</span>
+                    </div>
+                    <div class="threat-content">
+                        <p><strong>Method:</strong> Highly targeted attacks using personal information to seem legitimate.</p>
+                    </div>
+                </div>
+                <div class="threat-card" data-threat="malware">
+                    <div class="threat-header">
+                        <img src="images/characters/hacker-silhouette.png" alt="" class="threat-icon-img">
+                        <h3>MALWARE ATTACHMENTS</h3>
+                        <span class="threat-level high">HIGH RISK</span>
+                    </div>
+                    <div class="threat-content">
+                        <p><strong>Method:</strong> Malicious files disguised as legitimate documents or applications.</p>
+                    </div>
+                </div>
+                <div class="threat-card" data-threat="business-email">
+                    <div class="threat-header">
+                        <img src="images/characters/hacker-silhouette.png" alt="" class="threat-icon-img">
+                        <h3>BUSINESS EMAIL COMPROMISE</h3>
+                        <span class="threat-level critical">CRITICAL</span>
+                    </div>
+                    <div class="threat-content">
+                        <p><strong>Method:</strong> Criminals impersonate executives to authorize fraudulent payments.</p>
+                    </div>
+                </div>
+            </div>
             <button data-action="complete-phase" data-phase="1" class="btn btn-secondary">CONTINUE TO PHASE 2</button>
         </div>
     </section>
+
+    <!-- Training Phase 2: Red Flag Detection -->
     <section id="training-phase-2" class="training-section">
-        <!-- All your phase 2 content here... -->
         <div class="container">
-            <div class="section-header"><h2>PHASE 2: RED FLAG DETECTION</h2></div>
-            <!-- ... your email scanner ... -->
-            <button data-action="complete-phase" data-phase="2" class="btn btn-secondary" id="phase-2-btn" disabled>PHASE 2 COMPLETE</button>
+            <div class="section-header">
+                <h2>PHASE 2: RED FLAG DETECTION</h2>
+                <p>Interactive Threat Identification Training</p>
+            </div>
+            <!-- CONTENT FOR PHASE 2 -->
+            <div class="red-flags-training">
+                <div class="training-instructions">
+                    <h3><span aria-hidden="true">🔍 </span>EMAIL ANALYSIS TRAINING</h3>
+                    <p>Use your cursor to scan the email below and identify suspicious elements. Click on anything that seems suspicious to mark it as a red flag.</p>
+                </div>
+                <div class="email-scanner">
+                    <div class="example-email suspicious">
+                        <div class="email-header">
+                            <p><strong>From:</strong> <span class="scannable-hidden" data-flag="sender">security@hiltophonney.com</span></p>
+                            <p><strong>To:</strong> all-staff@hilltophoney.com</p>
+                            <p><strong>Subject:</strong> <span class="scannable-hidden" data-flag="subject">URGENT: Account Verification Required</span></p>
+                        </div>
+                        <div class="email-body">
+                            <p>Dear <span class="scannable-hidden" data-flag="greeting">Valued Employee</span>,</p>
+                            <p>We have detected <span class="scannable-hidden" data-flag="urgency">suspicious activity</span> on your account.</p>
+                            <p>Please <span class="scannable-hidden" data-flag="request">click here to verify your login</span> within 24 hours.</p>
+                            <p><a href="#" class="scannable-hidden" data-flag="link" onclick="event.preventDefault()">www.hiltophonney-secure.com/verify</a></p>
+                        </div>
+                    </div>
+                    <div class="scanner-feedback" id="scanner-feedback">
+                        <p>Red flags found: <span id="flags-found">0</span>/6</p>
+                        <div id="flag-explanations"></div>
+                    </div>
+                </div>
+                <button data-action="complete-phase" data-phase="2" class="btn btn-secondary" id="phase-2-btn" disabled>PHASE 2 COMPLETE</button>
+            </div>
         </div>
     </section>
+
+    <!-- Training Phase 3: Safe Email Practices -->
     <section id="training-phase-3" class="training-section">
-        <!-- All your phase 3 content here... -->
         <div class="container">
-            <div class="section-header"><h2>PHASE 3: DEFENSIVE PROTOCOLS</h2></div>
-            <!-- ... your best practices ... -->
+            <div class="section-header">
+                <h2>PHASE 3: DEFENSIVE PROTOCOLS</h2>
+                <p>Safe Email Practices for Agents</p>
+            </div>
+            <!-- CONTENT FOR PHASE 3 -->
+            <div class="best-practices">
+                <div class="practice-section">
+                    <h3><span aria-hidden="true">✅ </span>BEFORE YOU CLICK</h3>
+                    <div class="practice-grid">
+                        <div class="practice-card"><div class="practice-icon">👀</div><h4>VERIFY THE SENDER</h4><p>Check the full email address, not just the display name.</p></div>
+                        <div class="practice-card"><div class="practice-icon">🔍</div><h4>HOVER OVER LINKS</h4><p>Never click immediately. Hover to see the real destination.</p></div>
+                        <div class="practice-card"><div class="practice-icon">🤔</div><h4>QUESTION URGENCY</h4><p>Legitimate urgent requests rarely come via email alone.</p></div>
+                        <div class="practice-card"><div class="practice-icon">🛡️</div><h4>VERIFY ATTACHMENTS</h4><p>Only open attachments you are expecting. Scan all files.</p></div>
+                    </div>
+                </div>
+                <div class="incident-response">
+                    <h3><span aria-hidden="true">🚨 </span>IF YOU SUSPECT A THREAT</h3>
+                    <div class="response-steps">
+                        <div class="step"><div class="step-number">1</div><div class="step-content"><h4>STOP</h4><p>Do NOT reply, click, or download.</p></div></div>
+                        <div class="step"><div class="step-number">2</div><div class="step-content"><h4>ISOLATE</h4><p>Mark the email as spam/phishing.</p></div></div>
+                        <div class="step"><div class="step-number">3</div><div class="step-content"><h4>REPORT</h4><p>Forward the suspicious email to IT support.</p></div></div>
+                        <div class="step"><div class="step-number">4</div><div class="step-content"><h4>WARN OTHERS</h4><p>Alert your department or colleagues.</p></div></div>
+                    </div>
+                </div>
+            </div>
             <button data-action="complete-phase" data-phase="3" class="btn btn-secondary">PROCEED TO ASSESSMENT</button>
         </div>
     </section>
+
+    <!-- Final Assessment Phase -->
     <section id="assessment-phase" class="training-section">
-        <!-- All your assessment content here... -->
         <div class="container">
-            <div class="section-header"><h2>FINAL ASSESSMENT</h2></div>
+            <div class="section-header">
+                <h2>FINAL ASSESSMENT</h2>
+                <p>Email Security Knowledge Test</p>
+            </div>
+            <!-- CONTENT FOR ASSESSMENT -->
             <div class="assessment-content" id="assessment-content">
                 <div class="assessment-intro">
                      <h3><span aria-hidden="true">🎯 </span>FIELD TEST: Email Threat Assessment</h3>
                      <p>You will analyze 4 emails and determine which are safe and which are threats.</p>
                 </div>
-                <div class="email-assessment" id="email-assessment-container"></div>
-                <div class="assessment-results" id="assessment-results-container" style="display: none;"></div>
+                <div class="email-assessment" id="email-assessment-container">
+                    <!-- Assessment emails will be populated by JavaScript -->
+                </div>
+                <div class="assessment-results" id="assessment-results-container" style="display: none;">
+                    <!-- Results will be shown here by JavaScript -->
+                </div>
             </div>
         </div>
     </section>
