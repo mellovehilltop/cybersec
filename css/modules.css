@@ -1,5 +1,5 @@
 /* ==================================================
-   UPDATED CSSMODULES.CSS - FIXED SIZING & READABILITY
+   UPDATED & REFACTORED CSS - V2
    ================================================== */
 
 /* Global Font Size Improvements */
@@ -35,7 +35,6 @@
     margin-bottom: 40px;
 }
 
-/* FIXED: Section icons - reasonable size */
 .section-icon {
     width: 64px;
     height: 64px;
@@ -43,19 +42,17 @@
     filter: drop-shadow(0 0 10px rgba(0, 255, 255, 0.5));
 }
 
-/* FIXED: Much larger, readable headings */
 .section-header h2 {
     color: #00ffff;
     font-family: 'Orbitron', monospace;
-    font-size: 2.5rem; /* Increased from 2.2rem */
+    font-size: 2.5rem;
     margin-bottom: 15px;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
 }
 
-/* FIXED: Larger paragraph text */
 .section-header p {
     color: #cccccc;
-    font-size: 1.3rem; /* Increased from 1.1rem */
+    font-size: 1.3rem;
     margin-bottom: 20px;
 }
 
@@ -66,7 +63,7 @@
 
 .progress-bar {
     width: 100%;
-    height: 10px; /* Increased from 8px */
+    height: 10px;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 5px;
     overflow: hidden;
@@ -80,32 +77,33 @@
     border-radius: 3px;
 }
 
-/* Fixed Briefing Content with Better Contrast and Larger Text */
-.threat-assessment-fixed, .threat-assessment {
+/* REFACTOR: Consolidated ".threat-assessment-fixed" and ".threat-assessment" into a single class to avoid duplication. */
+.threat-assessment {
     background: #ffebee;
     border: 3px solid #d32f2f;
     border-radius: 12px;
-    padding: 30px; /* Increased from 25px */
+    padding: 30px;
     margin-bottom: 30px;
     text-align: center;
 }
 
-.threat-assessment-fixed h3, .threat-assessment h3 {
+.threat-assessment h3 {
     color: #d32f2f;
     margin-bottom: 20px;
     font-family: 'Orbitron', monospace;
-    font-size: 1.6rem; /* Increased from 1.3rem */
+    font-size: 1.6rem;
 }
 
-.threat-assessment-fixed p, .threat-assessment p {
+.threat-assessment p {
     color: #000000;
-    font-size: 1.2rem; /* Increased from 1.1rem */
+    font-size: 1.2rem;
     line-height: 1.6;
     font-weight: 500;
     margin-bottom: 15px;
 }
 
-.learning-objectives-fixed {
+/* REFACTOR: Renamed from ".learning-objectives-fixed" for consistency. */
+.learning-objectives {
     background: #e8f5e8;
     border: 3px solid #2e7d32;
     border-radius: 12px;
@@ -113,73 +111,69 @@
     margin-bottom: 30px;
 }
 
-.learning-objectives-fixed h3 {
+.learning-objectives h3 {
     color: #2e7d32;
     margin-bottom: 20px;
     font-family: 'Orbitron', monospace;
-    font-size: 1.6rem; /* Increased */
+    font-size: 1.6rem;
     text-align: center;
 }
 
-.learning-objectives-fixed ul {
+.learning-objectives ul {
     color: #000000;
     padding-left: 25px;
 }
 
-.learning-objectives-fixed li {
+.learning-objectives li {
     margin-bottom: 12px;
     line-height: 1.6;
     font-weight: 500;
     color: #1b5e20;
-    font-size: 1.1rem; /* Added explicit size */
+    font-size: 1.1rem;
 }
 
-/* FIXED: Instructor message styling */
-.instructor-message-fixed, .instructor-message {
+/* REFACTOR: Consolidated ".instructor-message-fixed" and ".instructor-message" into a single class. */
+.instructor-message {
     display: flex;
     align-items: flex-start;
     gap: 20px;
     background: #fff3e0;
     border: 3px solid #f57c00;
     border-radius: 15px;
-    padding: 30px; /* Increased */
+    padding: 30px;
     margin-bottom: 30px;
 }
 
-.instructor-message-fixed .instructor-avatar img, 
 .instructor-message .instructor-avatar img {
-    width: 80px; /* Reasonable size */
+    width: 80px;
     height: 80px;
     border-radius: 50%;
     border: 3px solid #f57c00;
     filter: drop-shadow(0 0 10px rgba(245, 124, 0, 0.5));
 }
 
-.instructor-message-fixed .message-content, 
 .instructor-message .message-content {
     flex: 1;
     color: #000000;
 }
 
-.instructor-message-fixed .message-content h4, 
+/* REFACTOR: Cleaned up the redundant and complex selectors for h3 and h4. */
 .instructor-message .message-content h3,
 .instructor-message .message-content h4 {
     color: #e65100;
     margin-bottom: 15px;
     font-family: 'Orbitron', monospace;
-    font-size: 1.4rem; /* Increased from 1.2rem */
+    font-size: 1.4rem;
 }
 
-.instructor-message-fixed .message-content p, 
 .instructor-message .message-content p {
     line-height: 1.6;
     margin-bottom: 15px;
     color: #3e2723;
     font-weight: 500;
-    font-size: 1.1rem; /* Added explicit size */
+    font-size: 1.1rem;
 }
 
-/* FIXED: Threat cards - better sizing */
 .learning-cards {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -192,8 +186,9 @@
     border: 2px solid #00ffff;
     border-radius: 12px;
     padding: 25px;
-    transition: all 0.3s ease;
-    font-size: 1rem; /* Base size */
+    /* REFACTOR: Changed `transition: all` to specific properties for better performance. */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    font-size: 1rem;
 }
 
 .threat-card:hover {
@@ -209,7 +204,7 @@
 }
 
 .threat-icon-img {
-    width: 40px; /* Reasonable size */
+    width: 40px;
     height: 40px;
     border-radius: 50%;
     filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.5));
@@ -218,7 +213,7 @@
 .threat-card h3 {
     color: #00ffff;
     font-family: 'Orbitron', monospace;
-    font-size: 1.3rem; /* Increased */
+    font-size: 1.3rem;
     margin: 0;
     flex: 1;
 }
@@ -226,21 +221,13 @@
 .threat-level {
     padding: 6px 12px;
     border-radius: 15px;
-    font-size: 0.9rem; /* Increased from 0.7rem */
+    font-size: 0.9rem;
     font-weight: bold;
     text-transform: uppercase;
 }
 
-.threat-level.high {
-    background: #e74c3c;
-    color: white;
-}
-
-.threat-level.medium {
-    background: #f39c12;
-    color: white;
-}
-
+.threat-level.high { background: #e74c3c; color: white; }
+.threat-level.medium { background: #f39c12; color: white; }
 .threat-level.critical {
     background: #c0392b;
     color: white;
@@ -257,23 +244,23 @@
     color: #ffffff;
     line-height: 1.6;
     margin-bottom: 10px;
-    font-size: 1rem; /* Explicit size */
+    font-size: 1rem;
 }
 
-/* FIXED: Buttons - larger and more clickable */
 .section-btn {
     background: linear-gradient(45deg, #3498db, #2980b9);
     color: white;
     border: 2px solid #3498db;
-    padding: 18px 36px; /* Increased from smaller values */
+    padding: 18px 36px;
     border-radius: 10px;
     cursor: pointer;
     font-weight: bold;
     font-family: 'Orbitron', monospace;
-    font-size: 1.2rem; /* Increased */
+    font-size: 1.2rem;
     text-transform: uppercase;
     letter-spacing: 1px;
-    transition: all 0.3s ease;
+    /* REFACTOR: Changed `transition: all` to specific properties for better performance. */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     margin: 20px auto;
     display: block;
     min-width: 200px;
@@ -293,14 +280,13 @@
     box-shadow: 0 8px 20px rgba(243, 156, 18, 0.4);
 }
 
-/* FIXED: Password-specific elements */
 .vault-container {
     text-align: center;
     margin: 40px 0;
 }
 
 .digital-vault {
-    width: 200px; /* Reasonable size */
+    width: 200px;
     height: 200px;
     background: linear-gradient(45deg, #1a1a2e, #16213e);
     border: 4px solid #00ffff;
@@ -314,18 +300,18 @@
 }
 
 .vault-icon, .vault-lock {
-    width: 80px; /* Reasonable size - not huge */
+    width: 80px;
     height: 80px;
-    transition: all 0.5s ease;
+    /* REFACTOR: Changed `transition: all` to specific properties for better performance. */
+    transition: filter 0.5s ease, transform 0.5s ease;
     filter: drop-shadow(0 0 15px rgba(243, 156, 18, 0.5));
 }
 
 .vault-unlocked .vault-lock, .vault-unlocked .vault-icon {
     filter: drop-shadow(0 0 20px rgba(0, 255, 0, 0.8));
-    transform: scale(1.1); /* Subtle scale, not huge */
+    transform: scale(1.1);
 }
 
-/* FIXED: Password tips grid */
 .password-tips {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -333,403 +319,104 @@
     margin: 30px 0;
 }
 
-.tip-card {
-    background: rgba(0, 255, 255, 0.1);
-    border: 2px solid #00ffff;
-    border-radius: 12px;
-    padding: 25px;
-    text-align: center;
+/* ... (Remaining code is structurally sound, no major refactors needed, continuing from here) ... */
+
+.tip-card { background: rgba(0, 255, 255, 0.1); border: 2px solid #00ffff; border-radius: 12px; padding: 25px; text-align: center; }
+.tip-icon-img { width: 40px; height: 40px; margin-bottom: 15px; filter: drop-shadow(0 0 8px rgba(0, 255, 255, 0.4)); }
+.tip-card h4 { color: #00ffff; font-family: 'Orbitron', monospace; font-size: 1.3rem; margin-bottom: 15px; }
+.tip-card p { color: #ffffff; line-height: 1.6; font-size: 1rem; }
+.password-input { width: 100%; padding: 16px; font-size: 1.1rem; border: 3px solid #00ffff; background: rgba(0, 255, 255, 0.1); color: #fff; border-radius: 8px; font-family: 'Courier New', monospace; font-weight: bold; margin: 15px 0; }
+.password-feedback { margin: 20px 0; padding: 20px; border-radius: 10px; background: rgba(0, 255, 255, 0.1); border-left: 4px solid #00ffff; font-size: 1rem; line-height: 1.6; color: #ffffff; }
+.password-feedback h4 { color: #00ffff; font-size: 1.3rem; margin-bottom: 15px; }
+.assessment-content { font-size: 1rem; }
+.assessment-intro h3 { font-size: 1.8rem; margin-bottom: 20px; color: #00ffff; }
+.assessment-intro p { font-size: 1.1rem; line-height: 1.6; margin-bottom: 25px; color: #ffffff; }
+.challenge-card { background: rgba(0, 255, 255, 0.1); border: 3px solid #00ffff; border-radius: 15px; padding: 25px; margin-bottom: 25px; }
+.challenge-card h4 { font-size: 1.4rem; margin-bottom: 15px; color: #00ffff; }
+.challenge-card p { font-size: 1rem; line-height: 1.6; margin-bottom: 15px; color: #ffffff; }
+.option-btn { padding: 15px 20px; font-size: 1rem; font-weight: bold; background: rgba(0, 255, 255, 0.2); border: 2px solid #00ffff; color: #fff; border-radius: 8px; cursor: pointer; /* REFACTOR: Specific transitions. */ transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease; margin: 8px; display: block; width: 100%; }
+.option-btn:hover { background: #00ffff; color: #000; transform: scale(1.02); }
+.certification-badge { width: 64px; height: 64px; margin-bottom: 15px; filter: drop-shadow(0 0 15px rgba(243, 156, 18, 0.6)); }
+.progress-indicator { position: fixed; top: 80px; right: 20px; background: rgba(26, 26, 46, 0.95); padding: 15px; border-radius: 12px; border: 2px solid #00ffff; z-index: 1000; font-size: 0.9rem; }
+.progress-step { display: flex; align-items: center; margin: 6px 0; color: #666; }
+.progress-step.active { color: #00ffff; font-weight: bold; }
+.progress-step.completed { color: #00ff00; font-weight: bold; }
+.step-number { width: 24px; height: 24px; border-radius: 50%; background: #333; display: flex; align-items: center; justify-content: center; margin-right: 10px; font-size: 0.8rem; font-weight: bold; }
+.progress-step.active .step-number { background: #00ffff; color: #000; }
+.progress-step.completed .step-number { background: #00ff00; color: #000; }
+.module-page { background: linear-gradient(135deg, #0c1445 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #001122 100%); min-height: 100vh; font-size: 1rem; color: #ffffff; }
+.module-header { background: rgba(0, 20, 40, 0.95); border-bottom: 3px solid #00ffff; padding: 15px 0; position: sticky; top: 0; z-index: 100; backdrop-filter: blur(10px); }
+.module-nav { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+.nav-btn { display: flex; align-items: center; gap: 8px; background: linear-gradient(45deg, #3498db, #2980b9); color: white; border: 2px solid #3498db; padding: 12px 18px; border-radius: 8px; cursor: pointer; font-weight: bold; /* REFACTOR: Specific transitions. */ transition: transform 0.3s ease, box-shadow 0.3s ease; text-decoration: none; font-family: 'Orbitron', monospace; font-size: 1rem; }
+.nav-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4); }
+.nav-icon { width: 20px; height: 20px; filter: brightness(0) invert(1); }
+.module-info { text-align: center; color: white; }
+.module-title-section { display: flex; align-items: center; justify-content: center; gap: 15px; }
+.module-logo { width: 50px; height: 50px; filter: drop-shadow(0 0 10px rgba(0, 255, 255, 0.5)); }
+.module-info h1 { font-family: 'Orbitron', monospace; color: #00ffff; font-size: 1.6rem; margin: 0; text-shadow: 2px 2px 4px rgba(0,0,0,0.8); }
+.module-subtitle { color: #f39c12; font-size: 1rem; margin: 5px 0 0 0; font-style: italic; }
+.module-progress-nav { color: #00ff00; font-family: 'Orbitron', monospace; font-weight: bold; font-size: 1rem; }
+.common-passwords { background: rgba(231, 76, 60, 0.2); border: 3px solid #e74c3c; border-radius: 12px; padding: 25px; margin: 25px 0; }
+.common-passwords h3 { color: #e74c3c; font-size: 1.5rem; margin-bottom: 20px; text-align: center; }
+.password-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 15px 0; text-align: center; }
+.password-grid span { background: rgba(231, 76, 60, 0.3); padding: 8px; border-radius: 5px; font-family: 'Courier New', monospace; font-size: 1rem; color: #ffffff; }
+.password-examples { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin: 25px 0; }
+.example-card { padding: 20px; border-radius: 12px; border: 3px solid; }
+.example-card h4 { font-size: 1.3rem; margin-bottom: 15px; }
+.example-card ul li { margin-bottom: 8px; font-size: 1rem; line-height: 1.4; font-family: 'Courier New', monospace; }
+.weak-example { background: rgba(231, 76, 60, 0.1); border-color: #e74c3c; }
+.strong-example { background: rgba(0, 255, 0, 0.1); border-color: #00ff00; }
+.strength-criteria { background: rgba(0, 255, 255, 0.1); border: 3px solid #00ffff; border-radius: 12px; padding: 25px; margin: 25px 0; }
+.strength-criteria h4 { font-size: 1.4rem; margin-bottom: 20px; color: #00ffff; }
+.criteria-list { display: grid; gap: 12px; }
+.criteria-item { display: flex; align-items: center; gap: 12px; padding: 12px; background: rgba(0, 0, 0, 0.3); border-radius: 8px; font-size: 1rem; font-weight: bold; }
+.check-mark { font-size: 1.2rem; min-width: 25px; }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+.briefing-content, .training-content { max-width: 1000px; margin: 0 auto; }
+.briefing-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 30px 0; }
+.stat-card { background: rgba(0, 255, 255, 0.1); border: 2px solid #00ffff; border-radius: 10px; padding: 20px; text-align: center; }
+.stat-card h4 { color: #00ffff; font-size: 1.5rem; margin-bottom: 10px; }
+.stat-card p { color: #ffffff; font-size: 1rem; line-height: 1.4; }
+
+
+/* ==================================================
+   ACCESSIBILITY OVERRIDES
+   ================================================== */
+
+/* REFACTOR: Added a media query to disable animations and transitions for users who prefer reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+  .training-section.active,
+  .threat-level.critical {
+    animation: none;
+  }
+
+  .progress-fill,
+  .threat-card,
+  .section-btn,
+  .vault-icon,
+  .vault-lock,
+  .option-btn,
+  .nav-btn {
+    transition: none;
+  }
 }
 
-.tip-icon-img {
-    width: 40px; /* Reasonable size */
-    height: 40px;
-    margin-bottom: 15px;
-    filter: drop-shadow(0 0 8px rgba(0, 255, 255, 0.4));
-}
 
-.tip-card h4 {
-    color: #00ffff;
-    font-family: 'Orbitron', monospace;
-    font-size: 1.3rem;
-    margin-bottom: 15px;
-}
-
-.tip-card p {
-    color: #ffffff;
-    line-height: 1.6;
-    font-size: 1rem;
-}
-
-/* FIXED: Password input styling */
-.password-input {
-    width: 100%;
-    padding: 16px;
-    font-size: 1.1rem; /* Reasonable size */
-    border: 3px solid #00ffff;
-    background: rgba(0, 255, 255, 0.1);
-    color: #fff;
-    border-radius: 8px;
-    font-family: 'Courier New', monospace;
-    font-weight: bold;
-    margin: 15px 0;
-}
-
-.password-feedback {
-    margin: 20px 0;
-    padding: 20px;
-    border-radius: 10px;
-    background: rgba(0, 255, 255, 0.1);
-    border-left: 4px solid #00ffff;
-    font-size: 1rem;
-    line-height: 1.6;
-    color: #ffffff;
-}
-
-.password-feedback h4 {
-    color: #00ffff;
-    font-size: 1.3rem;
-    margin-bottom: 15px;
-}
-
-/* FIXED: Assessment styling */
-.assessment-content {
-    font-size: 1rem; /* Base size */
-}
-
-.assessment-intro h3 {
-    font-size: 1.8rem; /* Reasonable size */
-    margin-bottom: 20px;
-    color: #00ffff;
-}
-
-.assessment-intro p {
-    font-size: 1.1rem;
-    line-height: 1.6;
-    margin-bottom: 25px;
-    color: #ffffff;
-}
-
-.challenge-card {
-    background: rgba(0, 255, 255, 0.1);
-    border: 3px solid #00ffff;
-    border-radius: 15px;
-    padding: 25px;
-    margin-bottom: 25px;
-}
-
-.challenge-card h4 {
-    font-size: 1.4rem;
-    margin-bottom: 15px;
-    color: #00ffff;
-}
-
-.challenge-card p {
-    font-size: 1rem;
-    line-height: 1.6;
-    margin-bottom: 15px;
-    color: #ffffff;
-}
-
-.option-btn {
-    padding: 15px 20px;
-    font-size: 1rem;
-    font-weight: bold;
-    background: rgba(0, 255, 255, 0.2);
-    border: 2px solid #00ffff;
-    color: #fff;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin: 8px;
-    display: block;
-    width: 100%;
-}
-
-.option-btn:hover {
-    background: #00ffff;
-    color: #000;
-    transform: scale(1.02);
-}
-
-/* FIXED: Certificate badge */
-.certification-badge {
-    width: 64px; /* Reasonable size */
-    height: 64px;
-    margin-bottom: 15px;
-    filter: drop-shadow(0 0 15px rgba(243, 156, 18, 0.6));
-}
-
-/* FIXED: Progress indicator */
-.progress-indicator {
-    position: fixed;
-    top: 80px;
-    right: 20px;
-    background: rgba(26, 26, 46, 0.95);
-    padding: 15px;
-    border-radius: 12px;
-    border: 2px solid #00ffff;
-    z-index: 1000;
-    font-size: 0.9rem; /* Reasonable size */
-}
-
-.progress-step {
-    display: flex;
-    align-items: center;
-    margin: 6px 0;
-    color: #666;
-}
-
-.progress-step.active {
-    color: #00ffff;
-    font-weight: bold;
-}
-
-.progress-step.completed {
-    color: #00ff00;
-    font-weight: bold;
-}
-
-.step-number {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    background: #333;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 10px;
-    font-size: 0.8rem;
-    font-weight: bold;
-}
-
-.progress-step.active .step-number {
-    background: #00ffff;
-    color: #000;
-}
-
-.progress-step.completed .step-number {
-    background: #00ff00;
-    color: #000;
-}
-
-/* Module Page Specific Styles */
-.module-page {
-    background: linear-gradient(135deg, #0c1445 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #001122 100%);
-    min-height: 100vh;
-    font-size: 1rem; /* Base font size */
-    color: #ffffff;
-}
-
-.module-header {
-    background: rgba(0, 20, 40, 0.95);
-    border-bottom: 3px solid #00ffff;
-    padding: 15px 0;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    backdrop-filter: blur(10px);
-}
-
-.module-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 20px;
-}
-
-.nav-btn {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: linear-gradient(45deg, #3498db, #2980b9);
-    color: white;
-    border: 2px solid #3498db;
-    padding: 12px 18px; /* Increased */
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: all 0.3s ease;
-    text-decoration: none;
-    font-family: 'Orbitron', monospace;
-    font-size: 1rem; /* Explicit size */
-}
-
-.nav-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
-}
-
-.nav-icon {
-    width: 20px;
-    height: 20px;
-    filter: brightness(0) invert(1);
-}
-
-.module-info {
-    text-align: center;
-    color: white;
-}
-
-.module-title-section {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
-}
-
-.module-logo {
-    width: 50px; /* Reasonable size */
-    height: 50px;
-    filter: drop-shadow(0 0 10px rgba(0, 255, 255, 0.5));
-}
-
-.module-info h1 {
-    font-family: 'Orbitron', monospace;
-    color: #00ffff;
-    font-size: 1.6rem; /* Reasonable size */
-    margin: 0;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
-}
-
-.module-subtitle {
-    color: #f39c12;
-    font-size: 1rem;
-    margin: 5px 0 0 0;
-    font-style: italic;
-}
-
-.module-progress-nav {
-    color: #00ff00;
-    font-family: 'Orbitron', monospace;
-    font-weight: bold;
-    font-size: 1rem;
-}
-
-/* FIXED: Common passwords section */
-.common-passwords {
-    background: rgba(231, 76, 60, 0.2);
-    border: 3px solid #e74c3c;
-    border-radius: 12px;
-    padding: 25px;
-    margin: 25px 0;
-}
-
-.common-passwords h3 {
-    color: #e74c3c;
-    font-size: 1.5rem;
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-.password-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    margin: 15px 0;
-    text-align: center;
-}
-
-.password-grid span {
-    background: rgba(231, 76, 60, 0.3);
-    padding: 8px;
-    border-radius: 5px;
-    font-family: 'Courier New', monospace;
-    font-size: 1rem;
-    color: #ffffff;
-}
-
-/* FIXED: Password examples */
-.password-examples {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 25px;
-    margin: 25px 0;
-}
-
-.example-card {
-    padding: 20px;
-    border-radius: 12px;
-    border: 3px solid;
-}
-
-.example-card h4 {
-    font-size: 1.3rem;
-    margin-bottom: 15px;
-}
-
-.example-card ul li {
-    margin-bottom: 8px;
-    font-size: 1rem;
-    line-height: 1.4;
-    font-family: 'Courier New', monospace;
-}
-
-.weak-example {
-    background: rgba(231, 76, 60, 0.1);
-    border-color: #e74c3c;
-}
-
-.strong-example {
-    background: rgba(0, 255, 0, 0.1);
-    border-color: #00ff00;
-}
-
-/* FIXED: Strength criteria */
-.strength-criteria {
-    background: rgba(0, 255, 255, 0.1);
-    border: 3px solid #00ffff;
-    border-radius: 12px;
-    padding: 25px;
-    margin: 25px 0;
-}
-
-.strength-criteria h4 {
-    font-size: 1.4rem;
-    margin-bottom: 20px;
-    color: #00ffff;
-}
-
-.criteria-list {
-    display: grid;
-    gap: 12px;
-}
-
-.criteria-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px;
-    background: rgba(0, 0, 0, 0.3);
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: bold;
-}
-
-.check-mark {
-    font-size: 1.2rem;
-    min-width: 25px;
-}
-
-/* Mobile Responsiveness */
+/* ==================================================
+   MOBILE RESPONSIVENESS
+   ================================================== */
 @media (max-width: 768px) {
+    /* REFACTOR: Removed `!important`. The order of rules is sufficient to override base styles. */
     .section-header h2 {
-        font-size: 2rem !important;
+        font-size: 2rem;
     }
     
     .section-header p {
-        font-size: 1.1rem !important;
+        font-size: 1.1rem;
     }
     
-    .learning-cards {
-        grid-template-columns: 1fr;
-    }
-    
-    .password-tips {
-        grid-template-columns: 1fr;
-    }
-    
+    .learning-cards,
+    .password-tips,
     .password-examples {
         grid-template-columns: 1fr;
     }
@@ -759,44 +446,4 @@
     .password-grid {
         grid-template-columns: repeat(2, 1fr);
     }
-}
-
-/* Additional fixes for containers */
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-.briefing-content, .training-content {
-    max-width: 1000px;
-    margin: 0 auto;
-}
-
-/* Ensure good spacing */
-.briefing-stats {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
-    margin: 30px 0;
-}
-
-.stat-card {
-    background: rgba(0, 255, 255, 0.1);
-    border: 2px solid #00ffff;
-    border-radius: 10px;
-    padding: 20px;
-    text-align: center;
-}
-
-.stat-card h4 {
-    color: #00ffff;
-    font-size: 1.5rem;
-    margin-bottom: 10px;
-}
-
-.stat-card p {
-    color: #ffffff;
-    font-size: 1rem;
-    line-height: 1.4;
 }
