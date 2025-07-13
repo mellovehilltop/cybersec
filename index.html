@@ -65,12 +65,7 @@
                                         <span class="difficulty">🔒 LEVEL 3</span>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="folder-actions">
-                                <button class="file-btn" onclick="openFile(1)" id="btn-1">
-                                    OPEN FILE
-                                </button>
-                            </div>
+
                         </div>
 
                         <!-- File 2: Password Security -->
@@ -95,12 +90,7 @@
                                         <span class="difficulty">🔒 LEVEL 2</span>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="folder-actions">
-                                <button class="file-btn" onclick="openFile(2)" id="btn-2" disabled>
-                                    CLEARANCE REQUIRED
-                                </button>
-                            </div>
+
                         </div>
 
                         <!-- File 3: Internet Security -->
@@ -125,12 +115,7 @@
                                         <span class="difficulty">🔒 LEVEL 3</span>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="folder-actions">
-                                <button class="file-btn" onclick="openFile(3)" id="btn-3" disabled>
-                                    CLEARANCE REQUIRED
-                                </button>
-                            </div>
+
                         </div>
 
                         <!-- File 4: Physical Security -->
@@ -155,12 +140,7 @@
                                         <span class="difficulty">🔒 LEVEL 2</span>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="folder-actions">
-                                <button class="file-btn" onclick="openFile(4)" id="btn-4" disabled>
-                                    CLEARANCE REQUIRED
-                                </button>
-                            </div>
+ 
                         </div>
 
                         <!-- File 5: GDPR -->
@@ -185,12 +165,6 @@
                                         <span class="difficulty">🔒 LEVEL 4</span>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="folder-actions">
-                                <button class="file-btn" onclick="openFile(5)" id="btn-5" disabled>
-                                    CLEARANCE REQUIRED
-                                </button>
-                            </div>
                         </div>
 
                     </div>
@@ -244,12 +218,6 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="special-actions">
-                        <button class="special-btn" onclick="openFinalAssessment()" id="final-btn" disabled>
-                            🔒 ACCESS DENIED
-                        </button>
-                    </div>
                 </div>
             </div>
         </div>
@@ -267,11 +235,6 @@
                 <div class="status-center">
                     <span class="files-accessed">FILES ACCESSED: <span id="files-completed">0</span>/5</span>
                     <span class="security-level">SECURITY LEVEL: TRAINEE</span>
-                </div>
-                <div class="status-right">
-                    <button onclick="toggleAdminPanel()" class="admin-access" title="System Administration">🔧</button>
-                    <span class="timestamp" id="current-timestamp"></span>
-                </div>
             </div>
         </div>
     </footer>
@@ -280,21 +243,6 @@
     <section class="admin-panel hidden" id="admin-panel">
         <div class="container">
             <div class="admin-terminal">
-                <div class="terminal-header">
-                    <span class="terminal-title">SYSTEM ADMINISTRATION CONSOLE</span>
-                    <button onclick="toggleAdminPanel()" class="terminal-close">×</button>
-                </div>
-                <div class="terminal-body">
-                    <div class="admin-commands">
-                        <h3>TESTING COMMANDS:</h3>
-                        <div class="command-buttons">
-                            <button onclick="resetAllProgress()" class="cmd-btn danger">RESET_ALL_PROGRESS</button>
-                            <button onclick="completeModule(1)" class="cmd-btn">COMPLETE_FILE_001</button>
-                            <button onclick="completeModule(2)" class="cmd-btn">COMPLETE_FILE_002</button>
-                            <button onclick="completeModule(3)" class="cmd-btn">COMPLETE_FILE_003</button>
-                            <button onclick="completeModule(4)" class="cmd-btn">COMPLETE_FILE_004</button>
-                            <button onclick="completeModule(5)" class="cmd-btn">COMPLETE_FILE_005</button>
-                        </div>
                     </div>
                 </div>
             </div>
