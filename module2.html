@@ -1,1 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 2: Password Security - Digital Shield Training</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/modules.css">
+    <style>
+        /* Module 2 Specific Styles */
+        .password-strength-meter {
+            width: 100%;
+            height: 8px;
+            background: #333;
+            border-radius: 4px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        
+        .strength-fill {
+            height: 100%;
+            transition: all 0.3s ease;
+            border-radius: 4px;
+        }
+        
+        .strength-weak { background: #e74c3c; width: 25%; }
+        .strength-fair { background: #f39c12; width: 50%; }
+        .strength-good { background: #3498db; width: 75%; }
+        .strength-strong { background: #00ff00; width: 100%; }
+        
+        .password-input-container {
+            position: relative;
+            margin: 20px 0;
+        }
+        
+        .password-input {
+            width: 100%;
+            padding: 15px;
+            font-size: 18px;
+            border: 2px solid #00ffff;
+            background: rgba(0, 255, 255, 0.1);
+            color: #fff;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .password-feedback {
+            margin: 15px 0;
+            padding: 15px;
+            border-radius: 8px;
+            background: rgba(0, 255, 255, 0.1);
+            border-left: 4px solid #00ffff;
+        }
+        
+        .vault-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .digital-vault {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(45deg, #1a1a2e, #16213e);
+            border: 3px solid #00ffff;
+            border-radius: 50%;
+            margin: 0 auto;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+        }
+        
+        .vault-lock {
+            font-size: 48px;
+            color: #f39c12;
+            transition: all 0.5s ease;
+        }
+        
+        .vault-unlocked .vault-lock {
+            color: #00ff00;
+            transform: scale(1.2);
+        }
+        
+        .password-tips {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .tip-card {
+            background: rgba(0, 255, 255, 0.1);
+            border: 1px solid #00ffff;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .tip-icon {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+        
+        .common-passwords {
+            background: rgba(231, 76, 60, 0.2);
+            border: 2px solid #e74c3c;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .password-examples {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .example-card {
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid;
+        }
+        
+        .weak-example {
+            background: rgba(231, 76, 60, 0.1);
+            border-color: #e74c3c;
+        }
+        
+        .strong-example {
+            background: rgba(0, 255, 0, 0.1);
+            border-color: #00ff00;
+        }
+        
+        .progress-indicator {
+            position: fixed;
+            top: 70px;
+            right: 20px;
+            background: rgba(26, 26, 46, 0.9);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #00ffff;
+            z-index: 1000;
+        }
+        
+        .progress-step {
+            display: flex;
+            align-items: center;
+            margin: 5px 0;
+            color: #666;
+        }
+        
+        .progress-step.active {
+            color: #00ffff;
+        }
+        
+        .progress-step.completed {
+            color: #00ff00;
+        }
+        
+        .step-number {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            font-size: 12px;
+        }
+        
+        .progress-step.active .step-number {
+            background: #00ffff;
+            color: #000;
+        }
+        
+        .progress-step.completed .step-number {
+            background: #00ff00;
+            color: #000;
+        }
+    </style>
+</head>
+<body class="module-page">
+    <!-- Progress Indicator -->
+    <div class="progress-indicator">
+        <div class="progress-step active" id="step-1">
+            <div class="step-number">1</div>
+            <span>Briefing</span>
+        </div>
+        <div class="progress-step" id="step-2">
+            <div class="step-number">2</div>
+            <span>Threats</span>
+        </div>
+        <div class="progress-step" id="step-3">
+            <div class="step-number">3</div>
+            <span>Best Practice</span>
+        </div>
+        <div class="progress-step" id="step-4">
+            <div class="step-number">4</div>
+            <span>Testing</span>
+        </div>
+        <div class="progress-step" id="step-5">
+            <div class="step-number">5</div>
+            <span>Assessment</span>
+        </div>
+    </div>
 
+    <!-- Header Navigation -->
+    <header class="module-header">
+        <div class="container">
+            <div class="module-nav">
+                <button onclick="returnToMissionControl()" class="nav-btn back">
+                    <img src="images/interface/navigation-back.png" alt="Back" style="width: 16px; margin-right: 8px;"> Mission Control
+                </button>
+                <div class="module-info">
+                    <h1>MODULE 02: PASSWORD SECURITY</h1>
+                    <p class="module-subtitle">The Vault Guardian Protocol</p>
+                </div>
+                <div class="module-progress-nav">
+                    <span class="progress-text">Progress: <span id="module-progress">0%</span></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mission Briefing Section -->
+    <section id="briefing-section" class="training-section active">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-icon" style="font-size: 64px;">🔐</div>
+                <h2>MISSION BRIEFING</h2>
+                <p>Intelligence Report: Password Vulnerabilities</p>
+            </div>
+            
+            <div class="briefing-content">
+                <div class="threat-assessment">
+                    <h3>🚨 THREAT LEVEL: CRITICAL</h3>
+                    <p><strong>81% of data breaches</strong> are caused by weak or stolen passwords. In the food manufacturing sector, this represents the highest risk to our operations, customer data, and production systems.</p>
+                    
+                    <div class="vault-container">
+                        <div class="digital-vault">
+                            <div class="vault-lock">🔒</div>
+                        </div>
+                        <p><strong>Your passwords are the keys to our digital kingdom.</strong></p>
+                    </div>
+                    
+                    <div class="briefing-stats">
+                        <div class="stat-card">
+                            <h4>2.3 BILLION</h4>
+                            <p>Passwords exposed in data breaches in 2023</p>
+                        </div>
+                        <div class="stat-card">
+                            <h4>3 SECONDS</h4>
+                            <p>Average time to crack "password123"</p>
+                        </div>
+                        <div class="stat-card">
+                            <h4>£3.86 MILLION</h4>
+                            <p>Average cost of a data breach in the UK</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mission-objective">
+                        <h3>🎯 MISSION OBJECTIVE</h3>
+                        <p>Master password security protocols to protect Hilltop Honey's digital assets. You will learn to create unbreakable passwords, recognize password threats, and implement secure password management practices.</p>
+                        <p><strong>Remember:</strong> Every weak password is an open door for cyber criminals. Lock them out completely.</p>
+                    </div>
+                </div>
+
+                <button onclick="startTraining()" class="section-btn primary">
+                    BEGIN VAULT TRAINING
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Training Phase 1: Password Threats -->
+    <section id="training-phase-1" class="training-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>PHASE 1: THREAT ANALYSIS</h2>
+                <p>Password Attack Vectors</p>
+            </div>
+
+            <div class="learning-cards">
+                <div class="threat-card">
+                    <div class="threat-header">
+                        <div class="threat-icon">💥</div>
+                        <h3>BRUTE FORCE ATTACKS</h3>
+                        <span class="threat-level high">HIGH RISK</span>
+                    </div>
+                    <div class="threat-content">
+                        <p><strong>Method:</strong> Automated tools try millions of password combinations per second.</p>
+                        <p><strong>Target:</strong> Simple, short passwords using common patterns.</p>
+                        <p><strong>Defense:</strong> Length and complexity make these attacks impractical.</p>
+                    </div>
+                </div>
+
+                <div class="threat-card">
+                    <div class="threat-header">
+                        <div class="threat-icon">📚</div>
+                        <h3>DICTIONARY ATTACKS</h3>
+                        <span class="threat-level medium">MEDIUM RISK</span>
+                    </div>
+                    <div class="threat-content">
+                        <p><strong>Method:</strong> Uses lists of common passwords and dictionary words.</p>
+                        <p><strong>Target:</strong> Passwords based on real words, names, or common phrases.</p>
+                        <p><strong>Defense:</strong> Avoid dictionary words; use unique combinations.</p>
+                    </div>
+                </div>
+
+                <div class="threat-card">
+                    <div class="threat-header">
+                        <div class="threat-icon">🎣</div>
+                        <h3>CREDENTIAL STUFFING</h3>
+                        <span class="threat-level critical">CRITICAL</span>
+                    </div>
+                    <div class="threat-content">
+                        <p><strong>Method:</strong> Uses leaked passwords from other breaches to access accounts.</p>
+                        <p><strong>Target:</strong> People who reuse the same password across multiple sites.</p>
+                        <p><strong>Defense:</strong> Unique passwords for every account.</p>
+                    </div>
+                </div>
+
+                <div class="threat-card">
+                    <div class="threat-header">
+                        <div class="threat-icon">👁️</div>
+                        <h3>SHOULDER SURFING</h3>
+                        <span class="threat-level medium">MEDIUM RISK</span>
+                    </div>
+                    <div class="threat-content">
+                        <p><strong>Method:</strong> Watching someone type their password in public spaces.</p>
+                        <p><strong>Target:</strong> Visible password entry in offices, cafes, public areas.</p>
+                        <p><strong>Defense:</strong> Shield your screen; use privacy screens.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="common-passwords">
+                <h3>⚠️ MOST COMMON PASSWORDS (NEVER USE THESE!)</h3>
+                <div class="password-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 15px 0;">
+                    <span>123456</span>
+                    <span>password</span>
+                    <span>123456789</span>
+                    <span>12345678</span>
+                    <span>qwerty</span>
+                    <span>abc123</span>
+                    <span>password123</span>
+                    <span>admin</span>
+                    <span>letmein</span>
+                    <span>welcome</span>
+                    <span>monkey</span>
+                    <span>dragon</span>
+                </div>
+                <p><strong>These passwords can be cracked in under 1 second!</strong></p>
+            </div>
+
+            <button onclick="completePhase(1)" class="section-btn primary">
+                CONTINUE TO PHASE 2
+            </button>
+        </div>
+    </section>
+
+    <!-- Training Phase 2: Password Best Practices -->
+    <section id="training-phase-2" class="training-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>PHASE 2: SECURITY PROTOCOLS</h2>
+                <p>Password Best Practices</p>
+            </div>
+
+            <div class="password-tips">
+                <div class="tip-card">
+                    <div class="tip-icon">📏</div>
+                    <h4>LENGTH MATTERS</h4>
+                    <p>Use at least 12 characters. Every additional character exponentially increases security.</p>
+                </div>
+                
+                <div class="tip-card">
+                    <div class="tip-icon">🎨</div>
+                    <h4>MIX IT UP</h4>
+                    <p>Combine uppercase, lowercase, numbers, and symbols for maximum strength.</p>
+                </div>
+                
+                <div class="tip-card">
+                    <div class="tip-icon">🎯</div>
+                    <h4>BE UNIQUE</h4>
+                    <p>Every account needs its own password. Never reuse passwords across sites.</p>
+                </div>
+                
+                <div class="tip-card">
+                    <div class="tip-icon">🔄</div>
+                    <h4>REGULAR UPDATES</h4>
+                    <p>Change passwords regularly, especially for critical accounts.</p>
+                </div>
+            </div>
+
+            <div class="password-examples">
+                <div class="example-card weak-example">
+                    <h4>❌ WEAK PASSWORDS</h4>
+                    <ul>
+                        <li>password123</li>
+                        <li>john1985</li>
+                        <li>honeybee</li>
+                        <li>qwerty</li>
+                    </ul>
+                    <p><strong>Why weak:</strong> Short, predictable, use dictionary words</p>
+                </div>
+                
+                <div class="example-card strong-example">
+                    <h4>✅ STRONG PASSWORDS</h4>
+                    <ul>
+                        <li>H0n3y!B33$2024#Sw33t</li>
+                        <li>Th3-G0ld3n-Hiv3$Saf3!</li>
+                        <li>My7r33$@r3-Ta11&Str0ng</li>
+                        <li>B33k33p3r#R0ck$4Ever!</li>
+                    </ul>
+                    <p><strong>Why strong:</strong> Long, mixed characters, unique phrases</p>
+                </div>
+            </div>
+
+            <div class="passphrase-method">
+                <h3>🗝️ THE PASSPHRASE METHOD</h3>
+                <p>Create memorable yet secure passwords using this technique:</p>
+                <ol>
+                    <li><strong>Pick 3-4 random words:</strong> "Honey Mountain Dancing Robot"</li>
+                    <li><strong>Add numbers & symbols:</strong> "Honey!Mountain#Dancing$Robot2024"</li>
+                    <li><strong>Make substitutions:</strong> "H0n3y!M0unt@in#D@nc1ng$R0b0t2024"</li>
+                </ol>
+            </div>
+
+            <button onclick="completePhase(2)" class="section-btn primary">
+                CONTINUE TO STRENGTH TESTING
+            </button>
+        </div>
+    </section>
+
+    <!-- Training Phase 3: Password Strength Testing -->
+    <section id="training-phase-3" class="training-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>PHASE 3: VAULT TESTING LAB</h2>
+                <p>Interactive Password Strength Analysis</p>
+            </div>
+
+            <div class="vault-container">
+                <div class="digital-vault" id="vault-status">
+                    <div class="vault-lock" id="vault-lock">🔒</div>
+                </div>
+                <p id="vault-message">Enter a password to test the vault security</p>
+            </div>
+
+            <div class="password-input-container">
+                <input type="password" 
+                       id="password-tester" 
+                       class="password-input" 
+                       placeholder="Enter password to test strength..."
+                       oninput="testPasswordStrength()">
+                <button type="button" onclick="togglePasswordVisibility()" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #00ffff; cursor: pointer;">👁️</button>
+            </div>
+
+            <div class="password-strength-meter">
+                <div class="strength-fill" id="strength-bar"></div>
+            </div>
+
+            <div class="password-feedback" id="password-feedback">
+                <h4>Password Analysis:</h4>
+                <p>Enter a password above to see detailed security analysis...</p>
+            </div>
+
+            <div class="strength-criteria">
+                <h4>Security Checklist:</h4>
+                <div class="criteria-list">
+                    <div class="criteria-item" id="length-check">
+                        <span class="check-mark">❌</span> At least 12 characters
+                    </div>
+                    <div class="criteria-item" id="uppercase-check">
+                        <span class="check-mark">❌</span> Contains uppercase letters
+                    </div>
+                    <div class="criteria-item" id="lowercase-check">
+                        <span class="check-mark">❌</span> Contains lowercase letters
+                    </div>
+                    <div class="criteria-item" id="numbers-check">
+                        <span class="check-mark">❌</span> Contains numbers
+                    </div>
+                    <div class="criteria-item" id="symbols-check">
+                        <span class="check-mark">❌</span> Contains symbols
+                    </div>
+                    <div class="criteria-item" id="common-check">
+                        <span class="check-mark">❌</span> Not a common password
+                    </div>
+                </div>
+            </div>
+
+            <div class="test-passwords">
+                <h4>Try These Examples:</h4>
+                <button onclick="testExample('password')" class="test-btn weak">password</button>
+                <button onclick="testExample('Password123')" class="test-btn weak">Password123</button>
+                <button onclick="testExample('MySecureP@ss2024')" class="test-btn good">MySecureP@ss2024</button>
+                <button onclick="testExample('H0n3y!B33$Ar3-Sw33t&G0ld3n#2024')" class="test-btn strong">H0n3y!B33$Ar3-Sw33t&G0ld3n#2024</button>
+            </div>
+
+            <button onclick="completePhase(3)" class="section-btn primary" id="phase-3-btn" disabled>
+                VAULT SECURED - CONTINUE TO ASSESSMENT
+            </button>
+        </div>
+    </section>
+
+    <!-- Final Assessment Phase -->
+    <section id="assessment-phase" class="training-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>FINAL ASSESSMENT</h2>
+                <p>Password Security Knowledge Test</p>
+            </div>
+
+            <div class="assessment-content">
+                <div class="assessment-intro">
+                    <h3>🎯 FIELD TEST: Password Security Challenge</h3>
+                    <p>Complete these challenges to prove your password security mastery:</p>
+                </div>
+
+                <div class="assessment-challenges">
+                    <div class="challenge-card" id="challenge-1">
+                        <h4>Challenge 1: Identify the Threat</h4>
+                        <p>You receive an email saying "Your password expires today. Click here to update: www.hilltopmoney.com"</p>
+                        <p><strong>What type of attack is this?</strong></p>
+                        <div class="challenge-options">
+                            <button onclick="answerChallenge(1, 'A')" class="option-btn">A) Brute Force</button>
+                            <button onclick="answerChallenge(1, 'B')" class="option-btn">B) Phishing</button>
+                            <button onclick="answerChallenge(1, 'C')" class="option-btn">C) Dictionary Attack</button>
+                        </div>
+                        <div class="challenge-result" id="result-1"></div>
+                    </div>
+
+                    <div class="challenge-card" id="challenge-2">
+                        <h4>Challenge 2: Password Strength</h4>
+                        <p>Rank these passwords from weakest to strongest:</p>
+                        <div class="password-ranking">
+                            <div class="ranking-item" draggable="true" data-strength="1">admin123</div>
+                            <div class="ranking-item" draggable="true" data-strength="3">MyDog$Loves2Run!</div>
+                            <div class="ranking-item" draggable="true" data-strength="2">Summer2024</div>
+                            <div class="ranking-item" draggable="true" data-strength="4">Tr33$@r3T@ll&Gr33n#F0r3st!</div>
+                        </div>
+                        <button onclick="checkRanking()" class="option-btn">Check My Ranking</button>
+                        <div class="challenge-result" id="result-2"></div>
+                    </div>
+
+                    <div class="challenge-card" id="challenge-3">
+                        <h4>Challenge 3: Create a Secure Password</h4>
+                        <p>Create a password for your work email that meets all security requirements:</p>
+                        <input type="password" id="custom-password" class="password-input" placeholder="Create your secure password here...">
+                        <button onclick="validateCustomPassword()" class="option-btn">Test My Password</button>
+                        <div class="challenge-result" id="result-3"></div>
+                    </div>
+                </div>
+
+                <div class="assessment-score">
+                    <h3>Assessment Score: <span id="final-score">0/3</span></h3>
+                    <div class="score-feedback" id="score-feedback">
+                        Complete all challenges to see your final score.
+                    </div>
+                </div>
+
+                <button onclick="completeModule()" class="section-btn primary" id="complete-btn" disabled>
+                    COMPLETE MISSION
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Global variables
+        let currentPhase = 0;
+        let challengeScores = [false, false, false];
+        let passwordVisible = false;
+        
+        // Common passwords list for validation
+        const commonPasswords = [
+            'password', '123456', '123456789', 'qwerty', 'abc123', 
+            'password123', 'admin', 'letmein', 'welcome', 'monkey'
+        ];
+
+        // Navigation functions
+        function returnToMissionControl() {
+            window.location.href = 'index.html';
+        }
+
+        function startTraining() {
+            showSection('training-phase-1');
+            updateProgress(1);
+        }
+
+        function completePhase(phase) {
+            updateProgress(phase + 1);
+            
+            if (phase === 1) {
+                showSection('training-phase-2');
+            } else if (phase === 2) {
+                showSection('training-phase-3');
+            } else if (phase === 3) {
+                showSection('assessment-phase');
+            }
+        }
+
+        function showSection(sectionId) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.training-section');
+            sections.forEach(section => section.classList.remove('active'));
+            
+            // Show target section
+            document.getElementById(sectionId).classList.add('active');
+        }
+
+        function updateProgress(step) {
+            // Update progress indicator
+            for (let i = 1; i <= 5; i++) {
+                const stepElement = document.getElementById(`step-${i}`);
+                if (i < step) {
+                    stepElement.className = 'progress-step completed';
+                } else if (i === step) {
+                    stepElement.className = 'progress-step active';
+                } else {
+                    stepElement.className = 'progress-step';
+                }
+            }
+            
+            // Update progress percentage
+            const percentage = ((step - 1) / 4) * 100;
+            document.getElementById('module-progress').textContent = `${Math.round(percentage)}%`;
+        }
+
+        // Password strength testing
+        function testPasswordStrength() {
+            const password = document.getElementById('password-tester').value;
+            const strengthBar = document.getElementById('strength-bar');
+            const feedback = document.getElementById('password-feedback');
+            const vault = document.getElementById('vault-status');
+            const vaultLock = document.getElementById('vault-lock');
+            const vaultMessage = document.getElementById('vault-message');
+            
+            if (!password) {
+                strengthBar.className = 'strength-fill';
+                feedback.innerHTML = '<h4>Password Analysis:</h4><p>Enter a password above to see detailed security analysis...</p>';
+                vault.classList.remove('vault-unlocked');
+                vaultLock.textContent = '🔒';
+                vaultMessage.textContent = 'Enter a password to test the vault security';
+                updateCriteria(password);
+                return;
+            }
+
+            const strength = calculatePasswordStrength(password);
+            const analysis = analyzePassword(password);
+            
+            // Update strength bar
+            strengthBar.className = `strength-fill strength-${strength.level}`;
+            
+            // Update feedback
+            feedback.innerHTML = `
+                <h4>Password Analysis:</h4>
+                <p><strong>Strength Level:</strong> ${strength.description}</p>
+                <p><strong>Crack Time:</strong> ${strength.crackTime}</p>
+                <div class="analysis-details">
+                    ${analysis.map(item => `<p>• ${item}</p>`).join('')}
+                </div>
+            `;
+            
+            // Update vault status
+            if (strength.level === 'strong') {
+                vault.classList.add('vault-unlocked');
+                vaultLock.textContent = '🔓';
+                vaultMessage.textContent = 'VAULT SECURED - Excellent password strength!';
+                document.getElementById('phase-3-btn').disabled = false;
+            } else {
+                vault.classList.remove('vault-unlocked');
+                vaultLock.textContent = '🔒';
+                vaultMessage.textContent = 'VAULT VULNERABLE - Password needs strengthening';
+                document.getElementById('phase-3-btn').disabled = true;
+            }
+            
+            updateCriteria(password);
+        }
+
+        function calculatePasswordStrength(password) {
+            let score = 0;
+            let crackTime = '';
+            
+            // Length score
+            if (password.length >= 12) score += 25;
+            else if (password.length >= 8) score += 15;
+            else if (password.length >= 6) score += 5;
+            
+            // Character variety
+            if (/[a-z]/.test(password)) score += 15;
+            if (/[A-Z]/.test(password)) score += 15;
+            if (/[0-9]/.test(password)) score += 15;
+            if (/[^A-Za-z0-9]/.test(password)) score += 15;
+            
+            // Bonus for good practices
+            if (password.length >= 16) score += 10;
+            if (!commonPasswords.includes(password.toLowerCase())) score += 5;
+            
+            // Penalties
+            if (/(.)\1{2,}/.test(password)) score -= 10; // Repeated characters
+            if (commonPasswords.includes(password.toLowerCase())) score -= 30;
+            
+            // Determine level and crack time
+            if (score >= 80) {
+                return { level: 'strong', description: 'EXCELLENT', crackTime: 'Centuries to crack' };
+            } else if (score >= 60) {
+                return { level: 'good', description: 'GOOD', crackTime: 'Years to crack' };
+            } else if (score >= 40) {
+                return { level: 'fair', description: 'FAIR', crackTime: 'Days to crack' };
+            } else {
+                return { level: 'weak', description: 'WEAK', crackTime: 'Minutes to crack' };
+            }
+        }
+
+        function analyzePassword(password) {
+            const analysis = [];
+            
+            if (password.length < 12) {
+                analysis.push('Consider making it longer (12+ characters recommended)');
+            }
+            if (!/[A-Z]/.test(password)) {
+                analysis.push('Add uppercase letters for better security');
+            }
+            if (!/[a-z]/.test(password)) {
+                analysis.push('Add lowercase letters for better security');
+            }
+            if (!/[0-9]/.test(password)) {
+                analysis.push('Add numbers for better security');
+            }
+            if (!/[^A-Za-z0-9]/.test(password)) {
+                analysis.push('Add symbols (!@#$%^&*) for better security');
+            }
+            if (commonPasswords.includes(password.toLowerCase())) {
+                analysis.push('This is a commonly used password - avoid it!');
+            }
+            if (/(.)\1{2,}/.test(password)) {
+                analysis.push('Avoid repeating the same character multiple times');
+            }
+            
+            if (analysis.length === 0) {
+                analysis.push('Excellent password structure!');
+                analysis.push('This password follows all security best practices');
+            }
+            
+            return analysis;
+        }
+
+        function updateCriteria(password) {
+            const criteria = {
+                'length-check': password.length >= 12,
+                'uppercase-check': /[A-Z]/.test(password),
+                'lowercase-check': /[a-z]/.test(password),
+                'numbers-check': /[0-9]/.test(password),
+                'symbols-check': /[^A-Za-z0-9]/.test(password),
+                'common-check': !commonPasswords.includes(password.toLowerCase())
+            };
+            
+            Object.keys(criteria).forEach(id => {
+                const element = document.getElementById(id);
+                const checkMark = element.querySelector('.check-mark');
+                if (criteria[id]) {
+                    checkMark.textContent = '✅';
+                    element.style.color = '#00ff00';
+                } else {
+                    checkMark.textContent = '❌';
+                    element.style.color = '#e74c3c';
+                }
+            });
+        }
+
+        function togglePasswordVisibility() {
+            const passwordInput = document.getElementById('password-tester');
+            passwordVisible = !passwordVisible;
+            passwordInput.type = passwordVisible ? 'text' : 'password';
+        }
+
+        function testExample(password) {
+            document.getElementById('password-tester').value = password;
+            testPasswordStrength();
+        }
+
+        // Assessment functions
+        function answerChallenge(challengeNum, answer) {
+            const resultDiv = document.getElementById(`result-${challengeNum}`);
+            
+            if (challengeNum === 1) {
+                if (answer === 'B') {
+                    resultDiv.innerHTML = '<p style="color: #00ff00;">✅ Correct! This is a phishing attempt targeting password credentials.</p>';
+                    challengeScores[0] = true;
+                } else {
+                    resultDiv.innerHTML = '<p style="color: #e74c3c;">❌ Incorrect. This is a phishing attack trying to steal login credentials.</p>';
+                }
+            }
+            
+            updateFinalScore();
+        }
+
+        function checkRanking() {
+            // For simplicity, we'll just provide the correct answer
+            const resultDiv = document.getElementById('result-2');
+            resultDiv.innerHTML = `
+                <p style="color: #00ffff;">Correct ranking (weakest to strongest):</p>
+                <ol>
+                    <li>admin123 (Very weak - common pattern)</li>
+                    <li>Summer2024 (Weak - predictable)</li>
+                    <li>MyDog$Loves2Run! (Good - long with mixed characters)</li>
+                    <li>Tr33$@r3T@ll&Gr33n#F0r3st! (Excellent - very long and complex)</li>
+                </ol>
+            `;
+            challengeScores[1] = true;
+            updateFinalScore();
+        }
+
+        function validateCustomPassword() {
+            const password = document.getElementById('custom-password').value;
+            const resultDiv = document.getElementById('result-3');
+            
+            if (!password) {
+                resultDiv.innerHTML = '<p style="color: #e74c3c;">Please enter a password to test.</p>';
+                return;
+            }
+            
+            const strength = calculatePasswordStrength(password);
+            
+            if (strength.level === 'strong' || strength.level === 'good') {
+                resultDiv.innerHTML = `<p style="color: #00ff00;">✅ Excellent! Your password strength is ${strength.description}.</p>`;
+                challengeScores[2] = true;
+            } else {
+                resultDiv.innerHTML = `<p style="color: #e74c3c;">❌ Password needs improvement. Current strength: ${strength.description}. Try making it longer with mixed characters.</p>`;
+            }
+            
+            updateFinalScore();
+        }
+
+        function updateFinalScore() {
+            const score = challengeScores.filter(Boolean).length;
+            document.getElementById('final-score').textContent = `${score}/3`;
+            
+            const feedback = document.getElementById('score-feedback');
+            
+            if (score === 3) {
+                feedback.innerHTML = '<p style="color: #00ff00;">🎉 MISSION ACCOMPLISHED! You are now a certified Password Security Expert!</p>';
+                document.getElementById('complete-btn').disabled = false;
+            } else if (score === 2) {
+                feedback.innerHTML = '<p style="color: #f39c12;">Good work! Complete one more challenge to earn your certification.</p>';
+            } else if (score === 1) {
+                feedback.innerHTML = '<p style="color: #e74c3c;">Keep going! Complete the remaining challenges to prove your skills.</p>';
+            } else {
+                feedback.innerHTML = '<p>Complete all challenges to see your final score.</p>';
+            }
+        }
+
+        function completeModule() {
+            alert('Congratulations! You have successfully completed Module 2: Password Security. Return to Mission Control to continue your training.');
+            // Here you would typically save progress and redirect
+            returnToMissionControl();
+        }
+
+        // Initialize the module
+        document.addEventListener('DOMContentLoaded', function() {
+            updateProgress(1);
+        });
+    </script>
+</body>
+</html>
