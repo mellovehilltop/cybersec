@@ -537,8 +537,41 @@ window.digitalShieldModules = {
         document.getElementById('flags-found').textContent = '0';
         document.getElementById('flag-explanations').innerHTML = '';
         console.log("🔄 Red flag scanner reset");
+    },
+    testClick: function() {
+        const elements = document.querySelectorAll('.scannable-hidden');
+        if (elements.length > 0) {
+            console.log("🧪 Testing click on first element...");
+            const firstElement = elements[0];
+            console.log("🎯 First element:", firstElement);
+            console.log("🎯 Flag type:", firstElement.getAttribute('data-flag'));
+            
+            // Force click manually
+            handleScannerClick({
+                preventDefault: () => {},
+                stopPropagation: () => {},
+                target: firstElement
+            });
+        } else {
+            console.log("❌ No elements found to test");
+        }
+    },
+    listElements: function() {
+        const elements = document.querySelectorAll('.scannable-hidden');
+        console.log("📋 All scannable elements:");
+        elements.forEach((el, i) => {
+            console.log(`${i}: "${el.textContent}" (${el.getAttribute('data-flag')})`);
+        });
+        return elements;
     }
 };
 
-console.log('🚀 Digital Shield Modules loaded successfully');
-console.log('🛠️ Debug: Use window.digitalShieldModules.initializeRedFlagScanner() to manually test scanner');
+console.log('🚀 Digital Shield Modules loaded successfully - VERSION 2.0 with click debugging');
+console.log('🛠️ Debug commands:');
+console.log('   window.digitalShieldModules.testClick() - Test first element');
+console.log('   window.digitalShieldModules.listElements() - List all elements');
+console.log('   window.digitalShieldModules.initializeRedFlagScanner() - Reinitialize scanner');
+
+// Test if the new version is loaded
+window.digitalShieldVersion = "2.0";
+console.log("📍 Module version:", window.digitalShieldVersion);
