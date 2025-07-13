@@ -8,6 +8,134 @@
     <link rel="stylesheet" href="css/modules.css">
     <style>
         /* Module 2 Specific Styles - IMPROVED READABILITY */
+        
+        /* IMAGE STYLING */
+        .section-icon {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 10px rgba(0, 255, 255, 0.6));
+        }
+        
+        .threat-icon-img {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.5));
+        }
+        
+        .tip-icon-img {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 0 8px rgba(0, 255, 255, 0.4));
+        }
+        
+        .vault-icon {
+            width: 120px;
+            height: 120px;
+            filter: drop-shadow(0 0 20px rgba(243, 156, 18, 0.6));
+        }
+        
+        .vault-lock {
+            width: 100px;
+            height: 100px;
+            transition: all 0.5s ease;
+            filter: drop-shadow(0 0 15px rgba(243, 156, 18, 0.5));
+        }
+        
+        .vault-unlocked .vault-lock {
+            filter: drop-shadow(0 0 20px rgba(0, 255, 0, 0.8));
+            transform: scale(1.3);
+        }
+        
+        /* INSTRUCTOR MESSAGE STYLING */
+        .instructor-message {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            background: rgba(0, 255, 255, 0.1);
+            border: 3px solid #00ffff;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+        
+        .instructor-avatar {
+            flex-shrink: 0;
+        }
+        
+        .instructor-avatar img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 3px solid #00ffff;
+            filter: drop-shadow(0 0 10px rgba(0, 255, 255, 0.5));
+        }
+        
+        .message-content {
+            flex: 1;
+        }
+        
+        .message-content h3, .message-content h4 {
+            color: #00ffff;
+            margin-bottom: 15px;
+            font-family: 'Orbitron', monospace;
+        }
+        
+        /* BACKGROUND IMAGES */
+        .module-page {
+            background: linear-gradient(rgba(10, 10, 26, 0.9), rgba(10, 10, 26, 0.9)), 
+                        url('images/backgrounds/training-room-bg.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+        }
+        
+        .training-section {
+            background: rgba(26, 26, 46, 0.95);
+            border-radius: 15px;
+            margin: 20px 0;
+            backdrop-filter: blur(5px);
+        }
+        
+        /* THREAT CARD IMPROVEMENTS */
+        .threat-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .threat-level {
+            margin-left: auto;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .threat-level.high {
+            background: #e74c3c;
+            color: white;
+        }
+        
+        .threat-level.medium {
+            background: #f39c12;
+            color: white;
+        }
+        
+        .threat-level.critical {
+            background: #c0392b;
+            color: white;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
         .password-strength-meter {
             width: 100%;
             height: 12px;
@@ -420,11 +548,16 @@
         <div class="container">
             <div class="module-nav">
                 <button onclick="returnToMissionControl()" class="nav-btn back">
-                    <img src="images/interface/navigation-back.png" alt="Back" style="width: 16px; margin-right: 8px;"> Mission Control
+                    <img src="images/interface/navigation-back.png" alt="Back" class="nav-icon"> Mission Control
                 </button>
                 <div class="module-info">
-                    <h1>MODULE 02: PASSWORD SECURITY</h1>
-                    <p class="module-subtitle">The Vault Guardian Protocol</p>
+                    <div class="module-title-section">
+                        <img src="images/interface/hilltop-shield-logo.png" alt="Hilltop Honey Security" class="module-logo">
+                        <div class="title-text">
+                            <h1>MODULE 02: PASSWORD SECURITY</h1>
+                            <p class="module-subtitle">The Vault Guardian Protocol</p>
+                        </div>
+                    </div>
                 </div>
                 <div class="module-progress-nav">
                     <span class="progress-text">Progress: <span id="module-progress">0%</span></span>
@@ -437,7 +570,7 @@
     <section id="briefing-section" class="training-section active">
         <div class="container">
             <div class="section-header">
-                <div class="section-icon" style="font-size: 64px;">🔐</div>
+                <img src="images/content/password-security-icon.png" alt="Password Security" class="section-icon">
                 <h2>MISSION BRIEFING</h2>
                 <p>Intelligence Report: Password Vulnerabilities</p>
             </div>
@@ -449,7 +582,7 @@
                     
                     <div class="vault-container">
                         <div class="digital-vault">
-                            <div class="vault-lock">🔒</div>
+                            <img src="images/content/password-security-icon.png" alt="Digital Vault" class="vault-icon">
                         </div>
                         <p><strong>Your passwords are the keys to our digital kingdom.</strong></p>
                     </div>
@@ -469,10 +602,18 @@
                         </div>
                     </div>
                     
-                    <div class="mission-objective">
-                        <h3>🎯 MISSION OBJECTIVE</h3>
-                        <p>Master password security protocols to protect Hilltop Honey's digital assets. You will learn to create unbreakable passwords, recognize password threats, and implement secure password management practices.</p>
-                        <p><strong>Remember:</strong> Every weak password is an open door for cyber criminals. Lock them out completely.</p>
+                    <div class="instructor-message">
+                        <div class="instructor-avatar">
+                            <img src="images/characters/instructor-avatar.png" alt="Security Instructor">
+                        </div>
+                        <div class="message-content">
+                            <h4>INSTRUCTOR BRIEFING</h4>
+                            <div class="mission-objective">
+                                <h3>🎯 MISSION OBJECTIVE</h3>
+                                <p>Master password security protocols to protect Hilltop Honey's digital assets. You will learn to create unbreakable passwords, recognize password threats, and implement secure password management practices.</p>
+                                <p><strong>Remember:</strong> Every weak password is an open door for cyber criminals. Lock them out completely.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -494,7 +635,7 @@
             <div class="learning-cards">
                 <div class="threat-card">
                     <div class="threat-header">
-                        <div class="threat-icon">💥</div>
+                        <img src="images/characters/hacker-silhouette.png" alt="Brute Force Attack" class="threat-icon-img">
                         <h3>BRUTE FORCE ATTACKS</h3>
                         <span class="threat-level high">HIGH RISK</span>
                     </div>
@@ -507,7 +648,7 @@
 
                 <div class="threat-card">
                     <div class="threat-header">
-                        <div class="threat-icon">📚</div>
+                        <img src="images/characters/hacker-silhouette.png" alt="Dictionary Attack" class="threat-icon-img">
                         <h3>DICTIONARY ATTACKS</h3>
                         <span class="threat-level medium">MEDIUM RISK</span>
                     </div>
@@ -520,7 +661,7 @@
 
                 <div class="threat-card">
                     <div class="threat-header">
-                        <div class="threat-icon">🎣</div>
+                        <img src="images/characters/hacker-silhouette.png" alt="Credential Stuffing" class="threat-icon-img">
                         <h3>CREDENTIAL STUFFING</h3>
                         <span class="threat-level critical">CRITICAL</span>
                     </div>
@@ -533,7 +674,7 @@
 
                 <div class="threat-card">
                     <div class="threat-header">
-                        <div class="threat-icon">👁️</div>
+                        <img src="images/characters/agent-avatar.png" alt="Shoulder Surfing" class="threat-icon-img">
                         <h3>SHOULDER SURFING</h3>
                         <span class="threat-level medium">MEDIUM RISK</span>
                     </div>
@@ -580,25 +721,25 @@
 
             <div class="password-tips">
                 <div class="tip-card">
-                    <div class="tip-icon">📏</div>
+                    <img src="images/interface/progress-complete.png" alt="Length" class="tip-icon-img">
                     <h4>LENGTH MATTERS</h4>
                     <p>Use at least 12 characters. Every additional character exponentially increases security.</p>
                 </div>
                 
                 <div class="tip-card">
-                    <div class="tip-icon">🎨</div>
+                    <img src="images/interface/progress-complete.png" alt="Complexity" class="tip-icon-img">
                     <h4>MIX IT UP</h4>
                     <p>Combine uppercase, lowercase, numbers, and symbols for maximum strength.</p>
                 </div>
                 
                 <div class="tip-card">
-                    <div class="tip-icon">🎯</div>
+                    <img src="images/content/password-security-icon.png" alt="Unique" class="tip-icon-img">
                     <h4>BE UNIQUE</h4>
                     <p>Every account needs its own password. Never reuse passwords across sites.</p>
                 </div>
                 
                 <div class="tip-card">
-                    <div class="tip-icon">🔄</div>
+                    <img src="images/interface/navigation-next.png" alt="Update" class="tip-icon-img">
                     <h4>REGULAR UPDATES</h4>
                     <p>Change passwords regularly, especially for critical accounts.</p>
                 </div>
@@ -654,7 +795,7 @@
 
             <div class="vault-container">
                 <div class="digital-vault" id="vault-status">
-                    <div class="vault-lock" id="vault-lock">🔒</div>
+                    <img src="images/content/password-security-icon.png" alt="Digital Vault" class="vault-lock" id="vault-lock">
                 </div>
                 <p id="vault-message">Enter a password to test the vault security</p>
             </div>
@@ -725,8 +866,15 @@
 
             <div class="assessment-content">
                 <div class="assessment-intro">
-                    <h3>🎯 FIELD TEST: Password Security Challenge</h3>
-                    <p>Complete these challenges to prove your password security mastery:</p>
+                    <div class="instructor-message">
+                        <div class="instructor-avatar">
+                            <img src="images/characters/instructor-avatar.png" alt="Security Instructor">
+                        </div>
+                        <div class="message-content">
+                            <h3>🎯 FIELD TEST: Password Security Challenge</h3>
+                            <p>Complete these challenges to prove your password security mastery:</p>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="assessment-challenges">
@@ -765,6 +913,7 @@
                 </div>
 
                 <div class="assessment-score">
+                    <img src="images/certificates/badge-password-expert.png" alt="Password Expert Badge" class="certification-badge">
                     <h3>Assessment Score: <span id="final-score">0/3</span></h3>
                     <div class="score-feedback" id="score-feedback">
                         Complete all challenges to see your final score.
@@ -772,6 +921,7 @@
                 </div>
 
                 <button onclick="completeModule()" class="section-btn primary" id="complete-btn" disabled>
+                    <img src="images/certificates/certificate-seal.png" alt="Certificate" class="btn-icon">
                     COMPLETE MISSION
                 </button>
             </div>
@@ -852,7 +1002,6 @@
                 strengthBar.className = 'strength-fill';
                 feedback.innerHTML = '<h4>Password Analysis:</h4><p>Enter a password above to see detailed security analysis...</p>';
                 vault.classList.remove('vault-unlocked');
-                vaultLock.textContent = '🔒';
                 vaultMessage.textContent = 'Enter a password to test the vault security';
                 updateCriteria(password);
                 return;
@@ -877,12 +1026,10 @@
             // Update vault status
             if (strength.level === 'strong') {
                 vault.classList.add('vault-unlocked');
-                vaultLock.textContent = '🔓';
                 vaultMessage.textContent = 'VAULT SECURED - Excellent password strength!';
                 document.getElementById('phase-3-btn').disabled = false;
             } else {
                 vault.classList.remove('vault-unlocked');
-                vaultLock.textContent = '🔒';
                 vaultMessage.textContent = 'VAULT VULNERABLE - Password needs strengthening';
                 document.getElementById('phase-3-btn').disabled = true;
             }
@@ -1064,7 +1211,23 @@
         }
 
         function completeModule() {
-            alert('Congratulations! You have successfully completed Module 2: Password Security. Return to Mission Control to continue your training.');
+            // Show completion message with certificate
+            const completionMessage = `
+                🎉 CONGRATULATIONS! 🎉
+                
+                You have successfully completed Module 2: Password Security!
+                
+                You've earned your Password Expert certification and are now qualified to:
+                • Create unbreakable passwords
+                • Identify password threats
+                • Implement secure password management
+                • Protect Hilltop Honey's digital assets
+                
+                Return to Mission Control to continue your cybersecurity training.
+            `;
+            
+            alert(completionMessage);
+            
             // Here you would typically save progress and redirect
             returnToMissionControl();
         }
