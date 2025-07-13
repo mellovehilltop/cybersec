@@ -1,4 +1,4 @@
-// Module Interactive Functions for Digital Shield Training
+// Module Interactive Functions for Digital Shield Training - CORRECTED VERSION 4.0
 
 // Module 1 Global Variables
 let currentPhase = 0;
@@ -6,6 +6,7 @@ let redFlagsFound = 0;
 let assessmentScore = 0;
 let assessmentComplete = false;
 let currentAssessmentEmail = 0;
+let habitsRevealed = 0;
 
 // Email examples for threat demonstrations
 const emailExamples = {
@@ -160,48 +161,32 @@ const assessmentEmails = [
     }
 ];
 
-// Red flag scanner data
+// Red flag data (6 flags total)
 const redFlagData = {
-    domain: {
-        text: "Domain misspelling",
-        explanation: "The domain 'hiltophonney.co.uk' is missing an 'o' - should be 'hilltophoney.co.uk'"
-    },
-    urgent: {
-        text: "Urgent pressure tactics",
-        explanation: "Creates false urgency to pressure quick action without proper verification"
-    },
-    generic: {
-        text: "Generic greeting",
-        explanation: "Uses 'Dear Customer' instead of your actual name"
-    },
-    request: {
-        text: "Credential request",
-        explanation: "Asks you to verify login details via email link"
-    },
-    link: {
-        text: "Suspicious URL",
-        explanation: "URL doesn't match claimed legitimate domain"
-    }
+    domain: "Domain misspelling: 'hiltophonney' missing an 'o'",
+    urgent: "Urgent pressure tactics in subject line",
+    generic: "Generic greeting 'Dear Customer'",
+    pressure: "Time pressure language about compromise",
+    request: "Requests credential verification via email",
+    link: "Suspicious URL with fake security domain"
 };
 
 // Initialize Module 1
 function initializeModule1() {
-    console.log("Initializing Module 1: Email Security");
+    console.log("🚀 Module 1: Email Security - VERSION 4.0 CORRECTED");
+    
+    // Reset all counters
+    currentPhase = 0;
+    redFlagsFound = 0;
+    habitsRevealed = 0;
+    assessmentScore = 0;
+    assessmentComplete = false;
+    currentAssessmentEmail = 0;
     
     // Set up progress tracking
     updateModuleProgress(0);
     
-    // Reset counters
-    redFlagsFound = 0;
-    habitsRevealed = 0;
-    
-    // Initialize red flag scanner
-    initializeRedFlagScanner();
-    
-    // Set up assessment
-    prepareAssessment();
-    
-    console.log("Module 1 initialization complete");
+    console.log("✅ Module 1 initialization complete");
 }
 
 // Start training from briefing
@@ -209,11 +194,7 @@ function startTraining() {
     showSection('training-phase-1');
     updateModuleProgress(25);
     currentPhase = 1;
-    
-    // Initialize scanner immediately when starting training
-    setTimeout(() => {
-        initializeRedFlagScanner();
-    }, 1000);
+    console.log("🎯 Started training Phase 1");
 }
 
 // Complete training phase
@@ -223,26 +204,18 @@ function completePhase(phaseNumber) {
     currentPhase = phaseNumber + 1;
     updateModuleProgress(progressValues[phaseNumber] || 0);
     
+    console.log(`🚀 Completing Phase ${phaseNumber}, moving to Phase ${currentPhase}`);
+    
     if (phaseNumber === 1) {
-        console.log("🚀 Moving to Phase 2 - Red Flag Scanner");
         showSection('training-phase-2');
-        
-        // Initialize scanner multiple times to ensure it works
+        // Initialize scanner when Phase 2 becomes visible
         setTimeout(() => {
-            console.log("🔄 Initializing scanner after 500ms...");
             initializeRedFlagScanner();
         }, 500);
-        
-        setTimeout(() => {
-            console.log("🔄 Backup initialization after 1500ms...");
-            initializeRedFlagScanner();
-        }, 1500);
-        
     } else if (phaseNumber === 2) {
-        console.log("🚀 Moving to Phase 3 - Best Practices");
         showSection('training-phase-3');
+        initializeClassifiedHabits();
     } else if (phaseNumber === 3) {
-        console.log("🚀 Moving to Assessment Phase");
         showSection('assessment-phase');
         startAssessment();
     } else if (phaseNumber === 4) {
@@ -262,6 +235,7 @@ function showSection(sectionId) {
     if (targetSection) {
         targetSection.classList.add('active');
         targetSection.scrollIntoView({ behavior: 'smooth' });
+        console.log(`📍 Showing section: ${sectionId}`);
     }
 }
 
@@ -292,77 +266,227 @@ function closeModal() {
     modal.style.display = 'none';
 }
 
-// Initialize red flag scanner
+// RED FLAG SCANNER - CORRECTED VERSION
 function initializeRedFlagScanner() {
-    const scannableElements = document.querySelectorAll('.scannable.suspicious');
+    console.log("🔧 RED FLAG SCANNER: Starting initialization...");
     
-    scannableElements.forEach(element => {
+    // Reset counter
+    redFlagsFound = 0;
+    
+    // Find all scannable elements (CORRECT selector)
+    const elements = document.querySelectorAll('.scannable-hidden');
+    console.log(`📊 RED FLAG SCANNER: Found ${elements.length} elements`);
+    
+    if (elements.length === 0) {
+        console.error("❌ RED FLAG SCANNER: No elements found! Check HTML class names.");
+        return;
+    }
+    
+    // Set up each element
+    elements.forEach((element, index) => {
+        const flagType = element.getAttribute('data-flag');
+        console.log(`🎯 RED FLAG SCANNER: Setting up element ${index}: "${flagType}"`);
+        
+        // Remove any existing handlers
+        element.removeEventListener('click', handleRedFlagClick);
+        
+        // Add click handler
+        element.addEventListener('click', handleRedFlagClick);
+        
+        // Visual setup
+        element.style.cursor = 'pointer';
+        element.title = `Click if suspicious: ${flagType}`;
+        
+        // Hover effects for feedback
+        element.onmouseenter = function() {
+            if (!this.hasAttribute('data-found')) {
+                this.style.backgroundColor = 'rgba(255,255,0,0.3)';
+            }
+        };
+        
+        element.onmouseleave = function() {
+            if (!this.hasAttribute('data-found')) {
+                this.style.backgroundColor = '';
+            }
+        };
+        
+        // Reset any previous found state
+        element.removeAttribute('data-found');
+        element.style.backgroundColor = '';
+        element.style.color = '';
+        element.style.fontWeight = '';
+        element.style.padding = '';
+        element.style.border = '';
+    });
+    
+    // Reset display
+    const counterElement = document.getElementById('flags-found');
+    if (counterElement) {
+        counterElement.textContent = '0';
+    }
+    
+    const explanationsDiv = document.getElementById('flag-explanations');
+    if (explanationsDiv) {
+        explanationsDiv.innerHTML = '';
+    }
+    
+    console.log("✅ RED FLAG SCANNER: Initialization complete!");
+}
+
+// Handle red flag clicks
+function handleRedFlagClick(event) {
+    console.log("🖱️ RED FLAG SCANNER: Click detected!");
+    
+    const element = event.target;
+    const flagType = element.getAttribute('data-flag');
+    
+    console.log(`🎯 RED FLAG SCANNER: Clicked "${flagType}"`);
+    
+    // Check if already found
+    if (element.hasAttribute('data-found')) {
+        console.log("⚠️ RED FLAG SCANNER: Already found, ignoring");
+        return;
+    }
+    
+    // Mark as found
+    element.setAttribute('data-found', 'true');
+    
+    // Apply visual changes immediately
+    element.style.backgroundColor = '#ff0000';
+    element.style.color = '#ffffff';
+    element.style.fontWeight = 'bold';
+    element.style.padding = '4px 8px';
+    element.style.border = '2px solid #ffffff';
+    element.style.borderRadius = '4px';
+    element.style.boxShadow = '0 0 5px rgba(255,0,0,0.8)';
+    
+    // Update counter
+    redFlagsFound++;
+    console.log(`📈 RED FLAG SCANNER: Counter now ${redFlagsFound}`);
+    
+    // Update display
+    const counterElement = document.getElementById('flags-found');
+    if (counterElement) {
+        counterElement.textContent = redFlagsFound;
+        console.log(`🔄 RED FLAG SCANNER: Updated display to ${redFlagsFound}`);
+    }
+    
+    // Add explanation
+    const explanationsDiv = document.getElementById('flag-explanations');
+    if (explanationsDiv) {
+        const explanation = document.createElement('div');
+        explanation.style.cssText = `
+            background: rgba(0,255,0,0.1);
+            border: 1px solid #00ff00;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 5px 0;
+            color: #00ff00;
+        `;
+        explanation.innerHTML = `<strong>✓ ${flagType}:</strong> ${redFlagData[flagType]}`;
+        explanationsDiv.appendChild(explanation);
+    }
+    
+    // Check if all found
+    if (redFlagsFound >= 6) {
+        const phase2Btn = document.getElementById('phase-2-btn');
+        if (phase2Btn) {
+            phase2Btn.disabled = false;
+            console.log("🎉 RED FLAG SCANNER: All flags found! Button enabled.");
+        }
+    }
+}
+
+// CLASSIFIED HABITS SYSTEM
+function initializeClassifiedHabits() {
+    console.log("🔒 CLASSIFIED HABITS: Initializing...");
+    
+    // Reset counter
+    habitsRevealed = 0;
+    
+    const habitElements = document.querySelectorAll('.habit-classified');
+    console.log(`📊 CLASSIFIED HABITS: Found ${habitElements.length} habits`);
+    
+    habitElements.forEach((element, index) => {
+        const habitNumber = element.getAttribute('data-habit');
+        console.log(`🎯 CLASSIFIED HABITS: Setting up habit ${habitNumber}`);
+        
+        // Reset to classified state
+        element.classList.remove('revealed');
+        const stamp = element.querySelector('.classified-stamp');
+        const content = element.querySelector('.classified-content');
+        
+        if (stamp) stamp.style.display = 'block';
+        if (content) content.classList.add('hidden');
+        
+        // Add click handler
         element.addEventListener('click', function() {
-            if (!this.classList.contains('found')) {
-                this.classList.add('found');
-                redFlagsFound++;
-                
-                const flagType = this.getAttribute('data-flag');
-                showFlagExplanation(flagType);
-                updateScannerProgress();
+            if (!this.classList.contains('revealed')) {
+                revealHabit(this);
             }
         });
     });
+    
+    // Reset progress display
+    updateHabitsProgress();
+    
+    console.log("✅ CLASSIFIED HABITS: Initialization complete!");
 }
 
-// Show red flag explanation
-function showFlagExplanation(flagType) {
-    const explanationsDiv = document.getElementById('flag-explanations');
-    const flagInfo = redFlagData[flagType];
+function revealHabit(habitElement) {
+    const habitNumber = habitElement.getAttribute('data-habit');
+    console.log(`🔓 CLASSIFIED HABITS: Revealing habit ${habitNumber}`);
     
-    if (flagInfo) {
-        const explanationElement = document.createElement('div');
-        explanationElement.className = 'flag-explanation';
-        explanationElement.innerHTML = `
-            <strong>✓ ${flagInfo.text}:</strong> ${flagInfo.explanation}
-        `;
-        explanationsDiv.appendChild(explanationElement);
+    const classifiedStamp = habitElement.querySelector('.classified-stamp');
+    const classifiedContent = habitElement.querySelector('.classified-content');
+    
+    // Hide stamp and show content
+    if (classifiedStamp) classifiedStamp.style.display = 'none';
+    if (classifiedContent) classifiedContent.classList.remove('hidden');
+    
+    // Mark as revealed
+    habitElement.classList.add('revealed');
+    
+    // Update counter
+    habitsRevealed++;
+    updateHabitsProgress();
+    
+    console.log(`📈 CLASSIFIED HABITS: ${habitsRevealed}/6 habits revealed`);
+    
+    // Check if all habits revealed
+    if (habitsRevealed >= 6) {
+        const phase3Btn = document.getElementById('phase-3-btn');
+        if (phase3Btn) {
+            phase3Btn.disabled = false;
+            console.log("🎉 CLASSIFIED HABITS: All habits revealed! Button enabled.");
+        }
     }
 }
 
-// Update scanner progress
-function updateScannerProgress() {
-    const flagsFoundElement = document.getElementById('flags-found');
-    const phase2Btn = document.getElementById('phase-2-btn');
-    
-    if (flagsFoundElement) {
-        flagsFoundElement.textContent = redFlagsFound;
-    }
-    
-    if (redFlagsFound >= 5 && phase2Btn) {
-        phase2Btn.disabled = false;
+function updateHabitsProgress() {
+    const habitsRevealedElement = document.getElementById('habits-revealed');
+    if (habitsRevealedElement) {
+        habitsRevealedElement.textContent = habitsRevealed;
     }
 }
 
-// Check progress for phase 3 habits
+// Legacy function for compatibility
 function checkProgress() {
-    const checkboxes = document.querySelectorAll('#training-phase-3 input[type="checkbox"]');
-    const checkedBoxes = document.querySelectorAll('#training-phase-3 input[type="checkbox"]:checked');
-    const phase3Btn = document.getElementById('phase-3-btn');
-    
-    if (checkedBoxes.length >= checkboxes.length && phase3Btn) {
-        phase3Btn.disabled = false;
-    }
+    return habitsRevealed >= 6;
 }
 
-// Prepare assessment
+// ASSESSMENT SYSTEM
 function prepareAssessment() {
     // Assessment will be initialized when assessment phase starts
 }
 
-// Start final assessment
 function startAssessment() {
+    console.log("🎯 ASSESSMENT: Starting final assessment");
     currentAssessmentEmail = 0;
     assessmentScore = 0;
     showAssessmentEmail();
 }
 
-// Show current assessment email
 function showAssessmentEmail() {
     const assessmentDiv = document.getElementById('email-assessment');
     
@@ -400,7 +524,6 @@ function showAssessmentEmail() {
     `;
 }
 
-// Assess current email
 function assessEmail(userSaysLegitimate) {
     const email = assessmentEmails[currentAssessmentEmail];
     const correct = (userSaysLegitimate === email.legitimate);
@@ -420,7 +543,6 @@ function assessEmail(userSaysLegitimate) {
     }, 3000);
 }
 
-// Show feedback for assessment email
 function showEmailFeedback(email, correct, userChoice) {
     const assessmentDiv = document.getElementById('email-assessment');
     const feedbackClass = correct ? 'correct' : 'incorrect';
@@ -441,7 +563,6 @@ function showEmailFeedback(email, correct, userChoice) {
     assessmentDiv.innerHTML += feedbackHtml;
 }
 
-// Show final assessment results
 function showAssessmentResults() {
     const resultsDiv = document.getElementById('assessment-results');
     let grade, message, badgeClass;
@@ -495,7 +616,6 @@ function showAssessmentResults() {
     assessmentComplete = true;
 }
 
-// Retake assessment
 function retakeAssessment() {
     currentAssessmentEmail = 0;
     assessmentScore = 0;
@@ -505,8 +625,52 @@ function retakeAssessment() {
 
 // Complete Module 1
 function completeModule1() {
+    console.log("🏆 MODULE 1 COMPLETE!");
     // Use the navigation function to complete module and show completion dialog
-    window.digitalShieldNavigation.completeModuleFromPage(1, assessmentScore);
+    if (window.digitalShieldNavigation && window.digitalShieldNavigation.completeModuleFromPage) {
+        window.digitalShieldNavigation.completeModuleFromPage(1, assessmentScore);
+    } else {
+        alert(`Module 1 Complete!\nScore: ${assessmentScore}%`);
+    }
+}
+
+// DEBUG FUNCTIONS
+function testRedFlagScanner() {
+    console.log("🧪 TESTING: Red flag scanner test starting...");
+    
+    const elements = document.querySelectorAll('.scannable-hidden');
+    console.log(`📊 TESTING: Found ${elements.length} elements`);
+    
+    if (elements.length > 0) {
+        const firstElement = elements[0];
+        console.log(`🎯 TESTING: Clicking first element (${firstElement.getAttribute('data-flag')})`);
+        firstElement.click();
+    } else {
+        console.log("❌ TESTING: No elements to test");
+    }
+}
+
+function resetRedFlagScanner() {
+    console.log("🔄 RESET: Resetting red flag scanner...");
+    redFlagsFound = 0;
+    
+    const elements = document.querySelectorAll('.scannable-hidden');
+    elements.forEach(el => {
+        el.removeAttribute('data-found');
+        el.style.backgroundColor = '';
+        el.style.color = '';
+        el.style.fontWeight = '';
+        el.style.padding = '';
+        el.style.border = '';
+    });
+    
+    const counterElement = document.getElementById('flags-found');
+    if (counterElement) counterElement.textContent = '0';
+    
+    const explanationsDiv = document.getElementById('flag-explanations');
+    if (explanationsDiv) explanationsDiv.innerHTML = '';
+    
+    console.log("✅ RESET: Red flag scanner reset complete");
 }
 
 // Modal click outside to close
@@ -517,7 +681,7 @@ window.onclick = function(event) {
     }
 }
 
-// Export functions for global use and debugging
+// Export functions for global use
 window.digitalShieldModules = {
     initializeModule1,
     startTraining,
@@ -527,51 +691,23 @@ window.digitalShieldModules = {
     checkProgress,
     assessEmail,
     completeModule1,
-    // Add debugging functions
+    // Debug functions
+    testRedFlagScanner,
+    resetRedFlagScanner,
     initializeRedFlagScanner,
-    resetRedFlagScanner: function() {
-        redFlagsFound = 0;
-        document.querySelectorAll('.scannable-hidden.found').forEach(el => {
-            el.classList.remove('found');
-        });
-        document.getElementById('flags-found').textContent = '0';
-        document.getElementById('flag-explanations').innerHTML = '';
-        console.log("🔄 Red flag scanner reset");
-    },
-    testClick: function() {
-        const elements = document.querySelectorAll('.scannable-hidden');
-        if (elements.length > 0) {
-            console.log("🧪 Testing click on first element...");
-            const firstElement = elements[0];
-            console.log("🎯 First element:", firstElement);
-            console.log("🎯 Flag type:", firstElement.getAttribute('data-flag'));
-            
-            // Force click manually
-            handleScannerClick({
-                preventDefault: () => {},
-                stopPropagation: () => {},
-                target: firstElement
-            });
-        } else {
-            console.log("❌ No elements found to test");
-        }
-    },
-    listElements: function() {
-        const elements = document.querySelectorAll('.scannable-hidden');
-        console.log("📋 All scannable elements:");
-        elements.forEach((el, i) => {
-            console.log(`${i}: "${el.textContent}" (${el.getAttribute('data-flag')})`);
-        });
-        return elements;
-    }
+    initializeClassifiedHabits
 };
 
-console.log('🚀 Digital Shield Modules loaded successfully - VERSION 3.0 with forced inline styling');
-console.log('🛠️ Debug commands:');
-console.log('   window.digitalShieldModules.testClick() - Test first element');
-console.log('   window.digitalShieldModules.listElements() - List all elements');
+// Make test functions available globally
+window.testRedFlagScanner = testRedFlagScanner;
+window.resetRedFlagScanner = resetRedFlagScanner;
+
+console.log('🚀 Digital Shield Modules loaded successfully - VERSION 4.0 CORRECTED');
+console.log('🛠️ Debug commands available:');
+console.log('   testRedFlagScanner() - Test first element click');
+console.log('   resetRedFlagScanner() - Reset all flags');
 console.log('   window.digitalShieldModules.initializeRedFlagScanner() - Reinitialize scanner');
 
-// Test if the new version is loaded
-window.digitalShieldVersion = "3.0";
+// Export version for checking
+window.digitalShieldVersion = "4.0";
 console.log("📍 Module version:", window.digitalShieldVersion);
