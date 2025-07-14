@@ -161,7 +161,7 @@ const module1Manager = {
             <div class="assessment-email">
                 <h4>Email ${this.currentAssessmentEmailIndex + 1} of ${this.assessmentEmails.length}</h4>
                 <div class="email-preview"><p><strong>From:</strong> ${email.from}</p><p><strong>Subject:</strong> ${email.subject}</p><p>${email.content}</p></div>
-                <div class="action-buttons"><button data-choice="true" class="btn">✅ SAFE</button><button data-choice="false" class="btn">⚠️ SUSPICIOUS</button></div>
+                <div class="action-buttons"><button data-choice="true" class="btn assess-btn safe">✅ SAFE</button><button data-choice="false" class="btn assess-btn suspicious">⚠️ SUSPICIOUS</button></div>
             </div>`;
     },
 
