@@ -188,9 +188,17 @@ const module1Manager = {
     completePhase(phase) {
         const nextPhase = phase + 1;
         this.updateProgress(nextPhase + 1);
-        if (phase === 1) this.showSection('training-phase-2');
-        else if (phase === 2) this.showSection('training-phase-3');
-        else if (phase === 3) this.showSection('assessment-phase');
+        
+        if (phase === 1) {
+            this.showSection('training-phase-2');
+        } else if (phase === 2) {
+            this.showSection('training-phase-3');
+        } else if (phase === 3) {
+            this.showSection('assessment-phase');
+            // ** THE FIX IS HERE: **
+            // We need to tell the script to draw the first question.
+            this.renderAssessmentEmail(); 
+        }
     },
     
     completeModule() {
