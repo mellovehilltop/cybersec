@@ -5,493 +5,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Module 2: Password Security - Digital Shield Training</title>
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/modules.css">
-
-        .password-strength-meter {
-            width: 100%;
-            height: 12px;
-            background: #333;
-            border-radius: 6px;
-            margin: 15px 0;
-            overflow: hidden;
-            border: 2px solid #00ffff;
-        }
-        
-        .strength-fill {
-            height: 100%;
-            transition: all 0.3s ease;
-            border-radius: 4px;
-        }
-        
-        .strength-weak { background: #e74c3c; width: 25%; }
-        .strength-fair { background: #f39c12; width: 50%; }
-        .strength-good { background: #3498db; width: 75%; }
-        .strength-strong { background: #00ff00; width: 100%; }
-        
-        .password-input-container {
-            position: relative;
-            margin: 25px 0;
-        }
-        
-        .password-input {
-            width: 100%;
-            padding: 20px;
-            font-size: 22px;
-            border: 3px solid #00ffff;
-            background: rgba(0, 255, 255, 0.1);
-            color: #fff;
-            border-radius: 10px;
-            font-family: 'Courier New', monospace;
-            font-weight: bold;
-        }
-        
-        .password-feedback {
-            margin: 20px 0;
-            padding: 20px;
-            border-radius: 10px;
-            background: rgba(0, 255, 255, 0.1);
-            border-left: 5px solid #00ffff;
-            font-size: 16px;
-            line-height: 1.6;
-        }
-        
-        .vault-container {
-            text-align: center;
-            margin: 40px 0;
-        }
-        
-        .digital-vault {
-            width: 250px;
-            height: 250px;
-            background: linear-gradient(45deg, #1a1a2e, #16213e);
-            border: 4px solid #00ffff;
-            border-radius: 50%;
-            margin: 0 auto;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 0 40px rgba(0, 255, 255, 0.4);
-        }
-        
-        .vault-lock {
-            font-size: 64px;
-            color: #f39c12;
-            transition: all 0.5s ease;
-        }
-        
-        .vault-unlocked .vault-lock {
-            color: #00ff00;
-            transform: scale(1.3);
-        }
-        
-        .password-tips {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            margin: 40px 0;
-        }
-        
-        .tip-card {
-            background: rgba(0, 255, 255, 0.1);
-            border: 2px solid #00ffff;
-            border-radius: 12px;
-            padding: 25px;
-            text-align: center;
-            font-size: 16px;
-        }
-        
-        .tip-icon {
-            font-size: 48px;
-            margin-bottom: 20px;
-        }
-        
-        .tip-card h4 {
-            font-size: 20px;
-            margin-bottom: 15px;
-            color: #00ffff;
-        }
-        
-        .common-passwords {
-            background: rgba(231, 76, 60, 0.2);
-            border: 3px solid #e74c3c;
-            border-radius: 12px;
-            padding: 25px;
-            margin: 25px 0;
-            font-size: 16px;
-        }
-        
-        .common-passwords h3 {
-            font-size: 22px;
-            margin-bottom: 20px;
-        }
-        
-        .password-examples {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 25px;
-            margin: 25px 0;
-        }
-        
-        .example-card {
-            padding: 20px;
-            border-radius: 12px;
-            border: 3px solid;
-            font-size: 16px;
-        }
-        
-        .example-card h4 {
-            font-size: 20px;
-            margin-bottom: 15px;
-        }
-        
-        .example-card ul li {
-            margin-bottom: 8px;
-            font-size: 16px;
-            line-height: 1.4;
-        }
-        
-        .weak-example {
-            background: rgba(231, 76, 60, 0.1);
-            border-color: #e74c3c;
-        }
-        
-        .strong-example {
-            background: rgba(0, 255, 0, 0.1);
-            border-color: #00ff00;
-        }
-        
-        .progress-indicator {
-            position: fixed;
-            top: 80px;
-            right: 20px;
-            background: rgba(26, 26, 46, 0.95);
-            padding: 20px;
-            border-radius: 12px;
-            border: 2px solid #00ffff;
-            z-index: 1000;
-            font-size: 16px;
-        }
-        
-        .progress-step {
-            display: flex;
-            align-items: center;
-            margin: 8px 0;
-            color: #666;
-            font-size: 16px;
-        }
-        
-        .progress-step.active {
-            color: #00ffff;
-            font-weight: bold;
-        }
-        
-        .progress-step.completed {
-            color: #00ff00;
-            font-weight: bold;
-        }
-        
-        .step-number {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            background: #333;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 12px;
-            font-size: 14px;
-            font-weight: bold;
-        }
-        
-        .progress-step.active .step-number {
-            background: #00ffff;
-            color: #000;
-        }
-        
-        .progress-step.completed .step-number {
-            background: #00ff00;
-            color: #000;
-        }
-        
-        /* MUCH LARGER STRENGTH CRITERIA */
-        .strength-criteria {
-            background: rgba(0, 255, 255, 0.1);
-            border: 3px solid #00ffff;
-            border-radius: 12px;
-            padding: 25px;
-            margin: 25px 0;
-        }
-        
-        .strength-criteria h4 {
-            font-size: 22px;
-            margin-bottom: 20px;
-            color: #00ffff;
-        }
-        
-        .criteria-list {
-            display: grid;
-            gap: 15px;
-        }
-        
-        .criteria-item {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 15px;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 8px;
-            font-size: 18px;
-            font-weight: bold;
-        }
-        
-        .check-mark {
-            font-size: 24px;
-            min-width: 30px;
-        }
-        
-        /* MUCH LARGER TEST BUTTONS */
-        .test-passwords {
-            margin: 30px 0;
-        }
-        
-        .test-passwords h4 {
-            font-size: 22px;
-            margin-bottom: 20px;
-            color: #00ffff;
-        }
-        
-        .test-btn {
-            display: inline-block;
-            margin: 8px;
-            padding: 15px 20px;
-            font-size: 16px;
-            font-weight: bold;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: 'Courier New', monospace;
-        }
-        
-        .test-btn.weak {
-            background: #e74c3c;
-            color: white;
-        }
-        
-        .test-btn.good {
-            background: #3498db;
-            color: white;
-        }
-        
-        .test-btn.strong {
-            background: #00ff00;
-            color: black;
-        }
-        
-        .test-btn:hover {
-            transform: scale(1.05);
-        }
-        
-        /* MOBILE RESPONSIVENESS - LARGER TEXT ON SMALL SCREENS */
-        @media (max-width: 768px) {
-            .password-input {
-                font-size: 20px;
-                padding: 18px;
-            }
-            
-            .digital-vault {
-                width: 200px;
-                height: 200px;
-            }
-            
-            .vault-lock {
-                font-size: 48px;
-            }
-            
-            .password-tips {
-                grid-template-columns: 1fr;
-            }
-            
-            .password-examples {
-                grid-template-columns: 1fr;
-            }
-            
-            .challenge-options {
-                grid-template-columns: 1fr;
-            }
-            
-            .option-btn {
-                font-size: 16px;
-                padding: 18px;
-            }
-            
-            .section-header h2 {
-                font-size: 28px !important;
-            }
-            
-            .assessment-intro h3 {
-                font-size: 24px;
-            }
-            
-            .challenge-card h4 {
-                font-size: 20px;
-            }
-            
-            .progress-indicator {
-                position: relative;
-                top: auto;
-                right: auto;
-                margin-bottom: 20px;
-            }
-        }
-        
-        /* ENSURE HIGH CONTRAST FOR ALL TEXT */
-        .module-page {
-            background: #0a0a1a;
-            color: #ffffff;
-            font-size: 16px;
-            line-height: 1.6;
-        }
-        
-        /* MAKE SURE BUTTONS ARE LARGE AND CLICKABLE */
-        .nav-btn, .section-btn {
-            min-height: 50px;
-            font-size: 18px;
-            font-weight: bold;
-            padding: 15px 30px;
-        }
-        
-        /* IMPROVE HEADING VISIBILITY */
-        h1, h2, h3, h4, h5, h6 {
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
-        
-        .module-info h1 {
-            font-size: 28px;
-            margin-bottom: 5px;
-        }
-        
-        .module-subtitle {
-            font-size: 18px;
-        }
-        
-        /* BETTER SPACING FOR READABILITY */
-        .training-section {
-            padding: 40px 0;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-    </style>
 </head>
 <body class="module-page">
     <!-- Progress Indicator -->
     <div class="progress-indicator">
-        <div class="progress-step active" id="step-1">
-            <div class="step-number">1</div>
-            <span>Briefing</span>
-        </div>
-        <div class="progress-step" id="step-2">
-            <div class="step-number">2</div>
-            <span>Threats</span>
-        </div>
-        <div class="progress-step" id="step-3">
-            <div class="step-number">3</div>
-            <span>Best Practice</span>
-        </div>
-        <div class="progress-step" id="step-4">
-            <div class="step-number">4</div>
-            <span>Testing</span>
-        </div>
-        <div class="progress-step" id="step-5">
-            <div class="step-number">5</div>
-            <span>Assessment</span>
-        </div>
+        <!-- JS will populate this -->
     </div>
 
     <!-- Header Navigation -->
     <header class="module-header">
-        <div class="container">
-            <div class="module-nav">
-                <button onclick="returnToMissionControl()" class="nav-btn back">
-                    <img src="images/interface/navigation-back.png" alt="Back" class="nav-icon"> Mission Control
-                </button>
-                <div class="module-info">
-                    <div class="module-title-section">
-                        <img src="images/interface/hilltop-shield-logo.png" alt="Hilltop Honey Security" class="module-logo">
-                        <div class="title-text">
-                            <h1>MODULE 02: PASSWORD SECURITY</h1>
-                            <p class="module-subtitle">The Vault Guardian Protocol</p>
-                        </div>
-                    </div>
+        <div class="container module-nav">
+            <button data-action="return-home" class="btn btn-primary nav-btn back">
+                <img src="images/interface/navigation-back.png" alt="" class="nav-icon"> Mission Control
+            </button>
+            <div class="module-info">
+                <div class="module-title-section">
+                    <img src="images/content/password-security-icon.png" alt="" class="module-logo">
+                    <h1>MODULE 02: PASSWORD SECURITY</h1>
                 </div>
-                <div class="module-progress-nav">
-                    <span class="progress-text">Progress: <span id="module-progress">0%</span></span>
-                </div>
+                <p class="module-subtitle">The Vault Guardian Protocol</p>
+            </div>
+            <div class="module-progress-nav">
+                <span id="module-progress">0%</span>
             </div>
         </div>
     </header>
 
     <!-- Mission Briefing Section -->
     <section id="briefing-section" class="training-section active">
-        <div class="container">
+        <div class="container briefing-content">
             <div class="section-header">
-                <img src="images/content/password-security-icon.png" alt="Password Security" class="section-icon">
+                <img src="images/content/password-security-icon.png" alt="" class="section-icon">
                 <h2>MISSION BRIEFING</h2>
                 <p>Intelligence Report: Password Vulnerabilities</p>
             </div>
-            
-            <div class="briefing-content">
-                <div class="threat-assessment">
-                    <h3>🚨 THREAT LEVEL: CRITICAL</h3>
-                    <p><strong>81% of data breaches</strong> are caused by weak or stolen passwords. In the food manufacturing sector, this represents the highest risk to our operations, customer data, and production systems.</p>
-                    
-                    <div class="vault-container">
-                        <div class="digital-vault">
-                            <img src="images/content/password-security-icon.png" alt="Digital Vault" class="vault-icon">
-                        </div>
-                        <p><strong>Your passwords are the keys to our digital kingdom.</strong></p>
-                    </div>
-                    
-                    <div class="briefing-stats">
-                        <div class="stat-card">
-                            <h4>2.3 BILLION</h4>
-                            <p>Passwords exposed in data breaches in 2023</p>
-                        </div>
-                        <div class="stat-card">
-                            <h4>3 SECONDS</h4>
-                            <p>Average time to crack "password123"</p>
-                        </div>
-                        <div class="stat-card">
-                            <h4>£3.86 MILLION</h4>
-                            <p>Average cost of a data breach in the UK</p>
-                        </div>
-                    </div>
-                    
-                    <div class="instructor-message">
-                        <div class="instructor-avatar">
-                            <img src="images/characters/instructor-avatar.png" alt="Security Instructor">
-                        </div>
-                        <div class="message-content">
-                            <h4>INSTRUCTOR BRIEFING</h4>
-                            <div class="mission-objective">
-                                <h3>🎯 MISSION OBJECTIVE</h3>
-                                <p>Master password security protocols to protect Hilltop Honey's digital assets. You will learn to create unbreakable passwords, recognize password threats, and implement secure password management practices.</p>
-                                <p><strong>Remember:</strong> Every weak password is an open door for cyber criminals. Lock them out completely.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <button onclick="startTraining()" class="section-btn primary">
-                    BEGIN VAULT TRAINING
-                </button>
+            <div class="threat-assessment">
+                <h3><span aria-hidden="true">🚨 </span>THREAT LEVEL: CRITICAL</h3>
+                <p><strong>81% of data breaches</strong> are caused by weak or stolen passwords. This is the highest risk to our operations, customer data, and production systems.</p>
             </div>
+            <div class="learning-objectives">
+                <h3><span aria-hidden="true">🎯 </span>MISSION OBJECTIVE</h3>
+                <p>Master password security to protect Hilltop Honey's digital assets. You will learn to create unbreakable passwords, recognize threats, and implement secure password management.</p>
+            </div>
+            <button data-action="start-training" class="btn btn-secondary">BEGIN VAULT TRAINING</button>
         </div>
     </section>
 
@@ -500,11 +56,10 @@
         <div class="container">
             <div class="section-header">
                 <h2>PHASE 1: THREAT ANALYSIS</h2>
-                <p>Password Attack Vectors</p>
+                <p>Common Password Attack Vectors</p>
             </div>
-
             <div class="learning-cards">
-                <div class="threat-card">
+               <div class="threat-card">
                     <div class="threat-header">
                         <img src="images/characters/hacker-silhouette.png" alt="Brute Force Attack" class="threat-icon-img">
                         <h3>BRUTE FORCE ATTACKS</h3>
@@ -556,29 +111,11 @@
                     </div>
                 </div>
             </div>
-
             <div class="common-passwords">
-                <h3>⚠️ MOST COMMON PASSWORDS (NEVER USE THESE!)</h3>
-                <div class="password-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 15px 0;">
-                    <span>123456</span>
-                    <span>password</span>
-                    <span>123456789</span>
-                    <span>12345678</span>
-                    <span>qwerty</span>
-                    <span>abc123</span>
-                    <span>password123</span>
-                    <span>admin</span>
-                    <span>letmein</span>
-                    <span>welcome</span>
-                    <span>monkey</span>
-                    <span>dragon</span>
-                </div>
-                <p><strong>These passwords can be cracked in under 1 second!</strong></p>
+                <h3>⚠️ COMMON PASSWORDS (AUTO-FAIL)</h3>
+                <div class="password-grid"></div>
             </div>
-
-            <button onclick="completePhase(1)" class="section-btn primary">
-                CONTINUE TO PHASE 2
-            </button>
+            <button data-action="complete-phase" data-phase="1" class="btn btn-secondary">CONTINUE TO PHASE 2</button>
         </div>
     </section>
 
@@ -589,9 +126,8 @@
                 <h2>PHASE 2: SECURITY PROTOCOLS</h2>
                 <p>Password Best Practices</p>
             </div>
-
             <div class="password-tips">
-                <div class="tip-card">
+                 <div class="tip-card">
                     <img src="images/interface/progress-complete.png" alt="Length" class="tip-icon-img">
                     <h4>LENGTH MATTERS</h4>
                     <p>Use at least 12 characters. Every additional character exponentially increases security.</p>
@@ -615,44 +151,10 @@
                     <p>Change passwords regularly, especially for critical accounts.</p>
                 </div>
             </div>
-
             <div class="password-examples">
-                <div class="example-card weak-example">
-                    <h4>❌ WEAK PASSWORDS</h4>
-                    <ul>
-                        <li>password123</li>
-                        <li>john1985</li>
-                        <li>honeybee</li>
-                        <li>qwerty</li>
-                    </ul>
-                    <p><strong>Why weak:</strong> Short, predictable, use dictionary words</p>
-                </div>
-                
-                <div class="example-card strong-example">
-                    <h4>✅ STRONG PASSWORDS</h4>
-                    <ul>
-                        <li>H0n3y!B33$2024#Sw33t</li>
-                        <li>Th3-G0ld3n-Hiv3$Saf3!</li>
-                        <li>My7r33$@r3-Ta11&Str0ng</li>
-                        <li>B33k33p3r#R0ck$4Ever!</li>
-                    </ul>
-                    <p><strong>Why strong:</strong> Long, mixed characters, unique phrases</p>
-                </div>
+                <!-- Weak/Strong examples will be here -->
             </div>
-
-            <div class="passphrase-method">
-                <h3>🗝️ THE PASSPHRASE METHOD</h3>
-                <p>Create memorable yet secure passwords using this technique:</p>
-                <ol>
-                    <li><strong>Pick 3-4 random words:</strong> "Honey Mountain Dancing Robot"</li>
-                    <li><strong>Add numbers & symbols:</strong> "Honey!Mountain#Dancing$Robot2024"</li>
-                    <li><strong>Make substitutions:</strong> "H0n3y!M0unt@in#D@nc1ng$R0b0t2024"</li>
-                </ol>
-            </div>
-
-            <button onclick="completePhase(2)" class="section-btn primary">
-                CONTINUE TO STRENGTH TESTING
-            </button>
+            <button data-action="complete-phase" data-phase="2" class="btn btn-secondary">CONTINUE TO STRENGTH TESTING</button>
         </div>
     </section>
 
@@ -663,67 +165,20 @@
                 <h2>PHASE 3: VAULT TESTING LAB</h2>
                 <p>Interactive Password Strength Analysis</p>
             </div>
-
             <div class="vault-container">
                 <div class="digital-vault" id="vault-status">
-                    <img src="images/content/password-security-icon.png" alt="Digital Vault" class="vault-lock" id="vault-lock">
+                    <img src="images/content/password-security-icon.png" alt="Digital Vault" class="vault-icon" id="vault-icon">
                 </div>
-                <p id="vault-message">Enter a password to test the vault security</p>
             </div>
-
             <div class="password-input-container">
-                <input type="password" 
-                       id="password-tester" 
-                       class="password-input" 
-                       placeholder="Enter password to test strength..."
-                       oninput="testPasswordStrength()">
-                <button type="button" onclick="togglePasswordVisibility()" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #00ffff; cursor: pointer;">👁️</button>
+                <label for="password-tester" class="sr-only">Password to test</label>
+<input type="password" id="password-tester" class="password-input" placeholder="Enter password to test...">
+                <button data-action="toggle-visibility" class="password-toggle-btn" aria-label="Toggle password visibility">Show</button>
             </div>
-
-            <div class="password-strength-meter">
-                <div class="strength-fill" id="strength-bar"></div>
-            </div>
-
-            <div class="password-feedback" id="password-feedback">
-                <h4>Password Analysis:</h4>
-                <p>Enter a password above to see detailed security analysis...</p>
-            </div>
-
-            <div class="strength-criteria">
-                <h4>Security Checklist:</h4>
-                <div class="criteria-list">
-                    <div class="criteria-item" id="length-check">
-                        <span class="check-mark">❌</span> At least 12 characters
-                    </div>
-                    <div class="criteria-item" id="uppercase-check">
-                        <span class="check-mark">❌</span> Contains uppercase letters
-                    </div>
-                    <div class="criteria-item" id="lowercase-check">
-                        <span class="check-mark">❌</span> Contains lowercase letters
-                    </div>
-                    <div class="criteria-item" id="numbers-check">
-                        <span class="check-mark">❌</span> Contains numbers
-                    </div>
-                    <div class="criteria-item" id="symbols-check">
-                        <span class="check-mark">❌</span> Contains symbols
-                    </div>
-                    <div class="criteria-item" id="common-check">
-                        <span class="check-mark">❌</span> Not a common password
-                    </div>
-                </div>
-            </div>
-
-            <div class="test-passwords">
-                <h4>Try These Examples:</h4>
-                <button onclick="testExample('password')" class="test-btn weak">password</button>
-                <button onclick="testExample('Password123')" class="test-btn weak">Password123</button>
-                <button onclick="testExample('MySecureP@ss2024')" class="test-btn good">MySecureP@ss2024</button>
-                <button onclick="testExample('H0n3y!B33$Ar3-Sw33t&G0ld3n#2024')" class="test-btn strong">H0n3y!B33$Ar3-Sw33t&G0ld3n#2024</button>
-            </div>
-
-            <button onclick="completePhase(3)" class="section-btn primary" id="phase-3-btn" disabled>
-                VAULT SECURED - CONTINUE TO ASSESSMENT
-            </button>
+            <div class="password-strength-meter"><div id="strength-bar" class="strength-fill"></div></div>
+            <div class="password-feedback" id="password-feedback"></div>
+            <div class="strength-criteria"><div class="criteria-list"></div></div>
+            <button data-action="complete-phase" data-phase="3" class="btn btn-secondary" id="phase-3-btn" disabled>VAULT SECURED - CONTINUE</button>
         </div>
     </section>
 
@@ -734,71 +189,19 @@
                 <h2>FINAL ASSESSMENT</h2>
                 <p>Password Security Knowledge Test</p>
             </div>
-
             <div class="assessment-content">
-                <div class="assessment-intro">
-                    <div class="instructor-message">
-                        <div class="instructor-avatar">
-                            <img src="images/characters/instructor-avatar.png" alt="Security Instructor">
-                        </div>
-                        <div class="message-content">
-                            <h3>🎯 FIELD TEST: Password Security Challenge</h3>
-                            <p>Complete these challenges to prove your password security mastery:</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="assessment-challenges">
-                    <div class="challenge-card" id="challenge-1">
-                        <h4>Challenge 1: Identify the Threat</h4>
-                        <p>You receive an email saying "Your password expires today. Click here to update: www.hilltopmoney.com"</p>
-                        <p><strong>What type of attack is this?</strong></p>
-                        <div class="challenge-options">
-                            <button onclick="answerChallenge(1, 'A')" class="option-btn">A) Brute Force</button>
-                            <button onclick="answerChallenge(1, 'B')" class="option-btn">B) Phishing</button>
-                            <button onclick="answerChallenge(1, 'C')" class="option-btn">C) Dictionary Attack</button>
-                        </div>
-                        <div class="challenge-result" id="result-1"></div>
-                    </div>
-
-                    <div class="challenge-card" id="challenge-2">
-                        <h4>Challenge 2: Password Strength</h4>
-                        <p>Rank these passwords from weakest to strongest:</p>
-                        <div class="password-ranking">
-                            <div class="ranking-item" draggable="true" data-strength="1">admin123</div>
-                            <div class="ranking-item" draggable="true" data-strength="3">MyDog$Loves2Run!</div>
-                            <div class="ranking-item" draggable="true" data-strength="2">Summer2024</div>
-                            <div class="ranking-item" draggable="true" data-strength="4">Tr33$@r3T@ll&Gr33n#F0r3st!</div>
-                        </div>
-                        <button onclick="checkRanking()" class="option-btn">Check My Ranking</button>
-                        <div class="challenge-result" id="result-2"></div>
-                    </div>
-
-                    <div class="challenge-card" id="challenge-3">
-                        <h4>Challenge 3: Create a Secure Password</h4>
-                        <p>Create a password for your work email that meets all security requirements:</p>
-                        <input type="password" id="custom-password" class="password-input" placeholder="Create your secure password here...">
-                        <button onclick="validateCustomPassword()" class="option-btn">Test My Password</button>
-                        <div class="challenge-result" id="result-3"></div>
-                    </div>
-                </div>
-
+                <div class="assessment-challenges"></div>
                 <div class="assessment-score">
-                    <img src="images/certificates/badge-password-expert.png" alt="Password Expert Badge" class="certification-badge">
                     <h3>Assessment Score: <span id="final-score">0/3</span></h3>
-                    <div class="score-feedback" id="score-feedback">
-                        Complete all challenges to see your final score.
-                    </div>
+                    <div id="score-feedback"></div>
                 </div>
-
-                <button onclick="completeModule()" class="section-btn primary" id="complete-btn" disabled>
-                    <img src="images/certificates/certificate-seal.png" alt="Certificate" class="btn-icon">
-                    COMPLETE MISSION
-                </button>
+                <button data-action="complete-module" class="btn btn-secondary" id="complete-btn" disabled>COMPLETE MISSION</button>
             </div>
         </div>
     </section>
 
-    <script src="js/file-system.js" defer></script>
+    <!-- SCRIPTS -->
+    <script src="js/progress.js" defer></script>
+    <script src="js/module2.js" defer></script>
 </body>
 </html>
