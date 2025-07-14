@@ -229,7 +229,7 @@ const module1Manager = {
     ],
     
     assessmentEmails: [
-        { from: "supplier@honeyextractors.co.uk", subject: "Updated Invoice #HE-2024-0847", content: "Please find attached our updated invoice<br>Best regards,<br>Honey Extractors", legitimate: true, explanation: "Legitimate: A standard business email from a known supplier with specific details." },
+        { from: "supplier@honeyextractors.co.uk", subject: "Updated Invoice #HE-2024-0847", body: "Please find attached our updated invoice<br>Best regards,<br>Honey Extractors", legitimate: true, explanation: "Legitimate: A standard business email from a known supplier with specific details." },
        
  { from: "security@hilltophoney-update.com",
         subject: "URGENT: Security System Update Required",
@@ -478,7 +478,7 @@ const module1Manager = {
         }
     },
 
-    renderAssessmentEmail() {
+        renderAssessmentEmail() {
         if (this.currentAssessmentEmailIndex >= this.assessmentEmails.length) {
             this.showAssessmentResults();
             return;
@@ -487,7 +487,7 @@ const module1Manager = {
         this.dom.assessmentContainer.innerHTML = `
             <div class="assessment-email">
                 <h4>Email ${this.currentAssessmentEmailIndex + 1} of ${this.assessmentEmails.length}</h4>
-                <div class="email-preview"><p><strong>From:</strong> ${email.from}</p><p><strong>Subject:</strong> ${email.subject}</p><p>${email.content}</p></div>
+                <div class="email-preview"><p><strong>From:</strong> ${email.from}</p><p><strong>Subject:</strong> ${email.subject}</p><p>${email.body}</p></div>
                 <div class="action-buttons"><button data-choice="true" class="btn assess-btn safe">✅ SAFE</button><button data-choice="false" class="btn assess-btn suspicious">⚠️ SUSPICIOUS</button></div>
             </div>`;
     },
