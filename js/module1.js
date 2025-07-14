@@ -45,6 +45,45 @@ const module1Manager = {
         body: "Dear Hilltop Honey,<br><br>Thank you for your recent order. Please note our bank details have changed for future payments:<br><br>New Account: HSBC Bank<br>Sort: 40-12-34<br>Account: 12345678<br><br>Please update your records.<br><br>Best regards,<br>Premium Honey Supplies", legitimate: false, explanation: "Suspicious request to change payment details. Should be verified through independent communication channels." }
     ],
 
+   // Content and state for the Phase 3 Flowchart
+    currentFlowNode: 'start',
+    flowchartNodes: {
+        'start': {
+            status: 'DECISION POINT',
+            text: 'A new email has arrived. Does it contain an <strong>unexpected request</strong> or attachment?',
+            options: [
+                { text: 'YES - It\'s Unexpected', next: 'q2_verify' },
+                { text: 'NO - It Seems Routine', next: 'end_caution' }
+            ]
+        },
+        'q2_verify': {
+            status: 'VERIFICATION REQUIRED',
+            text: 'The request is unexpected. Can you verify it with the sender through a <strong>separate, trusted channel</strong> (e.g., a known phone number, in-person chat)?',
+            options: [
+                { text: 'YES - I Can Verify', next: 'end_verify' },
+                { text: 'NO - I Can\'t Verify', next: 'end_report' }
+            ]
+        },
+        'end_caution': {
+            status: 'PROTOCOL CONCLUSION: PROCEED WITH CAUTION',
+            text: 'The email seems routine. Remain vigilant, but it is likely safe to proceed.',
+            isConclusion: true,
+            conclusionClass: 'conclusion-safe'
+        },
+        'end_verify': {
+            status: 'PROTOCOL CONCLUSION: VERIFY BEFORE ACTING',
+            text: 'Your action is to verify the request. If it checks out, it\'s safe. If the sender denies sending it, report the email to IT immediately.',
+            isConclusion: true,
+            conclusionClass: 'conclusion-safe'
+        },
+        'end_report': {
+            status: 'PROTOCOL CONCLUSION: THREAT DETECTED',
+            text: 'You cannot verify an unexpected request. This is a high-risk scenario. <strong>Do not reply, click, or download.</strong> Report the email to IT immediately.',
+            isConclusion: true,
+            conclusionClass: 'conclusion-danger'
+        }
+    },
+    
     // --- DOM CACHE ---
     dom: {},
 
@@ -59,15 +98,17 @@ const module1Manager = {
         this.dom.sections = document.querySelectorAll('.training-section');
         this.dom.moduleProgress = document.getElementById('module-progress');
         this.dom.actionButtons = document.querySelectorAll('[data-action]');
-        // Phase 1 Terminal
-        this.dom.terminalOutput = document.getElementById('terminal-output');
-        this.dom.terminalNextBtn = document.querySelector('[data-action="terminal-next"]');
-        this.dom.phase1ContinueBtn = document.getElementById('phase-1-continue-btn');
-        // Phase 2 Red Flags
+        // Phase 2
         this.dom.scannableElements = document.querySelectorAll('.scannable');
         this.dom.flagsFound = document.getElementById('flags-found');
         this.dom.flagExplanations = document.getElementById('flag-explanations');
         this.dom.phase2Btn = document.getElementById('phase-2-btn');
+        // Phase 3 Flowchart
+        this.dom.flowchart = document.getElementById('decision-flowchart');
+        this.dom.flowchartStatus = document.getElementById('flowchart-status');
+        this.dom.flowchartText = document.getElementById('flowchart-text');
+        this.dom.flowchartActions = document.getElementById('flowchart-actions');
+        this.dom.phase3Btn = document.getElementById('phase-3-btn');
         // Assessment
         this.dom.assessmentContainer = document.getElementById('email-assessment-container');
         this.dom.resultsContainer = document.getElementById('assessment-results-container');
@@ -80,13 +121,18 @@ const module1Manager = {
         this.dom.scannableElements.forEach(el => {
             el.addEventListener('click', (e) => this.handleRedFlagClick(e.currentTarget));
         });
+        this.dom.flowchartActions.addEventListener('click', (e) => {
+            if (e.target.matches('[data-next]')) {
+                this.handleFlowchartChoice(e.target.dataset.next);
+            }
+        });
         this.dom.assessmentContainer.addEventListener('click', (e) => {
             if (e.target.matches('[data-choice]')) {
                 this.handleAssessmentChoice(e.target.dataset.choice === 'true');
             }
         });
     },
-
+    
     // --- EVENT HANDLERS & CORE LOGIC ---
     handleAction(dataset) {
         const { action, phase } = dataset;
@@ -102,31 +148,10 @@ const module1Manager = {
             case 'complete-module': this.completeModule(); break;
         }
     },
-    
-    showSection(sectionId) {
-        this.dom.sections.forEach(section => section.classList.remove('active'));
-        document.getElementById(sectionId)?.classList.add('active');
-    },
 
-    updateProgress(step) {
-        const percentage = Math.round(((step - 1) / 4) * 100);
-        this.dom.moduleProgress.textContent = `${percentage}%`;
-    },
-
-    renderNextTerminalLine() {
-        this.currentTerminalStep++;
-        if (this.currentTerminalStep < this.terminalContent.length) {
-            const stepData = this.terminalContent[this.currentTerminalStep];
-            const newLine = document.createElement('div');
-            newLine.className = `terminal-line ${stepData.type}`;
-            newLine.innerHTML = stepData.text;
-            this.dom.terminalOutput.appendChild(newLine);
-            this.dom.terminalOutput.scrollTop = this.dom.terminalOutput.scrollHeight;
-        }
-        if (this.currentTerminalStep >= this.terminalContent.length - 1) {
-            this.dom.terminalNextBtn.style.display = 'none';
-            this.dom.phase1ContinueBtn.style.display = 'block';
-        }
+    handleFlowchartChoice(nextNodeId) {
+        this.currentFlowNode = nextNodeId;
+        this.renderFlowNode();
     },
 
     handleRedFlagClick(element) {
@@ -158,6 +183,52 @@ const module1Manager = {
         this.currentAssessmentEmailIndex++;
         this.dom.assessmentContainer.querySelectorAll('button').forEach(btn => btn.disabled = true);
         setTimeout(() => this.renderAssessmentEmail(), 3000);
+    },
+    
+    showSection(sectionId) {
+        this.dom.sections.forEach(section => section.classList.remove('active'));
+        document.getElementById(sectionId)?.classList.add('active');
+    },
+
+    updateProgress(step) {
+        const percentage = Math.round(((step - 1) / 4) * 100);
+        this.dom.moduleProgress.textContent = `${percentage}%`;
+    },
+
+    renderNextTerminalLine() {
+        this.currentTerminalStep++;
+        if (this.currentTerminalStep < this.terminalContent.length) {
+            const stepData = this.terminalContent[this.currentTerminalStep];
+            const newLine = document.createElement('div');
+            newLine.className = `terminal-line ${stepData.type}`;
+            newLine.innerHTML = stepData.text;
+            this.dom.terminalOutput.appendChild(newLine);
+            this.dom.terminalOutput.scrollTop = this.dom.terminalOutput.scrollHeight;
+        }
+        if (this.currentTerminalStep >= this.terminalContent.length - 1) {
+            this.dom.terminalNextBtn.style.display = 'none';
+            this.dom.phase1ContinueBtn.style.display = 'block';
+        }
+    },
+    
+    renderFlowNode() {
+        const node = this.flowchartNodes[this.currentFlowNode];
+        this.dom.flowchartStatus.textContent = node.status;
+        this.dom.flowchartText.innerHTML = node.text;
+        this.dom.flowchartActions.innerHTML = '';
+        this.dom.flowchart.className = 'decision-flowchart';
+        if (node.isConclusion) {
+            this.dom.flowchart.classList.add(node.conclusionClass);
+            this.dom.phase3Btn.style.display = 'block';
+        } else {
+            node.options.forEach(option => {
+                const button = document.createElement('button');
+                button.className = 'btn btn-secondary';
+                button.textContent = option.text;
+                button.dataset.next = option.next;
+                this.dom.flowchartActions.appendChild(button);
+            });
+        }
     },
 
     renderAssessmentEmail() {
@@ -197,16 +268,14 @@ const module1Manager = {
     completePhase(phase) {
         const nextPhase = phase + 1;
         this.updateProgress(nextPhase + 1);
-        
         if (phase === 1) {
             this.showSection('training-phase-2');
         } else if (phase === 2) {
             this.showSection('training-phase-3');
+            this.renderFlowNode(); 
         } else if (phase === 3) {
             this.showSection('assessment-phase');
-            // ** THE FIX IS HERE: **
-            // We need to tell the script to draw the first question.
-            this.renderAssessmentEmail(); 
+            this.renderAssessmentEmail();
         }
     },
     
