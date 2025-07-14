@@ -134,7 +134,34 @@ body {
 .status-badge.completed { background: var(--success-color); color: var(--text-dark); }
 .status-badge.locked { background: #6c757d; color: var(--text-light); }
 
-
+/* Fix for text on light-background components */
+.threat-assessment, .learning-objectives, .instructor-message {
+    color: var(--text-dark); /* Sets the default text color inside to black */
+}
+/* Fix for threat card icons and text in Module 2 */
+.learning-cards .threat-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+.learning-cards .threat-icon { /* This was missing */
+    font-size: 2.5rem;
+    flex-shrink: 0;
+}
+.learning-cards .threat-header h3 {
+    font-size: 1.3rem;
+    color: var(--primary-color);
+    flex-grow: 1;
+    margin: 0;
+}
+.learning-cards .threat-level {
+    font-size: 0.9rem;
+}
+.learning-cards .threat-content p {
+    font-size: 1rem;
+    line-height: 1.6;
+}
 /* ==================================================
    3. FILE SYSTEM LANDING PAGE STYLES (.file-system-page)
    ================================================== */
