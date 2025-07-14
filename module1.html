@@ -79,39 +79,42 @@
     </section>
 
     <!-- Training Phase 2: Red Flag Detection -->
-    <section id="training-phase-2" class="training-section">
-        <div class="container">
-            <div class="section-header">
-                <h2>PHASE 2: SPOT THE RED FLAGS</h2>
-                <p>Learning to Identify Suspicious Emails</p>
-            </div>
-            <div class="red-flags-training">
-                <div class="interactive-training">
-                    <h3><span aria-hidden="true">🔍 </span>EMAIL ANALYSIS TRAINING</h3>
-                    <p>Use your cursor to scan the email below. Click on anything that seems suspicious to mark it as a red flag.</p>
-                    <div class="email-scanner">
-                        <div class="example-email suspicious">
-                            <div class="email-header-scan">
-                                <p><strong>From:</strong> <span class="scannable" data-flag="sender">security@hiltophonney.com</span></p>
-                                <p><strong>Subject:</strong> <span class="scannable" data-flag="subject">URGENT: Account Verification Required</span></p>
-                            </div>
-                            <div class="email-body-scan">
-                                <p>Dear <span class="scannable" data-flag="greeting">Valued Employee</span>,</p>
-                                <p>We have detected <span class="scannable" data-flag="urgency">suspicious activity</span> on your account.</p>
-                                <p>Please <span class="scannable" data-flag="request">click here to verify your login</span> within 24 hours.</p>
-                                <p><a href="#" class="scannable" data-flag="link" onclick="event.preventDefault()">www.hiltophonney-secure.com/verify</a></p>
-                            </div>
+<section id="training-phase-2" class="training-section">
+    <div class="container">
+        <div class="section-header">
+            <h2>PHASE 2: SPOT THE RED FLAGS</h2>
+            <p>Learning to Identify Suspicious Emails</p>
+        </div>
+        
+        <!-- RESTORED FULL CONTENT FOR PHASE 2 -->
+        <div class="red-flags-training">
+            <div class="interactive-training">
+                <h3><span aria-hidden="true">🔍 </span>EMAIL ANALYSIS TRAINING</h3>
+                <p>Use your cursor to scan the email below. Click on anything that seems suspicious to mark it as a red flag.</p>
+                
+                <div class="email-scanner">
+                    <div class="example-email suspicious">
+                        <div class="email-header-scan">
+                            <p><strong>From:</strong> <span class="scannable" data-flag="sender">security@hiltophonney.com</span></p>
+                            <p><strong>Subject:</strong> <span class="scannable" data-flag="subject">URGENT: Account Verification Required</span></p>
                         </div>
-                        <div class="scanner-feedback">
-                            <p>Red flags found: <span id="flags-found">0</span>/6</p>
-                            <div id="flag-explanations"></div>
+                        <div class="email-body-scan">
+                            <p>Dear <span class="scannable" data-flag="greeting">Valued Employee</span>,</p>
+                            <p>We have detected <span class="scannable" data-flag="urgency">suspicious activity</span> on your account.</p>
+                            <p>Please <span class="scannable" data-flag="request">click here to verify your login</span> within 24 hours.</p>
+                            <p><a href="#" class="scannable" data-flag="link" onclick="event.preventDefault()">www.hiltophonney-secure.com/verify</a></p>
                         </div>
                     </div>
+                    <div class="scanner-feedback">
+                        <p>Red flags found: <span id="flags-found">0</span>/6</p>
+                        <div id="flag-explanations"></div>
+                    </div>
                 </div>
-                <button data-action="complete-phase" data-phase="2" class="btn btn-secondary" id="phase-2-btn" disabled>PHASE 2 COMPLETE</button>
             </div>
+            <button data-action="complete-phase" data-phase="2" class="btn btn-secondary" id="phase-2-btn" disabled>PHASE 2 COMPLETE</button>
         </div>
-    </section>
+    </div>
+</section>
 
     <!-- Training Phase 3: Safe Email Practices -->
     <section id="training-phase-3" class="training-section">
