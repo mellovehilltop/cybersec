@@ -73,9 +73,13 @@ const module2Manager = {
     completePhase(phase) {
         const nextPhase = phase + 1;
         this.updateProgress(nextPhase + 1);
-        const sectionId = phase === 3 ? 'assessment-phase' : `training-phase-${nextPhase}`;
-        this.showSection(sectionId);
-    },
+        const sectionId = `training-phase-${nextPhase}`;
+if (phase === 3) {
+    this.showSection('assessment-phase');
+    this.renderAssessment(); // <-- ADD THIS LINE
+} else {
+    this.showSection(sectionId);
+},
 
     // --- Phase 3: Password Strength Tester ---
     testPasswordStrength() {
@@ -140,7 +144,58 @@ const module2Manager = {
         this.passwordVisible = !this.passwordVisible;
         this.dom.passwordTester.type = this.passwordVisible ? 'text' : 'password';
     },
+ renderAssessment() {
+        const challenges = [
+            {
+                id: 1,
+                title: 'Challenge 1: Identify the Threat',
+                question: 'You receive an email saying "Your password expires today. Click here to update: www.hilltopmoney.com". What type of attack is this?',
+                options: [
+                    { text: 'A) Brute Force', answer: 'A' },
+                    { text: 'B) Phishing', answer: 'B' },
+                    { text: 'C) Dictionary Attack', answer: 'C' }
+                ],
+                correctAnswer: 'B'
+            },
+            {
+                id: 2,
+                title: 'Challenge 2: Create a Secure Password',
+                question: 'Create a password for your work email that meets all security requirements and passes the strength test.',
+                isCustom: true // Special flag for the custom password input
+            },
+            {
+                id: 3,
+                title: 'Challenge 3: Password Reuse',
+                question: 'You use the same strong password for your work email and your personal social media. Is this a secure practice?',
+                options: [
+                    { text: 'YES - As long as the password is strong', answer: 'A' },
+                    { text: 'NO - Each account needs a unique password', answer: 'B' }
+                ],
+                correctAnswer: 'B'
+            }
+        ];
 
+        this.dom.assessmentChallenges.innerHTML = challenges.map(c => `
+            <div class="challenge-card" id="challenge-${c.id}">
+                <h4>${c.title}</h4>
+                <p>${c.question}</p>
+                ${c.isCustom ? `
+                    <input type="password" id="custom-password" class="password-input" placeholder="Create your secure password...">
+                    <button data-action="validate-custom" class="btn option-btn">Test My Password</button>
+                ` : `
+                    <div class="challenge-options">
+                        ${c.options.map(o => `<button data-action="answer-challenge" data-challenge-id="${c.id}" data-answer="${o.answer}" class="btn option-btn">${o.text}</button>`).join('')}
+                    </div>
+                `}
+                <div class="challenge-result" id="result-${c.id}"></div>
+            </div>
+        `).join('');
+
+        // Re-bind events for the newly created buttons
+        this.dom.assessmentChallenges.querySelectorAll('[data-action]').forEach(btn => {
+            btn.addEventListener('click', (e) => this.handleAction(e.currentTarget.dataset));
+        });
+    },
     completeModule() {
         // Logic to save progress and redirect
         if (window.digitalShieldProgress) {
