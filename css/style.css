@@ -269,7 +269,173 @@ body {
 .example-card ul li { font-family: var(--font-secondary); /* ... other styles */ }
 
 /* ... (Many other module-specific styles are fine as they were, just ensure colors use variables) ... */
+/* ==================================================
+   MODULE 2: PASSWORD SECURITY STYLES
+   ================================================== */
+.common-passwords {
+    background: rgba(231, 76, 60, 0.2);
+    border: 3px solid var(--danger-color);
+    border-radius: 12px;
+    padding: 25px;
+    margin: 40px 0;
+    text-align: center;
+}
+.common-passwords h3 {
+    color: var(--danger-color);
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+.password-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px;
+    font-family: var(--font-secondary);
+}
+.password-grid span {
+    background: rgba(231, 76, 60, 0.3);
+    padding: 8px;
+    border-radius: 5px;
+}
 
+.password-tips {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+    margin: 40px 0;
+}
+.tip-card { /* Inherits base card styles */ }
+.tip-icon { font-size: 2.5rem; margin-bottom: 15px; }
+.tip-card h4 { color: var(--primary-color); }
+
+.password-examples {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    margin: 40px 0;
+}
+.example-card {
+    padding: 20px;
+    border-radius: 12px;
+    border: 3px solid;
+    font-family: var(--font-secondary);
+}
+.example-card h4 { font-size: 1.3rem; }
+.weak-example { background: rgba(231, 76, 60, 0.1); border-color: var(--danger-color); }
+.strong-example { background: rgba(0, 255, 0, 0.1); border-color: var(--success-color); }
+
+.password-input-container {
+    position: relative;
+    max-width: 800px;
+    margin: 25px auto;
+}
+.password-input {
+    width: 100%;
+    padding: 18px;
+    font-size: 1.5rem;
+    border: 3px solid var(--primary-color);
+    background: rgba(0, 255, 255, 0.1);
+    color: var(--text-light);
+    border-radius: 10px;
+    font-family: var(--font-secondary);
+    font-weight: bold;
+    padding-right: 50px; /* Space for the button */
+}
+.password-toggle-btn {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    cursor: pointer;
+    font-size: 1.5rem;
+}
+
+.password-strength-meter {
+    width: 100%;
+    max-width: 800px;
+    height: 12px;
+    background: #333;
+    border-radius: 6px;
+    margin: 0 auto 15px auto;
+    overflow: hidden;
+}
+.strength-fill {
+    height: 100%;
+    transition: width 0.3s ease, background-color 0.3s ease;
+    border-radius: 4px;
+}
+.strength-weak { background-color: var(--danger-color); width: 25%; }
+.strength-fair { background-color: var(--secondary-color); width: 50%; }
+.strength-good { background-color: #3498db; width: 75%; }
+.strength-strong { background-color: var(--success-color); width: 100%; }
+
+.password-feedback {
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 10px;
+    background: rgba(0, 255, 255, 0.1);
+    border-left: 5px solid var(--primary-color);
+    max-width: 800px;
+}
+
+.vault-container { text-align: center; margin: 40px 0; }
+.digital-vault {
+    width: 200px;
+    height: 200px;
+    background: linear-gradient(45deg, #1a1a2e, #16213e);
+    border: 4px solid var(--primary-color);
+    border-radius: 50%;
+    margin: 0 auto 15px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 40px rgba(0, 255, 255, 0.4);
+    transition: border-color 0.5s ease;
+}
+.digital-vault.unlocked {
+    border-color: var(--success-color);
+    box-shadow: 0 0 40px rgba(0, 255, 0, 0.6);
+}
+.vault-icon {
+    width: 80px;
+    filter: drop-shadow(0 0 15px rgba(243, 156, 18, 0.5));
+    transition: transform 0.5s ease;
+}
+.unlocked .vault-icon {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 20px rgba(0, 255, 0, 0.8));
+}
+
+.strength-criteria {
+    background: rgba(0, 255, 255, 0.1);
+    border: 3px solid var(--primary-color);
+    border-radius: 12px;
+    padding: 25px;
+    margin: 25px auto;
+    max-width: 800px;
+}
+.criteria-list { display: grid; gap: 12px; }
+.criteria-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+.check-mark { font-size: 1.5rem; min-width: 30px; }
+.criteria-item.pass { color: var(--success-color); }
+.criteria-item.fail { color: var(--danger-color); }
+
+.assessment-challenges { display: grid; gap: 25px; }
+.challenge-card { /* Inherits base card styles */ }
+.challenge-options { display: grid; gap: 10px; margin-top: 15px; }
+.option-btn { /* Inherits base btn styles */ }
+.challenge-result { margin-top: 15px; font-weight: bold; }
 /* ==================================================
    5. ANIMATIONS & ACCESSIBILITY
    ================================================== */
