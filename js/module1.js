@@ -28,23 +28,21 @@ const module1Manager = {
         { type: 'line', text: '<strong>WARNINGS:</strong> Be extremely suspicious of any change in bank details or urgent, out-of-the-blue payment requests.' },
         { type: 'header', text: 'ANALYSIS COMPLETE' },
     ],
-    
-    assessmentEmails: [
-        { from: "supplier@honeyextractors.co.uk", subject: "Updated Invoice #HE-2024-0847", content: "Please find attached our updated invoice<br>Best regards,<br>Honey Extractors", legitimate: true, explanation: "Legitimate: A standard business email from a known supplier with specific details." },
-       
- { from: "security@hilltophoney-update.com",
-        subject: "URGENT: Security System Update Required",
-        body: "Dear Employee,<br><br>Our security system requires immediate updating. Click the link below to verify your access credentials:<br><br><a href='#'>Verify Account Access</a><br><br>This must be completed within 2 hours or your access will be suspended.<br><br>IT Security Team", legitimate: false, explanation: "his is a phishing attempt with suspicious domain, generic greeting, urgent time pressure, and requests credentials." },
-       
- { from: "production@hilltophoney.co.uk",
-        subject: "Weekly Production Report - Week 29",
-        body: "Hi Team,<br><br>Please find this week's production summary:<br>- Honey processed: 3,247 litres<br>- Quality control: 100% pass rate<br>- Next week's targets attached<br><br>Any questions, let me know.<br><br>Production Team", legitimate: true, explanation: "This is a legitimate internal email with normal business content, proper domain, and expected communication pattern." },
-
-        { from: "supplier@premiumhoney.co.uk",
-        subject: "Invoice Payment - Account Details Update",
-        body: "Dear Hilltop Honey,<br><br>Thank you for your recent order. Please note our bank details have changed for future payments:<br><br>New Account: HSBC Bank<br>Sort: 40-12-34<br>Account: 12345678<br><br>Please update your records.<br><br>Best regards,<br>Premium Honey Supplies", legitimate: false, explanation: "Suspicious request to change payment details. Should be verified through independent communication channels." }
-    ],
-
+assessmentEmails: [
+    { from: "supplier@honeyextractors.co.uk", subject: "Updated Invoice #HE-2024-0847", body: "Please find attached our updated invoice.<br>Best regards,<br>Honey Extractors", legitimate: true, explanation: "Legitimate: A standard business email from a known supplier with specific details." },
+   
+    { from: "security@hilltophoney-update.com",
+      subject: "URGENT: Security System Update Required",
+      body: "Dear Employee,<br>Our security system requires immediate updating. Click the link below to verify your access credentials:<br><a href='#'>Verify Account Access</a><br>This must be completed within 2 hours or your access will be suspended.<br>IT Security Team", legitimate: false, explanation: "This is a phishing attempt with suspicious domain, generic greeting, urgent time pressure, and requests credentials." },
+   
+    { from: "production@hilltophoney.co.uk",
+      subject: "Weekly Production Report - Week 29",
+      body: "Hi Team,<br>Please find this week's production summary:<br>- Honey processed: 3,247 litres<br>- Quality control: 100% pass rate<br>- Next week's targets attached<br>Any questions, let me know.<br>Production Team", legitimate: true, explanation: "This is a legitimate internal email with normal business content, proper domain, and expected communication pattern." },
+      
+    { from: "supplier@premiumhoney.co.uk",
+      subject: "Invoice Payment - Account Details Update",
+      body: "Dear Hilltop Honey,<br>Thank you for your recent order. Please note our bank details have changed for future payments:<br>New Account: HSBC Bank<br>Sort: 40-12-34<br>Account: 12345678<br>Please update your records.<br>Best regards,<br>Premium Honey Supplies", legitimate: false, explanation: "Suspicious request to change payment details. Should be verified through independent communication channels." }
+],
     // --- DOM CACHE ---
     dom: {},
 
@@ -247,41 +245,89 @@ const module1Manager = {
     ],
 
    // Content and state for the Phase 3 Flowchart
-    currentFlowNode: 'start',
+  // INSIDE js/module1.js
+
+    // EXPANDED: Content and state for the Phase 3 Flowchart with multiple scenarios
+    currentFlowNode: 'scenario1_start',
     flowchartNodes: {
-        'start': {
-            status: 'DECISION POINT',
-            text: 'A new email has arrived. Does it contain an <strong>unexpected request</strong> or attachment?',
+        // --- SCENARIO 1: The Unexpected Request ---
+        'scenario1_start': {
+            status: 'SCENARIO 1/3: UNEXPECTED REQUEST',
+            text: 'You receive an email from `ceo@hilltophoney.co.uk` asking you to urgently buy £200 in gift cards. He says not to call as he is in meetings.',
+            options: [ { text: 'Analyze This Threat', next: 'scenario1_q1' } ]
+        },
+        'scenario1_q1': {
+            status: 'DECISION POINT 1',
+            text: 'Is this an unusual financial request combined with pressure not to verify?',
             options: [
-                { text: 'YES - It\'s Unexpected', next: 'q2_verify' },
-                { text: 'NO - It Seems Routine', next: 'end_caution' }
+                { text: 'YES - This is a classic BEC tactic', next: 'scenario1_q2' },
+                { text: 'NO - The CEO often asks for this', next: 'scenario1_fail' }
             ]
         },
-        'q2_verify': {
-            status: 'VERIFICATION REQUIRED',
-            text: 'The request is unexpected. Can you verify it with the sender through a <strong>separate, trusted channel</strong> (e.g., a known phone number, in-person chat)?',
+        'scenario1_q2': {
+            status: 'CORRECT ANALYSIS',
+            text: 'Excellent. You correctly identified a Business Email Compromise attempt. What is the correct protocol?',
             options: [
-                { text: 'YES - I Can Verify', next: 'end_verify' },
-                { text: 'NO - I Can\'t Verify', next: 'end_report' }
+                { text: 'STOP, do not reply, and REPORT to IT', next: 'scenario2_start' },
+                { text: 'Reply and ask for clarification', next: 'scenario1_fail' }
             ]
         },
-        'end_caution': {
-            status: 'PROTOCOL CONCLUSION: PROCEED WITH CAUTION',
-            text: 'The email seems routine. Remain vigilant, but it is likely safe to proceed.',
+        'scenario1_fail': {
+            status: 'PROTOCOL FAILED - RETRYING',
+            text: 'Incorrect. An urgent, un-verifiable request for money is a major red flag. Let\'s try again.',
+            options: [ { text: 'Restart Scenario 1', next: 'scenario1_start' } ]
+        },
+        // --- SCENARIO 2: The Mysterious Attachment ---
+        'scenario2_start': {
+            status: 'SCENARIO 2/3: MYSTERIOUS ATTACHMENT',
+            text: 'An email arrives from an unknown contact with the subject "Invoice" and a `.zip` file attached.',
+            options: [ { text: 'Analyze This Threat', next: 'scenario2_q1' } ]
+        },
+        'scenario2_q1': {
+            status: 'DECISION POINT 2',
+            text: 'You were not expecting this invoice. What is the safest action?',
+            options: [
+                { text: 'DELETE the email without opening it', next: 'scenario3_start' },
+                { text: 'Open the .zip to see if it\'s real', next: 'scenario2_fail' }
+            ]
+        },
+        'scenario2_fail': {
+            status: 'PROTOCOL FAILED - RETRYING',
+            text: 'Incorrect. Opening an unexpected attachment, especially a `.zip` file, could deploy malware instantly. The safest action is to delete it. Let\'s try again.',
+            options: [ { text: 'Restart Scenario 2', next: 'scenario2_start' } ]
+        },
+        // --- SCENARIO 3: The "Login Required" Link ---
+        'scenario3_start': {
+            status: 'SCENARIO 3/3: LOGIN REQUIRED',
+            text: 'You get an email from "Microsoft" saying you must click a link to re-validate your password due to a security update.',
+            options: [ { text: 'Analyze This Threat', next: 'scenario3_q1' } ]
+        },
+        'scenario3_q1': {
+            status: 'DECISION POINT 3',
+            text: 'What should you do about the link?',
+            options: [
+                { text: 'Hover over it to check the real destination', next: 'scenario3_q2' },
+                { text: 'Click it to secure your account quickly', next: 'scenario3_fail' }
+            ]
+        },
+        'scenario3_q2': {
+            status: 'CORRECT ANALYSIS',
+            text: 'You hover and see the link goes to `micros0ft-login.ru`. This is a phishing site.',
+            options: [
+                { text: 'REPORT the email as Phishing', next: 'end_success' }
+            ]
+        },
+        'scenario3_fail': {
+            status: 'PROTOCOL FAILED - RETRYING',
+            text: 'Incorrect. Never click a link in an unexpected email asking for credentials. This is the primary way phishing attacks succeed. Let\'s try again.',
+            options: [ { text: 'Restart Scenario 3', next: 'scenario3_start' } ]
+        },
+        // --- End Node ---
+        'end_success': {
+            status: 'PROTOCOL MASTERED',
+            text: 'You have successfully navigated all threat scenarios. Your decision-making skills are sharp.',
             isConclusion: true,
             conclusionClass: 'conclusion-safe'
-        },
-        'end_verify': {
-            status: 'PROTOCOL CONCLUSION: VERIFY BEFORE ACTING',
-            text: 'Your action is to verify the request. If it checks out, it\'s safe. If the sender denies sending it, report the email to IT immediately.',
-            isConclusion: true,
-            conclusionClass: 'conclusion-safe'
-        },
-        'end_report': {
-            status: 'PROTOCOL CONCLUSION: THREAT DETECTED',
-            text: 'You cannot verify an unexpected request. This is a high-risk scenario. <strong>Do not reply, click, or download.</strong> Report the email to IT immediately.',
-            isConclusion: true,
-            conclusionClass: 'conclusion-danger'
         }
     },
     
@@ -446,11 +492,17 @@ const module1Manager = {
             </div>`;
     },
 
+// INSIDE js/module1.js
+
     showEmailFeedback(email, userChoice, isCorrect) {
-        const feedbackDiv = document.createElement('div');
-        feedbackDiv.className = `assessment-feedback ${isCorrect ? 'correct' : 'incorrect'}`;
-        feedbackDiv.innerHTML = `<h3>${isCorrect ? 'CORRECT' : 'INCORRECT'}</h3><p>${email.explanation}</p>`;
-        this.dom.assessmentContainer.querySelector('.assessment-email').appendChild(feedbackDiv);
+        const feedbackClass = isCorrect ? 'correct' : 'incorrect';
+        const resultText = isCorrect ? 'CORRECT!' : 'INCORRECT';
+        this.dom.assessmentContainer.innerHTML = `
+            <div class="assessment-feedback ${feedbackClass}">
+                <h3>${resultText}</h3>
+                <p>${email.explanation}</p>
+            </div>
+        `;
     },
 
     showAssessmentResults() {
