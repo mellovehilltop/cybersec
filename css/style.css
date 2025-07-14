@@ -317,3 +317,66 @@ body {
     .module-page .module-title-section { flex-direction: column; gap: 10px; }
     .module-page .progress-indicator { position: relative; top: auto; right: auto; margin-bottom: 20px; }
 }
+/* --- Interactive Terminal (Module 1) --- */
+.interactive-terminal {
+    max-width: 900px;
+    margin: 30px auto;
+    background: rgba(0, 10, 20, 0.8);
+    border: 2px solid var(--primary-color);
+    border-radius: 12px;
+    box-shadow: 0 0 25px rgba(0, 255, 255, 0.2);
+    font-family: var(--font-secondary);
+    backdrop-filter: blur(5px);
+}
+
+.terminal-output {
+    padding: 25px;
+    height: 400px;
+    overflow-y: auto;
+    color: var(--text-light);
+}
+
+/* Style for the scrollbar */
+.terminal-output::-webkit-scrollbar {
+    width: 8px;
+}
+.terminal-output::-webkit-scrollbar-track {
+    background: rgba(0,0,0,0.2);
+}
+.terminal-output::-webkit-scrollbar-thumb {
+    background-color: var(--primary-color);
+    border-radius: 4px;
+}
+
+.terminal-line {
+    margin-bottom: 1.2em;
+    line-height: 1.6;
+    animation: fadeInLine 0.5s ease-out forwards;
+}
+
+@keyframes fadeInLine {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.terminal-line.header {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    font-family: var(--font-primary);
+    border-bottom: 1px solid var(--primary-color);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.terminal-line strong {
+    color: var(--secondary-color);
+}
+
+.terminal-controls {
+    border-top: 2px solid var(--primary-color);
+    padding: 15px;
+    text-align: right;
+    background: rgba(0,0,0,0.3);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
