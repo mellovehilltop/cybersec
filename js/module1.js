@@ -30,10 +30,19 @@ const module1Manager = {
     ],
     
     assessmentEmails: [
-        { from: "supplier@honeyextractors.co.uk", subject: "Updated Invoice #HE-2024-0847", content: "Please find attached our updated invoice...", legitimate: true, explanation: "Legitimate: A standard business email from a known supplier with specific details." },
-        { from: "security@hiltop-honey.secure.com", subject: "URGENT: Verify Account Now", content: "Your account will be suspended unless you verify immediately by clicking here...", legitimate: false, explanation: "Phishing: Misspelled domain, urgent language, and a demand for credentials." },
-        { from: "hr@hilltophoney.com", subject: "Holiday Schedule 2024", content: "Team, Please review the attached 2024 holiday schedule...", legitimate: true, explanation: "Legitimate: A typical internal HR communication." },
-        { from: "ceo@hilltophoney.com", subject: "Urgent Wire Transfer", content: "I need you to wire £50,000 to our new supplier immediately... I'm in meetings all day, don't call.", legitimate: false, explanation: "BEC: An unusual financial request combined with instructions not to verify via other channels." }
+        { from: "supplier@honeyextractors.co.uk", subject: "Updated Invoice #HE-2024-0847", content: "Please find attached our updated invoice<br>Best regards,<br>Honey Extractors", legitimate: true, explanation: "Legitimate: A standard business email from a known supplier with specific details." },
+       
+ { from: "security@hilltophoney-update.com",
+        subject: "URGENT: Security System Update Required",
+        body: "Dear Employee,<br><br>Our security system requires immediate updating. Click the link below to verify your access credentials:<br><br><a href='#'>Verify Account Access</a><br><br>This must be completed within 2 hours or your access will be suspended.<br><br>IT Security Team", legitimate: false, explanation: "his is a phishing attempt with suspicious domain, generic greeting, urgent time pressure, and requests credentials." },
+       
+ { from: "production@hilltophoney.co.uk",
+        subject: "Weekly Production Report - Week 29",
+        body: "Hi Team,<br><br>Please find this week's production summary:<br>- Honey processed: 3,247 litres<br>- Quality control: 100% pass rate<br>- Next week's targets attached<br><br>Any questions, let me know.<br><br>Production Team", legitimate: true, explanation: "This is a legitimate internal email with normal business content, proper domain, and expected communication pattern." },
+
+        { from: "supplier@premiumhoney.co.uk",
+        subject: "Invoice Payment - Account Details Update",
+        body: "Dear Hilltop Honey,<br><br>Thank you for your recent order. Please note our bank details have changed for future payments:<br><br>New Account: HSBC Bank<br>Sort: 40-12-34<br>Account: 12345678<br><br>Please update your records.<br><br>Best regards,<br>Premium Honey Supplies", legitimate: false, explanation: "Suspicious request to change payment details. Should be verified through independent communication channels." }
     ],
 
     // --- DOM CACHE ---
