@@ -195,7 +195,7 @@ if (phase === 3) {
         this.dom.assessmentChallenges.querySelectorAll('[data-action]').forEach(btn => {
             btn.addEventListener('click', (e) => this.handleAction(e.currentTarget.dataset));
         });
-    },
+    }
     completeModule() {
         // Logic to save progress and redirect
         if (window.digitalShieldProgress) {
