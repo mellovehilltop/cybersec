@@ -460,6 +460,64 @@ body {
     }
 }
 /* --- Best Practices & Incident Response (Module 1, Phase 3) --- */
+/* --- Decision Flowchart (Module 1, Phase 3) --- */
+.decision-flowchart {
+    max-width: 800px;
+    margin: 30px auto;
+    background: rgba(0, 10, 20, 0.8);
+    border: 3px solid var(--primary-color);
+    border-radius: 12px;
+    box-shadow: 0 0 25px rgba(0, 255, 255, 0.2);
+    transition: border-color 0.5s ease;
+}
+
+.flowchart-display {
+    padding: 30px;
+    text-align: center;
+}
+
+#flowchart-status {
+    font-family: var(--font-primary);
+    color: var(--secondary-color);
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: color 0.5s ease;
+}
+
+#flowchart-text {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    min-height: 60px; /* Prevents layout shifts */
+}
+
+.flowchart-actions {
+    border-top: 2px solid var(--primary-color);
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    background: rgba(0,0,0,0.3);
+    border-bottom-left-radius: 9px;
+    border-bottom-right-radius: 9px;
+}
+
+/* Styles for conclusion states */
+.decision-flowchart.conclusion-safe {
+    border-color: var(--success-color);
+}
+.decision-flowchart.conclusion-safe #flowchart-status {
+    color: var(--success-color);
+}
+
+.decision-flowchart.conclusion-danger {
+    border-color: var(--danger-color);
+}
+.decision-flowchart.conclusion-danger #flowchart-status {
+    color: var(--danger-color);
+}
 .practice-section, .incident-response {
     margin-bottom: 40px;
 }
