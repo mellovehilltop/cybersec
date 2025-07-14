@@ -7,15 +7,21 @@
  */
 const module1Manager = {
     // --- STATE ---
-    redFlagsFound: 0,
-    assessmentScore: 0,
-    currentAssessmentEmailIndex: 0,
-    totalRedFlags: 6,
-    assessmentEmails: [
-        { id: 1, from: "supplier@honeyextractors.co.uk", subject: "Updated Invoice #HE-2024-0847", content: "Dear Hilltop Honey, Please find attached our updated invoice...", legitimate: true, explanation: "Legitimate business email from a known supplier with specific details." },
-        { id: 2, from: "security@hiltop-honey.secure.com", subject: "URGENT: Verify Account Now", content: "Your account will be suspended unless you verify immediately. Click here: verify-now.suspicioussite.com", legitimate: false, explanation: "Phishing attempt with misspelled domain, urgent language, and suspicious link." },
-        { id: 3, from: "hr@hilltophoney.com", subject: "Holiday Schedule 2024", content: "Team, Please review the attached 2024 holiday schedule...", legitimate: true, explanation: "Internal HR communication with appropriate content and sender." },
-        { id: 4, from: "ceo@hilltophoney.com", subject: "Urgent Wire Transfer Required", content: "I need you to wire £50,000 to our new supplier immediately... Don't call me, I'm in meetings all day.", legitimate: false, explanation: "Business Email Compromise attempt - unusual financial request with instructions not to verify." }
+    currentTerminalStep: -1,
+    terminalContent: [
+        { type: 'header', text: 'INCOMING INTEL: PHISHING ATTACKS' },
+        { type: 'line', text: '<strong>METHOD:</strong> Fraudsters impersonate trusted sources to steal credentials or sensitive data.' },
+        { type: 'line', text: '<strong>PRIMARY TARGET:</strong> Your login details. Giving these away is like handing over the keys to our entire operation.' },
+        { type: 'header', text: 'THREAT 2: SPEAR PHISHING' },
+        { type: 'line', text: '<strong>METHOD:</strong> This is personal. Attackers use your name, job title, and project details to build trust before they strike.' },
+        { type: 'line', text: '<strong>PRIMARY TARGET:</strong> High-value individuals with access to sensitive systems. That could be you.' },
+        { type: 'header', text: 'THREAT 3: MALWARE ATTACHMENTS' },
+        { type: 'line', text: '<strong>METHOD:</strong> Malicious code hidden inside seemingly harmless files like invoices, reports, or images.' },
+        { type: 'line', text: '<strong>PRIMARY TARGET:</strong> Your computer and, through it, the entire Hilltop Honey network.' },
+        { type: 'header', text: 'THREAT 4: BUSINESS EMAIL COMPROMISE (BEC)' },
+        { type: 'line', text: '<strong>METHOD:</strong> The attacker poses as a senior executive or a supplier to trick you into making urgent, unauthorized payments.' },
+        { type: 'line', text: '<strong>PRIMARY TARGET:</strong> The company’s bank account. These attacks are direct financial theft.' },
+        { type: 'header', text: 'ANALYSIS COMPLETE' },
     ],
 
     // --- DOM CACHE ---
@@ -25,36 +31,22 @@ const module1Manager = {
     init() {
         this.cacheDOMElements();
         this.bindEvents();
-        this.updateProgress(1); // Start at step 1
-        console.log("Module 1 Manager Initialized");
+        this.updateProgress(1);
     },
 
     cacheDOMElements() {
         this.dom.sections = document.querySelectorAll('.training-section');
         this.dom.moduleProgress = document.getElementById('module-progress');
         this.dom.actionButtons = document.querySelectorAll('[data-action]');
-        this.dom.scannableElements = document.querySelectorAll('.scannable-hidden');
-        this.dom.flagsFound = document.getElementById('flags-found');
-        this.dom.flagExplanations = document.getElementById('flag-explanations');
-        this.dom.phase2Btn = document.getElementById('phase-2-btn');
-        this.dom.assessmentContainer = document.getElementById('email-assessment-container');
-        this.dom.resultsContainer = document.getElementById('assessment-results-container');
+        // Terminal-specific elements
+        this.dom.terminalOutput = document.getElementById('terminal-output');
+        this.dom.terminalNextBtn = document.querySelector('[data-action="terminal-next"]');
+        this.dom.phase1ContinueBtn = document.getElementById('phase-1-continue-btn');
     },
 
     bindEvents() {
         this.dom.actionButtons.forEach(btn => {
             btn.addEventListener('click', (e) => this.handleAction(e.currentTarget.dataset));
-        });
-
-        this.dom.scannableElements.forEach(el => {
-            el.addEventListener('click', (e) => this.handleRedFlagClick(e.currentTarget));
-        });
-
-        // Use event delegation for dynamically created assessment buttons
-        this.dom.assessmentContainer.addEventListener('click', (e) => {
-            if (e.target.matches('[data-choice]')) {
-                this.handleAssessmentChoice(e.target.dataset.choice === 'true');
-            }
         });
     },
 
@@ -63,154 +55,64 @@ const module1Manager = {
         const { action, phase } = dataset;
         switch (action) {
             case 'return-home': window.location.href = 'index.html'; break;
-            case 'start-training': this.showSection('training-phase-1'); this.updateProgress(2); break;
+            case 'start-training':
+                this.showSection('training-phase-1');
+                this.updateProgress(2);
+                this.renderNextTerminalLine(); // Start the terminal
+                break;
+            case 'terminal-next': this.renderNextTerminalLine(); break;
             case 'complete-phase': this.completePhase(parseInt(phase, 10)); break;
-            case 'complete-module': this.completeModule(); break;
+            // ... other actions for other phases will go here later
         }
     },
-
-    handleRedFlagClick(element) {
-        if (element.classList.contains('found')) return;
-
-        element.classList.add('found');
-        this.redFlagsFound++;
-        this.updateRedFlagFeedback(element.dataset.flag);
-
-        if (this.redFlagsFound >= this.totalRedFlags) {
-            this.dom.phase2Btn.disabled = false;
-        }
-    },
-
-    handleAssessmentChoice(userChoice) {
-        const email = this.assessmentEmails[this.currentAssessmentEmailIndex];
-        const isCorrect = (userChoice === email.legitimate);
-
-        if (isCorrect) {
-            this.assessmentScore += 100 / this.assessmentEmails.length;
-        }
-        
-        this.showEmailFeedback(email, userChoice, isCorrect);
-        this.currentAssessmentEmailIndex++;
-
-        // Disable buttons after choice
-        this.dom.assessmentContainer.querySelectorAll('button').forEach(btn => btn.disabled = true);
-
-        setTimeout(() => {
-            this.renderAssessmentEmail();
-        }, 3000);
-    },
-
-    // --- LOGIC & UI UPDATES ---
+    
+    // --- CORE LOGIC ---
     showSection(sectionId) {
         this.dom.sections.forEach(section => section.classList.remove('active'));
         document.getElementById(sectionId)?.classList.add('active');
     },
 
     updateProgress(step) {
-        // There are 4 steps: Briefing, Phase 1, Phase 2, Phase 3, Assessment
-        const percentage = ((step - 1) / 4) * 100;
-        if (this.dom.moduleProgress) {
-            this.dom.moduleProgress.textContent = `${Math.round(percentage)}%`;
+        const percentage = ((step - 1) / 4) * 100; // 5 total steps including briefing
+        this.dom.moduleProgress.textContent = `${Math.round(percentage)}%`;
+    },
+    
+    renderNextTerminalLine() {
+        this.currentTerminalStep++;
+        
+        if (this.currentTerminalStep < this.terminalContent.length) {
+            const stepData = this.terminalContent[this.currentTerminalStep];
+            const newLine = document.createElement('div');
+            newLine.className = `terminal-line ${stepData.type}`;
+            newLine.innerHTML = stepData.text;
+            
+            this.dom.terminalOutput.appendChild(newLine);
+            
+            // Auto-scroll to the new line
+            this.dom.terminalOutput.scrollTop = this.dom.terminalOutput.scrollHeight;
+        }
+
+        // Check if it's the last step
+        if (this.currentTerminalStep >= this.terminalContent.length - 1) {
+            this.dom.terminalNextBtn.style.display = 'none'; // Hide "NEXT" button
+            this.dom.phase1ContinueBtn.style.display = 'block'; // Show "CONTINUE" button
         }
     },
 
     completePhase(phase) {
         const nextPhase = phase + 1;
-        this.updateProgress(nextPhase + 1); // e.g., completing phase 1 moves to step 3 (phase 2)
+        this.updateProgress(nextPhase + 1);
         
-        if (phase === 1) this.showSection('training-phase-2');
-        else if (phase === 2) this.showSection('training-phase-3');
-        else if (phase === 3) {
-            this.showSection('assessment-phase');
-            this.renderAssessmentEmail();
+        // This logic will be expanded as you build out the other phases
+        if (phase === 1) {
+            alert("Phase 2 is not yet built."); // Placeholder
+            // this.showSection('training-phase-2');
         }
     },
-
-    updateRedFlagFeedback(flag) {
-        this.dom.flagsFound.textContent = this.redFlagsFound;
-        const explanations = {
-            'sender': 'Misspelled domain name - "hiltophonney" instead of "hilltophoney".',
-            'subject': 'Creates false urgency to pressure quick action.',
-            'greeting': 'Generic greeting instead of your actual name.',
-            'urgency': 'Suspicious activity claims designed to create panic.',
-            'request': 'Requests sensitive login verification via email.',
-            'link': 'Suspicious URL that doesn\'t match the real domain.'
-        };
-        const p = document.createElement('p');
-        p.innerHTML = `<strong>FLAGGED:</strong> ${explanations[flag]}`;
-        this.dom.flagExplanations.appendChild(p);
-    },
-
-    renderAssessmentEmail() {
-        if (this.currentAssessmentEmailIndex >= this.assessmentEmails.length) {
-            this.showAssessmentResults();
-            return;
-        }
-        const email = this.assessmentEmails[this.currentAssessmentEmailIndex];
-        this.dom.assessmentContainer.innerHTML = `
-            <div class="assessment-email">
-                <h4>Email ${this.currentAssessmentEmailIndex + 1} of ${this.assessmentEmails.length}</h4>
-                <div class="email-preview">
-                    <p><strong>From:</strong> ${email.from}</p>
-                    <p><strong>Subject:</strong> ${email.subject}</p>
-                    <p><strong>Content:</strong> ${email.content}</p>
-                </div>
-                <div class="assessment-question">
-                    <h4>Is this email safe or suspicious?</h4>
-                    <div class="action-buttons">
-                        <button data-choice="true" class="btn assess-btn safe">✅ SAFE</button>
-                        <button data-choice="false" class="btn assess-btn suspicious">⚠️ SUSPICIOUS</button>
-                    </div>
-                </div>
-            </div>
-        `;
-    },
-    
-    showEmailFeedback(email, userChoice, isCorrect) {
-        const feedbackClass = isCorrect ? 'correct' : 'incorrect';
-        const resultText = isCorrect ? 'CORRECT!' : 'INCORRECT';
-        const choiceText = userChoice ? 'marked as SAFE' : 'marked as SUSPICIOUS';
-        const actualText = email.legitimate ? 'actually SAFE' : 'actually SUSPICIOUS';
-
-        const feedbackHtml = `
-            <div class="assessment-feedback ${feedbackClass}">
-                <h3>${resultText}</h3>
-                <p>You ${choiceText}, and this email is ${actualText}.</p>
-                <div class="explanation"><strong>Explanation:</strong> ${email.explanation}</div>
-            </div>`;
-        this.dom.assessmentContainer.querySelector('.assessment-email').innerHTML += feedbackHtml;
-    },
-
-    showAssessmentResults() {
-        this.dom.assessmentContainer.innerHTML = ''; // Clear the assessment area
-        let grade, message;
-
-        if (this.assessmentScore >= 75) {
-            grade = 'EXPERT'; message = 'Excellent! You have mastered email security.';
-        } else if (this.assessmentScore >= 50) {
-            grade = 'PROFICIENT'; message = 'Good work! You understand email security basics.';
-        } else {
-            grade = 'NEEDS IMPROVEMENT'; message = 'Consider reviewing the training materials.';
-        }
-
-        this.dom.resultsContainer.innerHTML = `
-            <div class="assessment-completion">
-                <h2><span aria-hidden="true">🎯 </span>ASSESSMENT COMPLETE</h2>
-                <p>You scored ${Math.round(this.assessmentScore)}%</p>
-                <p><strong>Grade: ${grade}</strong>. ${message}</p>
-                <button data-action="complete-module" class="btn btn-secondary">COMPLETE MODULE 1</button>
-            </div>`;
-        this.dom.resultsContainer.style.display = 'block';
-    },
-
-    completeModule() {
-        if (window.digitalShieldProgress) {
-            window.digitalShieldProgress.completeModule(1, this.assessmentScore);
-        }
-        alert('🎉 Congratulations! You have successfully completed Module 1. You are being returned to Mission Control.');
-        window.location.href = 'index.html';
-    }
 };
+
+// --- ENTRY POINT ---
+module1Manager.init();
 
 // --- ENTRY POINT ---
 // The 'defer' attribute ensures this runs after the DOM is fully parsed.
