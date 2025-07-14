@@ -7,10 +7,8 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="module-page">
-    <!-- Progress Indicator -->
-    <div class="progress-indicator">
-        <!-- JS will populate this -->
-    </div>
+    <!-- Progress Indicator - JS will manage this -->
+    <div class="progress-indicator"></div>
 
     <!-- Header Navigation -->
     <header class="module-header">
@@ -59,56 +57,21 @@
                 <p>Common Password Attack Vectors</p>
             </div>
             <div class="learning-cards">
-               <div class="threat-card">
-                    <div class="threat-header">
-                        <img src="images/characters/hacker-silhouette.png" alt="Brute Force Attack" class="threat-icon-img">
-                        <h3>BRUTE FORCE ATTACKS</h3>
-                        <span class="threat-level high">HIGH RISK</span>
-                    </div>
-                    <div class="threat-content">
-                        <p><strong>Method:</strong> Automated tools try millions of password combinations per second.</p>
-                        <p><strong>Target:</strong> Simple, short passwords using common patterns.</p>
-                        <p><strong>Defense:</strong> Length and complexity make these attacks impractical.</p>
-                    </div>
-                </div>
-
                 <div class="threat-card">
-                    <div class="threat-header">
-                        <img src="images/characters/hacker-silhouette.png" alt="Dictionary Attack" class="threat-icon-img">
-                        <h3>DICTIONARY ATTACKS</h3>
-                        <span class="threat-level medium">MEDIUM RISK</span>
-                    </div>
-                    <div class="threat-content">
-                        <p><strong>Method:</strong> Uses lists of common passwords and dictionary words.</p>
-                        <p><strong>Target:</strong> Passwords based on real words, names, or common phrases.</p>
-                        <p><strong>Defense:</strong> Avoid dictionary words; use unique combinations.</p>
-                    </div>
+                    <div class="threat-header"><div class="threat-icon">💥</div><h3>BRUTE FORCE</h3><span class="threat-level high">HIGH</span></div>
+                    <div class="threat-content"><p>Automated tools try millions of combinations per second. Long, complex passwords are the only defense.</p></div>
                 </div>
-
                 <div class="threat-card">
-                    <div class="threat-header">
-                        <img src="images/characters/hacker-silhouette.png" alt="Credential Stuffing" class="threat-icon-img">
-                        <h3>CREDENTIAL STUFFING</h3>
-                        <span class="threat-level critical">CRITICAL</span>
-                    </div>
-                    <div class="threat-content">
-                        <p><strong>Method:</strong> Uses leaked passwords from other breaches to access accounts.</p>
-                        <p><strong>Target:</strong> People who reuse the same password across multiple sites.</p>
-                        <p><strong>Defense:</strong> Unique passwords for every account.</p>
-                    </div>
+                    <div class="threat-header"><div class="threat-icon">📖</div><h3>DICTIONARY ATTACKS</h3><span class="threat-level medium">MEDIUM</span></div>
+                    <div class="threat-content"><p>Uses lists of common words and names. Avoid using real words in your passwords.</p></div>
                 </div>
-
                 <div class="threat-card">
-                    <div class="threat-header">
-                        <img src="images/characters/agent-avatar.png" alt="Shoulder Surfing" class="threat-icon-img">
-                        <h3>SHOULDER SURFING</h3>
-                        <span class="threat-level medium">MEDIUM RISK</span>
-                    </div>
-                    <div class="threat-content">
-                        <p><strong>Method:</strong> Watching someone type their password in public spaces.</p>
-                        <p><strong>Target:</strong> Visible password entry in offices, cafes, public areas.</p>
-                        <p><strong>Defense:</strong> Shield your screen; use privacy screens.</p>
-                    </div>
+                    <div class="threat-header"><div class="threat-icon">♻️</div><h3>CREDENTIAL STUFFING</h3><span class="threat-level critical">CRITICAL</span></div>
+                    <div class="threat-content"><p>Uses leaked passwords from other site breaches. This is why unique passwords for every site are essential.</p></div>
+                </div>
+                <div class="threat-card">
+                    <div class="threat-header"><div class="threat-icon">👀</div><h3>SHOULDER SURFING</h3><span class="threat-level medium">MEDIUM</span></div>
+                    <div class="threat-content"><p>Physically watching someone type their password. Be aware of your surroundings in public spaces.</p></div>
                 </div>
             </div>
             <div class="common-passwords">
@@ -127,32 +90,13 @@
                 <p>Password Best Practices</p>
             </div>
             <div class="password-tips">
-                 <div class="tip-card">
-                    <img src="images/interface/progress-complete.png" alt="Length" class="tip-icon-img">
-                    <h4>LENGTH MATTERS</h4>
-                    <p>Use at least 12 characters. Every additional character exponentially increases security.</p>
-                </div>
-                
-                <div class="tip-card">
-                    <img src="images/interface/progress-complete.png" alt="Complexity" class="tip-icon-img">
-                    <h4>MIX IT UP</h4>
-                    <p>Combine uppercase, lowercase, numbers, and symbols for maximum strength.</p>
-                </div>
-                
-                <div class="tip-card">
-                    <img src="images/content/password-security-icon.png" alt="Unique" class="tip-icon-img">
-                    <h4>BE UNIQUE</h4>
-                    <p>Every account needs its own password. Never reuse passwords across sites.</p>
-                </div>
-                
-                <div class="tip-card">
-                    <img src="images/interface/navigation-next.png" alt="Update" class="tip-icon-img">
-                    <h4>REGULAR UPDATES</h4>
-                    <p>Change passwords regularly, especially for critical accounts.</p>
-                </div>
+                <div class="tip-card"><div class="tip-icon">📏</div><h4>LENGTH MATTERS</h4><p>Use at least 12 characters. Every additional character exponentially increases security.</p></div>
+                <div class="tip-card"><div class="tip-icon">🔀</div><h4>MIX IT UP</h4><p>Combine uppercase, lowercase, numbers, and symbols for maximum strength.</p></div>
+                <div class="tip-card"><div class="tip-icon">🚫</div><h4>BE UNIQUE</h4><p>Every account needs its own password. Never reuse passwords across sites.</p></div>
             </div>
             <div class="password-examples">
-                <!-- Weak/Strong examples will be here -->
+                <div class="example-card weak-example"><h4>❌ WEAK PASSWORDS</h4><ul><li>password123</li><li>john1985</li></ul></div>
+                <div class="example-card strong-example"><h4>✅ STRONG PASSWORDS</h4><ul><li>H0n3y!B33$2024#</li><li>Th3-G0ld3n-Hiv3!</li></ul></div>
             </div>
             <button data-action="complete-phase" data-phase="2" class="btn btn-secondary">CONTINUE TO STRENGTH TESTING</button>
         </div>
@@ -171,9 +115,8 @@
                 </div>
             </div>
             <div class="password-input-container">
-                <label for="password-tester" class="sr-only">Password to test</label>
-<input type="password" id="password-tester" class="password-input" placeholder="Enter password to test...">
-                <button data-action="toggle-visibility" class="password-toggle-btn" aria-label="Toggle password visibility">Show</button>
+                <input type="password" id="password-tester" class="password-input" placeholder="Enter password to test...">
+                <button data-action="toggle-visibility" class="password-toggle-btn" aria-label="Toggle password visibility">👁️</button>
             </div>
             <div class="password-strength-meter"><div id="strength-bar" class="strength-fill"></div></div>
             <div class="password-feedback" id="password-feedback"></div>
