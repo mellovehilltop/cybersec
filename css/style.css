@@ -412,22 +412,25 @@ body {
 }
 
 .scannable {
-    background-color: rgba(255, 255, 0, 0.3);
-    padding: 2px 4px;
-    border-radius: 3px;
+    /* DEFAULT STATE: Subtle, just indicates interactivity */
     cursor: pointer;
-    transition: background-color 0.3s ease;
-    border-bottom: 2px dotted var(--danger-color);
+    border-bottom: 2px dotted rgba(255, 255, 0, 0.5);
+    padding: 1px 3px;
+    transition: background-color 0.2s ease, color 0.2s ease;
 }
 .scannable:hover {
+    /* HOVER STATE: Highlighted yellow to give a clue */
     background-color: rgba(255, 255, 0, 0.6);
 }
 .scannable.found {
+    /* FOUND STATE: Clearly marked as found */
     background-color: var(--danger-color);
     color: var(--text-light);
     cursor: default;
     text-decoration: line-through;
     border: none;
+    padding: 2px 4px;
+    border-radius: 3px;
 }
 
 .scanner-feedback {
