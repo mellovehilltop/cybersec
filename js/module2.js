@@ -86,7 +86,7 @@ const module2Manager = {
     }
 
     // --- Phase 3: Password Strength Tester ---
-    testPasswordStrength() {
+    testPasswordStrength()
         const password = this.dom.passwordTester.value;
         if (!password) {
             this.resetStrengthTester();
