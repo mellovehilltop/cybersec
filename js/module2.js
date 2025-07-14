@@ -73,13 +73,17 @@ const module2Manager = {
     completePhase(phase) {
         const nextPhase = phase + 1;
         this.updateProgress(nextPhase + 1);
-        const sectionId = `training-phase-${nextPhase}`;
-if (phase === 3) {
-    this.showSection('assessment-phase');
-    this.renderAssessment(); // <-- ADD THIS LINE
-} else {
-    this.showSection(sectionId);
-}
+
+        // ** THE FIX IS HERE: **
+        // This logic needs to be inside the completePhase function.
+        if (phase === 3) {
+            this.showSection('assessment-phase');
+            this.renderAssessment(); // This now correctly calls the render function
+        } else {
+            const sectionId = `training-phase-${nextPhase}`;
+            this.showSection(sectionId);
+        }
+    }
 
     // --- Phase 3: Password Strength Tester ---
     testPasswordStrength() {
