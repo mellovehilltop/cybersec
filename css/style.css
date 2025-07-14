@@ -380,3 +380,79 @@ body {
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
 }
+/* --- Email Scanner (Module 1, Phase 2) --- */
+.email-scanner {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 25px;
+    margin-top: 30px;
+    background: rgba(0,0,0,0.2);
+    border: 1px solid var(--border-dark);
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.example-email.suspicious {
+    background: var(--bg-light-danger);
+    color: var(--text-dark);
+    border: 2px solid var(--danger-color);
+    border-radius: 8px;
+    padding: 20px;
+    font-family: sans-serif;
+}
+
+.email-header-scan {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+}
+.email-header-scan p, .email-body-scan p {
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+.scannable {
+    background-color: rgba(255, 255, 0, 0.3);
+    padding: 2px 4px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border-bottom: 2px dotted var(--danger-color);
+}
+.scannable:hover {
+    background-color: rgba(255, 255, 0, 0.6);
+}
+.scannable.found {
+    background-color: var(--danger-color);
+    color: var(--text-light);
+    cursor: default;
+    text-decoration: line-through;
+    border: none;
+}
+
+.scanner-feedback {
+    background: rgba(0, 10, 20, 0.8);
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid var(--primary-color);
+}
+.scanner-feedback p {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+#flag-explanations p {
+    font-size: 0.9rem;
+    font-weight: normal;
+    background: rgba(0,0,0,0.3);
+    padding: 8px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    border-left: 3px solid var(--secondary-color);
+}
+
+@media (max-width: 768px) {
+    .email-scanner {
+        grid-template-columns: 1fr;
+    }
+}
