@@ -265,9 +265,10 @@ const module1Manager = {
         this.dom.resultsContainer.style.display = 'block';
     },
 
-    completePhase(phase) {
+completePhase(phase) {
         const nextPhase = phase + 1;
         this.updateProgress(nextPhase + 1);
+        
         if (phase === 1) {
             this.showSection('training-phase-2');
         } else if (phase === 2) {
