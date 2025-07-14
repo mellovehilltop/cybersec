@@ -572,10 +572,11 @@ body {
 .email-preview {
     background: #f9f9f9;
     color: var(--text-dark);
-    padding: 15px;
+    padding: 20px;
     border-radius: 4px;
     font-family: sans-serif;
     margin-bottom: 20px;
+   min-height: 120px;
 }
 .email-preview p {
     margin-bottom: 10px;
@@ -586,6 +587,25 @@ body {
     justify-content: center;
     gap: 20px;
     margin-top: 20px;
+}
+.assess-btn {
+    padding: 12px 24px;
+    font-size: 1rem;
+    font-weight: bold;
+    min-width: 150px;
+}
+.assess-btn.safe {
+    background: var(--bg-light-success);
+    color: #1b5e20;
+    border: 2px solid var(--success-color);
+}
+.assess-btn.suspicious {
+    background: var(--bg-light-danger);
+    color: #b71c1c;
+    border: 2px solid var(--danger-color);
+}
+.assess-btn:hover {
+    transform: scale(1.05);
 }
 
 .assessment-feedback {
