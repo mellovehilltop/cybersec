@@ -79,7 +79,7 @@ if (phase === 3) {
     this.renderAssessment(); // <-- ADD THIS LINE
 } else {
     this.showSection(sectionId);
-},
+}
 
     // --- Phase 3: Password Strength Tester ---
     testPasswordStrength() {
