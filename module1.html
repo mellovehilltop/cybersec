@@ -62,21 +62,23 @@
     </section>
 
     <!-- Training Phase 1: Replaced with Interactive Terminal -->
-    <section id="training-phase-1" class="training-section">
-        <div class="container">
-            <div class="section-header">
-                <h2>PHASE 1: KNOW YOUR ENEMY</h2>
-                <p>Intel Feed: Threat Analysis</p>
-            </div>
-            <div class="interactive-terminal" id="phase-1-terminal">
-                <div class="terminal-output" id="terminal-output"></div>
-                <div class="terminal-controls">
-                    <button data-action="terminal-next" class="btn btn-secondary">NEXT ></button>
-                </div>
-            </div>
-            <button data-action="complete-phase" data-phase="1" class="btn btn-secondary" id="phase-1-continue-btn" style="display: none;">CONTINUE TO PHASE 2</button>
+<section id="training-phase-1" class="training-section">
+    <div class="container">
+        <div class="section-header">
+            <h2>PHASE 1: KNOW YOUR ENEMY</h2>
+            <p>Intel Feed: Threat Analysis</p>
         </div>
-    </section>
+        <!-- NEW INTERACTIVE TERMINAL STRUCTURE -->
+        <div class="interactive-terminal" id="phase-1-terminal">
+            <div class="terminal-output" id="terminal-output"></div>
+            
+            <div class="terminal-controls">
+                <button data-action="terminal-next" class="btn btn-secondary">NEXT ></button>
+            </div>
+        </div>
+        <button data-action="complete-phase" data-phase="1" class="btn btn-secondary" id="phase-1-continue-btn" style="display: none;">CONTINUE TO PHASE 2</button>
+    </div>
+</section>
 
     <!-- Training Phase 2: Red Flag Detection -->
 <section id="training-phase-2" class="training-section">
