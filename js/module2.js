@@ -144,7 +144,7 @@ const module2Manager = {
 
     renderAssessment() {
 
-    renderAssessment() {
+    renderAssessment()
         const challenges = [
             { id: 1, title: 'Challenge 1: Identify the Threat', question: 'You receive an email saying "Your password expires today. Click here to update: www.hilltopmoney.com". What type of attack is this?', options: [{ text: 'A) Brute Force', answer: 'A' }, { text: 'B) Phishing', answer: 'B' }, { text: 'C) Dictionary Attack', answer: 'C' }], correctAnswer: 'B' },
             { id: 2, title: 'Challenge 2: Create a Secure Password', question: 'Create a password for your work email that meets all security requirements.', isCustom: true },
