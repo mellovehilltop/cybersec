@@ -135,6 +135,18 @@
                 <div class="example-card weak-example"><h4>❌ WEAK PASSWORDS</h4><ul><li>password123</li><li>john1985</li></ul></div>
                 <div class="example-card strong-example"><h4>✅ STRONG PASSWORDS</h4><ul><li>H0n3y!B33$2024#</li><li>Th3-G0ld3n-Hiv3!</li></ul></div>
             </div>
+
+            <!-- ADD THIS ENTIRE DIV BACK IN -->
+            <div class="passphrase-method">
+                <h3><span aria-hidden="true">🗝️ </span>THE PASSPHRASE METHOD</h3>
+                <p>A great way to create memorable yet secure passwords:</p>
+                <ol>
+                    <li><strong>Pick 3-4 random words:</strong> "Honey Mountain Dancing Robot"</li>
+                    <li><strong>Add numbers & symbols:</strong> "Honey!Mountain#Dancing$Robot2024"</li>
+                    <li><strong>Make substitutions:</strong> "H0n3y!M0unt@in#D@nc1ng$R0b0t2024"</li>
+                </ol>
+            </div>
+
             <button data-action="complete-phase" data-phase="2" class="btn btn-secondary">CONTINUE TO STRENGTH TESTING</button>
         </div>
     </section>
@@ -158,6 +170,16 @@
             <div class="password-strength-meter"><div id="strength-bar" class="strength-fill"></div></div>
             <div class="password-feedback" id="password-feedback"></div>
             <div class="strength-criteria"><div class="criteria-list"></div></div>
+            <div class="test-passwords">
+                <h4>Try These Examples:</h4>
+                <div class="test-btn-container">
+                    <button data-action="test-example" data-password="password" class="btn test-btn weak">password</button>
+                    <button data-action="test-example" data-password="Password123" class="btn test-btn weak">Password123</button>
+                    <button data-action="test-example" data-password="MySecureP@ss2024" class="btn test-btn good">MySecureP@ss2024</button>
+                    <button data-action="test-example" data-password="H0n3y!B33$Ar3-Sw33t&G0ld3n#2024" class="btn test-btn strong">H0n3y!B33$Ar3-Sw33t&G0ld3n#2024</button>
+                </div>
+            </div>
+
             <button data-action="complete-phase" data-phase="3" class="btn btn-secondary" id="phase-3-btn" disabled>VAULT SECURED - CONTINUE</button>
         </div>
     </section>
