@@ -65,9 +65,12 @@
     transition: all 0.3s ease;
 }
 
-.learning-objectives.clicked li {
-    padding-left: 10px;
-    color: #00ffff;
+.learning-objectives li {
+    padding: 10px 0;
+    font-size: 1.1rem;
+    border-bottom: 1px solid rgba(0, 255, 255, 0.3);
+    transition: all 0.3s ease;
+    color: #00ffff; 
 }
 
 .learning-objectives li:before {
