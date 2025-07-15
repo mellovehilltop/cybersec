@@ -53,13 +53,81 @@
         </div>
     </section>
 
-    <!-- Training Phase 1: URL Detective Game -->
-    <section id="training-phase-1" class="training-section">
+    <!-- Training Phase 1A: Web Security Education -->
+    <section id="training-phase-1a" class="training-section">
+        <div class="container">
+            <div class="section-header">
+                <img src="images/module3/education-icon.png" alt="" class="section-icon">
+                <h2>PHASE 1: WEB SECURITY BASICS</h2>
+                <p>Learn to identify safe, suspicious, and dangerous websites</p>
+            </div>
+            
+            <div class="education-content">
+                <div class="security-category safe-sites">
+                    <h3>✅ SAFE WEBSITES</h3>
+                    <div class="category-explanation">
+                        <h4>What makes a website safe?</h4>
+                        <ul>
+                            <li><strong>HTTPS:</strong> Look for "https://" at the start - the 's' means secure</li>
+                            <li><strong>Official domains:</strong> hilltophoney.co.uk, royalmail.com, gov.uk</li>
+                            <li><strong>Valid certificates:</strong> Green padlock icon in browser</li>
+                            <li><strong>Correct spelling:</strong> No typos in company names</li>
+                        </ul>
+                        <div class="example-box safe">
+                            <strong>Example:</strong> https://www.hilltophoney.co.uk/suppliers
+                        </div>
+                    </div>
+                </div>
+
+                <div class="security-category suspicious-sites">
+                    <h3>⚠️ SUSPICIOUS WEBSITES</h3>
+                    <div class="category-explanation">
+                        <h4>Warning signs to watch for:</h4>
+                        <ul>
+                            <li><strong>HTTP only:</strong> Missing the 's' - not secure for sensitive data</li>
+                            <li><strong>Similar domains:</strong> amazon-deals.org instead of amazon.co.uk</li>
+                            <li><strong>Unusual extensions:</strong> .tk, .ml, .ga domains often used by scammers</li>
+                            <li><strong>Extra words:</strong> Additional terms added to legitimate domains</li>
+                        </ul>
+                        <div class="example-box suspicious">
+                            <strong>Example:</strong> http://hilltop-honey-suppliers.net
+                        </div>
+                    </div>
+                </div>
+
+                <div class="security-category dangerous-sites">
+                    <h3>🚫 DANGEROUS WEBSITES</h3>
+                    <div class="category-explanation">
+                        <h4>Never visit these sites:</h4>
+                        <ul>
+                            <li><strong>Misspelled domains:</strong> hiltophoney.tk (missing 'l')</li>
+                            <li><strong>IP addresses:</strong> http://192.168.4.23/downloads</li>
+                            <li><strong>Fake subdomains:</strong> payment-update.company.co.uk.security-check.tk</li>
+                            <li><strong>Download sites:</strong> Direct links to .exe files from unknown sources</li>
+                        </ul>
+                        <div class="example-box dangerous">
+                            <strong>Example:</strong> https://hiltophoney.tk/urgent-payment
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="education-summary">
+                <h3>🎯 Key Points to Remember</h3>
+                <p>When in doubt, always verify with IT before proceeding. It's better to be safe than sorry when it comes to company security.</p>
+            </div>
+            
+            <button data-action="start-detective-game" class="btn btn-secondary">START URL DETECTIVE GAME</button>
+        </div>
+    </section>
+
+    <!-- Training Phase 1B: URL Detective Game -->
+    <section id="training-phase-1b" class="training-section">
         <div class="container">
             <div class="section-header">
                 <img src="images/module3/url-detective-icon.png" alt="" class="section-icon">
-                <h2>PHASE 1: URL DETECTIVE</h2>
-                <p>Sort these URLs into the correct categories. Click a URL, then click a category.</p>
+                <h2>PHASE 1: URL DETECTIVE GAME</h2>
+                <p>Now test your knowledge! Sort these URLs into the correct categories.</p>
             </div>
             <div class="url-detective-game">
                 <div class="url-sorting-pool" id="url-sorting-pool">
