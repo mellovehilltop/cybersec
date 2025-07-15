@@ -11,6 +11,7 @@
     margin: 30px 0;
     text-align: center;
     animation: pulse-danger 2s infinite;
+    color: #e74c3c;
 }
 
 .threat-assessment h3 {
@@ -18,6 +19,10 @@
     font-size: 1.8rem;
     margin-bottom: 15px;
     text-shadow: 0 0 10px rgba(231, 76, 60, 0.5);
+}
+
+.threat-assessment p {
+    color: #e74c3c;
 }
 
 @keyframes pulse-danger {
@@ -32,6 +37,13 @@
     border-radius: 10px;
     padding: 30px;
     margin: 30px 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.learning-objectives.clicked {
+    background: rgba(0, 255, 255, 0.2);
+    box-shadow: 0 5px 20px rgba(0, 255, 255, 0.3);
 }
 
 .learning-objectives h3 {
@@ -53,7 +65,7 @@
     transition: all 0.3s ease;
 }
 
-.learning-objectives li:hover {
+.learning-objectives.clicked li {
     padding-left: 10px;
     color: #00ffff;
 }
@@ -63,6 +75,108 @@
     color: #00ff00;
     font-weight: bold;
     margin-right: 10px;
+}
+
+/* --- WEB SECURITY EDUCATION STYLING --- */
+.education-content {
+    margin: 40px 0;
+    display: grid;
+    gap: 30px;
+}
+
+.security-category {
+    border: 2px solid;
+    border-radius: 10px;
+    padding: 25px;
+    transition: all 0.3s ease;
+}
+
+.security-category.safe-sites {
+    border-color: #00ff00;
+    background: rgba(0, 255, 0, 0.1);
+}
+
+.security-category.suspicious-sites {
+    border-color: #f39c12;
+    background: rgba(243, 156, 18, 0.1);
+}
+
+.security-category.dangerous-sites {
+    border-color: #e74c3c;
+    background: rgba(231, 76, 60, 0.1);
+}
+
+.security-category h3 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.security-category.safe-sites h3 {
+    color: #00ff00;
+}
+
+.security-category.suspicious-sites h3 {
+    color: #f39c12;
+}
+
+.security-category.dangerous-sites h3 {
+    color: #e74c3c;
+}
+
+.category-explanation h4 {
+    color: #00ffff;
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+}
+
+.category-explanation ul {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 20px;
+}
+
+.category-explanation li {
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.category-explanation li strong {
+    color: #00ffff;
+}
+
+.example-box {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    padding: 15px;
+    font-family: 'Courier New', monospace;
+    border-left: 4px solid;
+}
+
+.example-box.safe {
+    border-left-color: #00ff00;
+}
+
+.example-box.suspicious {
+    border-left-color: #f39c12;
+}
+
+.example-box.dangerous {
+    border-left-color: #e74c3c;
+}
+
+.education-summary {
+    background: rgba(0, 255, 255, 0.1);
+    border: 2px solid #00ffff;
+    border-radius: 10px;
+    padding: 25px;
+    margin: 30px 0;
+    text-align: center;
+}
+
+.education-summary h3 {
+    color: #00ffff;
+    margin-bottom: 15px;
 }
 
 /* --- URL DETECTIVE GAME STYLING --- */
