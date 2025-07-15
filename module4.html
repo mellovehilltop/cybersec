@@ -1,1 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 4: Physical Security - Facility Guardian Training</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/modules.css">
+</head>
+<body class="module-page">
+    <!-- Header Navigation -->
+    <header class="module-header">
+        <div class="container module-nav">
+            <button data-action="return-home" class="btn btn-primary nav-btn back">
+                <img src="images/interface/navigation-back.png" alt="" class="nav-icon"> Mission Control
+            </button>
+            <div class="module-info">
+                <div class="module-title-section">
+                    <img src="images/module4/module4-icon.png" alt="" class="module-logo">
+                    <h1>MODULE 04: PHYSICAL SECURITY</h1>
+                </div>
+                <p class="module-subtitle">The Facility Guardian Protocol</p>
+            </div>
+            <div class="module-progress-nav">
+                <span id="module-progress">0%</span>
+            </div>
+        </div>
+    </header>
 
+    <!-- Mission Briefing Section -->
+    <section id="briefing-section" class="training-section active">
+        <div class="container briefing-content">
+            <div class="section-header">
+                <img src="images/module4/security-shield-icon.png" alt="" class="section-icon">
+                <h2>MISSION BRIEFING</h2>
+                <p>Threat Assessment: Industrial Espionage Attempts</p>
+            </div>
+            <div class="threat-assessment">
+                <h3><span aria-hidden="true">🚨 </span>THREAT LEVEL: HIGH</h3>
+                <p>Industrial spies are targeting Hilltop Honey's facilities to steal recipes, production schedules, and confidential business data through physical access breaches.</p>
+            </div>
+            
+            <div class="mission-objectives">
+                <h3><span aria-hidden="true">🎯 </span>YOUR MISSION OBJECTIVES</h3>
+                <ul>
+                    <li>Secure all facility access points and workstations</li>
+                    <li>Identify and prevent social engineering attempts</li>
+                    <li>Implement proper visitor management protocols</li>
+                    <li>Protect sensitive documents and data</li>
+                    <li>Report security incidents correctly</li>
+                </ul>
+            </div>
+
+            <div class="training-overview">
+                <h3>Training Phases</h3>
+                <div class="phase-grid">
+                    <div class="phase-card" data-phase="1">
+                        <div class="phase-number">1</div>
+                        <h4>Facility Security Walkthrough</h4>
+                        <p>Interactive site tour identifying security hotspots</p>
+                    </div>
+                    <div class="phase-card" data-phase="2">
+                        <div class="phase-number">2</div>
+                        <h4>Visitor Management</h4>
+                        <p>Handle 5 different visitor scenarios safely</p>
+                    </div>
+                    <div class="phase-card" data-phase="3">
+                        <div class="phase-number">3</div>
+                        <h4>Social Engineering Defence</h4>
+                        <p>Identify and respond to manipulation attempts</p>
+                    </div>
+                    <div class="phase-card" data-phase="4">
+                        <div class="phase-number">4</div>
+                        <h4>Clean Desk Challenge</h4>
+                        <p>Secure workstations and sensitive materials</p>
+                    </div>
+                </div>
+            </div>
+            
+            <button data-action="start-training" class="btn btn-success">BEGIN FACILITY GUARDIAN TRAINING</button>
+        </div>
+    </section>
+
+    <!-- Phase 1: Facility Walkthrough -->
+    <section id="phase-1" class="training-section">
+        <div class="container">
+            <div class="section-header">
+                <img src="images/module4/facility-icon.png" alt="" class="section-icon">
+                <h2>PHASE 1: FACILITY SECURITY WALKTHROUGH</h2>
+                <p>Identify security concerns across all facility areas</p>
+            </div>
+            
+            <div class="facility-locations">
+                <div class="location-selector">
+                    <h3>Select Area to Inspect:</h3>
+                    <div class="location-buttons">
+                        <button class="location-btn active" data-location="production">Production Floor</button>
+                        <button class="location-btn" data-location="warehouse">Warehouse</button>
+                        <button class="location-btn" data-location="office">Office Space</button>
+                        <button class="location-btn" data-location="common">Common Areas</button>
+                    </div>
+                </div>
+
+                <div class="location-viewer" id="location-viewer">
+                    <div class="location-image-container">
+                        <img id="location-image" src="images/module4/factory-floor-bg.jpg" alt="Production Floor" class="location-background">
+                        <!-- Interactive hotspots will be added by JavaScript -->
+                    </div>
+                    <div class="location-info">
+                        <h4 id="location-title">Production Floor</h4>
+                        <p id="location-description">Identify security concerns: unsecured equipment, unlocked cabinets, unauthorized personnel access</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="security-score">
+                <h3>Security Assessment Progress</h3>
+                <div class="score-display">
+                    <span>Hotspots Found: <span id="hotspots-found">0</span> / <span id="total-hotspots">12</span></span>
+                    <span>Current Score: <span id="walkthrough-score">0</span> points</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="walkthrough-progress"></div>
+                </div>
+            </div>
+
+            <div id="walkthrough-feedback" class="feedback-box">
+                Click on security concerns in the facility image above. Look for unsecured areas, equipment, and potential access vulnerabilities.
+            </div>
+            
+            <button data-action="complete-phase" data-phase="1" class="btn btn-secondary" id="phase-1-btn" disabled>PHASE 1 COMPLETE</button>
+        </div>
+    </section>
+
+    <!-- Phase 2: Visitor Management -->
+    <section id="phase-2" class="training-section">
+        <div class="container">
+            <div class="section-header">
+                <img src="images/module4/visitor-badge-icon.png" alt="" class="section-icon">
+                <h2>PHASE 2: VISITOR MANAGEMENT SIMULATION</h2>
+                <p>Process visitors according to Hilltop Honey security protocols</p>
+            </div>
+
+            <div class="visitor-scenario" id="visitor-scenario">
+                <div class="scenario-counter">
+                    <span>Visitor <span id="current-visitor">1</span> of <span id="total-visitors">5</span></span>
+                </div>
+                
+                <div class="visitor-card" id="visitor-card">
+                    <!-- Visitor details populated by JavaScript -->
+                </div>
+
+                <div class="visitor-actions">
+                    <h3>How do you handle this visitor?</h3>
+                    <div class="action-buttons" id="visitor-actions">
+                        <!-- Action buttons populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="visitor-feedback" id="visitor-feedback"></div>
+            
+            <button data-action="complete-phase" data-phase="2" class="btn btn-secondary" id="phase-2-btn" disabled>PHASE 2 COMPLETE</button>
+        </div>
+    </section>
+
+    <!-- Phase 3: Social Engineering Defence -->
+    <section id="phase-3" class="training-section">
+        <div class="container">
+            <div class="section-header">
+                <img src="images/module4/social-engineering-icon.png" alt="" class="section-icon">
+                <h2>PHASE 3: SOCIAL ENGINEERING DEFENCE</h2>
+                <p>Identify and respond to manipulation attempts appropriately</p>
+            </div>
+
+            <div class="scenario-progress">
+                <h3>Social Engineering Scenarios</h3>
+                <div class="scenario-tracker">
+                    <span>Scenario <span id="current-scenario">1</span> of <span id="total-scenarios">6</span></span>
+                    <span>Correct Responses: <span id="correct-responses">0</span></span>
+                </div>
+            </div>
+
+            <div class="social-scenario" id="social-scenario">
+                <!-- Scenario content populated by JavaScript -->
+            </div>
+
+            <div class="response-options" id="response-options">
+                <!-- Response choices populated by JavaScript -->
+            </div>
+
+            <div id="social-feedback" class="feedback-box">
+                Choose your response carefully. Consider the security implications of each action.
+            </div>
+            
+            <button data-action="complete-phase" data-phase="3" class="btn btn-secondary" id="phase-3-btn" disabled>PHASE 3 COMPLETE</button>
+        </div>
+    </section>
+
+    <!-- Phase 4: Clean Desk Challenge -->
+    <section id="phase-4" class="training-section">
+        <div class="container">
+            <div class="section-header">
+                <img src="images/module4/clean-desk-icon.png" alt="" class="section-icon">
+                <h2>PHASE 4: CLEAN DESK CHALLENGE</h2>
+                <p>Secure workstations and protect sensitive materials</p>
+            </div>
+
+            <div class="workspace-selector">
+                <h3>Select Workspace to Secure:</h3>
+                <div class="workspace-grid">
+                    <div class="workspace-card" data-workspace="supervisor">
+                        <img src="images/module4/supervisor-desk.jpg" alt="Supervisor Desk" class="workspace-preview">
+                        <h4>Production Supervisor</h4>
+                        <p>Recipe books, quality reports, schedules</p>
+                        <span class="status" id="supervisor-status">Not Secured</span>
+                    </div>
+                    <div class="workspace-card" data-workspace="hr">
+                        <img src="images/module4/hr-workstation.jpg" alt="HR Workstation" class="workspace-preview">
+                        <h4>HR Workstation</h4>
+                        <p>Employee files, payroll, contracts</p>
+                        <span class="status" id="hr-status">Not Secured</span>
+                    </div>
+                    <div class="workspace-card" data-workspace="lab">
+                        <img src="images/module4/lab-bench.jpg" alt="Laboratory Bench" class="workspace-preview">
+                        <h4>Laboratory Bench</h4>
+                        <p>Test results, formulations, samples</p>
+                        <span class="status" id="lab-status">Not Secured</span>
+                    </div>
+                    <div class="workspace-card" data-workspace="reception">
+                        <img src="images/module4/reception-area.jpg" alt="Reception Area" class="workspace-preview">
+                        <h4>Reception Area</h4>
+                        <p>Visitor logs, directory, phone lists</p>
+                        <span class="status" id="reception-status">Not Secured</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="clean-desk-workspace" id="clean-desk-workspace" style="display: none;">
+                <!-- Workspace cleaning interface populated by JavaScript -->
+            </div>
+
+            <div class="clean-desk-score">
+                <h3>Workspace Security Status</h3>
+                <div class="score-display">
+                    <span>Workspaces Secured: <span id="secured-count">0</span> / 4</span>
+                    <span>Security Score: <span id="clean-desk-score">0</span>%</span>
+                </div>
+            </div>
+
+            <div id="clean-desk-feedback" class="feedback-box">
+                Select a workspace to begin securing sensitive materials and documents.
+            </div>
+            
+            <button data-action="complete-phase" data-phase="4" class="btn btn-secondary" id="phase-4-btn" disabled>PHASE 4 COMPLETE</button>
+        </div>
+    </section>
+
+    <!-- Final Assessment -->
+    <section id="assessment-phase" class="training-section">
+        <div class="container">
+            <div class="section-header">
+                <img src="images/module4/assessment-icon.png" alt="" class="section-icon">
+                <h2>FINAL ASSESSMENT</h2>
+                <p>Site Security Audit - Demonstrate your physical security skills</p>
+            </div>
+
+            <div class="assessment-progress">
+                <h3>Security Audit Progress</h3>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="assessment-progress" style="width: 0%"></div>
+                </div>
+                <span id="assessment-score">Score: 0/100 (Pass: 80+)</span>
+            </div>
+
+            <div class="assessment-categories">
+                <div class="category-grid">
+                    <div class="category-card" data-category="access">
+                        <h4>Access Control</h4>
+                        <p>20 points</p>
+                        <span class="category-status">Pending</span>
+                    </div>
+                    <div class="category-card" data-category="workstation">
+                        <h4>Workstation Security</h4>
+                        <p>20 points</p>
+                        <span class="category-status">Pending</span>
+                    </div>
+                    <div class="category-card" data-category="equipment">
+                        <h4>Equipment Protection</h4>
+                        <p>20 points</p>
+                        <span class="category-status">Pending</span>
+                    </div>
+                    <div class="category-card" data-category="incident">
+                        <h4>Incident Response</h4>
+                        <p>20 points</p>
+                        <span class="category-status">Pending</span>
+                    </div>
+                    <div class="category-card" data-category="emergency">
+                        <h4>Emergency Procedures</h4>
+                        <p>20 points</p>
+                        <span class="category-status">Pending</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="assessment-container" id="assessment-container">
+                <!-- Assessment questions populated by JavaScript -->
+            </div>
+
+            <div id="assessment-feedback" class="feedback-box">
+                Complete all assessment categories to receive your final security certification.
+            </div>
+            
+            <button data-action="complete-module" class="btn btn-success" id="complete-btn" disabled>COMPLETE MODULE</button>
+        </div>
+    </section>
+
+    <!-- Achievement Modal -->
+    <div id="achievement-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="achievement-title">🏆 BADGE EARNED!</h3>
+                <button onclick="closeAchievementModal()" class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="badge-display" id="badge-display">
+                    <!-- Badge content populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="js/progress.js" defer></script>
+    <script src="js/module4.js" defer></script>
+</body>
+</html>
