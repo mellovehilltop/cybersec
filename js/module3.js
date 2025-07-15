@@ -241,6 +241,14 @@ const module3Manager = {
             btn.addEventListener('click', (e) => this.handleAction(e.currentTarget.dataset));
         });
         
+        // Learning objectives click interaction
+        const learningObjectives = document.querySelector('.learning-objectives');
+        if (learningObjectives) {
+            learningObjectives.addEventListener('click', () => {
+                learningObjectives.classList.toggle('clicked');
+            });
+        }
+        
         // URL Detective events
         if (this.dom.urlSortingPool) {
             this.dom.urlSortingPool.addEventListener('click', (e) => {
@@ -570,8 +578,13 @@ const module3Manager = {
                 break;
                 
             case 'start-training': 
-                this.showSection('training-phase-1'); 
+                this.showSection('training-phase-1a'); 
                 this.updateProgress(25); 
+                break;
+                
+            case 'start-detective-game':
+                this.showSection('training-phase-1b');
+                this.updateProgress(35);
                 break;
                 
             case 'complete-phase': 
@@ -610,7 +623,7 @@ const module3Manager = {
                 break;
             case 2:
                 nextSectionId = 'training-phase-3';
-                nextProgress = 75;
+                nextProgress = 70;
                 this.renderScenarios();
                 break;
             case 3:
