@@ -497,6 +497,9 @@ body {
 }
 .test-btn {
     font-family: var(--font-secondary);
+padding: 12px 20px;
+font-size: 1.1rem;
+margin: 8px; 
 }
 .test-btn.weak { background-color: var(--danger-color); color: white; }
 .test-btn.good { background-color: #3498db; color: white; }
