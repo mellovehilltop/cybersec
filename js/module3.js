@@ -96,7 +96,7 @@ const module3Manager = {
             id: 1,
             name: "Fake Supplier Site",
             theme: "supplier-site",
-            url: "http://hilltop-honey-suppliers.tk/urgent-verification", // Red flag: HTTP + .tk domain
+            url: "http://hilltop-honey-suppliers.tk/urgent-verification",
             content: {
                 logo: "HoneySuppliers.tk",
                 title: "URGENT: Account Verification Required",
@@ -113,15 +113,15 @@ const module3Manager = {
             id: 2,
             name: "Fake Software Site", 
             theme: "download-site",
-            url: "https://free-business-software.org/hilltop-accounting.exe", // Red flag: .exe in URL
+            url: "https://free-business-software.org/hilltop-accounting.exe",
             content: {
                 logo: "FreeBizSoft",
                 title: "Free Accounting Software for Hilltop Honey",
                 description: "Download our premium accounting software absolutely free! Special offer for Hilltop Honey employees.",
                 redFlags: [
-                    { id: "exe-url", element: ".website-url-bar", explanation: "Direct .exe file in URL is dangerous" },
+                    { id: "url", element: ".website-url-bar", explanation: "Direct .exe file in URL is dangerous" },
                     { id: "free-premium", element: ".contradiction", explanation: "'Free premium software' is contradictory and suspicious" },
-                    { id: "form", element: ".suspicious-form", explanation: "Form asking for company details before download" },
+                    { id: "form", element: ".suspicious-form", explanation: "Form asking for sensitive company details before download" },
                     { id: "certificate", element: ".fake-certificate-warning", explanation: "Certificate warning should never be ignored" }
                 ]
             }
@@ -130,14 +130,14 @@ const module3Manager = {
             id: 3,
             name: "Fake Payment Site",
             theme: "payment-site", 
-            url: "https://payment-update.hilltophoney.co.uk.security-verification.tk/login", // Red flag: Complex subdomain + .tk
+            url: "https://payment-update.hiltophoney.co.uk.security-verification.tk/login",
             content: {
-                logo: "Hilltop Payment Portal",
+                logo: "Hiltop Payment Portal",
                 title: "Payment System Security Update",
                 description: "Your payment details need updating due to new security requirements.",
                 redFlags: [
-                    { id: "complex-url", element: ".website-url-bar", explanation: "Complex subdomain structure attempting to look official" },
-                    { id: "spelling", element: ".logo-typo", explanation: "Misspelled company name in logo" }
+                    { id: "url", element: ".website-url-bar", explanation: "Complex subdomain structure with .tk extension attempting to look official" },
+                    { id: "spelling", element: ".logo-typo", explanation: "Misspelled company name 'Hiltop' instead of 'Hilltop'" }
                 ]
             }
         }
@@ -419,24 +419,42 @@ const module3Manager = {
 
     // --- PHASE 3: RED FLAG HUNT ---
     renderRedFlagHunt() {
-        if (!this.dom.websiteMockupContainer) return;
-        
         console.log('Starting Red Flag Hunt');
+        
         this.currentWebsite = 0;
         this.redFlagsFound = 0;
         this.redFlagScore = 0;
+        
+        // Update UI elements
         this.updateRedFlagUI();
-        this.renderWebsiteMockup();
+        
+        // Render first website
+        setTimeout(() => {
+            this.renderWebsiteMockup();
+        }, 100);
     },
 
     renderWebsiteMockup() {
-        const website = this.redFlagWebsites[this.currentWebsite];
-        if (!website) return;
+        console.log('Rendering website mockup', this.currentWebsite);
+        
+        const container = document.getElementById('website-mockup-container');
+        if (!container) {
+            console.error('Website container not found!');
+            return;
+        }
 
-        this.dom.websiteMockupContainer.innerHTML = `
+        const website = this.redFlagWebsites[this.currentWebsite];
+        if (!website) {
+            console.error('Website data not found for index:', this.currentWebsite);
+            return;
+        }
+
+        console.log('Rendering website:', website.name);
+
+        const websiteHTML = `
             <div class="website-mockup ${website.theme}">
                 <div class="website-header">
-                    <div class="website-logo red-flag logo-typo" data-flag="spelling">
+                    <div class="website-logo ${website.id === 3 ? 'red-flag logo-typo' : ''}" ${website.id === 3 ? 'data-flag="spelling"' : ''}>
                         ${website.content.logo}
                     </div>
                     <div class="website-url-bar red-flag" data-flag="url">
@@ -449,89 +467,147 @@ const module3Manager = {
                 
                 <div class="website-content">
                     <h1>${website.content.title}</h1>
-                    <div class="urgent-text red-flag" data-flag="urgent" style="color: #e74c3c; font-weight: bold; font-size: 1.2rem; margin: 20px 0;">
-                        ${website.id === 1 ? 'URGENT ACTION REQUIRED - VERIFY NOW!' : ''}
-                    </div>
-                    
-                    <p>${website.content.description}</p>
                     
                     ${website.id === 1 ? `
+                        <div class="urgent-text red-flag" data-flag="urgent" style="color: #e74c3c; font-weight: bold; font-size: 1.2rem; margin: 20px 0;">
+                            URGENT ACTION REQUIRED - VERIFY NOW!
+                        </div>
                         <div class="fake-popup red-flag" data-flag="popup">
                             <strong>SECURITY ALERT!</strong><br>
                             Your session has expired. Click here to login again.
                         </div>
+                    ` : ''}
+                    
+                    <p>${website.content.description}</p>
+                    
+                    ${website.id === 1 ? `
                         <a href="#" class="fake-download red-flag" data-flag="download">Download Verification Tool (update.exe)</a>
                     ` : ''}
                     
                     ${website.id === 2 ? `
-                        <h2 class="contradiction red-flag" data-flag="free-premium">Get Our Premium Software - Completely FREE!</h2>
+                        <h2 class="contradiction red-flag" data-flag="free-premium" style="color: #e74c3c;">Get Our Premium Software - Completely FREE!</h2>
                         <div class="suspicious-form red-flag" data-flag="form">
                             <h3>Enter Company Details to Download:</h3>
-                            <input type="text" placeholder="Company Name">
-                            <input type="text" placeholder="Bank Account Number">
-                            <input type="password" placeholder="Current Admin Password">
+                            <input type="text" placeholder="Company Name" readonly>
+                            <input type="text" placeholder="Bank Account Number" readonly>
+                            <input type="password" placeholder="Current Admin Password" readonly>
                             <button class="fake-button">Download Now</button>
                         </div>
                     ` : ''}
                     
                     ${website.id === 3 ? `
                         <p style="color: #e74c3c;">This secure portal requires immediate attention.</p>
-                        <button class="fake-button">Update Payment Details</button>
+                        <button class="fake-button red-flag" data-flag="urgent-button">Update Payment Details</button>
                     ` : ''}
                 </div>
             </div>
         `;
 
-        // Add click handlers for red flags
-        document.querySelectorAll('.red-flag').forEach(flag => {
-            flag.addEventListener('click', (e) => this.handleRedFlagClick(e.target));
-        });
+        container.innerHTML = websiteHTML;
 
-        // Update next button
-        if (this.dom.nextWebsiteBtn) {
-            this.dom.nextWebsiteBtn.onclick = () => this.nextWebsite();
-            this.dom.nextWebsiteBtn.style.display = 'none';
+        // Add click handlers for red flags
+        setTimeout(() => {
+            const redFlags = container.querySelectorAll('.red-flag');
+            console.log('Found red flags:', redFlags.length);
+            
+            redFlags.forEach((flag, index) => {
+                console.log(`Setting up flag ${index}:`, flag.dataset.flag);
+                flag.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    this.handleRedFlagClick(e.target);
+                });
+            });
+        }, 100);
+
+        // Update feedback
+        const feedbackEl = document.getElementById('redflag-feedback');
+        if (feedbackEl) {
+            feedbackEl.textContent = `Website ${this.currentWebsite + 1} loaded. Click on anything that looks suspicious!`;
+            feedbackEl.className = 'feedback-box';
+        }
+
+        // Hide next button initially
+        const nextBtn = document.getElementById('next-website-btn');
+        if (nextBtn) {
+            nextBtn.style.display = 'none';
         }
     },
 
     handleRedFlagClick(element) {
-        if (element.classList.contains('found')) return;
+        console.log('Red flag clicked:', element.dataset.flag);
+        
+        if (element.classList.contains('found')) {
+            console.log('Flag already found, ignoring');
+            return;
+        }
 
         const flagType = element.dataset.flag;
+        if (!flagType) {
+            console.log('No flag type found');
+            return;
+        }
+
         const website = this.redFlagWebsites[this.currentWebsite];
         const flagInfo = website.content.redFlags.find(flag => flag.id === flagType);
         
         if (flagInfo) {
+            console.log('Valid flag found:', flagType);
             element.classList.add('found');
             this.redFlagsFound++;
-            this.redFlagScore += 10; // 10 points per flag
+            this.redFlagScore += 10;
             
-            this.dom.redFlagFeedback.textContent = `Red flag found! ${flagInfo.explanation}`;
-            this.dom.redFlagFeedback.className = 'feedback-box correct';
+            const feedbackEl = document.getElementById('redflag-feedback');
+            if (feedbackEl) {
+                feedbackEl.textContent = `Red flag found! ${flagInfo.explanation}`;
+                feedbackEl.className = 'feedback-box correct';
+            }
             
             this.updateRedFlagUI();
             this.checkWebsiteCompletion();
+        } else {
+            console.log('Invalid flag clicked:', flagType);
+            const feedbackEl = document.getElementById('redflag-feedback');
+            if (feedbackEl) {
+                feedbackEl.textContent = "That's not a red flag. Keep looking for suspicious elements!";
+                feedbackEl.className = 'feedback-box incorrect';
+            }
         }
     },
 
     updateRedFlagUI() {
-        if (this.dom.flagsFound) this.dom.flagsFound.textContent = this.redFlagsFound;
-        if (this.dom.totalFlags) this.dom.totalFlags.textContent = this.totalRedFlags;
-        if (this.dom.currentScore) this.dom.currentScore.textContent = this.redFlagScore;
-        if (this.dom.currentWebsite) this.dom.currentWebsite.textContent = `${this.currentWebsite + 1} of 3`;
+        const flagsFoundEl = document.getElementById('flags-found');
+        const totalFlagsEl = document.getElementById('total-flags');
+        const currentScoreEl = document.getElementById('current-score');
+        const currentWebsiteEl = document.getElementById('current-website');
+        
+        if (flagsFoundEl) flagsFoundEl.textContent = this.redFlagsFound;
+        if (totalFlagsEl) totalFlagsEl.textContent = this.totalRedFlags;
+        if (currentScoreEl) currentScoreEl.textContent = this.redFlagScore;
+        if (currentWebsiteEl) currentWebsiteEl.textContent = `${this.currentWebsite + 1} of 3`;
+        
+        console.log(`UI Updated: ${this.redFlagsFound}/${this.totalRedFlags} flags, ${this.redFlagScore} points`);
     },
 
     checkWebsiteCompletion() {
         const website = this.redFlagWebsites[this.currentWebsite];
-        const websiteFlags = document.querySelectorAll('.red-flag').length;
-        const foundFlags = document.querySelectorAll('.red-flag.found').length;
+        const currentWebsiteFlags = website.content.redFlags.length;
+        const foundFlagsOnSite = document.querySelectorAll('.red-flag.found').length;
         
-        if (foundFlags >= websiteFlags) {
-            // All flags found on this website
+        console.log(`Website ${this.currentWebsite + 1}: ${foundFlagsOnSite}/${currentWebsiteFlags} flags found`);
+        
+        if (foundFlagsOnSite >= currentWebsiteFlags) {
+            const feedbackEl = document.getElementById('redflag-feedback');
+            const nextBtn = document.getElementById('next-website-btn');
+            
             if (this.currentWebsite < this.redFlagWebsites.length - 1) {
-                this.dom.redFlagFeedback.textContent = `Excellent! All red flags found on this website. Ready for the next one?`;
-                this.dom.redFlagFeedback.className = 'feedback-box correct';
-                this.dom.nextWebsiteBtn.style.display = 'inline-block';
+                if (feedbackEl) {
+                    feedbackEl.textContent = `Excellent! All red flags found on this website. Ready for the next one?`;
+                    feedbackEl.className = 'feedback-box correct';
+                }
+                if (nextBtn) {
+                    nextBtn.style.display = 'inline-block';
+                    nextBtn.onclick = () => this.nextWebsite();
+                }
             } else {
                 this.completeRedFlagHunt();
             }
@@ -539,40 +615,46 @@ const module3Manager = {
     },
 
     nextWebsite() {
+        console.log('Moving to next website');
         this.currentWebsite++;
         if (this.currentWebsite < this.redFlagWebsites.length) {
             this.renderWebsiteMockup();
-            this.dom.redFlagFeedback.textContent = "New website loaded. Find the red flags!";
-            this.dom.redFlagFeedback.className = 'feedback-box';
         } else {
             this.completeRedFlagHunt();
         }
     },
 
     completeRedFlagHunt() {
+        console.log(`Red Flag Hunt completed: ${this.redFlagsFound}/${this.totalRedFlags} flags found`);
+        
         let message = "";
         let badgeText = "";
         
-        if (this.redFlagsFound >= 8) { // Need 8/10 to pass
+        if (this.redFlagsFound >= 8) {
             message = `Outstanding! You found ${this.redFlagsFound}/${this.totalRedFlags} red flags (Score: ${this.redFlagScore} points). Phase 3 complete!`;
             badgeText = "🎯 Red Flag Hunter Badge Earned!";
-            this.dom.phase3Btn.disabled = false;
+            
+            const phase3Btn = document.getElementById('phase-3-btn');
+            if (phase3Btn) {
+                phase3Btn.disabled = false;
+            }
         } else {
-            message = `You found ${this.redFlagsFound}/${this.totalRedFlags} red flags. You need to find at least 8 to continue. Try again!`;
-            // Allow restart
+            message = `You found ${this.redFlagsFound}/${this.totalRedFlags} red flags. You need to find at least 8 to continue. Restarting...`;
+            
             setTimeout(() => {
                 this.currentWebsite = 0;
                 this.redFlagsFound = 0;
                 this.redFlagScore = 0;
-                this.renderWebsiteMockup();
                 this.updateRedFlagUI();
-                this.dom.redFlagFeedback.textContent = "Game restarted. Look carefully for red flags!";
-                this.dom.redFlagFeedback.className = 'feedback-box';
+                this.renderWebsiteMockup();
             }, 3000);
         }
 
-        this.dom.redFlagFeedback.textContent = message;
-        this.dom.redFlagFeedback.className = `feedback-box ${this.redFlagsFound >= 8 ? 'correct' : 'incorrect'}`;
+        const feedbackEl = document.getElementById('redflag-feedback');
+        if (feedbackEl) {
+            feedbackEl.textContent = message;
+            feedbackEl.className = `feedback-box ${this.redFlagsFound >= 8 ? 'correct' : 'incorrect'}`;
+        }
         
         if (this.redFlagsFound >= 8) {
             this.showBadgeNotification(badgeText);
@@ -725,6 +807,8 @@ const module3Manager = {
     },
 
     completePhase(phase) {
+        console.log('Completing phase:', phase);
+        
         let nextSectionId = '';
         let nextProgress = 0;
         
@@ -735,9 +819,13 @@ const module3Manager = {
                 this.renderCertificateInspector();
                 break;
             case 2:
+                console.log('Moving to Phase 3 - Red Flag Hunt');
                 nextSectionId = 'training-phase-3';
                 nextProgress = 70;
-                this.renderRedFlagHunt();
+                // Delay rendering to ensure DOM is ready
+                setTimeout(() => {
+                    this.renderRedFlagHunt();
+                }, 500);
                 break;
             case 3:
                 nextSectionId = 'assessment-phase';
