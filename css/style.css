@@ -463,6 +463,44 @@ body {
 .challenge-options { display: grid; gap: 10px; margin-top: 15px; }
 .option-btn { /* Inherits base btn styles */ }
 .challenge-result { margin-top: 15px; font-weight: bold; }
+.passphrase-method {
+    margin-top: 40px;
+    padding: 25px;
+    background: rgba(0, 255, 255, 0.05);
+    border: 1px solid rgba(0, 255, 255, 0.2);
+    border-radius: 8px;
+}
+.passphrase-method h3 {
+    color: var(--primary-color);
+}
+.passphrase-method ol {
+    padding-left: 20px;
+}
+.passphrase-method li {
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+
+.test-passwords {
+    margin: 30px auto;
+    max-width: 800px;
+    text-align: center;
+}
+.test-passwords h4 {
+    color: var(--primary-color);
+}
+.test-btn-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+}
+.test-btn {
+    font-family: var(--font-secondary);
+}
+.test-btn.weak { background-color: var(--danger-color); color: white; }
+.test-btn.good { background-color: #3498db; color: white; }
+.test-btn.strong { background-color: var(--success-color); color: black; }
 /* ==================================================
    5. ANIMATIONS & ACCESSIBILITY
    ================================================== */
