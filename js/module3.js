@@ -1,14 +1,14 @@
 const module3Manager = {
-    // --- STATE ---
+    // --- STATE & CONTENT (ALL PHASES) ---
     selectedURL: null,
     correctlySorted: 0,
     certificatesInspected: 0,
     currentWebsiteIndex: 0,
-    redFlagsFound: 0,
-    currentAssessmentQuestion: 0,
+    redFlagsFoundOnCurrentPage: 0,
+    totalRedFlagsOnCurrentPage: 0,
     assessmentScore: 0,
-
-    // --- CONTENT ---
+    currentAssessmentQuestion: 0,
+    
     urlExamples: [
         { url: "https://www.hilltophoney.co.uk", category: "safe", explanation: "Correct! HTTPS and the official domain are good signs." },
         { url: "http://hilltop-suppliers.net", category: "suspicious", explanation: "Correct! HTTP is not secure and this is not our official domain." },
@@ -28,6 +28,9 @@ const module3Manager = {
         { question: "Your browser shows a 'Certificate Not Valid' warning. What do you do?", options: ["Click 'Proceed anyway'", "Close the tab and report to IT", "Try the HTTP version"], correct: 1, explanation: "Correct! Never ignore certificate warnings. Close the tab and report it." }
     ],
 
+    // --- DOM CACHE ---
+    dom: {},
+
     // --- INITIALIZATION ---
     init() {
         this.cacheDOMElements();
@@ -40,7 +43,7 @@ const module3Manager = {
             sections: document.querySelectorAll('.training-section'),
             moduleProgress: document.getElementById('module-progress'),
             actionButtons: document.querySelectorAll('[data-action]'),
-            // Phase 1
+            // Phase 1B
             urlSortingPool: document.getElementById('url-sorting-pool'),
             dropZones: document.querySelectorAll('.url-drop-zone'),
             urlFeedback: document.getElementById('url-feedback'),
@@ -77,7 +80,8 @@ const module3Manager = {
     handleAction(dataset) {
         switch (dataset.action) {
             case 'return-home': window.location.href = 'index.html'; break;
-            case 'start-training': this.showSection('training-phase-1'); this.updateProgress(2); this.renderURLDetectiveGame(); break;
+            case 'start-training': this.showSection('training-phase-1a'); this.updateProgress(2); break;
+            case 'start-detective-game': this.showSection('training-phase-1b'); this.renderURLDetectiveGame(); break;
             case 'complete-phase': this.completePhase(parseInt(dataset.phase)); break;
             case 'complete-module': this.completeModule(); break;
         }
@@ -89,22 +93,56 @@ const module3Manager = {
     },
 
     updateProgress(step) {
-        const totalSteps = 4;
-        this.dom.moduleProgress.textContent = `${Math.round(((step-1)/totalSteps)*100)}%`;
+        const totalSteps = 5; // Briefing, Edu/Game, Cert, Hunt, Assess
+        this.dom.moduleProgress.textContent = `${Math.round(((step - 1) / totalSteps) * 100)}%`;
     },
 
     completePhase(phase) {
         this.updateProgress(phase + 2);
         if (phase === 1) { this.showSection('training-phase-2'); this.renderCertificateInspector(); }
-        if (phase === 2) { this.showSection('training-phase-3'); this.startRedFlagHunt(); }
-        if (phase === 3) { this.showSection('assessment-phase'); this.renderAssessment(); }
+        else if (phase === 2) { this.showSection('training-phase-3'); this.startRedFlagHunt(); }
+        else if (phase === 3) { this.showSection('assessment-phase'); this.renderAssessment(); }
     },
     
     // --- PHASE 1 LOGIC ---
-    renderURLDetectiveGame() { /* ... function from previous step ... */ },
-    selectURL(el) { /* ... function from previous step ... */ },
-    placeURL(zone) { /* ... function from previous step ... */ },
-    checkPhase1Completion() { /* ... function from previous step ... */ },
+    renderURLDetectiveGame() {
+        this.dom.urlSortingPool.innerHTML = this.urlExamples.map((item, index) => 
+            `<div class="url-item" data-index="${index}" data-category="${item.category}">${item.url}</div>`
+        ).join('');
+    },
+    selectURL(el) {
+        if (this.selectedURL) { this.selectedURL.classList.remove('selected'); }
+        this.selectedURL = el;
+        el.classList.add('selected');
+        this.dom.urlFeedback.textContent = "Now click a category box to place it.";
+        this.dom.urlFeedback.className = 'feedback-box';
+    },
+    placeURL(zone) {
+        if (!this.selectedURL) { this.dom.urlFeedback.textContent = "Please select a URL first."; return; }
+        const correctCategory = this.selectedURL.dataset.category;
+        const chosenCategory = zone.dataset.category;
+        if (correctCategory === chosenCategory) {
+            this.dom.urlFeedback.textContent = this.urlExamples[this.selectedURL.dataset.index].explanation;
+            this.dom.urlFeedback.className = 'feedback-box correct';
+            this.selectedURL.classList.remove('selected');
+            this.selectedURL.classList.add('correct');
+            zone.querySelector('.url-list').appendChild(this.selectedURL);
+            this.selectedURL = null;
+            this.correctlySorted++;
+            this.checkPhase1Completion();
+        } else {
+            this.dom.urlFeedback.textContent = `Incorrect. Think again about that URL.`;
+            this.dom.urlFeedback.className = 'feedback-box incorrect';
+            this.selectedURL.classList.add('incorrect');
+            setTimeout(() => this.selectedURL?.classList.remove('incorrect'), 500);
+        }
+    },
+    checkPhase1Completion() {
+        if (this.correctlySorted === this.urlExamples.length) {
+            this.dom.urlFeedback.textContent = "All URLs sorted correctly! Phase 1 complete.";
+            this.dom.phase1Btn.disabled = false;
+        }
+    },
 
     // --- PHASE 2 LOGIC ---
     renderCertificateInspector() {
@@ -122,6 +160,7 @@ const module3Manager = {
         if (el.classList.contains('revealed')) return;
         el.classList.add('revealed');
         this.certificatesInspected++;
+        this.dom.certFeedback.textContent = this.certificates[el.dataset.index].explanation;
         if (this.certificatesInspected === this.certificates.length) {
             this.dom.certFeedback.textContent = "All certificates inspected!";
             this.dom.phase2Btn.disabled = false;
@@ -131,43 +170,45 @@ const module3Manager = {
     // --- PHASE 3 LOGIC (RED FLAG HUNT) ---
     startRedFlagHunt() {
         this.currentWebsiteIndex = 0;
-        this.redFlagsFound = 0;
         this.renderNextWebsite();
     },
-    
     renderNextWebsite() {
         if (this.currentWebsiteIndex >= 3) {
             this.completeRedFlagHunt();
             return;
         }
-        const template = document.getElementById(`website-template-${this.currentWebsiteIndex + 1}`);
+        const templateId = `website-template-${this.currentWebsiteIndex + 1}`;
+        const template = document.getElementById(templateId);
+        if (!template) { console.error(`Template not found: ${templateId}`); return; }
+        
         this.dom.websiteMockupContainer.innerHTML = '';
         this.dom.websiteMockupContainer.appendChild(template.content.cloneNode(true));
         
         const flagsOnThisPage = this.dom.websiteMockupContainer.querySelectorAll('.red-flag');
-        this.dom.totalFlags.textContent = flagsOnThisPage.length;
+        this.totalRedFlagsOnCurrentPage = flagsOnThisPage.length;
+        this.redFlagsFoundOnCurrentPage = 0;
+        
+        this.dom.totalFlags.textContent = this.totalRedFlagsOnCurrentPage;
         this.dom.flagsFound.textContent = 0;
         this.dom.currentWebsite.textContent = `${this.currentWebsiteIndex + 1}`;
         this.dom.nextWebsiteBtn.style.display = 'none';
         this.dom.redflagFeedback.textContent = "Click on anything that looks suspicious.";
     },
-
     handleRedFlagClick(el) {
         if (el.classList.contains('found')) return;
         el.classList.add('found');
-        this.redFlagsFound++;
-        const currentFound = this.dom.websiteMockupContainer.querySelectorAll('.red-flag.found').length;
-        const totalOnPage = this.dom.websiteMockupContainer.querySelectorAll('.red-flag').length;
-        this.dom.flagsFound.textContent = currentFound;
-        this.dom.redflagFeedback.textContent = el.dataset.explanation;
-        if (currentFound === totalOnPage) {
+        this.redFlagsFoundOnCurrentPage++;
+        this.dom.flagsFound.textContent = this.redFlagsFoundOnCurrentPage;
+        this.dom.redflagFeedback.textContent = `FLAGGED: ${el.dataset.explanation}`;
+        if (this.redFlagsFoundOnCurrentPage === this.totalRedFlagsOnCurrentPage) {
             this.dom.nextWebsiteBtn.style.display = 'block';
         }
     },
-
     completeRedFlagHunt() {
-        this.dom.websiteMockupContainer.innerHTML = '<h2>Red Flag Hunt Complete!</h2>';
+        this.dom.websiteMockupContainer.innerHTML = `<h2><span aria-hidden="true">✅ </span>Red Flag Hunt Complete!</h2><p>Excellent work, Agent!</p>`;
+        this.dom.redflagFeedback.textContent = `You found all the red flags.`;
         this.dom.phase3Btn.disabled = false;
+        this.dom.nextWebsiteBtn.style.display = 'none';
     },
 
     // --- ASSESSMENT LOGIC ---
@@ -176,7 +217,6 @@ const module3Manager = {
         this.assessmentScore = 0;
         this.renderNextQuestion();
     },
-
     renderNextQuestion() {
         if (this.currentAssessmentQuestion >= this.assessmentQuestions.length) {
             this.showAssessmentResults();
@@ -191,7 +231,6 @@ const module3Manager = {
                 </div>
             </div>`;
     },
-
     handleAssessmentChoice(el) {
         const selected = parseInt(el.dataset.option);
         const correct = this.assessmentQuestions[this.currentAssessmentQuestion].correct;
@@ -205,27 +244,24 @@ const module3Manager = {
             this.renderNextQuestion();
         }, 2000);
     },
-    
     showAssessmentResults() {
-        this.dom.assessmentContainer.innerHTML = `<h2>Assessment Complete! You scored ${this.assessmentScore}/${this.assessmentQuestions.length}.</h2>`;
-        if (this.assessmentScore / this.assessmentQuestions.length >= 0.8) {
-            this.dom.completeBtn.disabled = false;
-        }
+        const passed = (this.assessmentScore / this.assessmentQuestions.length) >= 0.8;
+        this.dom.assessmentContainer.innerHTML = `
+            <div class="assessment-completion">
+                <h2>Assessment Complete!</h2>
+                <p>You scored ${this.assessmentScore}/${this.assessmentQuestions.length}.</p>
+                <p><strong>Status: ${passed ? 'PASSED' : 'FAILED - Please Review Module'}</strong></p>
+            </div>`;
+        if (passed) { this.dom.completeBtn.disabled = false; }
     },
     
     completeModule() {
         if (window.digitalShieldProgress) {
             window.digitalShieldProgress.completeModule(3, (this.assessmentScore / this.assessmentQuestions.length) * 100);
         }
-        alert('Module 3 complete!');
+        alert('Module 3 complete! Returning to Mission Control.');
         window.location.href = 'index.html';
     }
 };
-
-// Simplified placeholders for missing functions from previous steps
-module3Manager.renderURLDetectiveGame = function() { console.log('renderURLDetectiveGame placeholder'); };
-module3Manager.selectURL = function() { console.log('selectURL placeholder'); };
-module3Manager.placeURL = function() { console.log('placeURL placeholder'); };
-module3Manager.checkPhase1Completion = function() { console.log('checkPhase1Completion placeholder'); };
 
 document.addEventListener('DOMContentLoaded', () => module3Manager.init());
