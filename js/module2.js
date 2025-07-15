@@ -130,10 +130,19 @@ const module2Manager = {
         this.dom.criteriaList.innerHTML = criteria.map(item => `<div class="criteria-item ${item.pass ? 'pass' : 'fail'}"><span class="check-mark">${item.pass ? '✅' : '❌'}</span> ${item.text}</div>`).join('');
     },
 
-    togglePasswordVisibility() {
+        togglePasswordVisibility() {
         this.passwordVisible = !this.passwordVisible;
         this.dom.passwordTester.type = this.passwordVisible ? 'text' : 'password';
     },
+
+    // ADD THIS NEW FUNCTION
+    testExample(password) {
+        this.dom.passwordTester.value = password;
+        this.testPasswordStrength(); // Trigger the analysis
+        this.dom.passwordTester.focus(); // Focus on the input field
+    },
+
+    renderAssessment() {
 
     renderAssessment() {
         const challenges = [
