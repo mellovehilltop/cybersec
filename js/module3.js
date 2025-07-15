@@ -11,7 +11,6 @@ const module3Manager = {
     selectedURL: null,
     correctlySorted: 0,
     certificatesInspected: 0,
-    scenariosCompleted: 0,
     assessmentScore: 0,
     currentAssessmentQuestion: 0,
     
@@ -91,45 +90,62 @@ const module3Manager = {
         }
     ],
 
-    // Scenarios for Phase 3 - Threat Recognition
-    scenarios: [
+    // Red Flag Hunt game data for Phase 3
+    redFlagWebsites: [
         {
-            title: "Supplier Email Verification",
-            description: "You receive an email from 'New Honey Supplier Ltd' asking you to verify account details on their website: http://newhoneysupplier-verification.tk/login",
-            options: [
-                "Click the link immediately to verify",
-                "Check the URL carefully before deciding",
-                "Ignore the email completely",
-                "Forward to IT department for verification"
-            ],
-            correct: 3,
-            explanation: "Correct! Always verify suspicious supplier emails with IT. The .tk domain and HTTP protocol are major red flags."
+            id: 1,
+            name: "Fake Supplier Site",
+            theme: "supplier-site",
+            url: "http://hilltop-honey-suppliers.tk/urgent-verification", // Red flag: HTTP + .tk domain
+            content: {
+                logo: "HoneySuppliers.tk",
+                title: "URGENT: Account Verification Required",
+                description: "Dear Hilltop Honey, your supplier account requires immediate verification to continue services.",
+                redFlags: [
+                    { id: "url", element: ".website-url-bar", explanation: "HTTP protocol and .tk domain are major red flags" },
+                    { id: "urgent", element: ".urgent-text", explanation: "Urgent language is a common phishing tactic" },
+                    { id: "download", element: ".fake-download", explanation: "Suspicious download link with .exe file" },
+                    { id: "popup", element: ".fake-popup", explanation: "Unexpected popup claiming security issues" }
+                ]
+            }
         },
         {
-            title: "Software Download Request",
-            description: "Your manager asks you to download a supplier management tool from: http://businesstools.exe-download.org/supplier-manager.exe",
-            options: [
-                "Download immediately as requested",
-                "Ask for official download source first",
-                "Download but scan with antivirus first",
-                "Refuse to download anything"
-            ],
-            correct: 1,
-            explanation: "Correct! Always request official download sources. The .org domain for .exe files and HTTP protocol are suspicious."
+            id: 2,
+            name: "Fake Software Site", 
+            theme: "download-site",
+            url: "https://free-business-software.org/hilltop-accounting.exe", // Red flag: .exe in URL
+            content: {
+                logo: "FreeBizSoft",
+                title: "Free Accounting Software for Hilltop Honey",
+                description: "Download our premium accounting software absolutely free! Special offer for Hilltop Honey employees.",
+                redFlags: [
+                    { id: "exe-url", element: ".website-url-bar", explanation: "Direct .exe file in URL is dangerous" },
+                    { id: "free-premium", element: ".contradiction", explanation: "'Free premium software' is contradictory and suspicious" },
+                    { id: "form", element: ".suspicious-form", explanation: "Form asking for company details before download" },
+                    { id: "certificate", element: ".fake-certificate-warning", explanation: "Certificate warning should never be ignored" }
+                ]
+            }
         },
         {
-            title: "Urgent Payment Portal",
-            description: "A popup appears: 'URGENT: Hilltop Honey payment system requires immediate verification' with a link to: https://hilltop-payment-urgent.tk/verify-now",
-            options: [
-                "Click verify to resolve the issue",
-                "Close popup and report to IT",
-                "Enter details but change password after",
-                "Call the number provided in popup"
-            ],
-            correct: 1,
-            explanation: "Correct! Close suspicious popups and report them. The .tk domain and urgent language are classic phishing tactics."
+            id: 3,
+            name: "Fake Payment Site",
+            theme: "payment-site", 
+            url: "https://payment-update.hilltophoney.co.uk.security-verification.tk/login", // Red flag: Complex subdomain + .tk
+            content: {
+                logo: "Hilltop Payment Portal",
+                title: "Payment System Security Update",
+                description: "Your payment details need updating due to new security requirements.",
+                redFlags: [
+                    { id: "complex-url", element: ".website-url-bar", explanation: "Complex subdomain structure attempting to look official" },
+                    { id: "spelling", element: ".logo-typo", explanation: "Misspelled company name in logo" }
+                ]
+            }
         }
     ],
+    currentWebsite: 0,
+    redFlagsFound: 0,
+    totalRedFlags: 10,
+    redFlagScore: 0,
 
     // Assessment questions for final evaluation
     assessmentQuestions: [
@@ -223,9 +239,14 @@ const module3Manager = {
         this.dom.certFeedback = document.getElementById('cert-feedback');
         this.dom.phase2Btn = document.getElementById('phase-2-btn');
         
-        // Scenario elements
-        this.dom.scenarioContainer = document.getElementById('scenario-container');
-        this.dom.scenarioFeedback = document.getElementById('scenario-feedback');
+        // Red Flag Hunt elements
+        this.dom.websiteMockupContainer = document.getElementById('website-mockup-container');
+        this.dom.redFlagFeedback = document.getElementById('redflag-feedback');
+        this.dom.flagsFound = document.getElementById('flags-found');
+        this.dom.totalFlags = document.getElementById('total-flags');
+        this.dom.currentScore = document.getElementById('current-score');
+        this.dom.currentWebsite = document.getElementById('current-website');
+        this.dom.nextWebsiteBtn = document.getElementById('next-website-btn');
         this.dom.phase3Btn = document.getElementById('phase-3-btn');
         
         // Assessment elements
@@ -396,73 +417,165 @@ const module3Manager = {
         }
     },
 
-    // --- PHASE 3: SCENARIO SIMULATOR ---
-    renderScenarios() {
-        if (!this.dom.scenarioContainer) return;
+    // --- PHASE 3: RED FLAG HUNT ---
+    renderRedFlagHunt() {
+        if (!this.dom.websiteMockupContainer) return;
         
-        console.log('Rendering Threat Scenarios');
-        this.dom.scenarioContainer.innerHTML = '';
-        
-        this.scenarios.forEach((scenario, index) => {
-            const scenarioEl = document.createElement('div');
-            scenarioEl.className = 'scenario-card';
-            scenarioEl.innerHTML = `
-                <h3>Scenario ${index + 1}: ${scenario.title}</h3>
-                <div class="scenario-description">${scenario.description}</div>
-                <div class="scenario-options">
-                    ${scenario.options.map((option, optIndex) => 
-                        `<div class="scenario-option" data-scenario="${index}" data-option="${optIndex}">
-                            ${String.fromCharCode(65 + optIndex)}. ${option}
-                        </div>`
-                    ).join('')}
+        console.log('Starting Red Flag Hunt');
+        this.currentWebsite = 0;
+        this.redFlagsFound = 0;
+        this.redFlagScore = 0;
+        this.updateRedFlagUI();
+        this.renderWebsiteMockup();
+    },
+
+    renderWebsiteMockup() {
+        const website = this.redFlagWebsites[this.currentWebsite];
+        if (!website) return;
+
+        this.dom.websiteMockupContainer.innerHTML = `
+            <div class="website-mockup ${website.theme}">
+                <div class="website-header">
+                    <div class="website-logo red-flag logo-typo" data-flag="spelling">
+                        ${website.content.logo}
+                    </div>
+                    <div class="website-url-bar red-flag" data-flag="url">
+                        ${website.url}
+                    </div>
+                    <div style="width: 100px;"></div>
                 </div>
-                <div class="scenario-result" id="result-${index}" style="display: none;"></div>
-            `;
-            
-            this.dom.scenarioContainer.appendChild(scenarioEl);
+                
+                ${website.id === 2 ? '<div class="fake-certificate-warning red-flag" data-flag="certificate">⚠️ Certificate Error - Click to Continue</div>' : ''}
+                
+                <div class="website-content">
+                    <h1>${website.content.title}</h1>
+                    <div class="urgent-text red-flag" data-flag="urgent" style="color: #e74c3c; font-weight: bold; font-size: 1.2rem; margin: 20px 0;">
+                        ${website.id === 1 ? 'URGENT ACTION REQUIRED - VERIFY NOW!' : ''}
+                    </div>
+                    
+                    <p>${website.content.description}</p>
+                    
+                    ${website.id === 1 ? `
+                        <div class="fake-popup red-flag" data-flag="popup">
+                            <strong>SECURITY ALERT!</strong><br>
+                            Your session has expired. Click here to login again.
+                        </div>
+                        <a href="#" class="fake-download red-flag" data-flag="download">Download Verification Tool (update.exe)</a>
+                    ` : ''}
+                    
+                    ${website.id === 2 ? `
+                        <h2 class="contradiction red-flag" data-flag="free-premium">Get Our Premium Software - Completely FREE!</h2>
+                        <div class="suspicious-form red-flag" data-flag="form">
+                            <h3>Enter Company Details to Download:</h3>
+                            <input type="text" placeholder="Company Name">
+                            <input type="text" placeholder="Bank Account Number">
+                            <input type="password" placeholder="Current Admin Password">
+                            <button class="fake-button">Download Now</button>
+                        </div>
+                    ` : ''}
+                    
+                    ${website.id === 3 ? `
+                        <p style="color: #e74c3c;">This secure portal requires immediate attention.</p>
+                        <button class="fake-button">Update Payment Details</button>
+                    ` : ''}
+                </div>
+            </div>
+        `;
+
+        // Add click handlers for red flags
+        document.querySelectorAll('.red-flag').forEach(flag => {
+            flag.addEventListener('click', (e) => this.handleRedFlagClick(e.target));
         });
 
-        // Add click handlers for options
-        document.querySelectorAll('.scenario-option').forEach(option => {
-            option.addEventListener('click', (e) => this.handleScenarioChoice(e.target));
-        });
-    },
-
-    handleScenarioChoice(optionElement) {
-        const scenarioIndex = parseInt(optionElement.dataset.scenario);
-        const optionIndex = parseInt(optionElement.dataset.option);
-        const scenario = this.scenarios[scenarioIndex];
-        
-        // Disable all options for this scenario
-        const scenarioCard = optionElement.closest('.scenario-card');
-        const allOptions = scenarioCard.querySelectorAll('.scenario-option');
-        allOptions.forEach(opt => opt.style.pointerEvents = 'none');
-        
-        // Mark correct/incorrect
-        if (optionIndex === scenario.correct) {
-            optionElement.classList.add('correct');
-            this.scenariosCompleted++;
-        } else {
-            optionElement.classList.add('incorrect');
-            allOptions[scenario.correct].classList.add('correct');
+        // Update next button
+        if (this.dom.nextWebsiteBtn) {
+            this.dom.nextWebsiteBtn.onclick = () => this.nextWebsite();
+            this.dom.nextWebsiteBtn.style.display = 'none';
         }
-        
-        // Show explanation
-        const resultDiv = document.getElementById(`result-${scenarioIndex}`);
-        resultDiv.innerHTML = `<div class="feedback-box ${optionIndex === scenario.correct ? 'correct' : 'incorrect'}">
-            ${scenario.explanation}
-        </div>`;
-        resultDiv.style.display = 'block';
-        
-        this.checkPhase3Completion();
     },
 
-    checkPhase3Completion() {
-        if (this.scenariosCompleted === this.scenarios.length) {
-            this.dom.scenarioFeedback.textContent = "Brilliant! All scenarios completed successfully. Phase 3 complete.";
-            this.dom.scenarioFeedback.className = 'feedback-box correct';
+    handleRedFlagClick(element) {
+        if (element.classList.contains('found')) return;
+
+        const flagType = element.dataset.flag;
+        const website = this.redFlagWebsites[this.currentWebsite];
+        const flagInfo = website.content.redFlags.find(flag => flag.id === flagType);
+        
+        if (flagInfo) {
+            element.classList.add('found');
+            this.redFlagsFound++;
+            this.redFlagScore += 10; // 10 points per flag
+            
+            this.dom.redFlagFeedback.textContent = `Red flag found! ${flagInfo.explanation}`;
+            this.dom.redFlagFeedback.className = 'feedback-box correct';
+            
+            this.updateRedFlagUI();
+            this.checkWebsiteCompletion();
+        }
+    },
+
+    updateRedFlagUI() {
+        if (this.dom.flagsFound) this.dom.flagsFound.textContent = this.redFlagsFound;
+        if (this.dom.totalFlags) this.dom.totalFlags.textContent = this.totalRedFlags;
+        if (this.dom.currentScore) this.dom.currentScore.textContent = this.redFlagScore;
+        if (this.dom.currentWebsite) this.dom.currentWebsite.textContent = `${this.currentWebsite + 1} of 3`;
+    },
+
+    checkWebsiteCompletion() {
+        const website = this.redFlagWebsites[this.currentWebsite];
+        const websiteFlags = document.querySelectorAll('.red-flag').length;
+        const foundFlags = document.querySelectorAll('.red-flag.found').length;
+        
+        if (foundFlags >= websiteFlags) {
+            // All flags found on this website
+            if (this.currentWebsite < this.redFlagWebsites.length - 1) {
+                this.dom.redFlagFeedback.textContent = `Excellent! All red flags found on this website. Ready for the next one?`;
+                this.dom.redFlagFeedback.className = 'feedback-box correct';
+                this.dom.nextWebsiteBtn.style.display = 'inline-block';
+            } else {
+                this.completeRedFlagHunt();
+            }
+        }
+    },
+
+    nextWebsite() {
+        this.currentWebsite++;
+        if (this.currentWebsite < this.redFlagWebsites.length) {
+            this.renderWebsiteMockup();
+            this.dom.redFlagFeedback.textContent = "New website loaded. Find the red flags!";
+            this.dom.redFlagFeedback.className = 'feedback-box';
+        } else {
+            this.completeRedFlagHunt();
+        }
+    },
+
+    completeRedFlagHunt() {
+        let message = "";
+        let badgeText = "";
+        
+        if (this.redFlagsFound >= 8) { // Need 8/10 to pass
+            message = `Outstanding! You found ${this.redFlagsFound}/${this.totalRedFlags} red flags (Score: ${this.redFlagScore} points). Phase 3 complete!`;
+            badgeText = "🎯 Red Flag Hunter Badge Earned!";
             this.dom.phase3Btn.disabled = false;
-            this.showBadgeNotification("🎯 Threat Hunter Badge Earned!");
+        } else {
+            message = `You found ${this.redFlagsFound}/${this.totalRedFlags} red flags. You need to find at least 8 to continue. Try again!`;
+            // Allow restart
+            setTimeout(() => {
+                this.currentWebsite = 0;
+                this.redFlagsFound = 0;
+                this.redFlagScore = 0;
+                this.renderWebsiteMockup();
+                this.updateRedFlagUI();
+                this.dom.redFlagFeedback.textContent = "Game restarted. Look carefully for red flags!";
+                this.dom.redFlagFeedback.className = 'feedback-box';
+            }, 3000);
+        }
+
+        this.dom.redFlagFeedback.textContent = message;
+        this.dom.redFlagFeedback.className = `feedback-box ${this.redFlagsFound >= 8 ? 'correct' : 'incorrect'}`;
+        
+        if (this.redFlagsFound >= 8) {
+            this.showBadgeNotification(badgeText);
         }
     },
 
@@ -624,7 +737,7 @@ const module3Manager = {
             case 2:
                 nextSectionId = 'training-phase-3';
                 nextProgress = 70;
-                this.renderScenarios();
+                this.renderRedFlagHunt();
                 break;
             case 3:
                 nextSectionId = 'assessment-phase';
