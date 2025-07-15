@@ -935,3 +935,119 @@ body {
     font-size: 2rem;
     margin-bottom: 15px;
 }
+/* ==================================================
+   MODULE 3: INTERNET SECURITY STYLES
+   ================================================== */
+.url-detective-game {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 30px;
+    margin: 30px auto;
+    max-width: 1000px;
+}
+
+.url-sorting-pool {
+    background: rgba(0,0,0,0.2);
+    border: 1px dashed var(--primary-color);
+    padding: 20px;
+    border-radius: 8px;
+    min-height: 100px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+    align-content: flex-start;
+}
+
+.url-item {
+    background: #334;
+    color: var(--text-light);
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-family: var(--font-secondary);
+    cursor: pointer;
+    border: 2px solid #556;
+    transition: all 0.2s ease-out;
+}
+.url-item:hover {
+    border-color: var(--secondary-color);
+    transform: translateY(-2px);
+}
+.url-item.selected {
+    background: var(--secondary-color);
+    color: var(--text-dark);
+    border-color: var(--secondary-color);
+    transform: scale(1.05);
+}
+.url-item.correct {
+    opacity: 0.5;
+    pointer-events: none;
+}
+.url-item.incorrect {
+    animation: shake 0.5s ease;
+}
+
+.url-drop-zones {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.url-drop-zone {
+    border: 2px solid var(--border-dark);
+    border-radius: 8px;
+    padding: 15px;
+    min-height: 200px;
+    background: rgba(0,0,0,0.2);
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+.url-drop-zone:hover {
+    background: rgba(0, 255, 255, 0.1);
+}
+.url-drop-zone h4 {
+    text-align: center;
+    margin-bottom: 15px;
+    font-family: var(--font-primary);
+}
+.url-drop-zone.safe h4 { color: var(--success-color); }
+.url-drop-zone.suspicious h4 { color: var(--secondary-color); }
+.url-drop-zone.dangerous h4 { color: var(--danger-color); }
+
+.url-drop-zone .url-list {
+    list-style: none;
+    padding: 0;
+}
+.url-drop-zone .url-list .url-item {
+    margin-bottom: 10px;
+    cursor: default;
+}
+
+.feedback-box {
+    text-align: center;
+    margin: 20px auto;
+    padding: 15px;
+    border-radius: 8px;
+    font-weight: bold;
+    max-width: 800px;
+}
+.feedback-box.correct {
+    background: rgba(0, 255, 0, 0.2);
+    color: var(--success-color);
+}
+.feedback-box.incorrect {
+    background: rgba(231, 76, 60, 0.2);
+    color: var(--danger-color);
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+@media (max-width: 768px) {
+    .url-drop-zones {
+        grid-template-columns: 1fr;
+    }
+}
