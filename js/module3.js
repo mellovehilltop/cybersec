@@ -1,5 +1,5 @@
 const module3Manager = {
-    // --- STATE & CONTENT (ALL PHASES) ---
+    // --- STATE & CONTENT ---
     selectedURL: null,
     correctlySorted: 0,
     certificatesInspected: 0,
@@ -81,7 +81,7 @@ const module3Manager = {
         switch (dataset.action) {
             case 'return-home': window.location.href = 'index.html'; break;
             case 'start-training': this.showSection('training-phase-1a'); this.updateProgress(2); break;
-            case 'start-detective-game': this.showSection('training-phase-1b'); this.renderURLDetectiveGame(); break;
+            case 'start-detective-game': this.showSection('training-phase-1b'); this.updateProgress(3); this.renderURLDetectiveGame(); break;
             case 'complete-phase': this.completePhase(parseInt(dataset.phase)); break;
             case 'complete-module': this.completeModule(); break;
         }
@@ -93,18 +93,18 @@ const module3Manager = {
     },
 
     updateProgress(step) {
-        const totalSteps = 5; // Briefing, Edu/Game, Cert, Hunt, Assess
+        const totalSteps = 6; // Briefing, Edu, Game, Cert, Hunt, Assess
         this.dom.moduleProgress.textContent = `${Math.round(((step - 1) / totalSteps) * 100)}%`;
     },
 
     completePhase(phase) {
-        this.updateProgress(phase + 2);
+        this.updateProgress(phase + 3);
         if (phase === 1) { this.showSection('training-phase-2'); this.renderCertificateInspector(); }
         else if (phase === 2) { this.showSection('training-phase-3'); this.startRedFlagHunt(); }
         else if (phase === 3) { this.showSection('assessment-phase'); this.renderAssessment(); }
     },
     
-    // --- PHASE 1 LOGIC ---
+    // --- PHASE 1B LOGIC (URL DETECTIVE) ---
     renderURLDetectiveGame() {
         this.dom.urlSortingPool.innerHTML = this.urlExamples.map((item, index) => 
             `<div class="url-item" data-index="${index}" data-category="${item.category}">${item.url}</div>`
@@ -144,7 +144,7 @@ const module3Manager = {
         }
     },
 
-    // --- PHASE 2 LOGIC ---
+    // --- PHASE 2 LOGIC (CERTIFICATE INSPECTOR) ---
     renderCertificateInspector() {
         this.dom.certificateExamples.innerHTML = this.certificates.map((cert, i) => `
             <div class="certificate-card" data-index="${i}">
@@ -198,8 +198,10 @@ const module3Manager = {
         if (el.classList.contains('found')) return;
         el.classList.add('found');
         this.redFlagsFoundOnCurrentPage++;
+        
         this.dom.flagsFound.textContent = this.redFlagsFoundOnCurrentPage;
         this.dom.redflagFeedback.textContent = `FLAGGED: ${el.dataset.explanation}`;
+
         if (this.redFlagsFoundOnCurrentPage === this.totalRedFlagsOnCurrentPage) {
             this.dom.nextWebsiteBtn.style.display = 'block';
         }
