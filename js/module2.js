@@ -141,9 +141,6 @@ const module2Manager = {
         this.testPasswordStrength(); // Trigger the analysis
         this.dom.passwordTester.focus(); // Focus on the input field
     },
-
-    renderAssessment() {
-
     renderAssessment()
         const challenges = [
             { id: 1, title: 'Challenge 1: Identify the Threat', question: 'You receive an email saying "Your password expires today. Click here to update: www.hilltopmoney.com". What type of attack is this?', options: [{ text: 'A) Brute Force', answer: 'A' }, { text: 'B) Phishing', answer: 'B' }, { text: 'C) Dictionary Attack', answer: 'C' }], correctAnswer: 'B' },
