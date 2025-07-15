@@ -81,7 +81,8 @@ const module2Manager = {
             this.showSection(sectionId);
         }
     },
- {
+
+    testPasswordStrength() {
         const password = this.dom.passwordTester.value;
         if (!password) {
             this.resetStrengthTester();
