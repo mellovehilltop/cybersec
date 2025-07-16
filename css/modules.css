@@ -995,3 +995,197 @@
         font-size: 2rem;
     }
 }
+/* GDPR Shield Icon */
+.gdpr-shield-icon {
+    width: 64px;
+    height: 64px;
+    background: linear-gradient(135deg, #00ffff, #0088cc);
+    clip-path: polygon(50% 0%, 90% 25%, 90% 75%, 50% 100%, 10% 75%, 10% 25%);
+    position: relative;
+    display: inline-block;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+}
+
+.gdpr-shield-icon::after {
+    content: 'GDPR';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-weight: bold;
+    font-size: 10px;
+    font-family: 'Orbitron', monospace;
+}
+
+/* Personal Data Icon */
+.personal-data-icon {
+    width: 48px;
+    height: 48px;
+    background: #9b59b6;
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    position: relative;
+    display: inline-block;
+    box-shadow: 0 0 10px rgba(155, 89, 182, 0.5);
+}
+
+.personal-data-icon::before {
+    content: '👤';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+}
+
+.personal-data-icon::after {
+    content: '';
+    position: absolute;
+    top: -3px;
+    right: -3px;
+    width: 12px;
+    height: 12px;
+    background: #00ffff;
+    border-radius: 50%;
+    border: 2px solid white;
+}
+
+/* Consent Checkbox */
+.consent-checkbox {
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, #00ff00, #33cc33);
+    border-radius: 4px;
+    position: relative;
+    display: inline-block;
+    border: 2px solid #ffffff;
+    box-shadow: 0 0 8px rgba(0, 255, 0, 0.4);
+}
+
+.consent-checkbox::after {
+    content: '✓';
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Data Breach Alert */
+.data-breach-alert {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    position: relative;
+    display: inline-block;
+    box-shadow: 0 0 15px rgba(231, 76, 60, 0.6);
+}
+
+.data-breach-alert::after {
+    content: '!';
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    position: absolute;
+    top: 65%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Retention Calendar */
+.retention-calendar {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, #f39c12, #e67e22);
+    border-radius: 8px;
+    position: relative;
+    display: inline-block;
+    border: 2px solid white;
+    box-shadow: 0 0 10px rgba(243, 156, 18, 0.5);
+}
+
+.retention-calendar::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: 8px;
+    width: 4px;
+    height: 12px;
+    background: #666;
+    border-radius: 2px;
+    box-shadow: 24px 0 0 #666;
+}
+
+.retention-calendar::after {
+    content: '📅';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+}
+
+/* Document Icon */
+.document-icon {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #ecf0f1, #bdc3c7);
+    border-radius: 4px;
+    position: relative;
+    display: inline-block;
+    border: 1px solid #95a5a6;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.document-icon::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-top: 8px solid #95a5a6;
+}
+
+.document-icon::after {
+    content: '📄';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 16px;
+}
+
+/* ICO Logo Placeholder */
+.ico-logo {
+    width: 80px;
+    height: 40px;
+    background: linear-gradient(135deg, #003366, #0066cc);
+    border-radius: 4px;
+    position: relative;
+    display: inline-block;
+    border: 1px solid #ffffff;
+    color: white;
+    font-weight: bold;
+    font-size: 12px;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    line-height: 40px;
+}
+
+.ico-logo::after {
+    content: 'ICO';
+    color: white;
+}
+
+/* Container for CSS icons */
+.css-icon-container {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 5px;
+}
