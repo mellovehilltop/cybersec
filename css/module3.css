@@ -65,12 +65,9 @@
     transition: all 0.3s ease;
 }
 
-.learning-objectives li {
-    padding: 10px 0;
-    font-size: 1.1rem;
-    border-bottom: 1px solid rgba(0, 255, 255, 0.3);
-    transition: all 0.3s ease;
-    color: #00ffff; 
+.learning-objectives.clicked li {
+    padding-left: 10px;
+    color: #00ffff;
 }
 
 .learning-objectives li:before {
@@ -701,7 +698,7 @@
     color: #f39c12;
 }
 
-.website-mockup-container {
+.website-image-container {
     background: #ffffff;
     border: 3px solid #34495e;
     border-radius: 10px;
@@ -710,200 +707,78 @@
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     position: relative;
     min-height: 600px;
+    max-width: 100%;
 }
 
-.website-mockup {
+.website-screenshot {
     width: 100%;
-    min-height: 600px;
-    position: relative;
-    font-family: Arial, sans-serif;
-    color: #333333;
-    background: #ffffff;
-}
-
-.website-header {
-    background: linear-gradient(135deg, #2c3e50, #34495e);
-    color: white;
-    padding: 15px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    height: auto;
+    display: block;
     position: relative;
 }
 
-.website-logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-}
-
-.website-url-bar {
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 20px;
-    padding: 8px 15px;
-    font-family: 'Courier New', monospace;
-    font-size: 0.9rem;
-    color: #333;
-    flex: 1;
-    max-width: 400px;
-    margin: 0 20px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.website-content {
-    padding: 30px;
-    line-height: 1.6;
-}
-
-.website-content h1 {
-    color: #2c3e50;
-    margin-bottom: 20px;
-    font-size: 2rem;
-}
-
-.website-content h2 {
-    color: #34495e;
-    margin: 25px 0 15px 0;
-    font-size: 1.3rem;
-}
-
-.website-content p {
-    margin-bottom: 15px;
-    color: #555;
-}
-
-.fake-button {
-    background: linear-gradient(135deg, #e74c3c, #c0392b);
-    color: white;
-    padding: 12px 25px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-    margin: 10px 5px;
-    transition: all 0.3s ease;
-    display: inline-block;
-    text-decoration: none;
-}
-
-.fake-link {
-    color: #3498db;
-    text-decoration: underline;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.fake-download {
-    background: #f39c12;
-    color: white;
-    padding: 8px 15px;
-    border-radius: 3px;
-    text-decoration: none;
-    font-weight: bold;
-    display: inline-block;
-    margin: 10px 0;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.fake-popup {
+.red-flag-hotspot {
     position: absolute;
-    top: 150px;
-    right: 30px;
-    background: #e74c3c;
-    color: white;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    max-width: 250px;
-    cursor: pointer;
-    animation: popup-bounce 2s infinite;
-}
-
-@keyframes popup-bounce {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-}
-
-.fake-certificate-warning {
-    background: #e74c3c;
-    color: white;
-    padding: 10px;
-    text-align: center;
-    font-weight: bold;
+    border: 2px solid transparent;
     cursor: pointer;
     transition: all 0.3s ease;
-}
-
-.suspicious-form {
     background: rgba(231, 76, 60, 0.1);
-    border: 1px solid #e74c3c;
-    padding: 20px;
     border-radius: 5px;
-    margin: 20px 0;
 }
 
-.suspicious-form input {
-    width: 100%;
-    padding: 10px;
-    margin: 5px 0;
-    border: 1px solid #ddd;
-    border-radius: 3px;
-    cursor: pointer;
+.red-flag-hotspot:hover {
+    border-color: #e74c3c;
+    background: rgba(231, 76, 60, 0.3);
+    box-shadow: 0 0 15px rgba(231, 76, 60, 0.6);
+    transform: scale(1.05);
 }
 
-/* Red flag clickable elements */
-.red-flag {
-    position: relative;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.red-flag:hover {
-    background: rgba(231, 76, 60, 0.2);
-    box-shadow: 0 0 10px rgba(231, 76, 60, 0.5);
-}
-
-.red-flag.found {
-    background: rgba(0, 255, 0, 0.2);
-    border: 2px solid #00ff00;
-    border-radius: 5px;
-    animation: flag-found 0.6s ease;
+.red-flag-hotspot.found {
+    border-color: #00ff00;
+    background: rgba(0, 255, 0, 0.3);
     pointer-events: none;
+    animation: flag-found-pulse 1s ease;
 }
 
-.red-flag.found::after {
-    content: "✓ FOUND!";
+.red-flag-hotspot.found::after {
+    content: "✓";
     position: absolute;
-    top: -30px;
+    top: 50%;
     left: 50%;
-    transform: translateX(-50%);
-    background: #00ff00;
-    color: #1a1a2e;
-    padding: 5px 10px;
-    border-radius: 3px;
-    font-size: 0.8rem;
+    transform: translate(-50%, -50%);
+    color: #00ff00;
+    font-size: 2rem;
     font-weight: bold;
-    white-space: nowrap;
-    z-index: 10;
+    text-shadow: 0 0 10px rgba(0, 255, 0, 0.8);
 }
 
-@keyframes flag-found {
+@keyframes flag-found-pulse {
     0% { transform: scale(1); }
-    50% { transform: scale(1.1); }
+    50% { transform: scale(1.2); }
     100% { transform: scale(1); }
 }
 
-/* Different website themes */
-.website-mockup.supplier-site .website-header {
+.red-flag-hotspot.incorrect {
+    border-color: #e74c3c;
+    background: rgba(231, 76, 60, 0.4);
+    animation: incorrect-flash 0.5s ease;
+}
+
+@keyframes incorrect-flash {
+    0%, 100% { background: rgba(231, 76, 60, 0.1); }
+    50% { background: rgba(231, 76, 60, 0.6); }
+}
+
+/* Website specific styling */
+.website-1 {
     background: linear-gradient(135deg, #f39c12, #e67e22);
 }
 
-.website-mockup.download-site .website-header {
+.website-2 {
     background: linear-gradient(135deg, #9b59b6, #8e44ad);
 }
 
-.website-mockup.payment-site .website-header {
+.website-3 {
     background: linear-gradient(135deg, #27ae60, #2ecc71);
 }
 
@@ -1062,28 +937,15 @@
         gap: 20px;
     }
     
-    .website-header {
-        flex-direction: column;
-        gap: 10px;
-        text-align: center;
-    }
-    
-    .website-url-bar {
-        max-width: 100%;
-        margin: 0;
-        font-size: 0.8rem;
-    }
-    
-    .fake-popup {
-        position: relative;
-        right: auto;
-        top: auto;
+    .website-image-container {
         margin: 20px 0;
-        max-width: 100%;
+        min-height: 400px;
     }
     
-    .website-content {
-        padding: 20px;
+    .red-flag-hotspot {
+        /* Ensure hotspots remain clickable on mobile */
+        min-width: 44px;
+        min-height: 44px;
     }
 }
 
@@ -1107,17 +969,9 @@
         font-size: 1.8rem;
     }
     
-    .website-mockup-container {
+    .website-image-container {
         margin: 20px 0;
-    }
-    
-    .website-content h1 {
-        font-size: 1.5rem;
-    }
-    
-    .fake-popup {
-        padding: 15px;
-        font-size: 0.9rem;
+        min-height: 300px;
     }
     
     .score-panel {
@@ -1129,5 +983,11 @@
         flex-direction: row;
         justify-content: space-between;
         text-align: left;
+    }
+    
+    .red-flag-hotspot {
+        /* Ensure hotspots are easier to tap on mobile */
+        min-width: 50px;
+        min-height: 50px;
     }
 }
