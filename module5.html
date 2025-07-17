@@ -391,47 +391,209 @@
                 </div>
             </div>
 
-            <!-- Rights Request Scenarios -->
+            <!-- Rights Request Scenarios with Improved Layout -->
             <div id="rights-request-simulator">
                 <h3>📧 Handle These Hilltop Honey Customer Requests</h3>
                 
+                <!-- Scenario 1: Subject Access Request -->
                 <div class="request-scenario active" id="scenario-1">
-                    <div class="customer-request">
-                        <h4>Customer Request #1</h4>
-                        <div class="request-details">
-                            <strong>From:</strong> sarah.jones@email.com<br>
-                            <strong>Subject:</strong> Request for my data<br>
-                            <strong>Message:</strong> "Hi, I've been ordering honey from you for 3 years. I want to see all the information you have about me, including my order history and any notes about my nut allergy. Can you send me everything please?"
+                    <div class="scenario-layout">
+                        <!-- Left side: Rights Reference -->
+                        <div class="rights-reference">
+                            <h4>🛡️ Quick Rights Reference</h4>
+                            <div class="quick-rights">
+                                <div class="quick-right">
+                                    <strong>Access:</strong> Copy of all data (1 month)
+                                </div>
+                                <div class="quick-right">
+                                    <strong>Rectification:</strong> Correct errors (1 month)
+                                </div>
+                                <div class="quick-right">
+                                    <strong>Erasure:</strong> Delete data (1 month)
+                                </div>
+                                <div class="quick-right">
+                                    <strong>Portability:</strong> Data export (1 month)
+                                </div>
+                                <div class="quick-right">
+                                    <strong>Objection:</strong> Stop processing (immediate)
+                                </div>
+                            </div>
                         </div>
                         
-                        <div class="request-questions">
-                            <h5>What type of request is this?</h5>
-                            <div class="question-options">
-                                <label><input type="radio" name="request-type-1" value="access"> Subject Access Request</label>
-                                <label><input type="radio" name="request-type-1" value="rectification"> Rectification Request</label>
-                                <label><input type="radio" name="request-type-1" value="erasure"> Erasure Request</label>
-                                <label><input type="radio" name="request-type-1" value="portability"> Data Portability Request</label>
+                        <!-- Right side: Scenario Questions -->
+                        <div class="scenario-content">
+                            <div class="customer-request">
+                                <h4>Customer Request #1</h4>
+                                <div class="request-details">
+                                    <strong>From:</strong> sarah.jones@email.com<br>
+                                    <strong>Subject:</strong> Request for my data<br>
+                                    <strong>Message:</strong> "Hi, I've been ordering honey from you for 3 years. I want to see all the information you have about me, including my order history and any notes about my nut allergy. Can you send me everything please?"
+                                </div>
+                                
+                                <div class="request-questions">
+                                    <h5>What type of request is this?</h5>
+                                    <div class="question-options">
+                                        <label><input type="radio" name="request-type-1" value="access"> Subject Access Request</label>
+                                        <label><input type="radio" name="request-type-1" value="rectification"> Rectification Request</label>
+                                        <label><input type="radio" name="request-type-1" value="erasure"> Erasure Request</label>
+                                        <label><input type="radio" name="request-type-1" value="portability"> Data Portability Request</label>
+                                    </div>
+                                    
+                                    <h5>What must you do first?</h5>
+                                    <div class="question-options">
+                                        <label><input type="radio" name="first-step-1" value="send-data"> Send all her data immediately</label>
+                                        <label><input type="radio" name="first-step-1" value="verify-identity"> Verify her identity</label>
+                                        <label><input type="radio" name="first-step-1" value="charge-fee"> Request admin fee payment</label>
+                                        <label><input type="radio" name="first-step-1" value="refuse"> Refuse as too complex</label>
+                                    </div>
+                                    
+                                    <h5>What's your deadline to respond?</h5>
+                                    <div class="question-options">
+                                        <label><input type="radio" name="deadline-1" value="72-hours"> 72 hours</label>
+                                        <label><input type="radio" name="deadline-1" value="1-week"> 1 week</label>
+                                        <label><input type="radio" name="deadline-1" value="1-month"> 1 month</label>
+                                        <label><input type="radio" name="deadline-1" value="3-months"> 3 months</label>
+                                    </div>
+                                </div>
                             </div>
-                            
-                            <h5>What must you do first?</h5>
-                            <div class="question-options">
-                                <label><input type="radio" name="first-step-1" value="send-data"> Send all her data immediately</label>
-                                <label><input type="radio" name="first-step-1" value="verify-identity"> Verify her identity</label>
-                                <label><input type="radio" name="first-step-1" value="charge-fee"> Request admin fee payment</label>
-                                <label><input type="radio" name="first-step-1" value="refuse"> Refuse as too complex</label>
-                            </div>
-                            
-                            <h5>What's your deadline to respond?</h5>
-                            <div class="question-options">
-                                <label><input type="radio" name="deadline-1" value="72-hours"> 72 hours</label>
-                                <label><input type="radio" name="deadline-1" value="1-week"> 1 week</label>
-                                <label><input type="radio" name="deadline-1" value="1-month"> 1 month</label>
-                                <label><input type="radio" name="deadline-1" value="3-months"> 3 months</label>
-                            </div>
+                            <button class="scenario-btn" onclick="checkScenario(1)">Check Answers</button>
+                            <div id="scenario-1-feedback" class="feedback hidden"></div>
                         </div>
                     </div>
-                    <button class="scenario-btn" onclick="checkScenario(1)">Check Answers</button>
-                    <div id="scenario-1-feedback" class="feedback hidden"></div>
+                </div>
+                
+                <!-- Scenario 2: Marketing Objection -->
+                <div class="request-scenario" id="scenario-2">
+                    <div class="scenario-layout">
+                        <!-- Left side: Rights Reference -->
+                        <div class="rights-reference">
+                            <h4>🛡️ Quick Rights Reference</h4>
+                            <div class="quick-rights">
+                                <div class="quick-right">
+                                    <strong>Access:</strong> Copy of all data (1 month)
+                                </div>
+                                <div class="quick-right">
+                                    <strong>Rectification:</strong> Correct errors (1 month)
+                                </div>
+                                <div class="quick-right">
+                                    <strong>Erasure:</strong> Delete data (1 month)
+                                </div>
+                                <div class="quick-right">
+                                    <strong>Portability:</strong> Data export (1 month)
+                                </div>
+                                <div class="quick-right highlight">
+                                    <strong>Objection:</strong> Stop processing (immediate)
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Right side: Scenario Questions -->
+                        <div class="scenario-content">
+                            <div class="customer-request">
+                                <h4>Customer Request #2</h4>
+                                <div class="request-details">
+                                    <strong>From:</strong> mike.thompson@company.com<br>
+                                    <strong>Subject:</strong> Unsubscribe from all emails<br>
+                                    <strong>Message:</strong> "I keep getting marketing emails about new honey products even though I clicked unsubscribe. Please stop sending me ANY emails immediately and delete my email address from your system."
+                                </div>
+                                
+                                <div class="request-questions">
+                                    <h5>What type of request is this?</h5>
+                                    <div class="question-options">
+                                        <label><input type="radio" name="request-type-2" value="access"> Subject Access Request</label>
+                                        <label><input type="radio" name="request-type-2" value="objection"> Objection to Processing</label>
+                                        <label><input type="radio" name="request-type-2" value="erasure"> Erasure Request</label>
+                                        <label><input type="radio" name="request-type-2" value="restriction"> Restriction of Processing</label>
+                                    </div>
+                                    
+                                    <h5>Can you keep his email for order confirmations?</h5>
+                                    <div class="question-options">
+                                        <label><input type="radio" name="keep-email-2" value="yes"> Yes, we need it for legitimate business</label>
+                                        <label><input type="radio" name="keep-email-2" value="no"> No, must delete everything immediately</label>
+                                        <label><input type="radio" name="keep-email-2" value="ask"> Ask him what's acceptable</label>
+                                        <label><input type="radio" name="keep-email-2" value="ignore"> Ignore the request</label>
+                                    </div>
+                                    
+                                    <h5>How quickly must you act?</h5>
+                                    <div class="question-options">
+                                        <label><input type="radio" name="speed-2" value="immediately"> Stop marketing emails immediately</label>
+                                        <label><input type="radio" name="speed-2" value="1-week"> Within 1 week</label>
+                                        <label><input type="radio" name="speed-2" value="1-month"> Within 1 month</label>
+                                        <label><input type="radio" name="speed-2" value="next-campaign"> Before next email campaign</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="scenario-btn" onclick="checkScenario(2)">Check Answers</button>
+                            <div id="scenario-2-feedback" class="feedback hidden"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Scenario 3: Employee Data Rectification -->
+                <div class="request-scenario" id="scenario-3">
+                    <div class="scenario-layout">
+                        <!-- Left side: Rights Reference -->
+                        <div class="rights-reference">
+                            <h4>🛡️ Quick Rights Reference</h4>
+                            <div class="quick-rights">
+                                <div class="quick-right highlight">
+                                    <strong>Access:</strong> Copy of all data (1 month)
+                                </div>
+                                <div class="quick-right highlight">
+                                    <strong>Rectification:</strong> Correct errors (1 month)
+                                </div>
+                                <div class="quick-right">
+                                    <strong>Erasure:</strong> Delete data (1 month)
+                                </div>
+                                <div class="quick-right">
+                                    <strong>Portability:</strong> Data export (1 month)
+                                </div>
+                                <div class="quick-right">
+                                    <strong>Objection:</strong> Stop processing (immediate)
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Right side: Scenario Questions -->
+                        <div class="scenario-content">
+                            <div class="customer-request">
+                                <h4>Employee Request #3</h4>
+                                <div class="request-details">
+                                    <strong>From:</strong> jenny.baker@hilltophoney.com<br>
+                                    <strong>Subject:</strong> Correction to my personnel file<br>
+                                    <strong>Message:</strong> "HR has the wrong emergency contact number for me in my file. It's my ex-husband's number and I need it changed to my sister's number urgently. Also, can I get a copy of my latest performance review?"
+                                </div>
+                                
+                                <div class="request-questions">
+                                    <h5>What types of request are these?</h5>
+                                    <div class="question-options">
+                                        <label><input type="radio" name="request-type-3" value="rectification-only"> Rectification only</label>
+                                        <label><input type="radio" name="request-type-3" value="access-only"> Access only</label>
+                                        <label><input type="radio" name="request-type-3" value="both"> Both Rectification and Access</label>
+                                        <label><input type="radio" name="request-type-3" value="neither"> Neither - just admin request</label>
+                                    </div>
+                                    
+                                    <h5>What should you do about the emergency contact?</h5>
+                                    <div class="question-options">
+                                        <label><input type="radio" name="emergency-3" value="update-immediately"> Update it immediately</label>
+                                        <label><input type="radio" name="emergency-3" value="verify-first"> Verify identity then update</label>
+                                        <label><input type="radio" name="emergency-3" value="manager-approval"> Get line manager approval first</label>
+                                        <label><input type="radio" name="emergency-3" value="wait-month"> Wait for formal GDPR deadline</label>
+                                    </div>
+                                    
+                                    <h5>Can you provide the performance review?</h5>
+                                    <div class="question-options">
+                                        <label><input type="radio" name="review-3" value="yes-immediately"> Yes, send it immediately</label>
+                                        <label><input type="radio" name="review-3" value="yes-redacted"> Yes, but redact manager's comments</label>
+                                        <label><input type="radio" name="review-3" value="no-confidential"> No, performance reviews are confidential</label>
+                                        <label><input type="radio" name="review-3" value="manager-decision"> Manager must decide</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="scenario-btn" onclick="checkScenario(3)">Check Answers</button>
+                            <div id="scenario-3-feedback" class="feedback hidden"></div>
+                        </div>
+                    </div>
                 </div>
                 
                 <div id="rights-completion" class="score-display">Scenarios Completed: 0/3</div>
