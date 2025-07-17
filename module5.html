@@ -160,7 +160,7 @@
                     </div>
                     
                     <div class="data-area" data-area="supplier-data">
-                        <img src="images/module5/supplier-database.jpg" alt="Supplier Database">
+                        <img src="images/module5/supplier-database.png" alt="Supplier Database">
                         <h4>Supplier Contacts</h4>
                         <div class="data-types hidden">
                             <p><strong>Personal Data Found:</strong></p>
@@ -640,84 +640,318 @@
                 <p>Respond to data security incidents within legal deadlines - 72 hours to ICO</p>
             </div>
 
-            <!-- Breach Response Guide -->
+            <!-- Breach Response Guide with Detailed Procedures -->
             <div class="breach-guide">
-                <h3>⚡ 72-Hour Breach Response Timeline</h3>
+                <h3>⚡ 72-Hour Breach Response Procedures</h3>
                 <div class="timeline">
                     <div class="timeline-item">
                         <span class="time">0-1 Hours</span>
-                        <h4>Contain the Breach</h4>
-                        <p>Stop further data loss, secure systems</p>
+                        <h4>CONTAIN</h4>
+                        <div class="timeline-details">
+                            <p><strong>Immediate Actions:</strong></p>
+                            <ul>
+                                <li>Try to recall emails if possible</li>
+                                <li>Change passwords if systems compromised</li>
+                                <li>Isolate affected systems</li>
+                                <li>Stop further data loss</li>
+                                <li>Document what happened</li>
+                            </ul>
+                        </div>
                     </div>
                     <div class="timeline-item">
                         <span class="time">1-24 Hours</span>
-                        <h4>Assess Impact</h4>
-                        <p>What data? How many people? What risk?</p>
+                        <h4>ASSESS</h4>
+                        <div class="timeline-details">
+                            <p><strong>Risk Assessment:</strong></p>
+                            <ul>
+                                <li>How many people affected?</li>
+                                <li>What type of data exposed?</li>
+                                <li>Is it financial/medical data?</li>
+                                <li>Can criminals use this data?</li>
+                                <li>Are people at risk of harm?</li>
+                            </ul>
+                        </div>
                     </div>
                     <div class="timeline-item">
                         <span class="time">24-72 Hours</span>
-                        <h4>Report to ICO</h4>
-                        <p>If high risk to individuals</p>
+                        <h4>REPORT ICO</h4>
+                        <div class="timeline-details">
+                            <p><strong>ICO Notification Required If:</strong></p>
+                            <ul>
+                                <li>High risk to individuals</li>
+                                <li>Financial data exposed</li>
+                                <li>Medical/health data leaked</li>
+                                <li>Large numbers affected (1000+)</li>
+                                <li>Identity theft possible</li>
+                            </ul>
+                        </div>
                     </div>
                     <div class="timeline-item">
                         <span class="time">Within 1 Month</span>
-                        <h4>Notify Individuals</h4>
-                        <p>If high risk to their rights</p>
+                        <h4>NOTIFY PEOPLE</h4>
+                        <div class="timeline-details">
+                            <p><strong>Tell Individuals If:</strong></p>
+                            <ul>
+                                <li>High risk to their rights/freedoms</li>
+                                <li>They need to take action</li>
+                                <li>Could lead to fraud/identity theft</li>
+                                <li>Financial loss possible</li>
+                                <li>NOT needed for low-risk breaches</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Breach Simulation Game -->
+            <!-- Breach Simulation Game with Improved Layout -->
             <div class="breach-simulator">
                 <h3>🚨 LIVE BREACH SIMULATION</h3>
                 
+                <!-- Breach Scenario 1: Email Error -->
                 <div class="breach-scenario active" id="breach-1">
-                    <div class="breach-alert">
-                        <h4>INCIDENT #1: Email Error</h4>
-                        <div class="incident-time">
-                            <strong>Time:</strong> Monday 09:15 
-                            <span class="timer" id="timer-1">72:00:00</span> remaining
-                        </div>
-                        <div class="incident-details">
-                            <p><strong>Report:</strong> Marketing team member accidentally sent newsletter with customer list visible to all 2,000 recipients. Email contained names, email addresses, and order preferences of premium customers.</p>
-                            
-                            <p><strong>Data Involved:</strong></p>
-                            <ul>
-                                <li>2,000 customer email addresses</li>
-                                <li>Customer names</li>
-                                <li>Honey product preferences</li>
-                                <li>Premium customer status</li>
-                            </ul>
+                    <div class="breach-layout">
+                        <!-- Left side: Breach Response Checklist -->
+                        <div class="breach-reference">
+                            <h4>📋 Email Breach Response Guide</h4>
+                            <div class="breach-checklist">
+                                <div class="checklist-section">
+                                    <strong>IMMEDIATE PRIORITY:</strong>
+                                    <p>Try to recall the email first. Every minute counts - the more people who see it, the worse the breach gets.</p>
+                                </div>
+                                <div class="checklist-section">
+                                    <strong>RISK ASSESSMENT:</strong>
+                                    <p>Email addresses + preferences = LOW RISK. No financial data, no medical data, no passwords. People can't steal money or identity with this info.</p>
+                                </div>
+                                <div class="checklist-section">
+                                    <strong>ICO NOTIFICATION:</strong>
+                                    <p>NOT REQUIRED for low-risk email address exposure. Just document it internally for your records.</p>
+                                </div>
+                                <div class="checklist-section">
+                                    <strong>CUSTOMER NOTIFICATION:</strong>
+                                    <p>NOT REQUIRED for email addresses being visible to other customers. No significant harm likely.</p>
+                                </div>
+                                <div class="warning-box">
+                                    <strong>⚠️ Remember:</strong> Not every data incident requires ICO notification. Only high-risk breaches need reporting.
+                                </div>
+                            </div>
                         </div>
                         
-                        <div class="breach-questions">
-                            <h5>What's your immediate priority?</h5>
-                            <div class="question-options">
-                                <label><input type="radio" name="priority-1" value="recall-email"> Try to recall the email</label>
-                                <label><input type="radio" name="priority-1" value="notify-ico"> Report to ICO immediately</label>
-                                <label><input type="radio" name="priority-1" value="assess-damage"> Assess what data was exposed</label>
-                                <label><input type="radio" name="priority-1" value="notify-customers"> Email all customers about the breach</label>
+                        <!-- Right side: Breach Details & Questions -->
+                        <div class="breach-content">
+                            <div class="breach-alert">
+                                <h4>INCIDENT #1: Email Error</h4>
+                                <div class="incident-time">
+                                    <strong>Time:</strong> Monday 09:15 
+                                    <span class="timer" id="timer-1">72:00:00</span> remaining
+                                </div>
+                                <div class="incident-details">
+                                    <p><strong>Report:</strong> Marketing team member accidentally sent newsletter with customer list visible to all 2,000 recipients. Email contained names, email addresses, and order preferences of premium customers.</p>
+                                    
+                                    <p><strong>Data Involved:</strong></p>
+                                    <ul>
+                                        <li>2,000 customer email addresses</li>
+                                        <li>Customer names</li>
+                                        <li>Honey product preferences</li>
+                                        <li>Premium customer status</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="breach-questions">
+                                    <h5>What's your immediate priority?</h5>
+                                    <div class="question-options">
+                                        <label><input type="radio" name="priority-1" value="recall-email"> Try to recall the email</label>
+                                        <label><input type="radio" name="priority-1" value="notify-ico"> Report to ICO immediately</label>
+                                        <label><input type="radio" name="priority-1" value="assess-damage"> Assess what data was exposed</label>
+                                        <label><input type="radio" name="priority-1" value="notify-customers"> Email all customers about the breach</label>
+                                    </div>
+                                    
+                                    <h5>Is this a high-risk breach requiring ICO notification?</h5>
+                                    <div class="question-options">
+                                        <label><input type="radio" name="risk-level-1" value="high"> Yes - high risk, notify ICO</label>
+                                        <label><input type="radio" name="risk-level-1" value="medium"> Medium risk - consider notification</label>
+                                        <label><input type="radio" name="risk-level-1" value="low"> Low risk - just document internally</label>
+                                        <label><input type="radio" name="risk-level-1" value="no-breach"> Not a personal data breach</label>
+                                    </div>
+                                    
+                                    <h5>Do you need to notify the affected customers?</h5>
+                                    <div class="question-options">
+                                        <label><input type="radio" name="notify-individuals-1" value="yes"> Yes, notify all 2,000 customers</label>
+                                        <label><input type="radio" name="notify-individuals-1" value="no"> No notification needed</label>
+                                        <label><input type="radio" name="notify-individuals-1" value="consider"> Consider based on risk assessment</label>
+                                        <label><input type="radio" name="notify-individuals-1" value="ico-decides"> Let ICO decide</label>
+                                    </div>
+                                </div>
                             </div>
-                            
-                            <h5>Is this a high-risk breach requiring ICO notification?</h5>
-                            <div class="question-options">
-                                <label><input type="radio" name="risk-level-1" value="high"> Yes - high risk, notify ICO</label>
-                                <label><input type="radio" name="risk-level-1" value="medium"> Medium risk - consider notification</label>
-                                <label><input type="radio" name="risk-level-1" value="low"> Low risk - just document internally</label>
-                                <label><input type="radio" name="risk-level-1" value="no-breach"> Not a personal data breach</label>
-                            </div>
-                            
-                            <h5>Do you need to notify the affected customers?</h5>
-                            <div class="question-options">
-                                <label><input type="radio" name="notify-individuals-1" value="yes"> Yes, notify all 2,000 customers</label>
-                                <label><input type="radio" name="notify-individuals-1" value="no"> No notification needed</label>
-                                <label><input type="radio" name="notify-individuals-1" value="consider"> Consider based on risk assessment</label>
-                                <label><input type="radio" name="notify-individuals-1" value="ico-decides"> Let ICO decide</label>
-                            </div>
+                            <button class="scenario-btn" onclick="checkBreach(1)">Submit Response</button>
+                            <div id="breach-1-feedback" class="feedback hidden"></div>
                         </div>
                     </div>
-                    <button class="scenario-btn" onclick="checkBreach(1)">Submit Response</button>
-                    <div id="breach-1-feedback" class="feedback hidden"></div>
+                </div>
+
+                <!-- Breach Scenario 2: Laptop Theft -->
+                <div class="breach-scenario" id="breach-2">
+                    <div class="breach-layout">
+                        <!-- Left side: Laptop Theft Response Guide -->
+                        <div class="breach-reference">
+                            <h4>💻 Laptop Theft Response Guide</h4>
+                            <div class="breach-checklist">
+                                <div class="checklist-section">
+                                    <strong>BREACH TYPE:</strong>
+                                    <p>CONFIDENTIALITY breach - unauthorized people can now access personal data. This is definitely a personal data breach.</p>
+                                </div>
+                                <div class="checklist-section">
+                                    <strong>RISK LEVEL:</strong>
+                                    <p>HIGH RISK - payroll data + medical records = special category data. Financial and health information together = very serious.</p>
+                                </div>
+                                <div class="checklist-section">
+                                    <strong>ICO NOTIFICATION:</strong>
+                                    <p>DEFINITELY REQUIRED within 72 hours. Financial + medical data of 45 people = high risk to individuals.</p>
+                                </div>
+                                <div class="checklist-section">
+                                    <strong>EMPLOYEE NOTIFICATION:</strong>
+                                    <p>IMMEDIATELY - don't wait! Employees need to monitor their bank accounts and watch for fraud. Their safety is at risk.</p>
+                                </div>
+                                <div class="warning-box">
+                                    <strong>⚠️ Medical + Financial Data = Always High Risk!</strong> Always notify ICO and individuals when this combination is involved.
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Right side: Breach Details & Questions -->
+                        <div class="breach-content">
+                            <div class="breach-alert">
+                                <h4>INCIDENT #2: Laptop Theft</h4>
+                                <div class="incident-time">
+                                    <strong>Time:</strong> Friday 18:30 
+                                    <span class="timer" id="timer-2">72:00:00</span> remaining
+                                </div>
+                                <div class="incident-details">
+                                    <p><strong>Report:</strong> Production manager's laptop stolen from car. Device contained unencrypted employee records including payroll information, emergency contacts, and medical fitness certificates for 45 staff members.</p>
+                                    
+                                    <p><strong>Data Involved:</strong></p>
+                                    <ul>
+                                        <li>45 employee personal details</li>
+                                        <li>Home addresses and phone numbers</li>
+                                        <li>Bank account details for payroll</li>
+                                        <li>Emergency contact information</li>
+                                        <li>Medical fitness certificates (special category)</li>
+                                        <li>National Insurance numbers</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="breach-questions">
+                                    <h5>What type of breach is this?</h5>
+                                    <div class="question-options">
+                                        <label><input type="radio" name="breach-type-2" value="confidentiality"> Confidentiality breach</label>
+                                        <label><input type="radio" name="breach-type-2" value="availability"> Availability breach</label>
+                                        <label><input type="radio" name="breach-type-2" value="integrity"> Integrity breach</label>
+                                        <label><input type="radio" name="breach-type-2" value="all-three"> All three types</label>
+                                    </div>
+                                    
+                                    <h5>Risk level for ICO notification?</h5>
+                                    <div class="question-options">
+                                        <label><input type="radio" name="risk-2" value="high"> High risk - definitely notify ICO</label>
+                                        <label><input type="radio" name="risk-2" value="medium"> Medium risk - probably notify</label>
+                                        <label><input type="radio" name="risk-2" value="low"> Low risk - document only</label>
+                                        <label><input type="radio" name="risk-2" value="none"> No risk - device locked</label>
+                                    </div>
+                                    
+                                    <h5>When should you tell the affected employees?</h5>
+                                    <div class="question-options">
+                                        <label><input type="radio" name="employee-notification-2" value="immediately"> Immediately - within 24 hours</label>
+                                        <label><input type="radio" name="employee-notification-2" value="after-ico"> After ICO notification</label>
+                                        <label><input type="radio" name="employee-notification-2" value="1-month"> Within 1 month deadline</label>
+                                        <label><input type="radio" name="employee-notification-2" value="no-need"> No need to notify employees</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="scenario-btn" onclick="checkBreach(2)">Submit Response</button>
+                            <div id="breach-2-feedback" class="feedback hidden"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Breach Scenario 3: Cyber Attack -->
+                <div class="breach-scenario" id="breach-3">
+                    <div class="breach-layout">
+                        <!-- Left side: Cyber Attack Response Guide -->
+                        <div class="breach-reference">
+                            <h4>🔒 Cyber Attack Response Guide</h4>
+                            <div class="breach-checklist">
+                                <div class="checklist-section">
+                                    <strong>IMMEDIATE CONTAINMENT:</strong>
+                                    <p>ISOLATE compromised systems but keep essential operations running. Don't shut everything down - just isolate the problem.</p>
+                                </div>
+                                <div class="checklist-section">
+                                    <strong>RISK LEVEL:</strong>
+                                    <p>MAXIMUM RISK - payment cards + allergen data + 8,500 people = definitely high risk. Financial fraud + health risks possible.</p>
+                                </div>
+                                <div class="checklist-section">
+                                    <strong>ICO NOTIFICATION:</strong>
+                                    <p>DEFINITELY REQUIRED within 72 hours. This is exactly the type of breach ICO wants to know about immediately.</p>
+                                </div>
+                                <div class="checklist-section">
+                                    <strong>CUSTOMER NOTIFICATION:</strong>
+                                    <p>URGENT - customers need to cancel cards and watch for fraud. Don't wait - lives and money at risk.</p>
+                                </div>
+                                <div class="warning-box">
+                                    <strong>⚠️ Payment Cards = Immediate Action Required!</strong> Customers must be warned within 24 hours so they can protect themselves.
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Right side: Breach Details & Questions -->
+                        <div class="breach-content">
+                            <div class="breach-alert">
+                                <h4>INCIDENT #3: Cyber Attack</h4>
+                                <div class="incident-time">
+                                    <strong>Time:</strong> Sunday 02:15 
+                                    <span class="timer" id="timer-3">72:00:00</span> remaining
+                                </div>
+                                <div class="incident-details">
+                                    <p><strong>Report:</strong> Customer database hacked. Attackers accessed payment card details, order histories, and allergen information for 8,500 customers. Similar to recent Co-op and M&S attacks. Customer payment pages compromised for 6 weeks.</p>
+                                    
+                                    <p><strong>Data Involved:</strong></p>
+                                    <ul>
+                                        <li>8,500 customer records</li>
+                                        <li>Payment card numbers and CVV codes</li>
+                                        <li>Billing addresses</li>
+                                        <li>Order histories and preferences</li>
+                                        <li>Allergen and dietary information (special category)</li>
+                                        <li>Account passwords (encrypted)</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="breach-questions">
+                                    <h5>What's the immediate containment action?</h5>
+                                    <div class="question-options">
+                                        <label><input type="radio" name="containment-3" value="shut-down"> Shut down all systems immediately</label>
+                                        <label><input type="radio" name="containment-3" value="isolate-breach"> Isolate compromised systems only</label>
+                                        <label><input type="radio" name="containment-3" value="monitor"> Monitor but keep systems running</label>
+                                        <label><input type="radio" name="containment-3" value="change-passwords"> Just change all passwords</label>
+                                    </div>
+                                    
+                                    <h5>ICO notification requirement?</h5>
+                                    <div class="question-options">
+                                        <label><input type="radio" name="ico-notification-3" value="definitely"> Definitely required - within 72 hours</label>
+                                        <label><input type="radio" name="ico-notification-3" value="probably"> Probably required - assess risk first</label>
+                                        <label><input type="radio" name="ico-notification-3" value="maybe"> Maybe required - depends on damage</label>
+                                        <label><input type="radio" name="ico-notification-3" value="not-required"> Not required - low risk</label>
+                                    </div>
+                                    
+                                    <h5>Customer notification priority?</h5>
+                                    <div class="question-options">
+                                        <label><input type="radio" name="customer-notification-3" value="urgent"> Urgent - notify within 24 hours</label>
+                                        <label><input type="radio" name="customer-notification-3" value="planned"> Planned - notify within 1 month</label>
+                                        <label><input type="radio" name="customer-notification-3" value="after-investigation"> After full investigation complete</label>
+                                        <label><input type="radio" name="customer-notification-3" value="not-needed"> Not needed - banks will handle</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="scenario-btn" onclick="checkBreach(3)">Submit Response</button>
+                            <div id="breach-3-feedback" class="feedback hidden"></div>
+                        </div>
+                    </div>
                 </div>
                 
                 <div id="breach-completion" class="score-display">Breaches Handled: 0/3</div>
@@ -751,7 +985,7 @@
                     <h3>Badges Earned</h3>
                     <div class="badge-display">
                         <div class="badge earned">
-                            <img src="images/module5/badge-data-classifier.jpg" alt="Data Classifier" class="ai-generated-badge">
+                            <img src="images/module5/badge-data-classifier.png" alt="Data Classifier" class="ai-generated-badge">
                             <span>Data Classifier</span>
                         </div>
                         <div class="badge earned">
