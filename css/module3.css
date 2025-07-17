@@ -665,35 +665,39 @@
     background: rgba(0, 255, 255, 0.1);
     border: 2px solid #00ffff;
     border-radius: 10px;
-    padding: 20px;
-    margin: 20px 0;
+    padding: 25px;
+    margin: 30px 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    gap: 15px;
+    gap: 20px;
+    min-height: 80px;
 }
 
 .score-panel {
     display: flex;
-    gap: 30px;
+    gap: 40px;
     flex-wrap: wrap;
+    align-items: center;
 }
 
 .score-item {
     display: flex;
     flex-direction: column;
     text-align: center;
+    min-width: 120px;
 }
 
 .score-label {
-    font-size: 0.9rem;
+    font-size: 1rem;
     color: #00ffff;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
+    font-weight: bold;
 }
 
 .score-item span:last-child {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     font-weight: bold;
     color: #f39c12;
 }
@@ -722,15 +726,18 @@
     border: 2px solid transparent;
     cursor: pointer;
     transition: all 0.3s ease;
-    background: rgba(231, 76, 60, 0.1);
+    background: transparent;
     border-radius: 5px;
+    /* Make hotspots invisible initially */
+    opacity: 0;
 }
 
 .red-flag-hotspot:hover {
     border-color: #e74c3c;
     background: rgba(231, 76, 60, 0.3);
     box-shadow: 0 0 15px rgba(231, 76, 60, 0.6);
-    transform: scale(1.05);
+    transform: scale(1.02);
+    opacity: 1;
 }
 
 .red-flag-hotspot.found {
@@ -769,17 +776,19 @@
     50% { background: rgba(231, 76, 60, 0.6); }
 }
 
-/* Website specific styling */
-.website-1 {
-    background: linear-gradient(135deg, #f39c12, #e67e22);
+/* Assessment specific button styling */
+#complete-btn {
+    font-size: 1.2rem;
+    padding: 15px 40px;
+    margin: 30px auto;
+    display: block;
+    min-width: 250px;
+    text-align: center;
 }
 
-.website-2 {
-    background: linear-gradient(135deg, #9b59b6, #8e44ad);
-}
-
-.website-3 {
-    background: linear-gradient(135deg, #27ae60, #2ecc71);
+#complete-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
 }
 
 /* --- ASSESSMENT STYLING --- */
