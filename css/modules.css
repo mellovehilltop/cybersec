@@ -1807,7 +1807,347 @@ button[data-action="complete-module"]:disabled {
     margin-top: 20px;
     min-width: 180px;
 }
+/* Phase 4 Enhanced Readability - Add to bottom of your CSS */
 
+/* Larger, more readable text throughout Phase 4 */
+#training-phase-4 {
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+#training-phase-4 h2 {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+}
+
+#training-phase-4 h3 {
+    font-size: 1.8rem;
+    margin-bottom: 25px;
+}
+
+#training-phase-4 p {
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+}
+
+/* Enhanced Timeline Boxes with More Information */
+.timeline {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    margin: 40px 0;
+    position: relative;
+}
+
+.timeline::before {
+    display: none; /* Remove connecting line for better mobile experience */
+}
+
+.timeline-item {
+    background: rgba(0, 20, 40, 0.95);
+    border: 3px solid var(--gdpr-warning);
+    border-radius: 15px;
+    padding: 25px;
+    text-align: left;
+    position: relative;
+    z-index: 2;
+    min-height: 200px;
+    box-shadow: 0 10px 30px rgba(231, 76, 60, 0.3);
+}
+
+.timeline-item .time {
+    display: block;
+    color: var(--gdpr-warning);
+    font-weight: bold;
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    font-family: 'Orbitron', monospace;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.timeline-item h4 {
+    color: var(--gdpr-gold);
+    margin: 15px 0;
+    font-size: 1.3rem;
+    font-family: 'Orbitron', monospace;
+    text-align: center;
+}
+
+.timeline-item p {
+    color: #ffffff;
+    font-size: 1rem;
+    margin: 8px 0;
+    line-height: 1.5;
+}
+
+.timeline-item ul {
+    list-style: none;
+    padding: 0;
+    margin: 15px 0;
+}
+
+.timeline-item li {
+    color: #cccccc;
+    padding: 5px 0;
+    padding-left: 20px;
+    position: relative;
+    font-size: 0.95rem;
+}
+
+.timeline-item li::before {
+    content: '▶';
+    color: var(--gdpr-success);
+    position: absolute;
+    left: 0;
+    font-size: 0.8rem;
+}
+
+/* Enhanced Breach Scenario Layout */
+.breach-scenario {
+    background: rgba(40, 0, 0, 0.95);
+    border: 3px solid var(--gdpr-warning);
+    border-radius: 20px;
+    padding: 35px;
+    margin: 30px 0;
+    position: relative;
+    box-shadow: 0 15px 40px rgba(231, 76, 60, 0.4);
+}
+
+.breach-scenario h3 {
+    font-size: 1.6rem;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.breach-scenario h4 {
+    color: var(--gdpr-warning);
+    font-family: 'Orbitron', monospace;
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.breach-scenario h5 {
+    color: var(--gdpr-gold);
+    margin: 25px 0 15px 0;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+/* Enhanced Question Options */
+.question-options {
+    margin: 20px 0 30px 0;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.question-options label {
+    display: block;
+    padding: 15px 20px;
+    margin: 8px 0;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #ffffff;
+    font-size: 1rem;
+    border: 2px solid transparent;
+}
+
+.question-options label:hover {
+    background: rgba(0, 255, 255, 0.1);
+    border-color: var(--gdpr-info);
+    transform: translateX(5px);
+}
+
+.question-options input[type="radio"] {
+    margin-right: 15px;
+    transform: scale(1.2);
+}
+
+/* Enhanced Incident Details */
+.incident-details {
+    background: rgba(0, 0, 0, 0.7);
+    padding: 25px;
+    border-radius: 15px;
+    margin-bottom: 25px;
+    border: 2px solid var(--gdpr-warning);
+}
+
+.incident-details p {
+    color: #ffffff;
+    line-height: 1.7;
+    margin-bottom: 18px;
+    font-size: 1.1rem;
+}
+
+.incident-details ul {
+    list-style: none;
+    padding: 0;
+    margin: 15px 0;
+}
+
+.incident-details li {
+    color: var(--gdpr-warning);
+    padding: 8px 0;
+    padding-left: 25px;
+    position: relative;
+    font-size: 1rem;
+}
+
+.incident-details li::before {
+    content: '⚠';
+    position: absolute;
+    left: 0;
+    color: var(--gdpr-warning);
+    font-size: 1.2rem;
+}
+
+/* Enhanced Timer Display */
+.incident-time {
+    background: rgba(0, 0, 0, 0.9);
+    padding: 15px 25px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 2px solid var(--gdpr-warning);
+}
+
+.timer {
+    color: var(--gdpr-warning);
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    font-size: 1.4rem;
+    text-shadow: 0 0 10px rgba(231, 76, 60, 0.5);
+}
+
+/* Enhanced Feedback Sections */
+.feedback {
+    background: rgba(0, 0, 0, 0.9);
+    border: 2px solid var(--gdpr-info);
+    border-radius: 15px;
+    padding: 25px;
+    margin-top: 25px;
+    font-size: 1.1rem;
+}
+
+.feedback h4 {
+    color: var(--gdpr-info);
+    margin-bottom: 20px;
+    font-family: 'Orbitron', monospace;
+    font-size: 1.3rem;
+}
+
+.feedback-content {
+    color: #ffffff;
+    line-height: 1.8;
+    font-size: 1.1rem;
+}
+
+/* Enhanced Buttons */
+.scenario-btn {
+    background: linear-gradient(45deg, var(--gdpr-warning), #c0392b);
+    color: white;
+    border: none;
+    padding: 18px 40px;
+    border-radius: 12px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    font-family: 'Orbitron', monospace;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 25px;
+    min-width: 200px;
+    box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
+}
+
+.scenario-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(231, 76, 60, 0.5);
+    background: linear-gradient(45deg, #e74c3c, #e74c3c);
+}
+
+/* Mobile Responsive Improvements */
+@media (max-width: 768px) {
+    #training-phase-4 {
+        font-size: 1rem;
+    }
+    
+    #training-phase-4 h2 {
+        font-size: 2rem;
+    }
+    
+    #training-phase-4 h3 {
+        font-size: 1.5rem;
+    }
+    
+    .timeline {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .timeline-item {
+        padding: 20px;
+        min-height: 150px;
+    }
+    
+    .breach-scenario {
+        padding: 25px;
+        margin: 20px 0;
+    }
+    
+    .question-options label {
+        padding: 12px 15px;
+        font-size: 0.95rem;
+    }
+    
+    .timer {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    #training-phase-4 {
+        font-size: 0.95rem;
+    }
+    
+    .timeline-item {
+        padding: 15px;
+        min-height: 120px;
+    }
+    
+    .timeline-item .time {
+        font-size: 1.1rem;
+    }
+    
+    .timeline-item h4 {
+        font-size: 1.1rem;
+    }
+    
+    .breach-scenario {
+        padding: 20px;
+    }
+    
+    .question-options label {
+        padding: 10px 12px;
+        font-size: 0.9rem;
+    }
+    
+    .scenario-btn {
+        min-width: 180px;
+        padding: 15px 30px;
+        font-size: 1rem;
+    }
+}
 .scenario-btn:hover {
     transform: translateY(-3px);
     box-shadow: 0 8px 20px rgba(155, 89, 182, 0.4);
