@@ -1,25 +1,21 @@
-/* Additional CSS for Module 5: GDPR Data Protection Training */
-/* Add these styles to your existing css/modules.css file */
+/* ==========================================================================
+   Module 5: GDPR Data Protection Training
+   ========================================================================== */
 
-/* GDPR-Specific Color Variables */
+/* 1. Root Variables & Animations
+   ========================================================================== */
 :root {
-    --gdpr-privacy: #9b59b6;
-    --gdpr-success: #00ff00;
-    --gdpr-warning: #e74c3c;
-    --gdpr-info: #00ffff;
-    --gdpr-gold: #f39c12;
-}
-
-/* Training Section Management */
-.training-section {
-    display: none;
-    padding: 40px 0;
-    min-height: 80vh;
-}
-
-.training-section.active {
-    display: block;
-    animation: fadeInUp 0.6s ease-out;
+    --gdpr-privacy: #9b59b6; /* Purple */
+    --gdpr-success: #00ff00; /* Bright Green */
+    --gdpr-warning: #e74c3c; /* Red */
+    --gdpr-info: #00ffff;    /* Cyan */
+    --gdpr-gold: #f39c12;     /* Gold/Orange */
+    --text-primary: #ffffff;
+    --text-secondary: #cccccc;
+    --bg-interactive: rgba(0, 40, 80, 0.8);
+    --bg-dark-panel: rgba(0, 20, 40, 0.9);
+    --bg-dark-overlay: rgba(0, 0, 0, 0.7);
+    --font-heading: 'Orbitron', monospace;
 }
 
 @keyframes fadeInUp {
@@ -39,6 +35,29 @@
     75% { transform: translateX(5px); }
 }
 
+/* 2. Core Layout & Section Management
+   ========================================================================== */
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+.training-section {
+    display: none;
+    padding: 40px 0;
+    min-height: 80vh;
+}
+
+.training-section.active {
+    display: block;
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* 3. Reusable Components (Cards, Buttons, etc.)
+   ========================================================================== */
+
 /* Phase Overview Cards */
 .phase-overview {
     margin: 40px 0;
@@ -52,7 +71,7 @@
 }
 
 .phase-card {
-    background: rgba(0, 40, 80, 0.8);
+    background: var(--bg-interactive);
     border: 2px solid var(--gdpr-info);
     border-radius: 15px;
     padding: 20px;
@@ -83,16 +102,93 @@
 .phase-card h4 {
     color: var(--gdpr-info);
     margin: 10px 0;
-    font-family: 'Orbitron', monospace;
+    font-family: var(--font-heading);
 }
 
 .phase-card p {
-    color: #cccccc;
+    color: var(--text-secondary);
     font-size: 0.9rem;
     margin: 0;
 }
 
-/* Phase-specific progress indicators */
+/* General Purpose Buttons */
+.scenario-btn {
+    background: linear-gradient(45deg, var(--gdpr-privacy), #8e44ad);
+    color: white;
+    border: none;
+    padding: 15px 35px;
+    border-radius: 10px;
+    font-weight: bold;
+    font-family: var(--font-heading);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 20px;
+    min-width: 180px;
+}
+
+.scenario-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(155, 89, 182, 0.4);
+    background: linear-gradient(45deg, #a569bd, #9b59b6);
+}
+
+.reset-btn {
+    background: linear-gradient(45deg, var(--gdpr-gold), #e67e22);
+    color: #000;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-family: var(--font-heading);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 180px;
+}
+
+.reset-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(243, 156, 18, 0.4);
+    background: linear-gradient(45deg, #f1c40f, #f39c12);
+}
+
+/* Phase Completion Buttons (Higher Specificity to avoid !important) */
+.phase-completion .completion-btn {
+    background: linear-gradient(45deg, #00ff00, #33cc33);
+    color: #000;
+    border: 3px solid #00ff00;
+    padding: 18px 35px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    font-family: var(--font-heading);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.4);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    min-width: 250px;
+}
+
+.phase-completion .completion-btn:hover:enabled {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 255, 0, 0.6);
+    background: linear-gradient(45deg, #33ff33, #00dd00);
+}
+
+.phase-completion .completion-btn:disabled {
+    background: #666;
+    color: #999;
+    border-color: #555;
+    box-shadow: none;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Progress Bars */
 .phase-progress {
     margin: 20px auto;
     max-width: 400px;
@@ -113,7 +209,84 @@
     border-radius: 4px;
 }
 
-/* Mission Briefing Styles */
+/* Feedback Box */
+.feedback {
+    display: none; /* Initially hidden, shown with JS */
+    background: rgba(0, 0, 0, 0.9);
+    border: 2px solid var(--gdpr-info);
+    border-radius: 15px;
+    padding: 25px;
+    margin-top: 25px;
+    font-size: 1.1rem;
+}
+
+.feedback.show {
+    display: block;
+}
+
+.feedback h4 {
+    color: var(--gdpr-info);
+    margin-bottom: 20px;
+    font-family: var(--font-heading);
+    font-size: 1.3rem;
+}
+
+.feedback-content {
+    color: var(--text-primary);
+    line-height: 1.8;
+}
+
+/* 4. SVG Icons
+   ========================================================================== */
+.icon {
+    display: inline-block;
+    width: 48px;
+    height: 48px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    vertical-align: middle;
+}
+
+/* Note: SVGs are URL-encoded to work in CSS background-image */
+.icon-gdpr-shield {
+    width: 64px;
+    height: 64px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%2300ffff;'/%3E%3Cstop offset='100%25' style='stop-color:%230088cc;'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath fill='url(%23grad)' d='M32 0 L57.6 16 V48 L32 64 L6.4 48 V16 Z'/%3E%3Ctext x='50%25' y='50%25' fill='white' font-family='Orbitron, monospace' font-size='10' font-weight='bold' text-anchor='middle' dy='.3em'%3EGDPR%3C/text%3E%3C/svg%3E");
+}
+
+.icon-personal-data {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath fill='%239b59b6' d='M24,47.8C11.4,47.8,1,37.3,1,24.7S11.4,1.6,24,1.6s23,10.5,23,23.1S36.6,47.8,24,47.8z'/%3E%3Cpath fill='white' d='M24 16c-3.3 0-6 2.7-6 6s2.7 6 6 6 6-2.7 6-6-2.7-6-6-6zm0 18c-6.6 0-12 3.6-12 8h24c0-4.4-5.4-8-12-8z'/%3E%3Ccircle cx='38' cy='8' r='6' fill='%2300ffff' stroke='white' stroke-width='2'/%3E%3C/svg%3E");
+}
+
+.icon-consent-checkbox {
+    width: 32px;
+    height: 32px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%2300ff00;'/%3E%3Cstop offset='100%25' style='stop-color:%2333cc33;'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='28' height='28' x='2' y='2' fill='url(%23grad)' rx='4' ry='4' stroke='white' stroke-width='2'/%3E%3Cpath fill='none' stroke='white' stroke-width='4' stroke-linecap='round' d='M8 16l6 6 10-12'/%3E%3C/svg%3E");
+}
+
+.icon-data-breach-alert {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23e74c3c;'/%3E%3Cstop offset='100%25' style='stop-color:%23c0392b;'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath fill='url(%23grad)' d='M24 0 L0 48 L48 48 Z'/%3E%3Ctext x='50%25' y='65%25' fill='white' font-size='28' font-weight='bold' text-anchor='middle' dy='.3em'%3E!%3C/text%3E%3C/svg%3E");
+}
+
+.icon-retention-calendar {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23f39c12;'/%3E%3Cstop offset='100%25' style='stop-color:%23e67e22;'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='44' height='44' x='2' y='2' fill='url(%23grad)' rx='8' ry='8' stroke='white' stroke-width='2'/%3E%3Crect x='10' y='0' width='4' height='8' fill='%23666' rx='2'/%3E%3Crect x='34' y='0' width='4' height='8' fill='%23666' rx='2'/%3E%3Ctext x='50%25' y='55%25' text-anchor='middle' font-size='20' dy='.3em'%3E%3C%21-- Calendar Emoji --%3E%26%23128197%3B%3C/text%3E%3C/svg%3E");
+}
+
+.icon-document {
+    width: 40px;
+    height: 40px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath fill='%23ecf0f1' stroke='%2395a5a6' stroke-width='1' d='M5 2 h22 l8 8 v28 h-30 z'/%3E%3Cpath fill='%23bdc3c7' d='M27 2 h8 l-8 8 z'/%3E%3Ctext x='50%25' y='55%25' text-anchor='middle' font-size='16' dy='.3em'%3E%26%23128196%3B%3C/text%3E%3C/svg%3E");
+}
+
+.icon-ico-logo {
+    width: 80px;
+    height: 40px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 40'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23003366;'/%3E%3Cstop offset='100%25' style='stop-color:%230066cc;'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='78' height='38' x='1' y='1' fill='url(%23grad)' rx='4' ry='4' stroke='white' stroke-width='1'/%3E%3Ctext x='50%25' y='50%25' fill='white' font-family='Arial, sans-serif' font-size='12' font-weight='bold' text-anchor='middle' dy='.3em'%3EICO%3C/text%3E%3C/svg%3E");
+}
+
+/* 5. Mission Briefing & Content Sections
+   ========================================================================== */
 .threat-assessment {
     background: rgba(231, 76, 60, 0.1);
     border: 2px solid var(--gdpr-warning);
@@ -126,11 +299,11 @@
 .threat-assessment h3 {
     color: var(--gdpr-warning);
     margin-bottom: 15px;
-    font-family: 'Orbitron', monospace;
+    font-family: var(--font-heading);
 }
 
 .threat-assessment p {
-    color: #ffffff;
+    color: var(--text-primary);
     line-height: 1.6;
     margin-bottom: 10px;
 }
@@ -146,7 +319,7 @@
 .mission-objectives h4 {
     color: var(--gdpr-info);
     margin-bottom: 15px;
-    font-family: 'Orbitron', monospace;
+    font-family: var(--font-heading);
     text-align: center;
 }
 
@@ -156,9 +329,8 @@
 }
 
 .mission-objectives li {
-    color: #cccccc;
-    padding: 8px 0;
-    padding-left: 25px;
+    color: var(--text-secondary);
+    padding: 8px 0 8px 25px;
     position: relative;
     line-height: 1.6;
 }
@@ -171,206 +343,12 @@
     font-size: 0.8rem;
 }
 
-/* CSS-Only Icons - No Image Files Needed */
-.css-icon-container {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    margin: 5px;
-}
+/* 6. Interactive Tools & Games
+   ========================================================================== */
 
-.gdpr-shield-icon {
-    width: 64px;
-    height: 64px;
-    background: linear-gradient(135deg, #00ffff, #0088cc);
-    clip-path: polygon(50% 0%, 90% 25%, 90% 75%, 50% 100%, 10% 75%, 10% 25%);
-    position: relative;
-    display: inline-block;
-    box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
-}
-
-.gdpr-shield-icon::after {
-    content: 'GDPR';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-    font-weight: bold;
-    font-size: 10px;
-    font-family: 'Orbitron', monospace;
-}
-
-.personal-data-icon {
-    width: 48px;
-    height: 48px;
-    background: #9b59b6;
-    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-    position: relative;
-    display: inline-block;
-    box-shadow: 0 0 10px rgba(155, 89, 182, 0.5);
-}
-
-.personal-data-icon::before {
-    content: '👤';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 20px;
-}
-
-.personal-data-icon::after {
-    content: '';
-    position: absolute;
-    top: -3px;
-    right: -3px;
-    width: 12px;
-    height: 12px;
-    background: #00ffff;
-    border-radius: 50%;
-    border: 2px solid white;
-}
-
-.consent-checkbox {
-    width: 32px;
-    height: 32px;
-    background: linear-gradient(135deg, #00ff00, #33cc33);
-    border-radius: 4px;
-    position: relative;
-    display: inline-block;
-    border: 2px solid #ffffff;
-    box-shadow: 0 0 8px rgba(0, 255, 0, 0.4);
-}
-
-.consent-checkbox::after {
-    content: '✓';
-    color: white;
-    font-size: 18px;
-    font-weight: bold;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.data-breach-alert {
-    width: 48px;
-    height: 48px;
-    background: linear-gradient(135deg, #e74c3c, #c0392b);
-    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-    position: relative;
-    display: inline-block;
-    box-shadow: 0 0 15px rgba(231, 76, 60, 0.6);
-}
-
-.data-breach-alert::after {
-    content: '!';
-    color: white;
-    font-size: 24px;
-    font-weight: bold;
-    position: absolute;
-    top: 65%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.retention-calendar {
-    width: 48px;
-    height: 48px;
-    background: linear-gradient(135deg, #f39c12, #e67e22);
-    border-radius: 8px;
-    position: relative;
-    display: inline-block;
-    border: 2px solid white;
-    box-shadow: 0 0 10px rgba(243, 156, 18, 0.5);
-}
-
-.retention-calendar::before {
-    content: '';
-    position: absolute;
-    top: -6px;
-    left: 8px;
-    width: 4px;
-    height: 12px;
-    background: #666;
-    border-radius: 2px;
-    box-shadow: 24px 0 0 #666;
-}
-
-.retention-calendar::after {
-    content: '📅';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 20px;
-}
-
-.document-icon {
-    width: 40px;
-    height: 40px;
-    background: linear-gradient(135deg, #ecf0f1, #bdc3c7);
-    border-radius: 4px;
-    position: relative;
-    display: inline-block;
-    border: 1px solid #95a5a6;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
-
-.document-icon::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 0;
-    height: 0;
-    border-left: 8px solid transparent;
-    border-top: 8px solid #95a5a6;
-}
-
-.document-icon::after {
-    content: '📄';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 16px;
-}
-
-.ico-logo {
-    width: 80px;
-    height: 40px;
-    background: linear-gradient(135deg, #003366, #0066cc);
-    border-radius: 4px;
-    position: relative;
-    display: inline-block;
-    border: 1px solid #ffffff;
-    color: white;
-    font-weight: bold;
-    font-size: 12px;
-    font-family: Arial, sans-serif;
-    text-align: center;
-    line-height: 40px;
-}
-
-.ico-logo::after {
-    content: 'ICO';
-    color: white;
-}
-
-/* AI Generated Badge Images */
-.ai-generated-badge {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    border: 3px solid #f39c12;
-    filter: drop-shadow(0 0 10px rgba(243, 156, 18, 0.5));
-}
-
-/* Interactive Tools Styling */
+/* Generic Interactive Tool Wrapper */
 .interactive-tool {
-    background: rgba(0, 40, 80, 0.8);
+    background: var(--bg-interactive);
     border: 2px solid var(--gdpr-info);
     border-radius: 15px;
     padding: 25px;
@@ -380,7 +358,7 @@
 
 .interactive-tool h3 {
     color: var(--gdpr-info);
-    font-family: 'Orbitron', monospace;
+    font-family: var(--font-heading);
     margin-bottom: 15px;
     text-align: center;
 }
@@ -394,7 +372,7 @@
 
 .fine-calculator label {
     display: block;
-    color: #cccccc;
+    color: var(--text-secondary);
     margin-bottom: 10px;
     font-weight: bold;
 }
@@ -407,6 +385,7 @@
     border-radius: 4px;
     outline: none;
     -webkit-appearance: none;
+    appearance: none;
 }
 
 .fine-calculator input[type="range"]::-webkit-slider-thumb {
@@ -431,7 +410,7 @@
 }
 
 .fine-result {
-    background: rgba(0, 0, 0, 0.5);
+    background: var(--bg-dark-overlay);
     border-radius: 10px;
     padding: 20px;
     margin-top: 20px;
@@ -467,7 +446,7 @@
 }
 
 .data-area {
-    background: rgba(0, 20, 40, 0.9);
+    background: var(--bg-dark-panel);
     border: 2px solid #333;
     border-radius: 12px;
     padding: 20px;
@@ -499,12 +478,12 @@
 .data-area h4 {
     color: var(--gdpr-info);
     margin-bottom: 15px;
-    font-family: 'Orbitron', monospace;
+    font-family: var(--font-heading);
 }
 
 .data-types {
     text-align: left;
-    background: rgba(0, 0, 0, 0.7);
+    background: var(--bg-dark-overlay);
     padding: 15px;
     border-radius: 8px;
     margin-top: 15px;
@@ -527,9 +506,8 @@
 }
 
 .data-types li {
-    color: #cccccc;
-    padding: 3px 0;
-    padding-left: 15px;
+    color: var(--text-secondary);
+    padding: 3px 0 3px 15px;
     position: relative;
 }
 
@@ -540,74 +518,17 @@
     left: 0;
 }
 
-/* Classification Guide */
-.classification-guide {
-    margin: 30px 0;
-}
-
-.classification-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 15px;
-    margin: 20px 0;
-}
-
-.classification-level {
-    padding: 15px;
-    border-radius: 10px;
-    text-align: center;
-    border: 2px solid;
-}
-
-.classification-level.public {
-    background: rgba(0, 128, 0, 0.1);
-    border-color: #00ff00;
-}
-
-.classification-level.internal {
-    background: rgba(0, 162, 232, 0.1);
-    border-color: #00a2e8;
-}
-
-.classification-level.confidential {
-    background: rgba(255, 165, 0, 0.1);
-    border-color: #ffa500;
-}
-
-.classification-level.restricted {
-    background: rgba(255, 0, 0, 0.1);
-    border-color: #ff0000;
-}
-
-.classification-level h4 {
-    margin: 0 0 10px 0;
-    font-family: 'Orbitron', monospace;
-}
-
-.classification-level p {
-    margin: 5px 0;
-    font-weight: bold;
-}
-
-.classification-level small {
-    color: #cccccc;
-    font-style: italic;
-}
-
 /* Document Classification Game */
-.classification-game {
-    margin: 30px 0;
-}
-
 .documents-to-sort {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 15px;
     margin: 20px 0 30px 0;
     padding: 20px;
     background: rgba(0, 0, 0, 0.3);
     border-radius: 10px;
     border: 2px dashed #666;
+    overflow-x: auto;
 }
 
 .document-card {
@@ -630,6 +551,7 @@
 .document-card.dragging {
     opacity: 0.5;
     transform: rotate(5deg);
+    cursor: grabbing;
 }
 
 .document-card.correct {
@@ -657,15 +579,15 @@
 }
 
 .document-card p {
-    color: #cccccc;
+    color: var(--text-secondary);
     font-size: 0.8rem;
     margin: 0;
 }
 
-/* Drop Zones */
+/* Classification Drop Zones */
 .classification-drop-zones {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: 15px;
     margin: 20px 0;
 }
@@ -676,36 +598,21 @@
     padding: 15px;
     border: 2px solid;
     min-height: 150px;
+    transition: all 0.3s ease;
 }
-
-.drop-zone[data-level="public"] {
-    border-color: #00ff00;
-    background: rgba(0, 255, 0, 0.1);
-}
-
-.drop-zone[data-level="internal"] {
-    border-color: #00a2e8;
-    background: rgba(0, 162, 232, 0.1);
-}
-
-.drop-zone[data-level="confidential"] {
-    border-color: #ffa500;
-    background: rgba(255, 165, 0, 0.1);
-}
-
-.drop-zone[data-level="restricted"] {
-    border-color: #ff0000;
-    background: rgba(255, 0, 0, 0.1);
-}
-
 .drop-zone.drag-over {
     box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
     transform: scale(1.05);
 }
 
+.drop-zone[data-level="public"] { border-color: #00ff00; background: rgba(0, 255, 0, 0.1); }
+.drop-zone[data-level="internal"] { border-color: #00a2e8; background: rgba(0, 162, 232, 0.1); }
+.drop-zone[data-level="confidential"] { border-color: #ffa500; background: rgba(255, 165, 0, 0.1); }
+.drop-zone[data-level="restricted"] { border-color: #ff0000; background: rgba(255, 0, 0, 0.1); }
+
 .drop-zone h4 {
     margin: 0 0 15px 0;
-    font-family: 'Orbitron', monospace;
+    font-family: var(--font-heading);
     font-size: 1.2rem;
 }
 
@@ -720,95 +627,87 @@
     margin-bottom: 10px;
     transition: all 0.3s ease;
 }
-
 .drop-area:hover {
     border-color: var(--gdpr-info);
     color: var(--gdpr-info);
 }
 
 .document-count {
-    color: #cccccc;
+    color: var(--text-secondary);
     font-size: 0.9rem;
     font-weight: bold;
 }
 
-/* Rights Management */
-.rights-overview {
-    margin: 30px 0;
-}
+/* 7. Rights & Breach Scenarios
+   ========================================================================== */
 
-.rights-grid {
+/* Two-column Scenario Layout */
+.scenario-layout {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 15px;
-    margin: 20px 0;
+    grid-template-columns: 350px 1fr;
+    gap: 30px;
+    align-items: start;
 }
 
-.right-card {
+/* Rights Reference Panel (Sticky) */
+.rights-reference {
     background: rgba(155, 89, 182, 0.1);
     border: 2px solid var(--gdpr-privacy);
-    border-radius: 10px;
-    padding: 15px;
-    text-align: center;
-    transition: all 0.3s ease;
+    border-radius: 12px;
+    padding: 20px;
+    position: sticky;
+    top: 20px;
+    max-height: 80vh;
+    overflow-y: auto;
 }
 
-.right-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(155, 89, 182, 0.3);
-}
-
-.right-card h4 {
+.rights-reference h4 {
     color: var(--gdpr-privacy);
-    margin: 0 0 10px 0;
-    font-family: 'Orbitron', monospace;
+    margin-bottom: 15px;
+    font-family: var(--font-heading);
+    text-align: center;
+    font-size: 1rem;
 }
 
-.right-card p {
-    color: #cccccc;
-    margin: 5px 0;
-    font-size: 0.9rem;
-}
-
-.deadline {
-    display: block;
-    color: var(--gdpr-gold);
-    font-weight: bold;
-    font-size: 0.8rem;
-    margin-top: 10px;
+/* Scenario Content Area */
+.scenario-content {
+    background: var(--bg-dark-panel);
+    border: 2px solid var(--gdpr-info);
+    border-radius: 12px;
+    padding: 25px;
 }
 
 /* Rights Request Scenarios */
 .request-scenario {
     display: none;
-    background: rgba(0, 20, 40, 0.9);
-    border: 2px solid var(--gdpr-privacy);
-    border-radius: 15px;
-    padding: 25px;
-    margin: 20px 0;
+    opacity: 0;
+    transform: translateX(20px);
+    transition: all 0.6s ease;
 }
 
 .request-scenario.active {
-    display: block;
-    animation: fadeInUp 0.6s ease-out;
+    display: block; /* Overridden by .scenario-layout if present */
+    opacity: 1;
+    transform: translateX(0);
 }
 
 .request-scenario.completed {
-    border-color: var(--gdpr-success);
-    background: rgba(0, 40, 20, 0.9);
+    opacity: 0.7;
 }
 
-.customer-request {
-    background: rgba(0, 0, 0, 0.5);
-    border-radius: 10px;
-    padding: 20px;
-    margin-bottom: 20px;
+.request-scenario.completed .scenario-content {
+    border-color: var(--gdpr-success);
+    background: rgba(0, 40, 20, 0.8);
+}
+.request-scenario.completed .rights-reference {
+    border-color: var(--gdpr-success);
+    background: rgba(0, 255, 0, 0.05);
 }
 
 .customer-request h4 {
     color: var(--gdpr-info);
     margin-bottom: 15px;
-    font-family: 'Orbitron', monospace;
+    font-family: var(--font-heading);
 }
 
 .request-details {
@@ -817,142 +716,126 @@
     border-radius: 8px;
     margin-bottom: 20px;
     font-family: monospace;
-    color: #cccccc;
+    color: var(--text-secondary);
     line-height: 1.6;
 }
 
 .request-questions h5 {
     color: var(--gdpr-gold);
     margin: 20px 0 10px 0;
+    font-size: 1.2rem;
+    font-weight: bold;
 }
 
 .question-options {
-    margin: 10px 0 20px 0;
+    margin: 20px 0 30px 0;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .question-options label {
     display: block;
-    padding: 8px 15px;
-    margin: 5px 0;
+    padding: 15px 20px;
+    margin: 8px 0;
     background: rgba(255, 255, 255, 0.05);
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
     transition: all 0.3s ease;
-    color: #cccccc;
+    color: var(--text-primary);
+    font-size: 1rem;
+    border: 2px solid transparent;
 }
 
 .question-options label:hover {
     background: rgba(0, 255, 255, 0.1);
-    border-left: 3px solid var(--gdpr-info);
+    border-color: var(--gdpr-info);
+    transform: translateX(5px);
 }
 
 .question-options input[type="radio"] {
-    margin-right: 10px;
-}
-
-.scenario-btn {
-    background: linear-gradient(45deg, var(--gdpr-privacy), #8e44ad);
-    color: white;
-    border: none;
-    padding: 12px 30px;
-    border-radius: 8px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin-top: 15px;
-}
-
-.scenario-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(155, 89, 182, 0.4);
-}
-
-/* Feedback Display */
-.feedback {
-    background: rgba(0, 0, 0, 0.7);
-    border-radius: 10px;
-    padding: 20px;
-    margin-top: 15px;
-    border-left: 4px solid var(--gdpr-info);
-}
-
-.feedback.hidden {
-    display: none;
-}
-
-.feedback h4 {
-    color: var(--gdpr-info);
-    margin-bottom: 15px;
-}
-
-.feedback-content {
-    color: #cccccc;
-    line-height: 1.6;
+    margin-right: 15px;
+    transform: scale(1.2);
 }
 
 /* Breach Response Simulation */
-.breach-guide {
-    margin: 30px 0;
-}
-
 .timeline {
-    display: flex;
-    justify-content: space-between;
-    margin: 20px 0;
-    position: relative;
-}
-
-.timeline::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, var(--gdpr-warning), var(--gdpr-gold));
-    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    margin: 40px 0;
 }
 
 .timeline-item {
-    background: rgba(0, 20, 40, 0.9);
-    border: 2px solid var(--gdpr-warning);
-    border-radius: 10px;
-    padding: 15px;
-    text-align: center;
-    position: relative;
-    z-index: 2;
-    max-width: 200px;
+    background: var(--bg-dark-panel);
+    border: 3px solid var(--gdpr-warning);
+    border-radius: 15px;
+    padding: 25px;
+    text-align: left;
+    min-height: 200px;
+    box-shadow: 0 10px 30px rgba(231, 76, 60, 0.3);
 }
 
 .timeline-item .time {
     display: block;
     color: var(--gdpr-warning);
     font-weight: bold;
-    font-size: 0.9rem;
-    margin-bottom: 5px;
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    font-family: var(--font-heading);
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .timeline-item h4 {
     color: var(--gdpr-gold);
-    margin: 5px 0;
-    font-size: 1rem;
+    margin: 15px 0;
+    font-size: 1.3rem;
+    font-family: var(--font-heading);
+    text-align: center;
 }
 
 .timeline-item p {
-    color: #cccccc;
-    font-size: 0.8rem;
-    margin: 0;
+    color: var(--text-primary);
+    font-size: 1rem;
+    margin: 8px 0;
+    line-height: 1.5;
 }
 
-/* Breach Scenarios */
+.timeline-item ul {
+    list-style: none;
+    padding: 0;
+    margin: 15px 0;
+}
+
+.timeline-item li {
+    color: var(--text-secondary);
+    padding: 5px 0 5px 20px;
+    position: relative;
+    font-size: 0.95rem;
+}
+
+.timeline-item li::before {
+    content: '▶';
+    color: var(--gdpr-success);
+    position: absolute;
+    left: 0;
+    font-size: 0.8rem;
+}
+
+/* Breach Scenario Container */
 .breach-scenario {
     display: none;
-    background: rgba(40, 0, 0, 0.9);
+    background: rgba(40, 0, 0, 0.95);
     border: 3px solid var(--gdpr-warning);
-    border-radius: 15px;
-    padding: 25px;
-    margin: 20px 0;
-    position: relative;
+    border-radius: 20px;
+    padding: 35px;
+    margin: 30px 0;
+    box-shadow: 0 15px 40px rgba(231, 76, 60, 0.4);
+    font-size: 1.1rem;
+    line-height: 1.6;
 }
 
 .breach-scenario.active {
@@ -965,55 +848,47 @@
     background: rgba(0, 40, 20, 0.9);
 }
 
-.breach-alert h4 {
-    color: var(--gdpr-warning);
-    font-family: 'Orbitron', monospace;
-    font-size: 1.3rem;
-    margin-bottom: 15px;
-    text-transform: uppercase;
+.breach-scenario h3 {
+    font-size: 1.8rem;
+    margin-bottom: 25px;
+    text-align: center;
 }
 
-.incident-time {
-    background: rgba(0, 0, 0, 0.7);
-    padding: 10px 15px;
-    border-radius: 8px;
+.breach-scenario h4 {
+    color: var(--gdpr-warning);
+    font-family: var(--font-heading);
+    font-size: 1.4rem;
     margin-bottom: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.timer {
-    color: var(--gdpr-warning);
-    font-family: 'Courier New', monospace;
-    font-weight: bold;
-    font-size: 1.1rem;
+    text-transform: uppercase;
+    text-align: center;
 }
 
 .incident-details {
-    background: rgba(0, 0, 0, 0.5);
-    padding: 20px;
-    border-radius: 10px;
-    margin-bottom: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 25px;
+    border-radius: 15px;
+    margin-bottom: 25px;
+    border: 2px solid var(--gdpr-warning);
 }
 
 .incident-details p {
-    color: #cccccc;
-    line-height: 1.6;
-    margin-bottom: 15px;
+    color: var(--text-primary);
+    line-height: 1.7;
+    margin-bottom: 18px;
+    font-size: 1.1rem;
 }
 
 .incident-details ul {
     list-style: none;
     padding: 0;
-    margin: 10px 0;
+    margin: 15px 0;
 }
 
 .incident-details li {
     color: var(--gdpr-warning);
-    padding: 3px 0;
-    padding-left: 15px;
+    padding: 8px 0 8px 25px;
     position: relative;
+    font-size: 1rem;
 }
 
 .incident-details li::before {
@@ -1021,11 +896,32 @@
     position: absolute;
     left: 0;
     color: var(--gdpr-warning);
+    font-size: 1.2rem;
 }
 
-/* Assessment Preparation */
+.incident-time {
+    background: rgba(0, 0, 0, 0.9);
+    padding: 15px 25px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 2px solid var(--gdpr-warning);
+}
+
+.timer {
+    color: var(--gdpr-warning);
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    font-size: 1.4rem;
+    text-shadow: 0 0 10px rgba(231, 76, 60, 0.5);
+}
+
+/* 8. Assessment & Completion Modal
+   ========================================================================== */
 .assessment-prep {
-    background: rgba(0, 40, 80, 0.8);
+    background: var(--bg-interactive);
     border: 2px solid var(--gdpr-gold);
     border-radius: 15px;
     padding: 25px;
@@ -1043,7 +939,7 @@
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.checkbox {
+.checklist-item .checkbox {
     width: 30px;
     height: 30px;
     border: 2px solid #666;
@@ -1058,13 +954,12 @@
 }
 
 .checklist-item span:last-child {
-    color: #cccccc;
+    color: var(--text-secondary);
     flex: 1;
 }
 
-/* Score Display */
 .score-display {
-    background: rgba(0, 0, 0, 0.7);
+    background: var(--bg-dark-overlay);
     border: 2px solid var(--gdpr-info);
     border-radius: 10px;
     padding: 15px;
@@ -1073,42 +968,10 @@
     font-weight: bold;
     font-size: 1.1rem;
     color: var(--gdpr-info);
-    font-family: 'Orbitron', monospace;
+    font-family: var(--font-heading);
 }
 
-/* Phase Completion Buttons */
-.phase-completion {
-    text-align: center;
-    margin: 40px 0;
-}
-
-.completion-btn {
-    background: linear-gradient(45deg, var(--gdpr-success), #33ff33);
-    color: #000;
-    border: none;
-    padding: 15px 40px;
-    border-radius: 10px;
-    font-size: 1.1rem;
-    font-weight: bold;
-    font-family: 'Orbitron', monospace;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.completion-btn:enabled:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(0, 255, 0, 0.4);
-}
-
-.completion-btn:disabled {
-    background: #666;
-    color: #999;
-    cursor: not-allowed;
-}
-
-/* Final Assessment Modal / Completion Summary */
+/* Final Assessment Modal */
 .modal {
     position: fixed;
     top: 0;
@@ -1120,10 +983,14 @@
     align-items: center;
     justify-content: center;
     z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s;
 }
 
-.modal.hidden {
-    display: none;
+.modal.visible {
+    opacity: 1;
+    visibility: visible;
 }
 
 .modal-content {
@@ -1137,18 +1004,23 @@
     overflow-y: auto;
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
     text-align: center;
+    transform: scale(0.9);
+    transition: transform 0.4s ease;
+}
+
+.modal.visible .modal-content {
+    transform: scale(1);
 }
 
 .modal-content h2 {
     color: var(--gdpr-gold);
-    font-family: 'Orbitron', monospace;
-    text-align: center;
+    font-family: var(--font-heading);
     margin-bottom: 30px;
     font-size: 1.8rem;
 }
 
 .score-summary {
-    background: rgba(0, 0, 0, 0.5);
+    background: var(--bg-dark-overlay);
     padding: 20px;
     border-radius: 10px;
     margin-bottom: 30px;
@@ -1210,7 +1082,7 @@
 }
 
 .next-steps p {
-    color: #cccccc;
+    color: var(--text-secondary);
     line-height: 1.6;
     margin-bottom: 25px;
 }
@@ -1222,8 +1094,7 @@
     flex-wrap: wrap;
 }
 
-.certificate-btn {
-    background: linear-gradient(45deg, var(--gdpr-gold), #e67e22);
+.certificate-btn, .menu-btn {
     color: #000;
     border: none;
     padding: 12px 25px;
@@ -1232,1020 +1103,130 @@
     cursor: pointer;
     transition: all 0.3s ease;
 }
-
+.certificate-btn {
+    background: linear-gradient(45deg, var(--gdpr-gold), #e67e22);
+}
+.menu-btn {
+    background: linear-gradient(45deg, var(--gdpr-info), #2980b9);
+    color: white;
+}
 .certificate-btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(243, 156, 18, 0.4);
 }
-
-.menu-btn {
-    background: linear-gradient(45deg, var(--gdpr-info), #2980b9);
-    color: white;
-    border: none;
-    padding: 12px 25px;
-    border-radius: 8px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
 .menu-btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(0, 255, 255, 0.4);
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    .data-inventory-grid,
-    .documents-to-sort {
-        grid-template-columns: 1fr;
-    }
-    
-    .classification-drop-zones {
-        grid-template-columns: 1fr 1fr;
-        gap: 10px;
-    }
-    
-    .rights-grid {
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    }
-    
-    .timeline {
-        flex-direction: column;
-        align-items: center;
-        gap: 15px;
-    }
-    
-    .timeline::before {
-        display: none;
-    }
-    
-    .timeline-item {
-        max-width: 100%;
-    }
-    
-    .badge-display {
-        gap: 10px;
-    }
-    
-    .action-buttons {
-        flex-direction: column;
-        align-items: center;
-    }
-    
-    .phase-cards {
-        grid-template-columns: 1fr 1fr;
-    }
-}
+/* 9. Responsive Design
+   ========================================================================== */
 
-@media (max-width: 480px) {
-    .classification-drop-zones,
-    .rights-grid,
-    .phase-cards {
-        grid-template-columns: 1fr;
-    }
-    
-    .fine-amount {
-        font-size: 1.5rem;
-    }
-    
-    .total-cost {
-        font-size: 1.2rem;
-    }
-
-    .modal-content {
-        padding: 20px;
-        margin: 10px;
-    }
-    
-    .final-score {
-        font-size: 2rem;
-    }
-}
-/* Enhanced Cyber-Theme Buttons */
-.btn.btn-success {
-    background: linear-gradient(45deg, #00ffff, #0088cc) !important;
-    color: #000000 !important;
-    border: 3px solid #00ffff !important;
-    padding: 20px 40px !important;
-    font-size: 1.3rem !important;
-    font-weight: bold !important;
-    font-family: 'Orbitron', monospace !important;
-    text-transform: uppercase !important;
-    letter-spacing: 2px !important;
-    border-radius: 12px !important;
-    box-shadow: 0 0 20px rgba(0, 255, 255, 0.4) !important;
-    transition: all 0.3s ease !important;
-    position: relative !important;
-    overflow: hidden !important;
-    cursor: pointer !important;
-    min-width: 300px !important;
-    text-align: center !important;
-}
-
-.btn.btn-success:hover {
-    transform: translateY(-3px) !important;
-    box-shadow: 0 8px 25px rgba(0, 255, 255, 0.6) !important;
-    background: linear-gradient(45deg, #33ffff, #00aaff) !important;
-}
-
-.btn.btn-success:active {
-    transform: translateY(-1px) !important;
-}
-
-.btn.btn-success::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    transition: left 0.6s ease;
-}
-
-.btn.btn-success:hover::before {
-    left: 100%;
-}
-
-/* Phase Completion Buttons - Cyber Style */
-button[data-action="complete-phase"],
-button[data-action="complete-module"] {
-    background: linear-gradient(45deg, #00ff00, #33cc33) !important;
-    color: #000000 !important;
-    border: 3px solid #00ff00 !important;
-    padding: 18px 35px !important;
-    font-size: 1.2rem !important;
-    font-weight: bold !important;
-    font-family: 'Orbitron', monospace !important;
-    text-transform: uppercase !important;
-    letter-spacing: 1.5px !important;
-    border-radius: 10px !important;
-    box-shadow: 0 0 15px rgba(0, 255, 0, 0.4) !important;
-    transition: all 0.3s ease !important;
-    cursor: pointer !important;
-    min-width: 250px !important;
-}
-
-button[data-action="complete-phase"]:hover,
-button[data-action="complete-module"]:hover {
-    transform: translateY(-3px) !important;
-    box-shadow: 0 8px 20px rgba(0, 255, 0, 0.6) !important;
-    background: linear-gradient(45deg, #33ff33, #00dd00) !important;
-}
-
-button[data-action="complete-phase"]:disabled,
-button[data-action="complete-module"]:disabled {
-    background: #666 !important;
-    color: #999 !important;
-    border-color: #555 !important;
-    box-shadow: none !important;
-    cursor: not-allowed !important;
-    transform: none !important;
-}
-
-/* Fixed Classification Drop Zones Layout - REPLACE your existing .classification-drop-zones */
-.classification-drop-zones {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
-    margin: 20px 0;
-    max-width: 100%;
-    overflow-x: auto;
-}
-
-/* Improved Document Layout - REPLACE your existing .documents-to-sort */
-.documents-to-sort {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 15px;
-    margin: 20px 0 30px 0;
-    padding: 20px;
-    background: rgba(0, 0, 0, 0.3);
-    border-radius: 10px;
-    border: 2px dashed #666;
-    max-width: 100%;
-    overflow-x: auto;
-}
-
-/* Better container management - REPLACE your existing .container if it exists */
-.container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 20px;
-    box-sizing: border-box;
-}
-
-/* Enhanced Responsive Design - ADD to your existing media queries */
 @media (max-width: 1200px) {
-    .classification-drop-zones {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
-    }
-    
     .documents-to-sort {
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
         gap: 12px;
     }
 }
 
-/* Enhanced Mobile Styles - MERGE with your existing @media (max-width: 768px) */
-@media (max-width: 768px) {
-    .btn.btn-success {
-        min-width: 250px !important;
-        padding: 15px 30px !important;
-        font-size: 1.1rem !important;
-    }
-    
-    button[data-action="complete-phase"],
-    button[data-action="complete-module"] {
-        min-width: 200px !important;
-        padding: 15px 25px !important;
-        font-size: 1rem !important;
-    }
-    
-    .classification-drop-zones {
-        grid-template-columns: 1fr;
-        gap: 10px;
-    }
-    
-    .drop-zone {
-        min-height: 120px;
-        padding: 12px;
-    }
-}
-
-/* Enhanced Small Mobile Styles - MERGE with your existing @media (max-width: 480px) */
-@media (max-width: 480px) {
-    .btn.btn-success {
-        min-width: 200px !important;
-        padding: 12px 25px !important;
-        font-size: 1rem !important;
-        letter-spacing: 1px !important;
-    }
-    
-    button[data-action="complete-phase"],
-    button[data-action="complete-module"] {
-        min-width: 180px !important;
-        padding: 12px 20px !important;
-        font-size: 0.9rem !important;
-    }
-    
-    .container {
-        padding: 0 15px;
-    }
-}
-/* Phase 3 Improved Layout - Add these styles to your CSS */
-
-/* Two-column scenario layout */
-.scenario-layout {
-    display: grid;
-    grid-template-columns: 350px 1fr;
-    gap: 30px;
-    align-items: start;
-}
-
-/* Rights reference panel */
-.rights-reference {
-    background: rgba(155, 89, 182, 0.1);
-    border: 2px solid var(--gdpr-privacy);
-    border-radius: 12px;
-    padding: 20px;
-    position: sticky;
-    top: 20px;
-    max-height: 80vh;
-    overflow-y: auto;
-}
-
-.rights-reference h4 {
-    color: var(--gdpr-privacy);
-    margin-bottom: 15px;
-    font-family: 'Orbitron', monospace;
-    text-align: center;
-    font-size: 1rem;
-}
-
-/* Detailed procedure guide styling */
-.procedure-guide {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.procedure-step {
-    background: rgba(0, 0, 0, 0.4);
-    padding: 15px;
-    border-radius: 8px;
-    border-left: 4px solid var(--gdpr-gold);
-    transition: all 0.3s ease;
-}
-
-.procedure-step:hover {
-    background: rgba(243, 156, 18, 0.1);
-    transform: translateX(3px);
-}
-
-.procedure-step strong {
-    color: var(--gdpr-gold);
-    display: block;
-    margin-bottom: 8px;
-    font-size: 0.9rem;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.procedure-step p {
-    color: #cccccc;
-    font-size: 0.85rem;
-    line-height: 1.5;
-    margin: 0;
-}
-
-.key-point {
-    background: rgba(231, 76, 60, 0.1);
-    border: 2px solid var(--gdpr-warning);
-    border-radius: 8px;
-    padding: 12px;
-    text-align: center;
-    font-size: 0.85rem;
-    margin-top: 10px;
-}
-
-.key-point strong {
-    color: var(--gdpr-warning);
-}
-
-/* Quick rights for smaller scenarios */
-.quick-rights {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.quick-right {
-    background: rgba(0, 0, 0, 0.3);
-    padding: 12px;
-    border-radius: 8px;
-    border-left: 3px solid var(--gdpr-privacy);
-    font-size: 0.9rem;
-    transition: all 0.3s ease;
-}
-
-.quick-right:hover {
-    background: rgba(155, 89, 182, 0.2);
-    transform: translateX(5px);
-}
-
-.quick-right.highlight {
-    border-left-color: var(--gdpr-gold);
-    background: rgba(243, 156, 18, 0.1);
-    box-shadow: 0 0 10px rgba(243, 156, 18, 0.3);
-}
-
-.quick-right strong {
-    color: var(--gdpr-gold);
-    display: block;
-    margin-bottom: 4px;
-}
-
-/* Scenario content area */
-.scenario-content {
-    background: rgba(0, 20, 40, 0.8);
-    border: 2px solid var(--gdpr-info);
-    border-radius: 12px;
-    padding: 25px;
-}
-
-/* Enhanced feedback styling with reset functionality */
-.feedback {
-    background: rgba(0, 0, 0, 0.8);
-    border: 2px solid var(--gdpr-info);
-    border-radius: 10px;
-    padding: 20px;
-    margin-top: 20px;
-}
-
-.feedback h4 {
-    color: var(--gdpr-info);
-    margin-bottom: 15px;
-    font-family: 'Orbitron', monospace;
-}
-
-.feedback-content {
-    color: #cccccc;
-    line-height: 1.8;
-    margin-bottom: 15px;
-}
-
-/* Reset section styling */
-.reset-section {
-    background: rgba(243, 156, 18, 0.1);
-    border: 1px solid var(--gdpr-gold);
-    border-radius: 8px;
-    padding: 15px;
-    text-align: center;
-    margin-top: 15px;
-}
-
-.reset-section p {
-    color: var(--gdpr-gold);
-    margin-bottom: 15px;
-    font-weight: bold;
-}
-
-.reset-btn {
-    background: linear-gradient(45deg, var(--gdpr-gold), #e67e22);
-    color: #000;
-    border: none;
-    padding: 12px 25px;
-    border-radius: 8px;
-    font-weight: bold;
-    font-family: 'Orbitron', monospace;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    min-width: 180px;
-}
-
-.reset-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(243, 156, 18, 0.4);
-    background: linear-gradient(45deg, #f1c40f, #f39c12);
-}
-
-/* Improved request scenario styling */
-.request-scenario.completed {
-    border-color: var(--gdpr-success);
-}
-
-.request-scenario.completed .scenario-content {
-    border-color: var(--gdpr-success);
-    background: rgba(0, 40, 20, 0.8);
-}
-
-.request-scenario.completed .rights-reference {
-    border-color: var(--gdpr-success);
-    background: rgba(0, 255, 0, 0.05);
-}
-
-/* Mobile responsive adjustments */
 @media (max-width: 1024px) {
     .scenario-layout {
         grid-template-columns: 300px 1fr;
         gap: 20px;
     }
-    
-    .rights-reference {
-        padding: 15px;
-    }
-    
-    .procedure-step {
-        padding: 12px;
-    }
-    
-    .procedure-step strong {
-        font-size: 0.85rem;
-    }
-    
-    .procedure-step p {
-        font-size: 0.8rem;
-    }
 }
 
 @media (max-width: 768px) {
-    .scenario-layout {
-        grid-template-columns: 1fr;
-        gap: 20px;
+    .phase-cards,
+    .classification-drop-zones {
+        grid-template-columns: 1fr 1fr;
     }
-    
-    .rights-reference {
-        position: static;
-        max-height: none;
-        order: 1;
-    }
-    
-    .scenario-content {
-        order: 2;
-    }
-    
-    .procedure-guide {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 12px;
-    }
-    
-    .procedure-step {
-        padding: 10px;
-    }
-    
-    .procedure-step strong {
-        font-size: 0.8rem;
-    }
-    
-    .procedure-step p {
-        font-size: 0.75rem;
-    }
-}
 
-@media (max-width: 480px) {
-    .procedure-guide {
+    .data-inventory-grid,
+    .documents-to-sort {
         grid-template-columns: 1fr;
     }
-    
-    .scenario-content,
-    .rights-reference {
-        padding: 15px;
-    }
-    
-    .request-details {
-        font-size: 0.9rem;
-        padding: 12px;
-    }
-    
-    .question-options label {
-        padding: 6px 12px;
-        font-size: 0.9rem;
-    }
-    
-    .reset-btn {
-        min-width: 150px;
-        padding: 10px 20px;
-        font-size: 0.9rem;
-    }
-}
 
-/* Animation for scenario transitions */
-.request-scenario {
-    opacity: 0;
-    transform: translateX(20px);
-    transition: all 0.6s ease;
-}
-
-.request-scenario.active {
-    opacity: 1;
-    transform: translateX(0);
-}
-
-.request-scenario.completed {
-    opacity: 0.7;
-}
-
-/* Enhanced scenario button styling */
-.scenario-btn {
-    background: linear-gradient(45deg, var(--gdpr-privacy), #8e44ad);
-    color: white;
-    border: none;
-    padding: 15px 35px;
-    border-radius: 10px;
-    font-weight: bold;
-    font-family: 'Orbitron', monospace;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin-top: 20px;
-    min-width: 180px;
-}
-/* Phase 4 Enhanced Readability - Add to bottom of your CSS */
-
-/* Larger, more readable text throughout Phase 4 */
-#training-phase-4 {
-    font-size: 1.1rem;
-    line-height: 1.6;
-}
-
-#training-phase-4 h2 {
-    font-size: 2.5rem;
-    margin-bottom: 30px;
-}
-
-#training-phase-4 h3 {
-    font-size: 1.8rem;
-    margin-bottom: 25px;
-}
-
-#training-phase-4 p {
-    font-size: 1.1rem;
-    margin-bottom: 15px;
-}
-
-/* Enhanced Timeline Boxes with More Information */
-.timeline {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 25px;
-    margin: 40px 0;
-    position: relative;
-}
-
-.timeline::before {
-    display: none; /* Remove connecting line for better mobile experience */
-}
-
-.timeline-item {
-    background: rgba(0, 20, 40, 0.95);
-    border: 3px solid var(--gdpr-warning);
-    border-radius: 15px;
-    padding: 25px;
-    text-align: left;
-    position: relative;
-    z-index: 2;
-    min-height: 200px;
-    box-shadow: 0 10px 30px rgba(231, 76, 60, 0.3);
-}
-
-.timeline-item .time {
-    display: block;
-    color: var(--gdpr-warning);
-    font-weight: bold;
-    font-size: 1.3rem;
-    margin-bottom: 15px;
-    font-family: 'Orbitron', monospace;
-    text-align: center;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.timeline-item h4 {
-    color: var(--gdpr-gold);
-    margin: 15px 0;
-    font-size: 1.3rem;
-    font-family: 'Orbitron', monospace;
-    text-align: center;
-}
-
-.timeline-item p {
-    color: #ffffff;
-    font-size: 1rem;
-    margin: 8px 0;
-    line-height: 1.5;
-}
-
-.timeline-item ul {
-    list-style: none;
-    padding: 0;
-    margin: 15px 0;
-}
-
-.timeline-item li {
-    color: #cccccc;
-    padding: 5px 0;
-    padding-left: 20px;
-    position: relative;
-    font-size: 0.95rem;
-}
-
-.timeline-item li::before {
-    content: '▶';
-    color: var(--gdpr-success);
-    position: absolute;
-    left: 0;
-    font-size: 0.8rem;
-}
-
-/* Enhanced Breach Scenario Layout */
-.breach-scenario {
-    background: rgba(40, 0, 0, 0.95);
-    border: 3px solid var(--gdpr-warning);
-    border-radius: 20px;
-    padding: 35px;
-    margin: 30px 0;
-    position: relative;
-    box-shadow: 0 15px 40px rgba(231, 76, 60, 0.4);
-}
-
-.breach-scenario h3 {
-    font-size: 1.6rem;
-    margin-bottom: 25px;
-    text-align: center;
-}
-
-.breach-scenario h4 {
-    color: var(--gdpr-warning);
-    font-family: 'Orbitron', monospace;
-    font-size: 1.4rem;
-    margin-bottom: 20px;
-    text-transform: uppercase;
-    text-align: center;
-}
-
-.breach-scenario h5 {
-    color: var(--gdpr-gold);
-    margin: 25px 0 15px 0;
-    font-size: 1.2rem;
-    font-weight: bold;
-}
-
-/* Enhanced Question Options */
-.question-options {
-    margin: 20px 0 30px 0;
-    background: rgba(0, 0, 0, 0.3);
-    padding: 20px;
-    border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.question-options label {
-    display: block;
-    padding: 15px 20px;
-    margin: 8px 0;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    color: #ffffff;
-    font-size: 1rem;
-    border: 2px solid transparent;
-}
-
-.question-options label:hover {
-    background: rgba(0, 255, 255, 0.1);
-    border-color: var(--gdpr-info);
-    transform: translateX(5px);
-}
-
-.question-options input[type="radio"] {
-    margin-right: 15px;
-    transform: scale(1.2);
-}
-
-/* Enhanced Incident Details */
-.incident-details {
-    background: rgba(0, 0, 0, 0.7);
-    padding: 25px;
-    border-radius: 15px;
-    margin-bottom: 25px;
-    border: 2px solid var(--gdpr-warning);
-}
-
-.incident-details p {
-    color: #ffffff;
-    line-height: 1.7;
-    margin-bottom: 18px;
-    font-size: 1.1rem;
-}
-
-.incident-details ul {
-    list-style: none;
-    padding: 0;
-    margin: 15px 0;
-}
-
-.incident-details li {
-    color: var(--gdpr-warning);
-    padding: 8px 0;
-    padding-left: 25px;
-    position: relative;
-    font-size: 1rem;
-}
-
-.incident-details li::before {
-    content: '⚠';
-    position: absolute;
-    left: 0;
-    color: var(--gdpr-warning);
-    font-size: 1.2rem;
-}
-
-/* Enhanced Timer Display */
-.incident-time {
-    background: rgba(0, 0, 0, 0.9);
-    padding: 15px 25px;
-    border-radius: 10px;
-    margin-bottom: 25px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border: 2px solid var(--gdpr-warning);
-}
-
-.timer {
-    color: var(--gdpr-warning);
-    font-family: 'Courier New', monospace;
-    font-weight: bold;
-    font-size: 1.4rem;
-    text-shadow: 0 0 10px rgba(231, 76, 60, 0.5);
-}
-
-/* Enhanced Feedback Sections */
-.feedback {
-    background: rgba(0, 0, 0, 0.9);
-    border: 2px solid var(--gdpr-info);
-    border-radius: 15px;
-    padding: 25px;
-    margin-top: 25px;
-    font-size: 1.1rem;
-}
-
-.feedback h4 {
-    color: var(--gdpr-info);
-    margin-bottom: 20px;
-    font-family: 'Orbitron', monospace;
-    font-size: 1.3rem;
-}
-
-.feedback-content {
-    color: #ffffff;
-    line-height: 1.8;
-    font-size: 1.1rem;
-}
-
-/* Enhanced Buttons */
-.scenario-btn {
-    background: linear-gradient(45deg, var(--gdpr-warning), #c0392b);
-    color: white;
-    border: none;
-    padding: 18px 40px;
-    border-radius: 12px;
-    font-size: 1.2rem;
-    font-weight: bold;
-    font-family: 'Orbitron', monospace;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin-top: 25px;
-    min-width: 200px;
-    box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
-}
-
-.scenario-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(231, 76, 60, 0.5);
-    background: linear-gradient(45deg, #e74c3c, #e74c3c);
-}
-
-/* Mobile Responsive Improvements */
-@media (max-width: 768px) {
-    #training-phase-4 {
-        font-size: 1rem;
-    }
-    
-    #training-phase-4 h2 {
-        font-size: 2rem;
-    }
-    
-    #training-phase-4 h3 {
-        font-size: 1.5rem;
+    .rights-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     }
     
     .timeline {
         grid-template-columns: 1fr;
         gap: 20px;
     }
-    
-    .timeline-item {
-        padding: 20px;
-        min-height: 150px;
+
+    .action-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .phase-completion .completion-btn {
+        min-width: 200px;
+        padding: 15px 25px;
+        font-size: 1rem;
     }
     
+    /* Re-stack two-column layout */
+    .scenario-layout {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    .rights-reference {
+        position: static;
+        max-height: none;
+        order: 1;
+    }
+    .scenario-content {
+        order: 2;
+    }
+
+    /* Phase 4 readability adjustments */
     .breach-scenario {
         padding: 25px;
         margin: 20px 0;
+        font-size: 1rem;
     }
-    
-    .question-options label {
-        padding: 12px 15px;
-        font-size: 0.95rem;
-    }
-    
-    .timer {
-        font-size: 1.2rem;
-    }
+    .breach-scenario h2 { font-size: 2rem; }
+    .breach-scenario h3 { font-size: 1.5rem; }
+    .timer { font-size: 1.2rem; }
 }
 
 @media (max-width: 480px) {
-    #training-phase-4 {
-        font-size: 0.95rem;
+    .container {
+        padding: 0 15px;
     }
-    
-    .timeline-item {
-        padding: 15px;
-        min-height: 120px;
+
+    .phase-cards,
+    .classification-drop-zones,
+    .rights-grid {
+        grid-template-columns: 1fr;
     }
-    
-    .timeline-item .time {
-        font-size: 1.1rem;
-    }
-    
-    .timeline-item h4 {
-        font-size: 1.1rem;
-    }
-    
-    .breach-scenario {
+
+    .fine-amount { font-size: 1.5rem; }
+    .total-cost { font-size: 1.2rem; }
+
+    .modal-content {
         padding: 20px;
+        margin: 10px;
     }
-    
-    .question-options label {
-        padding: 10px 12px;
+    .final-score { font-size: 2rem; }
+
+    .phase-completion .completion-btn {
+        min-width: 180px;
+        padding: 12px 20px;
         font-size: 0.9rem;
     }
-    
+
+    .reset-btn {
+        min-width: 150px;
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
+
     .scenario-btn {
         min-width: 180px;
         padding: 15px 30px;
         font-size: 1rem;
     }
 }
-.scenario-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(155, 89, 182, 0.4);
-    background: linear-gradient(45deg, #a569bd, #9b59b6);
-}
-<!-- Add this CSS for the scenario navigation -->
-<style>
-.scenario-navigation {
-    background: rgba(0, 40, 80, 0.8);
-    border: 2px solid var(--gdpr-info);
-    border-radius: 15px;
-    padding: 25px;
-    margin: 30px 0;
-    text-align: center;
-}
-
-.scenario-navigation h3 {
-    color: var(--gdpr-info);
-    font-family: 'Orbitron', monospace;
-    margin-bottom: 15px;
-}
-
-.scenario-navigation p {
-    color: #cccccc;
-    margin-bottom: 25px;
-    font-size: 1.1rem;
-}
-
-.scenario-selector {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-.scenario-selector .scenario-btn {
-    min-width: 180px;
-    margin: 5px;
-}
-
-.procedure-guide {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    margin: 20px 0;
-}
-
-.procedure-step {
-    background: rgba(0, 0, 0, 0.4);
-    padding: 15px;
-    border-radius: 8px;
-    border-left: 4px solid var(--gdpr-gold);
-    transition: all 0.3s ease;
-}
-
-.procedure-step:hover {
-    background: rgba(243, 156, 18, 0.1);
-    transform: translateX(3px);
-}
-
-.procedure-step strong {
-    color: var(--gdpr-gold);
-    display: block;
-    margin-bottom: 8px;
-    font-size: 0.9rem;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.procedure-step p {
-    color: #cccccc;
-    font-size: 1rem;
-    line-height: 1.5;
-    margin: 0;
-}
-
-.key-point {
-    background: rgba(231, 76, 60, 0.1);
-    border: 2px solid var(--gdpr-warning);
-    border-radius: 8px;
-    padding: 15px;
-    text-align: center;
-    font-size: 1rem;
-    margin-top: 15px;
-}
-
-.key-point strong {
-    color: var(--gdpr-warning);
-}
-
-@media (max-width: 768px) {
-    .scenario-selector {
-        flex-direction: column;
-        align-items: center;
-    }
-    
-    .scenario-selector .scenario-btn {
-        min-width: 200px;
-    }
-}
-</style>
