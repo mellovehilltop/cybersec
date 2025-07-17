@@ -331,240 +331,439 @@ const Module5 = {
         this.startBreachTimers();
     },
 
-    // Start breach timers
-    startBreachTimers() {
-        const timers = ['timer-1', 'timer-2', 'timer-3'];
+    / Phase 4 Enhanced JavaScript - Replace your existing Phase 4 JavaScript
+
+// Enhanced breach scenarios with more detail
+const breachScenarios = [
+    {
+        id: 1,
+        title: "INCIDENT #1: EMAIL ERROR",
+        description: "Marketing team member accidentally sent newsletter with customer list visible to all 2,000 recipients. Email contained names, email addresses, and order preferences of premium customers.",
+        dataInvolved: [
+            "2,000 customer email addresses",
+            "Customer names", 
+            "Honey product preferences",
+            "Premium customer status"
+        ],
+        questions: [
+            {
+                question: "What's your immediate priority?",
+                options: [
+                    { value: "recall-email", text: "Try to recall the email" },
+                    { value: "report-ico", text: "Report to ICO immediately" },
+                    { value: "assess-data", text: "Assess what data was exposed" },
+                    { value: "email-customers", text: "Email all customers about the breach" }
+                ],
+                correct: "recall-email",
+                explanation: "First priority is containment - try to recall the email to minimize exposure."
+            },
+            {
+                question: "Is this a high-risk breach requiring ICO notification?",
+                options: [
+                    { value: "yes-high", text: "Yes - high risk, notify ICO" },
+                    { value: "medium-risk", text: "Medium risk - consider notification" },
+                    { value: "low-risk", text: "Low risk - just document internally" },
+                    { value: "not-breach", text: "Not a personal data breach" }
+                ],
+                correct: "low-risk",
+                explanation: "Low risk - just email addresses and preferences. No financial data, no medical data, no passwords."
+            },
+            {
+                question: "Do you need to notify the affected customers?",
+                options: [
+                    { value: "yes-notify", text: "Yes, notify all 2,000 customers" },
+                    { value: "no-notify", text: "No notification needed" },
+                    { value: "risk-assessment", text: "Consider based on risk assessment" },
+                    { value: "ico-decide", text: "Let ICO decide" }
+                ],
+                correct: "no-notify",
+                explanation: "Individual notification NOT needed for low-risk breaches. Just document internally."
+            }
+        ]
+    },
+    {
+        id: 2,
+        title: "INCIDENT #2: LAPTOP THEFT",
+        description: "Production manager's laptop stolen from car containing unencrypted files with employee personal data including bank details for 45 staff members.",
+        dataInvolved: [
+            "45 employee records",
+            "Bank account details",
+            "Home addresses",
+            "National Insurance numbers",
+            "Salary information"
+        ],
+        questions: [
+            {
+                question: "What's your immediate priority?",
+                options: [
+                    { value: "call-police", text: "Call the police immediately" },
+                    { value: "contain-breach", text: "Contain the breach - change passwords" },
+                    { value: "notify-ico", text: "Notify ICO within 72 hours" },
+                    { value: "tell-employees", text: "Tell affected employees immediately" }
+                ],
+                correct: "contain-breach",
+                explanation: "First priority is containment - change passwords, remote wipe if possible, secure systems."
+            },
+            {
+                question: "Is this a high-risk breach requiring ICO notification?",
+                options: [
+                    { value: "yes-high", text: "Yes - high risk, notify ICO" },
+                    { value: "medium-risk", text: "Medium risk - consider notification" },
+                    { value: "low-risk", text: "Low risk - just document internally" },
+                    { value: "not-breach", text: "Not a personal data breach" }
+                ],
+                correct: "yes-high",
+                explanation: "HIGH RISK - Financial data exposed, identity theft possible. ICO notification required within 72 hours."
+            },
+            {
+                question: "Do you need to notify the affected employees?",
+                options: [
+                    { value: "yes-notify", text: "Yes, notify all affected employees" },
+                    { value: "no-notify", text: "No notification needed" },
+                    { value: "risk-assessment", text: "Consider based on risk assessment" },
+                    { value: "ico-decide", text: "Let ICO decide" }
+                ],
+                correct: "yes-notify",
+                explanation: "YES - High risk to individuals. They need to take action (monitor bank accounts, etc.)"
+            }
+        ]
+    },
+    {
+        id: 3,
+        title: "INCIDENT #3: SYSTEM HACK",
+        description: "Cyber attack on order system exposed customer payment details. 500 customers affected including credit card numbers and billing addresses.",
+        dataInvolved: [
+            "500 customer payment cards",
+            "Credit card numbers",
+            "Billing addresses",
+            "Order history",
+            "Customer phone numbers"
+        ],
+        questions: [
+            {
+                question: "What's your immediate priority?",
+                options: [
+                    { value: "isolate-systems", text: "Isolate affected systems" },
+                    { value: "notify-banks", text: "Notify credit card companies" },
+                    { value: "tell-customers", text: "Tell customers immediately" },
+                    { value: "call-police", text: "Call police cyber crime unit" }
+                ],
+                correct: "isolate-systems",
+                explanation: "First priority is containment - isolate systems to prevent further damage."
+            },
+            {
+                question: "Is this a high-risk breach requiring ICO notification?",
+                options: [
+                    { value: "yes-high", text: "Yes - high risk, notify ICO immediately" },
+                    { value: "medium-risk", text: "Medium risk - consider notification" },
+                    { value: "low-risk", text: "Low risk - just document internally" },
+                    { value: "not-breach", text: "Not a personal data breach" }
+                ],
+                correct: "yes-high",
+                explanation: "VERY HIGH RISK - Financial data exposed, fraud likely. ICO notification required within 72 hours."
+            },
+            {
+                question: "Do you need to notify the affected customers?",
+                options: [
+                    { value: "yes-immediately", text: "Yes, notify customers immediately" },
+                    { value: "no-notify", text: "No notification needed" },
+                    { value: "after-investigation", text: "After investigation complete" },
+                    { value: "ico-decide", text: "Let ICO decide" }
+                ],
+                correct: "yes-immediately",
+                explanation: "YES - Customers need to cancel cards and monitor accounts. Financial fraud is likely."
+            }
+        ]
+    }
+];
+
+// Enhanced Module 5 GDPR Training Manager
+const Module5Manager = {
+    currentScenario: 0,
+    scenarioAnswers: {},
+    
+    // Initialize Phase 4 with enhanced timeline
+    setupPhase4() {
+        console.log('Setting up Phase 4: Breach Response');
+        this.updateTimelineBoxes();
+        this.showScenario(0);
+        this.startBreachTimer();
+    },
+    
+    // Update timeline boxes with detailed information
+    updateTimelineBoxes() {
+        const timelineData = [
+            {
+                time: "0-1 Hours",
+                title: "CONTAIN", 
+                actions: [
+                    "Try to recall emails if possible",
+                    "Change passwords if systems compromised",
+                    "Isolate affected systems",
+                    "Stop further data loss",
+                    "Document what happened"
+                ]
+            },
+            {
+                time: "1-24 Hours", 
+                title: "ASSESS",
+                actions: [
+                    "Risk assessment: How many people affected?",
+                    "What type of data exposed?",
+                    "Is it financial/medical data?",
+                    "Can criminals use this data?",
+                    "Are people at risk of harm?"
+                ]
+            },
+            {
+                time: "24-72 Hours",
+                title: "REPORT ICO",
+                actions: [
+                    "ICO Notification Required for:",
+                    "High risk to individuals",
+                    "Financial data exposed", 
+                    "Medical/health data",
+                    "Large numbers affected (1000+)",
+                    "Identity theft possible"
+                ]
+            },
+            {
+                time: "Within 1 Month",
+                title: "NOTIFY PEOPLE",
+                actions: [
+                    "Tell individuals if:",
+                    "High risk to them",
+                    "They need to take action",
+                    "Could lead to fraud",
+                    "Financial loss possible",
+                    "NOT needed for low-risk breaches"
+                ]
+            }
+        ];
         
-        timers.forEach(timerId => {
-            const timerElement = document.getElementById(timerId);
-            if (timerElement) {
-                let timeLeft = 72 * 60 * 60; // 72 hours in seconds
+        const timeline = document.querySelector('.timeline');
+        if (timeline) {
+            timeline.innerHTML = timelineData.map(item => `
+                <div class="timeline-item">
+                    <span class="time">${item.time}</span>
+                    <h4>${item.title}</h4>
+                    <ul>
+                        ${item.actions.map(action => `<li>${action}</li>`).join('')}
+                    </ul>
+                </div>
+            `).join('');
+        }
+    },
+    
+    // Show specific breach scenario
+    showScenario(scenarioIndex) {
+        // Hide all scenarios
+        document.querySelectorAll('.breach-scenario').forEach(scenario => {
+            scenario.style.display = 'none';
+        });
+        
+        const scenario = breachScenarios[scenarioIndex];
+        if (!scenario) return;
+        
+        const scenarioHtml = `
+            <div class="breach-scenario active" id="scenario-${scenario.id}">
+                <div class="breach-alert">
+                    <h4>${scenario.title}</h4>
+                    <div class="incident-time">
+                        <span>Time: Monday 09:15</span>
+                        <span class="timer" id="timer-${scenario.id}">71:55:23</span>
+                        <span>remaining</span>
+                    </div>
+                </div>
                 
-                const timer = setInterval(() => {
-                    const hours = Math.floor(timeLeft / 3600);
-                    const minutes = Math.floor((timeLeft % 3600) / 60);
-                    const seconds = timeLeft % 60;
-                    
-                    timerElement.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-                    
-                    if (timeLeft <= 0) {
-                        clearInterval(timer);
-                        timerElement.textContent = 'TIME EXPIRED';
-                        timerElement.style.color = '#e74c3c';
-                    }
-                    
-                    timeLeft--;
-                }, 1000);
+                <div class="incident-details">
+                    <p><strong>Report:</strong> ${scenario.description}</p>
+                    <p><strong>Data Involved:</strong></p>
+                    <ul>
+                        ${scenario.dataInvolved.map(data => `<li>${data}</li>`).join('')}
+                    </ul>
+                </div>
+                
+                <div class="scenario-questions">
+                    ${scenario.questions.map((q, index) => `
+                        <div class="question-block">
+                            <h5>${q.question}</h5>
+                            <div class="question-options">
+                                ${q.options.map(option => `
+                                    <label>
+                                        <input type="radio" name="scenario-${scenario.id}-q${index}" value="${option.value}">
+                                        ${option.text}
+                                    </label>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+                
+                <div class="scenario-actions">
+                    <button class="scenario-btn" onclick="Module5Manager.checkScenario(${scenario.id})">
+                        SUBMIT RESPONSE
+                    </button>
+                    ${scenarioIndex > 0 ? `<button class="scenario-btn" onclick="Module5Manager.showScenario(${scenarioIndex - 1})">← PREVIOUS</button>` : ''}
+                    ${scenarioIndex < breachScenarios.length - 1 ? `<button class="scenario-btn" onclick="Module5Manager.showScenario(${scenarioIndex + 1})">NEXT →</button>` : ''}
+                </div>
+                
+                <div id="scenario-${scenario.id}-feedback" class="feedback hidden"></div>
+            </div>
+        `;
+        
+        // Add to container
+        const container = document.querySelector('#training-phase-4 .breach-guide');
+        if (container) {
+            // Remove existing scenarios
+            container.querySelectorAll('.breach-scenario').forEach(s => s.remove());
+            container.insertAdjacentHTML('beforeend', scenarioHtml);
+        }
+        
+        // Update progress indicator
+        this.updateScenarioProgress();
+    },
+    
+    // Check scenario answers
+    checkScenario(scenarioId) {
+        const scenario = breachScenarios.find(s => s.id === scenarioId);
+        if (!scenario) return;
+        
+        let correct = 0;
+        let feedbackHtml = '<h4>Response Assessment</h4><div class="feedback-content">';
+        
+        scenario.questions.forEach((question, index) => {
+            const selectedAnswer = document.querySelector(`input[name="scenario-${scenarioId}-q${index}"]:checked`);
+            
+            if (selectedAnswer) {
+                if (selectedAnswer.value === question.correct) {
+                    correct++;
+                    feedbackHtml += `<p>✅ <strong>Question ${index + 1}:</strong> Correct! ${question.explanation}</p>`;
+                } else {
+                    feedbackHtml += `<p>❌ <strong>Question ${index + 1}:</strong> Incorrect. ${question.explanation}</p>`;
+                }
+            } else {
+                feedbackHtml += `<p>⚠️ <strong>Question ${index + 1}:</strong> No answer selected.</p>`;
             }
         });
-    },
-
-    // Check scenario answers - Updated to handle all 3 scenarios
-    checkScenario(scenarioNumber) {
-        let correct = 0;
-        let total = 3;
-        let feedback = '';
         
-        if (scenarioNumber === 1) {
-            // Scenario 1: Sarah's Subject Access Request
-            const requestType = document.querySelector('input[name="request-type-1"]:checked');
-            const firstStep = document.querySelector('input[name="first-step-1"]:checked');
-            const deadline = document.querySelector('input[name="deadline-1"]:checked');
-            
-            if (requestType?.value === 'access') {
-                correct++;
-                feedback += '✅ Correct: This is a Subject Access Request<br>';
-            } else {
-                feedback += '❌ Incorrect: This is a Subject Access Request - customer wants all their data<br>';
-            }
-            
-            if (firstStep?.value === 'verify-identity') {
-                correct++;
-                feedback += '✅ Correct: Always verify identity first<br>';
-            } else {
-                feedback += '❌ Incorrect: Must verify identity before providing personal data<br>';
-            }
-            
-            if (deadline?.value === '1-month') {
-                correct++;
-                feedback += '✅ Correct: 1 month deadline for Subject Access Requests<br>';
-            } else {
-                feedback += '❌ Incorrect: You have 1 month to respond to Subject Access Requests<br>';
-            }
-            
-        } else if (scenarioNumber === 2) {
-            // Scenario 2: Mike's Marketing Objection
-            const requestType = document.querySelector('input[name="request-type-2"]:checked');
-            const keepEmail = document.querySelector('input[name="keep-email-2"]:checked');
-            const speed = document.querySelector('input[name="speed-2"]:checked');
-            
-            if (requestType?.value === 'objection') {
-                correct++;
-                feedback += '✅ Correct: This is an objection to marketing processing<br>';
-            } else {
-                feedback += '❌ Incorrect: This is an objection to processing for marketing purposes<br>';
-            }
-            
-            if (keepEmail?.value === 'ask') {
-                correct++;
-                feedback += '✅ Correct: Ask what processing is acceptable for legitimate business needs<br>';
-            } else {
-                feedback += '❌ Incorrect: You can keep email for legitimate business needs (order confirmations) but should ask what\'s acceptable<br>';
-            }
-            
-            if (speed?.value === 'immediately') {
-                correct++;
-                feedback += '✅ Correct: Stop marketing emails immediately<br>';
-            } else {
-                feedback += '❌ Incorrect: Must stop marketing processing immediately when customer objects<br>';
-            }
-            
-        } else if (scenarioNumber === 3) {
-            // Scenario 3: Jenny's Employee Request
-            const requestType = document.querySelector('input[name="request-type-3"]:checked');
-            const emergency = document.querySelector('input[name="emergency-3"]:checked');
-            const review = document.querySelector('input[name="review-3"]:checked');
-            
-            if (requestType?.value === 'both') {
-                correct++;
-                feedback += '✅ Correct: Both rectification (correct contact) and access (get review copy)<br>';
-            } else {
-                feedback += '❌ Incorrect: This includes both rectification and access requests<br>';
-            }
-            
-            if (emergency?.value === 'verify-first') {
-                correct++;
-                feedback += '✅ Correct: Verify identity then update emergency contact promptly<br>';
-            } else {
-                feedback += '❌ Incorrect: Verify identity first, then update emergency contact - it\'s a safety issue<br>';
-            }
-            
-            if (review?.value === 'yes-immediately') {
-                correct++;
-                feedback += '✅ Correct: Employees have right to access their own performance reviews<br>';
-            } else {
-                feedback += '❌ Incorrect: Employee has right to access their own performance review data<br>';
-            }
-        }
+        feedbackHtml += '</div>';
         
-        // Display feedback with reset option for wrong answers
-        const feedbackElement = document.getElementById(`scenario-${scenarioNumber}-feedback`);
+        // Show feedback
+        const feedbackElement = document.getElementById(`scenario-${scenarioId}-feedback`);
         if (feedbackElement) {
-            let feedbackHTML = `
-                <h4>Scenario ${scenarioNumber} Results: ${correct}/${total}</h4>
-                <div class="feedback-content">${feedback}</div>
-            `;
-            
-            // Add reset button if not all correct
-            if (correct < total) {
-                feedbackHTML += `
-                    <div class="reset-section">
-                        <p><strong>Review the procedure guide on the left, then try again.</strong></p>
-                        <button class="reset-btn" onclick="Module5.resetScenario(${scenarioNumber})">
-                            🔄 Reset & Try Again
-                        </button>
-                    </div>
-                `;
-            }
-            
-            feedbackElement.innerHTML = feedbackHTML;
+            feedbackElement.innerHTML = feedbackHtml;
             feedbackElement.classList.remove('hidden');
         }
         
-        // Update scenario completion tracking
-        if (correct === total) {
-            this.state.scenariosCompleted++;
-            
-            // Mark scenario as complete
-            document.getElementById(`scenario-${scenarioNumber}`).classList.add('completed');
-            
-            // Update completion counter
-            const completionDisplay = document.getElementById('rights-completion');
-            if (completionDisplay) {
-                completionDisplay.textContent = `Scenarios Completed: ${this.state.scenariosCompleted}/3`;
-            }
-            
-            // Show next scenario or enable completion
-            if (this.state.scenariosCompleted < 3) {
-                // Show next scenario after delay
-                setTimeout(() => {
-                    document.getElementById(`scenario-${scenarioNumber}`).classList.remove('active');
-                    const nextScenario = document.getElementById(`scenario-${scenarioNumber + 1}`);
-                    if (nextScenario) {
-                        nextScenario.classList.add('active');
-                        this.showNotification(`Scenario ${scenarioNumber} complete! Moving to scenario ${scenarioNumber + 1}...`, 'success');
-                    }
-                }, 2000);
-            } else {
-                // All scenarios completed
-                this.state.rightsComplete = true;
-                const completeBtn = document.getElementById('complete-phase-3');
-                if (completeBtn) {
-                    completeBtn.disabled = false;
-                }
-                this.showBadgeNotification('🏆 Rights Management Master! Privacy Champion Badge Earned!');
-            }
-        } else {
-            // Show what they got wrong
-            this.showNotification(`${correct}/${total} correct. Review the feedback and try again if needed.`, 'warning');
+        // Update progress
+        this.scenarioAnswers[scenarioId] = correct;
+        this.updateScenarioProgress();
+        
+        // Show success message if all correct
+        if (correct === scenario.questions.length) {
+            setTimeout(() => {
+                this.showNotification(`✅ Scenario ${scenarioId} completed successfully!`, 'success');
+            }, 1000);
+        }
+        
+        // Check if all scenarios completed
+        if (Object.keys(this.scenarioAnswers).length === breachScenarios.length) {
+            this.checkPhaseCompletion();
         }
     },
-
-    // Check breach response
-    checkBreach(breachNumber) {
-        let correct = 0;
-        let feedback = '';
+    
+    // Update scenario progress display
+    updateScenarioProgress() {
+        const completed = Object.keys(this.scenarioAnswers).length;
+        const total = breachScenarios.length;
         
-        if (breachNumber === 1) {
-            const priority = document.querySelector('input[name="priority-1"]:checked');
-            const riskLevel = document.querySelector('input[name="risk-level-1"]:checked');
-            const notifyIndividuals = document.querySelector('input[name="notify-individuals-1"]:checked');
-            
-            if (priority?.value === 'recall-email') {
-                correct++;
-                feedback += '✅ Correct: Try to recall/contain the breach first<br>';
-            } else {
-                feedback += '❌ Incorrect: First priority is containment<br>';
-            }
-            
-            if (riskLevel?.value === 'low') {
-                correct++;
-                feedback += '✅ Correct: Low risk - just email addresses and preferences<br>';
-            } else {
-                feedback += '❌ Incorrect: This is low risk breach<br>';
-            }
-            
-            if (notifyIndividuals?.value === 'no') {
-                correct++;
-                feedback += '✅ Correct: No individual notification needed<br>';
-            } else {
-                feedback += '❌ Incorrect: Individual notification not required<br>';
-            }
-        }
-        
-        // Display feedback
-        const feedbackElement = document.getElementById(`breach-${breachNumber}-feedback`);
-        if (feedbackElement) {
-            feedbackElement.innerHTML = `
-                <h4>Breach ${breachNumber} Response: ${correct}/3</h4>
-                <div class="feedback-content">${feedback}</div>
-            `;
-            feedbackElement.classList.remove('hidden');
-        }
-        
-        if (correct === 3) {
-            this.state.breachesHandled++;
-            if (this.state.breachesHandled >= 1) { // Simplified for demo
-                this.state.breachComplete = true;
-                const completeBtn = document.getElementById('complete-module-5');
-                if (completeBtn) {
-                    completeBtn.disabled = false;
-                }
-                this.showBadgeNotification('🏆 Breach Response Expert!');
-            }
+        const progressElement = document.getElementById('breach-completion');
+        if (progressElement) {
+            progressElement.textContent = `Scenarios Completed: ${completed}/${total}`;
         }
     },
+    
+    // Check if phase 4 is complete
+    checkPhaseCompletion() {
+        const totalCorrect = Object.values(this.scenarioAnswers).reduce((sum, score) => sum + score, 0);
+        const totalQuestions = breachScenarios.reduce((sum, scenario) => sum + scenario.questions.length, 0);
+        
+        if (totalCorrect >= Math.floor(totalQuestions * 0.8)) { // 80% pass rate
+            const completeBtn = document.getElementById('complete-module-5');
+            if (completeBtn) {
+                completeBtn.disabled = false;
+            }
+            this.showNotification('🎉 Phase 4 Complete! You are ready for data breach response.', 'success');
+        }
+    },
+    
+    // Start breach response timer
+    startBreachTimer() {
+        const timers = document.querySelectorAll('[id^="timer-"]');
+        
+        timers.forEach(timerElement => {
+            let timeLeft = 72 * 60 * 60; // 72 hours in seconds
+            
+            const timer = setInterval(() => {
+                const hours = Math.floor(timeLeft / 3600);
+                const minutes = Math.floor((timeLeft % 3600) / 60);
+                const seconds = timeLeft % 60;
+                
+                timerElement.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    timerElement.textContent = 'TIME EXPIRED';
+                    timerElement.style.color = '#ff0000';
+                    timerElement.style.textShadow = '0 0 20px #ff0000';
+                }
+                
+                timeLeft--;
+            }, 1000);
+        });
+    },
+    
+    // Show notification
+    showNotification(message, type) {
+        // Create notification element
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            border-radius: 10px;
+            font-weight: bold;
+            z-index: 1000;
+            max-width: 300px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            ${type === 'success' ? 'background: rgba(0,255,0,0.1); border: 2px solid #00ff00; color: #00ff00;' : ''}
+            ${type === 'error' ? 'background: rgba(255,0,0,0.1); border: 2px solid #ff0000; color: #ff0000;' : ''}
+            ${type === 'warning' ? 'background: rgba(255,165,0,0.1); border: 2px solid #ffa500; color: #ffa500;' : ''}
+        `;
+        notification.textContent = message;
+        
+        document.body.appendChild(notification);
+        
+        // Remove after 5 seconds
+        setTimeout(() => {
+            notification.remove();
+        }, 5000);
+    }
+};
 
+// Initialize when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    // Make sure Module5Manager is available globally
+    window.Module5Manager = Module5Manager;
+    
+    // Setup Phase 4 if on that phase
+    if (document.getElementById('training-phase-4')) {
+        Module5Manager.setupPhase4();
+    }
+});
     // Complete module
     completeModule() {
         this.updateProgress(100);
