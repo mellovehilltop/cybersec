@@ -1495,3 +1495,267 @@ button[data-action="complete-module"]:disabled {
         padding: 0 15px;
     }
 }
+/* Phase 3 Improved Layout - Add these styles to your CSS */
+
+/* Two-column scenario layout */
+.scenario-layout {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 30px;
+    align-items: start;
+}
+
+/* Rights reference panel */
+.rights-reference {
+    background: rgba(155, 89, 182, 0.1);
+    border: 2px solid var(--gdpr-privacy);
+    border-radius: 12px;
+    padding: 20px;
+    position: sticky;
+    top: 20px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.rights-reference h4 {
+    color: var(--gdpr-privacy);
+    margin-bottom: 15px;
+    font-family: 'Orbitron', monospace;
+    text-align: center;
+    font-size: 1rem;
+}
+
+.quick-rights {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.quick-right {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 12px;
+    border-radius: 8px;
+    border-left: 3px solid var(--gdpr-privacy);
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.quick-right:hover {
+    background: rgba(155, 89, 182, 0.2);
+    transform: translateX(5px);
+}
+
+.quick-right.highlight {
+    border-left-color: var(--gdpr-gold);
+    background: rgba(243, 156, 18, 0.1);
+    box-shadow: 0 0 10px rgba(243, 156, 18, 0.3);
+}
+
+.quick-right strong {
+    color: var(--gdpr-gold);
+    display: block;
+    margin-bottom: 4px;
+}
+
+/* Scenario content area */
+.scenario-content {
+    background: rgba(0, 20, 40, 0.8);
+    border: 2px solid var(--gdpr-info);
+    border-radius: 12px;
+    padding: 25px;
+}
+
+/* Improved request scenario styling */
+.request-scenario.completed {
+    border-color: var(--gdpr-success);
+}
+
+.request-scenario.completed .scenario-content {
+    border-color: var(--gdpr-success);
+    background: rgba(0, 40, 20, 0.8);
+}
+
+.request-scenario.completed .rights-reference {
+    border-color: var(--gdpr-success);
+    background: rgba(0, 255, 0, 0.05);
+}
+
+/* Enhanced feedback styling */
+.feedback {
+    background: rgba(0, 0, 0, 0.8);
+    border: 2px solid var(--gdpr-info);
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.feedback h4 {
+    color: var(--gdpr-info);
+    margin-bottom: 15px;
+    font-family: 'Orbitron', monospace;
+}
+
+.feedback-content {
+    color: #cccccc;
+    line-height: 1.8;
+}
+
+/* Scenario progress indicator */
+.scenario-progress {
+    text-align: center;
+    margin: 20px 0;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+    border: 1px solid var(--gdpr-info);
+}
+
+.scenario-progress-bar {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    margin: 10px 0;
+    overflow: hidden;
+}
+
+.scenario-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gdpr-privacy), var(--gdpr-gold));
+    transition: width 0.8s ease;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 1024px) {
+    .scenario-layout {
+        grid-template-columns: 250px 1fr;
+        gap: 20px;
+    }
+    
+    .rights-reference {
+        padding: 15px;
+    }
+    
+    .quick-right {
+        padding: 10px;
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .scenario-layout {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .rights-reference {
+        position: static;
+        max-height: none;
+        order: 1;
+    }
+    
+    .scenario-content {
+        order: 2;
+    }
+    
+    .quick-rights {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 10px;
+    }
+    
+    .quick-right {
+        padding: 8px;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .quick-rights {
+        grid-template-columns: 1fr;
+    }
+    
+    .scenario-content,
+    .rights-reference {
+        padding: 15px;
+    }
+    
+    .request-details {
+        font-size: 0.9rem;
+        padding: 12px;
+    }
+    
+    .question-options label {
+        padding: 6px 12px;
+        font-size: 0.9rem;
+    }
+}
+
+/* Animation for scenario transitions */
+.request-scenario {
+    opacity: 0;
+    transform: translateX(20px);
+    transition: all 0.6s ease;
+}
+
+.request-scenario.active {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.request-scenario.completed {
+    opacity: 0.7;
+}
+
+/* Scenario navigation hints */
+.scenario-hint {
+    background: rgba(243, 156, 18, 0.1);
+    border: 1px solid var(--gdpr-gold);
+    border-radius: 8px;
+    padding: 12px;
+    margin: 15px 0;
+    text-align: center;
+    color: var(--gdpr-gold);
+    font-size: 0.9rem;
+    font-style: italic;
+}
+
+/* Success indicators for completed scenarios */
+.scenario-success {
+    background: rgba(0, 255, 0, 0.1);
+    border: 2px solid var(--gdpr-success);
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
+    margin: 15px 0;
+    color: var(--gdpr-success);
+    font-weight: bold;
+}
+
+.scenario-success::before {
+    content: '✅ ';
+    font-size: 1.2rem;
+}
+
+/* Enhanced scenario button styling */
+.scenario-btn {
+    background: linear-gradient(45deg, var(--gdpr-privacy), #8e44ad);
+    color: white;
+    border: none;
+    padding: 15px 35px;
+    border-radius: 10px;
+    font-weight: bold;
+    font-family: 'Orbitron', monospace;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 20px;
+    min-width: 180px;
+}
+
+.scenario-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(155, 89, 182, 0.4);
+    background: linear-gradient(45deg, #a569bd, #9b59b6);
+}
