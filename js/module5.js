@@ -338,12 +338,14 @@ const Module5 = {
         });
     },
 
-    // Check scenario answers
+    // Check scenario answers - Updated to handle all 3 scenarios
     checkScenario(scenarioNumber) {
         let correct = 0;
+        let total = 3;
         let feedback = '';
         
         if (scenarioNumber === 1) {
+            // Scenario 1: Sarah's Subject Access Request
             const requestType = document.querySelector('input[name="request-type-1"]:checked');
             const firstStep = document.querySelector('input[name="first-step-1"]:checked');
             const deadline = document.querySelector('input[name="deadline-1"]:checked');
@@ -368,28 +370,108 @@ const Module5 = {
             } else {
                 feedback += '❌ Incorrect: You have 1 month to respond to Subject Access Requests<br>';
             }
+            
+        } else if (scenarioNumber === 2) {
+            // Scenario 2: Mike's Marketing Objection
+            const requestType = document.querySelector('input[name="request-type-2"]:checked');
+            const keepEmail = document.querySelector('input[name="keep-email-2"]:checked');
+            const speed = document.querySelector('input[name="speed-2"]:checked');
+            
+            if (requestType?.value === 'objection') {
+                correct++;
+                feedback += '✅ Correct: This is an objection to marketing processing<br>';
+            } else {
+                feedback += '❌ Incorrect: This is an objection to processing for marketing purposes<br>';
+            }
+            
+            if (keepEmail?.value === 'ask') {
+                correct++;
+                feedback += '✅ Correct: Ask what processing is acceptable for legitimate business needs<br>';
+            } else {
+                feedback += '❌ Incorrect: You can keep email for legitimate business needs (order confirmations) but should ask what\'s acceptable<br>';
+            }
+            
+            if (speed?.value === 'immediately') {
+                correct++;
+                feedback += '✅ Correct: Stop marketing emails immediately<br>';
+            } else {
+                feedback += '❌ Incorrect: Must stop marketing processing immediately when customer objects<br>';
+            }
+            
+        } else if (scenarioNumber === 3) {
+            // Scenario 3: Jenny's Employee Request
+            const requestType = document.querySelector('input[name="request-type-3"]:checked');
+            const emergency = document.querySelector('input[name="emergency-3"]:checked');
+            const review = document.querySelector('input[name="review-3"]:checked');
+            
+            if (requestType?.value === 'both') {
+                correct++;
+                feedback += '✅ Correct: Both rectification (correct contact) and access (get review copy)<br>';
+            } else {
+                feedback += '❌ Incorrect: This includes both rectification and access requests<br>';
+            }
+            
+            if (emergency?.value === 'verify-first') {
+                correct++;
+                feedback += '✅ Correct: Verify identity then update emergency contact promptly<br>';
+            } else {
+                feedback += '❌ Incorrect: Verify identity first, then update emergency contact - it\'s a safety issue<br>';
+            }
+            
+            if (review?.value === 'yes-immediately') {
+                correct++;
+                feedback += '✅ Correct: Employees have right to access their own performance reviews<br>';
+            } else {
+                feedback += '❌ Incorrect: Employee has right to access their own performance review data<br>';
+            }
         }
         
         // Display feedback
         const feedbackElement = document.getElementById(`scenario-${scenarioNumber}-feedback`);
         if (feedbackElement) {
             feedbackElement.innerHTML = `
-                <h4>Scenario ${scenarioNumber} Results: ${correct}/3</h4>
+                <h4>Scenario ${scenarioNumber} Results: ${correct}/${total}</h4>
                 <div class="feedback-content">${feedback}</div>
             `;
             feedbackElement.classList.remove('hidden');
         }
         
-        if (correct === 3) {
+        // Update scenario completion tracking
+        if (correct === total) {
             this.state.scenariosCompleted++;
-            if (this.state.scenariosCompleted >= 1) { // Simplified for demo
+            
+            // Mark scenario as complete
+            document.getElementById(`scenario-${scenarioNumber}`).classList.add('completed');
+            
+            // Update completion counter
+            const completionDisplay = document.getElementById('rights-completion');
+            if (completionDisplay) {
+                completionDisplay.textContent = `Scenarios Completed: ${this.state.scenariosCompleted}/3`;
+            }
+            
+            // Show next scenario or enable completion
+            if (this.state.scenariosCompleted < 3) {
+                // Show next scenario after delay
+                setTimeout(() => {
+                    document.getElementById(`scenario-${scenarioNumber}`).classList.remove('active');
+                    const nextScenario = document.getElementById(`scenario-${scenarioNumber + 1}`);
+                    if (nextScenario) {
+                        nextScenario.classList.add('active');
+                        this.showNotification(`Scenario ${scenarioNumber} complete! Moving to scenario ${scenarioNumber + 1}...`, 'success');
+                    }
+                }, 2000);
+            } else {
+                // All scenarios completed
                 this.state.rightsComplete = true;
                 const completeBtn = document.getElementById('complete-phase-3');
                 if (completeBtn) {
                     completeBtn.disabled = false;
                 }
-                this.showBadgeNotification('🏆 Rights Management Master!');
+                this.showBadgeNotification('🏆 Rights Management Master! Privacy Champion Badge Earned!');
             }
+        } else {
+            // Show what they got wrong
+            this.showNotification(`${correct}/${total} correct. Review the feedback and try again if needed.`, 'warning');
         }
     },
 
