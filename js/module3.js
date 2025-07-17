@@ -808,7 +808,24 @@ const module3Manager = {
 
     completeModule() {
         this.updateProgress(100);
-        this.showBadgeNotification("🎓 Module 3 Complete - Internet Security Master!");
+        
+        // Show completion with badge
+        const completionHTML = `
+            <div style="text-align: center; padding: 40px;">
+                <img src="images/certificates/badge-internet-expert.png" alt="Internet Expert Badge" style="width: 150px; height: 150px; margin-bottom: 20px;">
+                <h2 style="color: #00ffff; margin-bottom: 15px;">🎓 Congratulations!</h2>
+                <p style="font-size: 1.3rem; color: #00ff00; margin-bottom: 20px;">You have won your Internet Expert Badge!</p>
+                <p style="font-size: 1.1rem; margin-bottom: 30px;">You've mastered internet security protocols and can now safely navigate the digital world.</p>
+            </div>
+        `;
+        
+        // Show completion screen
+        const assessmentContainer = document.getElementById('assessment-container');
+        if (assessmentContainer) {
+            assessmentContainer.innerHTML = completionHTML;
+        }
+        
+        this.showBadgeNotification("🏆 Internet Expert Badge Earned!");
         
         // Save progress to localStorage for integration with your progress system
         const moduleData = {
@@ -816,7 +833,8 @@ const module3Manager = {
             completed: true,
             score: Math.round((this.assessmentScore / this.assessmentQuestions.length) * 100),
             completedAt: new Date().toISOString(),
-            timeSpent: Date.now() - (this.startTime || Date.now())
+            timeSpent: Date.now() - (this.startTime || Date.now()),
+            badgeEarned: "Internet Expert"
         };
         
         localStorage.setItem('module3_progress', JSON.stringify(moduleData));
@@ -829,7 +847,7 @@ const module3Manager = {
         // Redirect after showing completion
         setTimeout(() => {
             window.location.href = 'index.html';
-        }, 3000);
+        }, 5000);
     },
 
     showBadgeNotification(text) {
