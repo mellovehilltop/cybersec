@@ -17,7 +17,7 @@
             </button>
             <div class="module-info">
                 <div class="module-title-section">
-                    <!-- ICON FIX: Replaced old div structure with a single, accessible span -->
+                    <!-- FIX: Replaced old div structure with a single, accessible span -->
                     <span class="icon icon-gdpr-shield" role="img" aria-label="GDPR Shield Icon"></span>
                     <h1>MODULE 05: GDPR DATA PROTECTION</h1>
                 </div>
@@ -33,7 +33,7 @@
     <section id="briefing-section" class="training-section active">
         <div class="container briefing-content">
             <div class="section-header">
-                <!-- ICON FIX: Replaced old div structure -->
+                <!-- FIX: Replaced old div structure -->
                 <span class="icon icon-data-breach-alert" role="img" aria-label="Data Breach Alert Icon"></span>
                 <h2>MISSION BRIEFING</h2>
                 <p>Threat Assessment: UK Data Protection Crisis</p>
@@ -61,7 +61,7 @@
             <div class="phase-overview">
                 <h3>Training Phases</h3>
                 <div class="phase-cards">
-                    <!-- ACCESSIBILITY & JS FIX: Added role and tabindex to make these accessible. data-action can be added if they need to be clickable. -->
+                    <!-- FIX: Added role and tabindex for accessibility -->
                     <div class="phase-card" data-phase="1" role="button" tabindex="0">
                         <div class="phase-number">1</div>
                         <h4>Data Discovery</h4>
@@ -93,21 +93,39 @@
     <section id="training-phase-1" class="training-section">
         <div class="container">
             <div class="section-header">
+                <!-- FIX: Replaced old div structure -->
                 <span class="icon icon-data-breach-alert" role="img" aria-label="Data Breach Alert Icon"></span>
                 <h2>PHASE 1: DATA DISCOVERY</h2>
                 <p>Identify all personal data in Hilltop Honey's operations</p>
             </div>
 
+            <!-- ICO Fine Calculator -->
             <div class="interactive-tool">
                 <h3>💰 ICO Fine Impact Calculator</h3>
-                <!-- ... ICO Calculator content remains the same ... -->
+                <p>See what a data breach could cost Hilltop Honey:</p>
+                <div class="fine-calculator">
+                    <label for="breach-size">Number of customers affected:</label>
+                    <input type="range" id="breach-size" min="100" max="50000" value="5000" step="100">
+                    <span id="breach-count">5,000</span> customers
+                    
+                    <div class="fine-result">
+                        <div class="fine-amount">Potential ICO Fine: £<span id="fine-amount">125,000</span></div>
+                        <div class="additional-costs">
+                            + Legal costs: £<span id="legal-costs">25,000</span><br>
+                            + Reputation damage: £<span id="reputation-costs">200,000</span><br>
+                            + Customer compensation: £<span id="compensation-costs">50,000</span>
+                        </div>
+                        <div class="total-cost">Total Cost: £<span id="total-cost">400,000</span></div>
+                    </div>
+                </div>
             </div>
 
-            <!-- CONTENT FIX: Restored the full, original content for the Data Inventory Game -->
+            <!-- Data Inventory Game -->
             <div class="interactive-tool">
                 <h3>🕵️ Data Detective: What Data Do We Handle?</h3>
                 <p>Click on each area of Hilltop Honey to discover what personal data we collect:</p>
                 <div class="data-inventory-grid">
+                    <!-- FIX: Added role and tabindex for accessibility -->
                     <div class="data-area" data-area="customer-orders" role="button" tabindex="0">
                         <img src="images/module5/customer-data-flow.png" alt="Customer Orders">
                         <h4>Customer Orders</h4>
@@ -175,7 +193,9 @@
                 <div id="data-inventory-score" class="score-display">Areas Discovered: 0/4</div>
             </div>
 
-            <button data-action="complete-phase" data-phase="1" class="btn btn-success" id="complete-phase-1" disabled>COMPLETE PHASE 1 ✓</button>
+            <button data-action="complete-phase" data-phase="1" class="btn btn-success" id="complete-phase-1" disabled>
+                COMPLETE PHASE 1 ✓
+            </button>
         </div>
     </section>
 
@@ -183,43 +203,126 @@
     <section id="training-phase-2" class="training-section">
         <div class="container">
             <div class="section-header">
+                <!-- FIX: Replaced old div structure -->
                 <span class="icon icon-personal-data" role="img" aria-label="Personal Data Icon"></span>
                 <h2>PHASE 2: DATA CLASSIFICATION</h2>
                 <p>Sort Hilltop Honey's business documents by their data protection requirements</p>
             </div>
-            
-            <!-- ... Classification Guide content ... -->
 
+            <!-- Classification Guide -->
+            <div class="classification-guide">
+                <h3>📋 Data Classification Levels</h3>
+                <div class="classification-grid">
+                    <div class="classification-level public">
+                        <h4>Public</h4>
+                        <p>Information freely shared with anyone</p>
+                        <small>Example: Marketing materials, public prices</small>
+                    </div>
+                    <div class="classification-level internal">
+                        <h4>Internal</h4>
+                        <p>Information for Hilltop Honey staff only</p>
+                        <small>Example: Staff directories, meeting minutes</small>
+                    </div>
+                    <div class="classification-level confidential">
+                        <h4>Confidential</h4>
+                        <p>Sensitive business information</p>
+                        <small>Example: Customer lists, supplier contracts</small>
+                    </div>
+                    <div class="classification-level restricted">
+                        <h4>Restricted</h4>
+                        <p>Highly sensitive, special category data</p>
+                        <small>Example: Medical records, recipe formulations</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Drag and Drop Classification Game -->
             <div class="classification-game">
                 <h3>🎯 Sort These Hilltop Honey Documents</h3>
+                
                 <div class="documents-to-sort">
                     <div class="document-card" draggable="true" data-classification="public" data-document="marketing-flyer">
+                        <!-- FIX: Replaced old div structure -->
                         <span class="icon icon-document" role="img" aria-label="Document Icon"></span>
                         <h4>Honey Product Brochure</h4>
                         <p>Marketing materials for trade shows</p>
                     </div>
+                    
                     <div class="document-card" draggable="true" data-classification="internal" data-document="staff-schedule">
                         <span class="icon icon-document" role="img" aria-label="Document Icon"></span>
                         <h4>Production Shift Schedule</h4>
                         <p>Weekly staff rota for honey processing</p>
                     </div>
+                    
                     <div class="document-card" draggable="true" data-classification="confidential" data-document="customer-list">
                         <span class="icon icon-document" role="img" aria-label="Document Icon"></span>
                         <h4>Premium Customer Database</h4>
                         <p>Contact details of bulk honey buyers</p>
                     </div>
+                    
                     <div class="document-card" draggable="true" data-classification="restricted" data-document="allergen-records">
                         <span class="icon icon-document" role="img" aria-label="Document Icon"></span>
                         <h4>Customer Allergen Records</h4>
                         <p>Health information for special dietary needs</p>
                     </div>
-                    <!-- ... other document cards ... -->
+                    
+                    <div class="document-card" draggable="true" data-classification="internal" data-document="meeting-minutes">
+                        <span class="icon icon-document" role="img" aria-label="Document Icon"></span>
+                        <h4>Quality Team Meeting Notes</h4>
+                        <p>Internal discussion about process improvements</p>
+                    </div>
+                    
+                    <div class="document-card" draggable="true" data-classification="confidential" data-document="supplier-contract">
+                        <span class="icon icon-document" role="img" aria-label="Document Icon"></span>
+                        <h4>Bee Farm Supplier Agreement</h4>
+                        <p>Commercial terms with honey suppliers</p>
+                    </div>
+                    
+                    <div class="document-card" draggable="true" data-classification="restricted" data-document="recipe-formula">
+                        <span class="icon icon-document" role="img" aria-label="Document Icon"></span>
+                        <h4>Honey Blend Secret Recipe</h4>
+                        <p>Proprietary formulation for signature products</p>
+                    </div>
+                    
+                    <div class="document-card" draggable="true" data-classification="public" data-document="price-list">
+                        <span class="icon icon-document" role="img" aria-label="Document Icon"></span>
+                        <h4>Public Wholesale Prices</h4>
+                        <p>Standard pricing for retail customers</p>
+                    </div>
                 </div>
-                <!-- ... drop zones ... -->
+
+                <div class="classification-drop-zones">
+                    <div class="drop-zone" data-level="public">
+                        <h4>Public</h4>
+                        <div class="drop-area">Drop documents here</div>
+                        <div class="document-count">0/2 correct</div>
+                    </div>
+                    
+                    <div class="drop-zone" data-level="internal">
+                        <h4>Internal</h4>
+                        <div class="drop-area">Drop documents here</div>
+                        <div class="document-count">0/2 correct</div>
+                    </div>
+                    
+                    <div class="drop-zone" data-level="confidential">
+                        <h4>Confidential</h4>
+                        <div class="drop-area">Drop documents here</div>
+                        <div class="document-count">0/2 correct</div>
+                    </div>
+                    
+                    <div class="drop-zone" data-level="restricted">
+                        <h4>Restricted</h4>
+                        <div class="drop-area">Drop documents here</div>
+                        <div class="document-count">0/2 correct</div>
+                    </div>
+                </div>
+                
                 <div id="classification-score" class="score-display">Documents Classified: 0/8</div>
             </div>
 
-            <button data-action="complete-phase" data-phase="2" class="btn btn-success" id="complete-phase-2" disabled>COMPLETE PHASE 2 ✓</button>
+            <button data-action="complete-phase" data-phase="2" class="btn btn-success" id="complete-phase-2" disabled>
+                COMPLETE PHASE 2 ✓
+            </button>
         </div>
     </section>
 
@@ -227,46 +330,103 @@
     <section id="training-phase-3" class="training-section">
         <div class="container">
             <div class="section-header">
+                <!-- FIX: Replaced old div structure -->
                 <span class="icon icon-consent-checkbox" role="img" aria-label="Consent Checkbox Icon"></span>
                 <h2>PHASE 3: DATA SUBJECT RIGHTS</h2>
                 <p>Handle customer and employee data requests correctly and within legal deadlines</p>
             </div>
 
-            <!-- ... Rights Overview content ... -->
+            <!-- Rights Overview -->
+            <div class="rights-overview">
+                <h3>🛡️ Individual Data Protection Rights</h3>
+                <div class="rights-grid">
+                    <div class="right-card"><h4>Access</h4><p>Copy of all their personal data</p><span class="deadline">1 month deadline</span></div>
+                    <div class="right-card"><h4>Rectification</h4><p>Correct inaccurate information</p><span class="deadline">1 month deadline</span></div>
+                    <div class="right-card"><h4>Erasure</h4><p>Delete their personal data</p><span class="deadline">1 month deadline</span></div>
+                    <div class="right-card"><h4>Portability</h4><p>Data in machine-readable format</p><span class="deadline">1 month deadline</span></div>
+                    <div class="right-card"><h4>Objection</h4><p>Stop processing for specific purposes</p><span class="deadline">Immediate</span></div>
+                    <div class="right-card"><h4>Restriction</h4><p>Limit processing while disputed</p><span class="deadline">Immediate</span></div>
+                </div>
+            </div>
 
+            <!-- Rights Request Scenarios with Improved Layout -->
             <div id="rights-request-simulator">
                 <h3>📧 Handle These Hilltop Honey Customer Requests</h3>
                 
-                <!-- Scenario 1 -->
+                <!-- Scenario 1: Subject Access Request -->
                 <div class="request-scenario active" id="scenario-1">
                     <div class="scenario-layout">
-                        <!-- ... (Procedure Guide content) ... -->
+                        <!-- Left side: Comprehensive Procedure Guide -->
+                        <div class="rights-reference">
+                            <h4>📋 Subject Access Request Procedure</h4>
+                            <div class="procedure-guide">
+                                <div class="procedure-step"><strong>STEP 1: Verify Identity</strong><p>Always verify the person's identity first before sending any personal data. Ask for ID or security questions.</p></div>
+                                <div class="procedure-step"><strong>STEP 2: Search All Systems</strong><p>Look in: customer database, order history, complaint records, marketing lists, any notes about allergies/preferences.</p></div>
+                                <div class="procedure-step"><strong>STEP 3: Compile Data</strong><p>Gather ALL personal information we hold about them - even handwritten notes count as personal data.</p></div>
+                                <div class="procedure-step"><strong>STEP 4: Remove Third Party Data</strong><p>If our records mention other people, redact those names before sending.</p></div>
+                                <div class="procedure-step"><strong>DEADLINE: 1 Month</strong><p>You have 1 month from receiving the request to provide the data. This is free for the customer.</p></div>
+                                <div class="key-point"><strong>⚠️ NEVER send personal data without verifying identity first!</strong></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Right side: Scenario Questions -->
                         <div class="scenario-content">
-                            <!-- ... (Customer Request content) ... -->
-                            <!-- ONCLICK REMOVED: Replaced with data-action and data-scenario-id -->
+                            <div class="customer-request">
+                                <h4>Customer Request #1</h4>
+                                <div class="request-details"><strong>From:</strong> sarah.jones@email.com<br><strong>Subject:</strong> Request for my data<br><strong>Message:</strong> "Hi, I've been ordering honey from you for 3 years. I want to see all the information you have about me, including my order history and any notes about my nut allergy. Can you send me everything please?"</div>
+                                <div class="request-questions">
+                                    <h5>What type of request is this?</h5><div class="question-options"><label><input type="radio" name="request-type-1" value="access"> Subject Access Request</label><label><input type="radio" name="request-type-1" value="rectification"> Rectification Request</label><label><input type="radio" name="request-type-1" value="erasure"> Erasure Request</label><label><input type="radio" name="request-type-1" value="portability"> Data Portability Request</label></div>
+                                    <h5>What must you do first?</h5><div class="question-options"><label><input type="radio" name="first-step-1" value="send-data"> Send all her data immediately</label><label><input type="radio" name="first-step-1" value="verify-identity"> Verify her identity</label><label><input type="radio" name="first-step-1" value="charge-fee"> Request admin fee payment</label><label><input type="radio" name="first-step-1" value="refuse"> Refuse as too complex</label></div>
+                                    <h5>What's your deadline to respond?</h5><div class="question-options"><label><input type="radio" name="deadline-1" value="72-hours"> 72 hours</label><label><input type="radio" name="deadline-1" value="1-week"> 1 week</label><label><input type="radio" name="deadline-1" value="1-month"> 1 month</label><label><input type="radio" name="deadline-1" value="3-months"> 3 months</label></div>
+                                </div>
+                            </div>
+                            <!-- FIX: Removed onclick, added data-action and data-scenario-id -->
                             <button class="scenario-btn" data-action="check-rights-scenario" data-scenario-id="1">Check Answers</button>
                             <div id="scenario-1-feedback" class="feedback hidden"></div>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Scenarios 2 & 3 -->
-                <!-- ... (Full content for scenarios 2 and 3) ... -->
+                <!-- Scenario 2: Marketing Objection -->
                 <div class="request-scenario" id="scenario-2">
-                    <!-- ... -->
-                    <button class="scenario-btn" data-action="check-rights-scenario" data-scenario-id="2">Check Answers</button>
-                    <!-- ... -->
+                    <div class="scenario-layout">
+                        <div class="rights-reference"><h4>🚫 Marketing Objection Procedure</h4><!-- ... --></div>
+                        <div class="scenario-content">
+                            <div class="customer-request">
+                                <h4>Customer Request #2</h4>
+                                <div class="request-details"><strong>From:</strong> mike.thompson@company.com<br><strong>Subject:</strong> Unsubscribe from all emails<br><strong>Message:</strong> "I keep getting marketing emails... Please stop..."</div>
+                                <!-- ... -->
+                            </div>
+                            <!-- FIX: Removed onclick, added data-action and data-scenario-id -->
+                            <button class="scenario-btn" data-action="check-rights-scenario" data-scenario-id="2">Check Answers</button>
+                            <div id="scenario-2-feedback" class="feedback hidden"></div>
+                        </div>
+                    </div>
                 </div>
+                
+                <!-- Scenario 3: Employee Data Rectification -->
                 <div class="request-scenario" id="scenario-3">
-                    <!-- ... -->
-                    <button class="scenario-btn" data-action="check-rights-scenario" data-scenario-id="3">Check Answers</button>
-                    <!-- ... -->
+                    <div class="scenario-layout">
+                        <div class="rights-reference"><h4>👥 Employee Data Request Procedure</h4><!-- ... --></div>
+                        <div class="scenario-content">
+                            <div class="customer-request">
+                                <h4>Employee Request #3</h4>
+                                <div class="request-details"><strong>From:</strong> jenny.baker@hilltophoney.com<br><strong>Subject:</strong> Correction to my personnel file<br><strong>Message:</strong> "HR has the wrong emergency contact number..."</div>
+                                <!-- ... -->
+                            </div>
+                            <!-- FIX: Removed onclick, added data-action and data-scenario-id -->
+                            <button class="scenario-btn" data-action="check-rights-scenario" data-scenario-id="3">Check Answers</button>
+                            <div id="scenario-3-feedback" class="feedback hidden"></div>
+                        </div>
+                    </div>
                 </div>
                 
                 <div id="rights-completion" class="score-display">Scenarios Completed: 0/3</div>
             </div>
 
-            <button data-action="complete-phase" data-phase="3" class="btn btn-success" id="complete-phase-3" disabled>COMPLETE PHASE 3 ✓</button>
+            <button data-action="complete-phase" data-phase="3" class="btn btn-success" id="complete-phase-3" disabled>
+                COMPLETE PHASE 3 ✓
+            </button>
         </div>
     </section>
 
@@ -274,30 +434,35 @@
     <section id="training-phase-4" class="training-section">
         <div class="container">
             <div class="section-header">
+                <!-- FIX: Replaced old div structure -->
                 <span class="icon icon-data-breach-alert" role="img" aria-label="Data Breach Alert Icon"></span>
                 <h2>PHASE 4: BREACH RESPONSE</h2>
                 <p>Respond to data security incidents within legal deadlines - 72 hours to ICO</p>
             </div>
 
-            <!-- ... (Breach Guide and Timeline content) ... -->
-            
-            <div class="scenario-navigation">
-                <h3>🎯 LIVE BREACH SIMULATION</h3>
-                <p>Test your response to 3 different data breach scenarios. Each scenario has different risk levels and requirements.</p>
-                <div class="scenario-selector">
-                    <!-- ONCLICK REMOVED: Replaced with data-action -->
-                    <button class="scenario-btn" data-action="show-breach-scenario" data-scenario-id="0">Scenario 1: Email Error</button>
-                    <button class="scenario-btn" data-action="show-breach-scenario" data-scenario-id="1">Scenario 2: Laptop Theft</button>
-                    <button class="scenario-btn" data-action="show-breach-scenario" data-scenario-id="2">Scenario 3: System Hack</button>
+            <div class="breach-guide">
+                <h3>⚡ 72-Hour Breach Response Procedures</h3>
+                <div class="timeline"><!-- Populated by JS --></div>
+                <div class="interactive-tool"><h3>📋 Email Breach Response Guide</h3><!-- ... --></div>
+
+                <div class="scenario-navigation">
+                    <h3>🎯 LIVE BREACH SIMULATION</h3>
+                    <p>Test your response to 3 different data breach scenarios. Each scenario has different risk levels and requirements.</p>
+                    <div class="scenario-selector">
+                        <!-- FIX: Removed onclick, added data-action and data-scenario-id -->
+                        <button class="scenario-btn" data-action="show-breach-scenario" data-scenario-id="0">Scenario 1: Email Error</button>
+                        <button class="scenario-btn" data-action="show-breach-scenario" data-scenario-id="1">Scenario 2: Laptop Theft</button>
+                        <button class="scenario-btn" data-action="show-breach-scenario" data-scenario-id="2">Scenario 3: System Hack</button>
+                    </div>
                 </div>
+
+                <div id="breach-scenarios-container"></div>
+                <div id="breach-completion" class="score-display">Scenarios Completed: 0/3</div>
             </div>
 
-            <div id="breach-scenarios-container"></div>
-            <div id="breach-completion" class="score-display">Scenarios Completed: 0/3</div>
-        </div>
-
-        <div class="phase-completion">
-            <button data-action="complete-module" data-module="5" class="btn btn-success" id="complete-module-5" disabled>COMPLETE MODULE 5 - GDPR DATA GUARDIAN ✓</button>
+            <div class="phase-completion">
+                <button data-action="complete-module" data-module="5" class="btn btn-success" id="complete-module-5" disabled>COMPLETE MODULE 5 - GDPR DATA GUARDIAN ✓</button>
+            </div>
         </div>
     </section>
 
@@ -305,17 +470,36 @@
     <section id="assessment-complete" class="training-section">
         <div class="container">
             <div class="section-header">
+                <!-- FIX: Replaced old div structure -->
                 <span class="icon icon-gdpr-shield" role="img" aria-label="GDPR Shield Icon"></span>
                 <h2>🏆 DATA GUARDIAN CERTIFIED</h2>
                 <p>Module 5: GDPR Data Protection Training Complete</p>
             </div>
 
             <div class="completion-summary">
-                <!-- ... (Score summary content) ... -->
-                <div class="action-buttons">
-                    <!-- ONCLICK REMOVED: Replaced with data-action -->
-                    <button data-action="download-certificate" class="certificate-btn">Download Certificate</button>
-                    <button data-action="return-home" class="menu-btn">Return to Mission Control</button>
+                <div class="score-summary">
+                    <h3>Your Results</h3>
+                    <div class="final-score">Score: <span id="final-score">95</span>%</div>
+                    <div class="completion-time">Time: <span id="completion-time">22</span> minutes</div>
+                </div>
+
+                <div class="badges-earned">
+                    <h3>Badges Earned</h3>
+                    <div class="badge-display">
+                        <div class="badge earned"><img src="images/module5/badge-data-classifier.png" alt="Data Classifier" class="ai-generated-badge"><span>Data Classifier</span></div>
+                        <div class="badge earned"><img src="images/module5/badge-privacy-champion.png" alt="Privacy Champion" class="ai-generated-badge"><span>Privacy Champion</span></div>
+                        <div class="badge earned"><img src="images/module5/badge-compliance-guardian.png" alt="Compliance Guardian" class="ai-generated-badge"><span>Compliance Guardian</span></div>
+                    </div>
+                </div>
+
+                <div class="next-steps">
+                    <h3>Next Steps</h3>
+                    <p>You've mastered GDPR compliance for Hilltop Honey! Apply these principles in your daily work to protect customer data and avoid ICO fines.</p>
+                    <div class="action-buttons">
+                        <!-- FIX: Removed onclick, added data-action -->
+                        <button data-action="download-certificate" class="certificate-btn">Download Certificate</button>
+                        <button data-action="return-home" class="menu-btn">Return to Mission Control</button>
+                    </div>
                 </div>
             </div>
         </div>
