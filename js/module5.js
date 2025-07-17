@@ -9,6 +9,27 @@ const Module5 = {
         buttons: document.querySelectorAll('[data-action]')
     },
 
+    // Reset scenario for retry
+    resetScenario(scenarioNumber) {
+        // Clear all radio button selections for this scenario
+        const scenarioElement = document.getElementById(`scenario-${scenarioNumber}`);
+        if (scenarioElement) {
+            const radioButtons = scenarioElement.querySelectorAll('input[type="radio"]');
+            radioButtons.forEach(radio => {
+                radio.checked = false;
+            });
+            
+            // Hide feedback
+            const feedbackElement = document.getElementById(`scenario-${scenarioNumber}-feedback`);
+            if (feedbackElement) {
+                feedbackElement.classList.add('hidden');
+            }
+            
+            // Show hint message
+            this.showNotification('Questions reset! Use the procedure guide to help you answer correctly.', 'info');
+        }
+    },
+
     // Module state
     state: {
         currentPhase: 0,
@@ -426,13 +447,27 @@ const Module5 = {
             }
         }
         
-        // Display feedback
+        // Display feedback with reset option for wrong answers
         const feedbackElement = document.getElementById(`scenario-${scenarioNumber}-feedback`);
         if (feedbackElement) {
-            feedbackElement.innerHTML = `
+            let feedbackHTML = `
                 <h4>Scenario ${scenarioNumber} Results: ${correct}/${total}</h4>
                 <div class="feedback-content">${feedback}</div>
             `;
+            
+            // Add reset button if not all correct
+            if (correct < total) {
+                feedbackHTML += `
+                    <div class="reset-section">
+                        <p><strong>Review the procedure guide on the left, then try again.</strong></p>
+                        <button class="reset-btn" onclick="Module5.resetScenario(${scenarioNumber})">
+                            🔄 Reset & Try Again
+                        </button>
+                    </div>
+                `;
+            }
+            
+            feedbackElement.innerHTML = feedbackHTML;
             feedbackElement.classList.remove('hidden');
         }
         
