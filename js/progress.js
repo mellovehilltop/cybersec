@@ -1,481 +1,525 @@
 /**
- * js/progress.js
- *
- * Manages all training progress, including loading from and saving to
- * localStorage. This ensures progress is not lost between sessions.
- * It provides a global `digitalShieldProgress` object for other scripts to use.
+ * progress.js - Digital Shield Training Progress Tracker
+ * 
+ * Comprehensive progress tracking system for all 5 cyber security training modules.
+ * Handles phase progress, module completion, scoring, and persistent storage.
  */
-const digitalShieldProgress = {
-    // The key used to save progress in the browser's storage.
-    storageKey: 'digitalShieldUserProgress',
-    // The default state for progress when none is saved.
-    totalModules: 5, // IMPORTANT: Update this number if you add more modules!
-    progress: {},
 
-    /**
-     * Initializes the progress tracker by loading saved data or creating a new state.
-     */
+const digitalShieldProgress = {
+    // --- CONFIGURATION ---
+    totalModules: 5,
+    passingScore: 75,
+    storageKey: 'digitalShieldProgress',
+    
+    // --- MODULE DEFINITIONS ---
+    moduleConfig: {
+        1: {
+            name: 'Email Security',
+            subtitle: 'The Interceptor Protocol',
+            phases: 4,
+            icon: '📧',
+            difficulty: 'LEVEL 3',
+            duration: '15 min'
+        },
+        2: {
+            name: 'Password Security',
+            subtitle: 'The Vault Protocol',
+            phases: 4,
+            icon: '🔐',
+            difficulty: 'LEVEL 2',
+            duration: '12 min'
+        },
+        3: {
+            name: 'Internet Security Protocols',
+            subtitle: 'Digital Navigator',
+            phases: 4,
+            icon: '🌐',
+            difficulty: 'LEVEL 3',
+            duration: '18 min'
+        },
+        4: {
+            name: 'Physical Security',
+            subtitle: 'Facility Guardian',
+            phases: 4,
+            icon: '🏢',
+            difficulty: 'LEVEL 4',
+            duration: '20 min'
+        },
+        5: {
+            name: 'GDPR Data Protection',
+            subtitle: 'Data Guardian',
+            phases: 4,
+            icon: '🛡️',
+            difficulty: 'LEVEL 5',
+            duration: '22 min'
+        }
+    },
+
+    // --- PROGRESS DATA STRUCTURE ---
+    progress: {
+        agent: {
+            name: '[CLASSIFIED]',
+            startDate: null,
+            lastAccessed: null,
+            totalTimeSpent: 0,
+            overallProgress: 0,
+            clearanceLevel: 'TRAINEE'
+        },
+        modules: {
+            1: { started: false, completed: false, score: 0, currentPhase: 1, phaseProgress: [0, 0, 0, 0], timeSpent: 0, attempts: 0, badges: [] },
+            2: { started: false, completed: false, score: 0, currentPhase: 1, phaseProgress: [0, 0, 0, 0], timeSpent: 0, attempts: 0, badges: [] },
+            3: { started: false, completed: false, score: 0, currentPhase: 1, phaseProgress: [0, 0, 0, 0], timeSpent: 0, attempts: 0, badges: [] },
+            4: { started: false, completed: false, score: 0, currentPhase: 1, phaseProgress: [0, 0, 0, 0], timeSpent: 0, attempts: 0, badges: [] },
+            5: { started: false, completed: false, score: 0, currentPhase: 1, phaseProgress: [0, 0, 0, 0], timeSpent: 0, attempts: 0, badges: [] }
+        },
+        achievements: {
+            totalBadges: 0,
+            unlockedBadges: [],
+            completionCertificates: []
+        }
+    },
+
+    // --- INITIALIZATION ---
     init() {
         this.loadProgress();
-        console.log("Digital Shield Progress Initialized.");
+        this.updateLastAccessed();
+        this.updateDisplay();
+        this.unlockAvailableModules();
+        
+        console.log('Digital Shield Progress Tracker initialized');
+        return true;
     },
 
-    /**
-     * Loads progress from localStorage. If no data is found, it creates a fresh state.
-     */
-    loadProgress() {
-        const savedProgress = localStorage.getItem(this.storageKey);
-        if (savedProgress) {
-            this.progress = JSON.parse(savedProgress);
-            // Ensure the totalModules count is up-to-date in case it changed.
-            if (Object.keys(this.progress).length !== this.totalModules) {
-                this.resetProgress(); // Reset if module count mismatch.
-            }
-        } else {
-            this.resetProgress();
-        }
-    },
-
-    /**
-     * Saves the current progress state to localStorage.
-     */
+    // --- PROGRESS PERSISTENCE ---
     saveProgress() {
-        localStorage.setItem(this.storageKey, JSON.stringify(this.progress));
-    },
-
-    /**
-     * Resets all progress to its initial state.
-     */
-    resetProgress() {
-        this.progress = {};
-        for (let i = 1; i <= this.totalModules; i++) {
-            this.progress[i] = { score: 0, completed: false };
+        try {
+            const progressData = {
+                ...this.progress,
+                version: '1.0',
+                lastSaved: new Date().toISOString()
+            };
+            localStorage.setItem(this.storageKey, JSON.stringify(progressData));
+            console.log('Progress saved successfully');
+        } catch (error) {
+            console.error('Failed to save progress:', error);
+            this.showAlert('Warning: Progress could not be saved. Your progress may be lost.');
         }
-        this.saveProgress();
     },
 
-    /**
-     * Checks if a specific module is unlocked.
-     * @param {number | string} moduleNumber - The module to check.
-     * @returns {boolean} - True if the module is unlocked.
-     */
-    isModuleUnlocked(moduleNumber) {
-        const num = parseInt(moduleNumber, 10);
+    loadProgress() {
+        try {
+            const saved = localStorage.getItem(this.storageKey);
+            if (saved) {
+                const loadedData = JSON.parse(saved);
+                
+                // Merge with default structure to handle version updates
+                this.progress = this.mergeProgress(this.progress, loadedData);
+                
+                console.log('Progress loaded successfully');
+            } else {
+                // First time user - initialize with defaults
+                this.progress.agent.startDate = new Date().toISOString();
+                this.saveProgress();
+            }
+        } catch (error) {
+            console.error('Failed to load progress:', error);
+            this.showAlert('Warning: Could not load previous progress. Starting fresh.');
+        }
+    },
+
+    mergeProgress(defaultProgress, savedProgress) {
+        const merged = JSON.parse(JSON.stringify(defaultProgress));
         
-        // ** THE CRITICAL FIX IS HERE **
-        // Module 1 is ALWAYS unlocked. It's the starting point.
-        if (num === 1) {
-            return true;
+        // Merge agent data
+        if (savedProgress.agent) {
+            merged.agent = { ...merged.agent, ...savedProgress.agent };
         }
         
-        // For all other modules, check if the PREVIOUS module is completed.
-        const previousModule = num - 1;
-        return this.isModuleCompleted(previousModule);
+        // Merge module data
+        if (savedProgress.modules) {
+            for (let moduleId = 1; moduleId <= this.totalModules; moduleId++) {
+                if (savedProgress.modules[moduleId]) {
+                    merged.modules[moduleId] = { 
+                        ...merged.modules[moduleId], 
+                        ...savedProgress.modules[moduleId] 
+                    };
+                }
+            }
+        }
+        
+        // Merge achievements
+        if (savedProgress.achievements) {
+            merged.achievements = { ...merged.achievements, ...savedProgress.achievements };
+        }
+        
+        return merged;
     },
 
-    /**
-     * Checks if a module has been marked as complete.
-     * @param {number | string} moduleNumber - The module to check.
-     * @returns {boolean} - True if the module is complete.
-     */
-    isModuleCompleted(moduleNumber) {
-        const num = parseInt(moduleNumber, 10);
-        return this.progress[num]?.completed || false;
-    },
+    // --- MODULE MANAGEMENT ---
+    startModule(moduleId) {
+        const moduleNum = parseInt(moduleId, 10);
+        if (!this.isValidModule(moduleNum)) {
+            console.error(`Invalid module ID: ${moduleId}`);
+            return false;
+        }
 
-    /**
-     * Marks a module as complete and saves the progress.
-     * @param {number | string} moduleNumber - The module to complete.
-     * @param {number} score - The score achieved for this module.
-     */
-    completeModule(moduleNumber, score) {
-        const num = parseInt(moduleNumber, 10);
-        if (this.progress[num]) {
-            this.progress[num].completed = true;
-            this.progress[num].score = score;
+        if (!this.isModuleAccessible(moduleNum)) {
+            this.showAlert(`Module ${moduleNum} is not yet accessible. Complete previous modules first.`);
+            return false;
+        }
+
+        const module = this.progress.modules[moduleNum];
+        if (!module.started) {
+            module.started = true;
+            module.attempts++;
+            this.updateLastAccessed();
             this.saveProgress();
-            console.log(`Module ${num} completed with score ${score}. Progress saved.`);
+            
+            console.log(`Module ${moduleNum} started`);
+        }
+        
+        return true;
+    },
+
+    updateModulePhase(moduleId, phase, progress, timeSpent = 0) {
+        const moduleNum = parseInt(moduleId, 10);
+        if (!this.isValidModule(moduleNum) || !this.isValidPhase(phase)) {
+            console.error(`Invalid module (${moduleId}) or phase (${phase})`);
+            return false;
+        }
+
+        const module = this.progress.modules[moduleNum];
+        module.phaseProgress[phase - 1] = Math.max(0, Math.min(100, progress));
+        module.currentPhase = Math.max(module.currentPhase, phase);
+        module.timeSpent += timeSpent;
+        
+        this.updateOverallProgress();
+        this.saveProgress();
+        this.updateDisplay();
+        
+        console.log(`Module ${moduleNum} Phase ${phase}: ${progress}% complete`);
+        return true;
+    },
+
+    completeModule(moduleId, score, timeSpent = 0) {
+        const moduleNum = parseInt(moduleId, 10);
+        if (!this.isValidModule(moduleNum)) {
+            console.error(`Invalid module ID: ${moduleId}`);
+            return false;
+        }
+
+        const module = this.progress.modules[moduleNum];
+        const finalScore = Math.max(0, Math.min(100, score));
+        const passed = finalScore >= this.passingScore;
+        
+        // Update module data
+        module.completed = passed;
+        module.score = finalScore;
+        module.timeSpent += timeSpent;
+        module.phaseProgress = [100, 100, 100, 100]; // Mark all phases complete
+        
+        // Update agent data
+        this.progress.agent.totalTimeSpent += timeSpent;
+        
+        // Award badges for excellent performance
+        if (finalScore >= 90) {
+            this.awardBadge(moduleNum, 'Excellence');
+        }
+        if (finalScore >= this.passingScore) {
+            this.awardBadge(moduleNum, 'Completion');
+        }
+        
+        this.updateOverallProgress();
+        this.unlockAvailableModules();
+        this.saveProgress();
+        this.updateDisplay();
+        
+        console.log(`Module ${moduleNum} completed with score: ${finalScore}%`);
+        return passed;
+    },
+
+    // --- BADGE SYSTEM ---
+    awardBadge(moduleId, badgeType) {
+        const moduleNum = parseInt(moduleId, 10);
+        if (!this.isValidModule(moduleNum)) return false;
+
+        const badgeId = `module${moduleNum}_${badgeType.toLowerCase()}`;
+        const module = this.progress.modules[moduleNum];
+        
+        if (!module.badges.includes(badgeId)) {
+            module.badges.push(badgeId);
+            this.progress.achievements.totalBadges++;
+            this.progress.achievements.unlockedBadges.push({
+                id: badgeId,
+                moduleId: moduleNum,
+                type: badgeType,
+                name: `${this.moduleConfig[moduleNum].name} ${badgeType}`,
+                earnedDate: new Date().toISOString()
+            });
+            
+            console.log(`Badge awarded: ${badgeId}`);
+            this.showBadgeNotification(badgeId, badgeType);
+        }
+        
+        return true;
+    },
+
+    showBadgeNotification(badgeId, badgeType) {
+        // This would trigger a UI notification - implement based on your UI framework
+        console.log(`🏆 Achievement unlocked: ${badgeType} Badge!`);
+    },
+
+    // --- VALIDATION HELPERS ---
+    isValidModule(moduleId) {
+        const moduleNum = parseInt(moduleId, 10);
+        return moduleNum >= 1 && moduleNum <= this.totalModules;
+    },
+
+    isValidPhase(phase) {
+        return phase >= 1 && phase <= 4;
+    },
+
+    isModuleAccessible(moduleId) {
+        const moduleNum = parseInt(moduleId, 10);
+        if (moduleNum === 1) return true; // First module always accessible
+        
+        // Check if previous module is completed
+        const previousModule = this.progress.modules[moduleNum - 1];
+        return previousModule && previousModule.completed;
+    },
+
+    isModuleCompleted(moduleId) {
+        const moduleNum = parseInt(moduleId, 10);
+        if (!this.isValidModule(moduleNum)) return false;
+        
+        return this.progress.modules[moduleNum].completed;
+    },
+
+    // --- PROGRESS CALCULATIONS ---
+    updateOverallProgress() {
+        const completedModules = Object.values(this.progress.modules).filter(m => m.completed).length;
+        this.progress.agent.overallProgress = Math.round((completedModules / this.totalModules) * 100);
+        
+        // Update clearance level based on progress
+        if (completedModules === this.totalModules) {
+            this.progress.agent.clearanceLevel = 'CERTIFIED AGENT';
+        } else if (completedModules >= 3) {
+            this.progress.agent.clearanceLevel = 'ADVANCED TRAINEE';
+        } else if (completedModules >= 1) {
+            this.progress.agent.clearanceLevel = 'ACTIVE TRAINEE';
         }
     },
 
-    /**
-     * Calculates and returns statistics about the current progress.
-     * @returns {object} - An object with progress stats.
-     */
+    getModuleProgress(moduleId) {
+        const moduleNum = parseInt(moduleId, 10);
+        if (!this.isValidModule(moduleNum)) return null;
+        
+        const module = this.progress.modules[moduleNum];
+        const avgPhaseProgress = module.phaseProgress.reduce((a, b) => a + b, 0) / 4;
+        
+        return {
+            ...module,
+            config: this.moduleConfig[moduleNum],
+            progressPercentage: module.completed ? 100 : avgPhaseProgress,
+            accessible: this.isModuleAccessible(moduleNum),
+            status: this.getModuleStatus(moduleNum)
+        };
+    },
+
+    getModuleStatus(moduleId) {
+        const moduleNum = parseInt(moduleId, 10);
+        if (!this.isValidModule(moduleNum)) return 'invalid';
+        
+        const module = this.progress.modules[moduleNum];
+        
+        if (module.completed) return 'completed';
+        if (module.started) return 'in-progress';
+        if (this.isModuleAccessible(moduleNum)) return 'available';
+        return 'locked';
+    },
+
     getProgressStats() {
-        const completedModules = Object.values(this.progress).filter(m => m.completed).length;
-        const overallProgress = (completedModules / this.totalModules) * 100;
+        const completedModules = Object.values(this.progress.modules).filter(m => m.completed).length;
+        const totalTimeSpent = this.progress.agent.totalTimeSpent;
+        const totalBadges = this.progress.achievements.totalBadges;
+        
         return {
             completedModules,
-            overallProgress: Math.round(overallProgress),
+            totalModules: this.totalModules,
+            overallProgress: this.progress.agent.overallProgress,
+            totalTimeSpent,
+            totalBadges,
+            clearanceLevel: this.progress.agent.clearanceLevel,
+            averageScore: this.calculateAverageScore()
         };
     },
-};
 
-// Expose the object to the global window scope so other scripts can access it.
-window.digitalShieldProgress = digitalShieldProgress;
-
-// Initialize the progress tracker immediately when the script loads.
-window.digitalShieldProgress.init();
-// Add these functions to your existing js/progress.js file for Module 5 integration
-
-// Extended training progress object for Module 5
-const module5Progress = {
-    dataInventoryComplete: false,
-    classificationScore: 0,
-    rightsScenarios: {
-        scenario1: false,
-        scenario2: false,
-        scenario3: false
-    },
-    breachResponses: {
-        breach1: false,
-        breach2: false,
-        breach3: false
-    },
-    badgesEarned: [],
-    finalScore: 0,
-    completionTime: 0,
-    startTime: null,
-    phaseCompletions: {
-        phase1: false,
-        phase2: false,
-        phase3: false,
-        phase4: false
-    }
-};
-
-// Initialize Module 5 progress tracking
-function initializeModule5Progress() {
-    if (!trainingProgress.modules.module5) {
-        trainingProgress.modules.module5 = {
-            started: false,
-            completed: false,
-            score: 0,
-            timeSpent: 0,
-            badgesEarned: [],
-            phaseProgress: {
-                phase1: 0,
-                phase2: 0,
-                phase3: 0,
-                phase4: 0
-            },
-            detailedProgress: JSON.parse(JSON.stringify(module5Progress))
-        };
-    }
-    
-    // Set start time if not already set
-    if (!trainingProgress.modules.module5.detailedProgress.startTime) {
-        trainingProgress.modules.module5.detailedProgress.startTime = Date.now();
-        trainingProgress.modules.module5.started = true;
-    }
-    
-    saveProgress();
-}
-
-// Update Module 5 phase progress
-function updateModule5Phase(phaseNumber, percentage, details = {}) {
-    if (!trainingProgress.modules.module5) {
-        initializeModule5Progress();
-    }
-    
-    trainingProgress.modules.module5.phaseProgress[`phase${phaseNumber}`] = percentage;
-    
-    // Update detailed progress based on phase
-    const moduleProgress = trainingProgress.modules.module5.detailedProgress;
-    
-    switch(phaseNumber) {
-        case 1:
-            if (details.dataInventoryComplete) {
-                moduleProgress.dataInventoryComplete = true;
-                moduleProgress.phaseCompletions.phase1 = true;
-                awardModule5Badge('data-spotter');
-            }
-            break;
-            
-        case 2:
-            if (details.classificationScore) {
-                moduleProgress.classificationScore = details.classificationScore;
-                if (details.classificationScore >= 100) {
-                    moduleProgress.phaseCompletions.phase2 = true;
-                    awardModule5Badge('data-classifier');
-                }
-            }
-            break;
-            
-        case 3:
-            if (details.scenarioComplete) {
-                moduleProgress.rightsScenarios[details.scenarioComplete] = true;
-                const allRightsComplete = Object.values(moduleProgress.rightsScenarios).every(Boolean);
-                if (allRightsComplete) {
-                    moduleProgress.phaseCompletions.phase3 = true;
-                    awardModule5Badge('privacy-champion');
-                }
-            }
-            break;
-            
-        case 4:
-            if (details.breachComplete) {
-                moduleProgress.breachResponses[details.breachComplete] = true;
-                const allBreachesComplete = Object.values(moduleProgress.breachResponses).every(Boolean);
-                if (allBreachesComplete) {
-                    moduleProgress.phaseCompletions.phase4 = true;
-                    awardModule5Badge('compliance-guardian');
-                    completeModule5();
-                }
-            }
-            break;
-    }
-    
-    saveProgress();
-    updateProgressDisplay();
-}
-
-// Award Module 5 specific badges
-function awardModule5Badge(badgeType) {
-    if (!trainingProgress.modules.module5) {
-        initializeModule5Progress();
-    }
-    
-    const moduleProgress = trainingProgress.modules.module5;
-    
-    if (!moduleProgress.badgesEarned.includes(badgeType)) {
-        moduleProgress.badgesEarned.push(badgeType);
-        moduleProgress.detailedProgress.badgesEarned.push(badgeType);
+    calculateAverageScore() {
+        const completedModules = Object.values(this.progress.modules).filter(m => m.completed);
+        if (completedModules.length === 0) return 0;
         
-        // Add to global badges
-        if (!trainingProgress.badges.includes(badgeType)) {
-            trainingProgress.badges.push(badgeType);
+        const totalScore = completedModules.reduce((sum, module) => sum + module.score, 0);
+        return Math.round(totalScore / completedModules.length);
+    },
+
+    // --- UI UPDATE METHODS ---
+    updateDisplay() {
+        this.updateHeaderDisplay();
+        this.updateModuleCards();
+        this.updateProgressBar();
+    },
+
+    updateHeaderDisplay() {
+        const elements = {
+            agentName: document.getElementById('agent-name'),
+            overallProgress: document.getElementById('overall-progress'),
+            filesCompleted: document.getElementById('files-completed'),
+            sessionTime: document.getElementById('session-time'),
+            currentTimestamp: document.getElementById('current-timestamp')
+        };
+
+        if (elements.agentName) {
+            elements.agentName.textContent = this.progress.agent.name;
         }
         
-        showBadgeNotification(badgeType);
-        saveProgress();
-    }
-}
-
-// Complete Module 5
-function completeModule5() {
-    if (!trainingProgress.modules.module5) {
-        initializeModule5Progress();
-    }
-    
-    const moduleProgress = trainingProgress.modules.module5;
-    const detailedProgress = moduleProgress.detailedProgress;
-    
-    // Calculate completion time
-    if (detailedProgress.startTime) {
-        detailedProgress.completionTime = Math.round((Date.now() - detailedProgress.startTime) / 60000);
-        moduleProgress.timeSpent = detailedProgress.completionTime;
-    }
-    
-    // Calculate final score based on all activities
-    let totalScore = 0;
-    let activities = 0;
-    
-    // Data inventory completion (25 points)
-    if (detailedProgress.dataInventoryComplete) {
-        totalScore += 25;
-    }
-    activities++;
-    
-    // Classification score (25 points)
-    totalScore += Math.round(detailedProgress.classificationScore * 0.25);
-    activities++;
-    
-    // Rights scenarios (25 points)
-    const rightsComplete = Object.values(detailedProgress.rightsScenarios).filter(Boolean).length;
-    totalScore += Math.round((rightsComplete / 3) * 25);
-    activities++;
-    
-    // Breach responses (25 points)
-    const breachComplete = Object.values(detailedProgress.breachResponses).filter(Boolean).length;
-    totalScore += Math.round((breachComplete / 3) * 25);
-    activities++;
-    
-    detailedProgress.finalScore = totalScore;
-    moduleProgress.score = totalScore;
-    moduleProgress.completed = true;
-    
-    // Add to completed modules
-    if (!trainingProgress.completedModules.includes('module5')) {
-        trainingProgress.completedModules.push('module5');
-    }
-    
-    // Award completion badge if score is high enough
-    if (totalScore >= 85) {
-        awardModule5Badge('gdpr-guardian');
-    }
-    
-    saveProgress();
-    updateProgressDisplay();
-    
-    console.log('Module 5 completed with score:', totalScore);
-}
-
-// Get Module 5 progress summary for display
-function getModule5Summary() {
-    if (!trainingProgress.modules.module5) {
-        return {
-            started: false,
-            completed: false,
-            score: 0,
-            timeSpent: 0,
-            badgesEarned: [],
-            phaseProgress: { phase1: 0, phase2: 0, phase3: 0, phase4: 0 }
-        };
-    }
-    
-    return trainingProgress.modules.module5;
-}
-
-// Module 5 specific badge names mapping
-const module5BadgeNames = {
-    'data-spotter': 'Data Spotter',
-    'data-classifier': 'Data Classifier',
-    'privacy-champion': 'Privacy Champion',
-    'compliance-guardian': 'Compliance Guardian',
-    'gdpr-guardian': 'GDPR Guardian'
-};
-
-// Enhanced badge notification for Module 5
-function showModule5BadgeNotification(badgeType) {
-    const badgeName = module5BadgeNames[badgeType] || badgeType;
-    
-    // Create custom notification for GDPR badges
-    const notification = document.createElement('div');
-    notification.className = 'gdpr-badge-notification';
-    notification.innerHTML = `
-        <div class="badge-content">
-            <div class="badge-icon">🏆</div>
-            <h3>GDPR BADGE EARNED!</h3>
-            <p class="badge-name">${badgeName}</p>
-            <p class="badge-description">${getBadgeDescription(badgeType)}</p>
-        </div>
-    `;
-    
-    // Custom styling for GDPR badges
-    notification.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background: linear-gradient(135deg, #9b59b6, #8e44ad);
-        color: white;
-        padding: 25px;
-        border-radius: 15px;
-        border: 3px solid #f39c12;
-        box-shadow: 0 15px 35px rgba(155, 89, 182, 0.5);
-        z-index: 1001;
-        animation: gdprBadgeSlide 0.6s ease-out;
-        max-width: 350px;
-        text-align: center;
-        font-weight: bold;
-    `;
-    
-    // Add custom animation if not exists
-    if (!document.getElementById('gdpr-badge-animations')) {
-        const style = document.createElement('style');
-        style.id = 'gdpr-badge-animations';
-        style.textContent = `
-            @keyframes gdprBadgeSlide {
-                from { 
-                    transform: translateX(100%) scale(0.8); 
-                    opacity: 0; 
-                }
-                to { 
-                    transform: translateX(0) scale(1); 
-                    opacity: 1; 
-                }
-            }
-            .gdpr-badge-notification .badge-icon {
-                font-size: 2rem;
-                margin-bottom: 10px;
-            }
-            .gdpr-badge-notification .badge-name {
-                font-size: 1.2rem;
-                color: #f39c12;
-                margin: 10px 0;
-            }
-            .gdpr-badge-notification .badge-description {
-                font-size: 0.9rem;
-                opacity: 0.9;
-                margin: 5px 0;
-            }
-        `;
-        document.head.appendChild(style);
-    }
-    
-    document.body.appendChild(notification);
-    
-    // Remove after 5 seconds
-    setTimeout(() => {
-        notification.style.animation = 'gdprBadgeSlide 0.5s ease-in reverse';
-        setTimeout(() => {
-            if (notification.parentNode) {
-                notification.parentNode.removeChild(notification);
-            }
-        }, 500);
-    }, 5000);
-}
-
-// Get badge descriptions for Module 5
-function getBadgeDescription(badgeType) {
-    const descriptions = {
-        'data-spotter': 'Identified all types of personal data in Hilltop Honey operations',
-        'data-classifier': 'Perfect classification of sensitive business documents',
-        'privacy-champion': 'Mastered all data subject rights and request handling',
-        'compliance-guardian': 'Expert breach response within legal deadlines',
-        'gdpr-guardian': 'Complete GDPR compliance mastery with 85%+ score'
-    };
-    
-    return descriptions[badgeType] || 'GDPR training achievement unlocked';
-}
-
-// Enhanced progress display update for Module 5
-function updateModule5ProgressDisplay() {
-    const module5Data = getModule5Summary();
-    
-    // Update module card on main page if exists
-    const module5Card = document.querySelector('[data-module="module5"]');
-    if (module5Card) {
-        const statusBadge = module5Card.querySelector('.status-badge');
-        const progressBar = module5Card.querySelector('.module-progress .progress-fill');
-        const moduleBtn = module5Card.querySelector('.module-btn');
+        if (elements.overallProgress) {
+            elements.overallProgress.textContent = `${this.progress.agent.overallProgress}%`;
+        }
         
-        if (module5Data.completed) {
-            statusBadge.textContent = 'Completed';
-            statusBadge.className = 'status-badge completed';
-            if (progressBar) progressBar.style.width = '100%';
-            if (moduleBtn) {
-                moduleBtn.textContent = `Review (${module5Data.score}%)`;
-                moduleBtn.className = 'module-btn completed';
-            }
-        } else if (module5Data.started) {
-            statusBadge.textContent = 'In Progress';
-            statusBadge.className = 'status-badge in-progress';
-            const avgProgress = Object.values(module5Data.phaseProgress).reduce((a, b) => a + b, 0) / 4;
-            if (progressBar) progressBar.style.width = `${avgProgress}%`;
-            if (moduleBtn) {
-                moduleBtn.textContent = 'Continue';
-                moduleBtn.disabled = false;
+        if (elements.filesCompleted) {
+            const completed = Object.values(this.progress.modules).filter(m => m.completed).length;
+            elements.filesCompleted.textContent = `${completed}/${this.totalModules}`;
+        }
+        
+        if (elements.currentTimestamp) {
+            elements.currentTimestamp.textContent = new Date().toLocaleString();
+        }
+    },
+
+    updateModuleCards() {
+        for (let moduleId = 1; moduleId <= this.totalModules; moduleId++) {
+            const moduleData = this.getModuleProgress(moduleId);
+            const card = document.getElementById(`file-${moduleId}`);
+            
+            if (card && moduleData) {
+                this.updateModuleCard(card, moduleData, moduleId);
             }
         }
-    }
-    
-    // Update badges display
-    updateBadgesDisplay();
-}
+    },
 
-// Initialize Module 5 tracking when page loads
+    updateModuleCard(card, moduleData, moduleId) {
+        const statusBadge = card.querySelector('.status-badge');
+        const button = card.querySelector('.file-btn');
+        
+        if (statusBadge) {
+            statusBadge.className = `status-badge ${moduleData.status}`;
+            statusBadge.textContent = this.getStatusText(moduleData.status);
+        }
+        
+        if (button) {
+            button.disabled = !moduleData.accessible;
+            button.textContent = this.getButtonText(moduleData.status, moduleData.score);
+        }
+        
+        // Update lock state
+        if (moduleData.accessible) {
+            card.classList.remove('locked');
+        } else {
+            card.classList.add('locked');
+        }
+    },
+
+    getStatusText(status) {
+        const statusMap = {
+            'completed': 'COMPLETE',
+            'in-progress': 'IN PROGRESS',
+            'available': 'NEW',
+            'locked': 'LOCKED'
+        };
+        return statusMap[status] || 'UNKNOWN';
+    },
+
+    getButtonText(status, score) {
+        switch (status) {
+            case 'completed':
+                return `REVIEW (${score}%)`;
+            case 'in-progress':
+                return 'CONTINUE';
+            case 'available':
+                return 'OPEN FILE';
+            case 'locked':
+                return 'LOCKED';
+            default:
+                return 'UNAVAILABLE';
+        }
+    },
+
+    updateProgressBar() {
+        const progressBar = document.querySelector('.progress-fill');
+        if (progressBar) {
+            progressBar.style.width = `${this.progress.agent.overallProgress}%`;
+        }
+    },
+
+    unlockAvailableModules() {
+        // This method updates the UI to show which modules are now accessible
+        for (let moduleId = 1; moduleId <= this.totalModules; moduleId++) {
+            const card = document.getElementById(`file-${moduleId}`);
+            if (card) {
+                const isAccessible = this.isModuleAccessible(moduleId);
+                card.classList.toggle('locked', !isAccessible);
+            }
+        }
+    },
+
+    // --- UTILITY METHODS ---
+    updateLastAccessed() {
+        this.progress.agent.lastAccessed = new Date().toISOString();
+    },
+
+    showAlert(message) {
+        // Basic alert - replace with your preferred notification system
+        alert(message);
+    },
+
+    resetProgress() {
+        if (confirm('Are you sure you want to reset all progress? This cannot be undone.')) {
+            localStorage.removeItem(this.storageKey);
+            location.reload();
+        }
+    },
+
+    exportProgress() {
+        const dataStr = JSON.stringify(this.progress, null, 2);
+        const dataBlob = new Blob([dataStr], { type: 'application/json' });
+        const url = URL.createObjectURL(dataBlob);
+        
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'digital-shield-progress.json';
+        link.click();
+        
+        URL.revokeObjectURL(url);
+    }
+};
+
+// --- GLOBAL INITIALIZATION ---
+// Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', function() {
-    if (window.location.pathname.includes('module5.html')) {
-        initializeModule5Progress();
-    }
-    updateModule5ProgressDisplay();
+    digitalShieldProgress.init();
 });
 
-// Export functions for global access
-window.initializeModule5Progress = initializeModule5Progress;
-window.updateModule5Phase = updateModule5Phase;
-window.awardModule5Badge = awardModule5Badge;
-window.completeModule5 = completeModule5;
-window.getModule5Summary = getModule5Summary;
+// Expose to global scope for module access
+window.digitalShieldProgress = digitalShieldProgress;
+
+// Auto-save progress every 30 seconds
+setInterval(() => {
+    digitalShieldProgress.saveProgress();
+}, 30000);
+
+// Save progress when page is about to unload
+window.addEventListener('beforeunload', () => {
+    digitalShieldProgress.saveProgress();
+});
+
+console.log('Digital Shield Progress System loaded successfully');
