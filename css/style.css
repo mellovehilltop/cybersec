@@ -902,3 +902,77 @@ p {
   white-space: nowrap;
   border: 0;
 }
+/* ADD THIS TO YOUR CSS FILE - Section Management Fix */
+
+/* Hide all training sections by default */
+.training-section {
+    display: none !important;
+    padding: var(--spacing-xxl) 0;
+    min-height: 80vh;
+}
+
+/* Only show the active section */
+.training-section.active {
+    display: block !important;
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* Fix icon sizes */
+.section-icon {
+    width: 64px !important;
+    height: 64px !important;
+    margin-bottom: var(--spacing-lg);
+    filter: drop-shadow(0 0 10px var(--primary-color));
+}
+
+.file-icon {
+    font-size: 2rem !important; /* Much smaller than before */
+    filter: drop-shadow(0 0 10px var(--primary-color));
+}
+
+.instructor-avatar {
+    width: 80px !important;
+    height: 80px !important;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid var(--primary-color);
+}
+
+.instructor-avatar img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover;
+}
+
+/* Fix button spacing */
+.btn {
+    margin: var(--spacing-md) 0 !important;
+}
+
+/* Ensure proper section spacing */
+.briefing-content,
+.red-flags-training,
+.decision-flowchart,
+.assessment-content {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-lg);
+}
+
+/* Fix text sizing */
+.section-header h2 {
+    font-size: 2.5rem !important;
+}
+
+.section-header p {
+    font-size: 1.2rem !important;
+}
+
+/* Interactive training text */
+.interactive-training h3 {
+    font-size: 1.5rem !important;
+}
+
+.interactive-training p {
+    font-size: 1rem !important;
+}
