@@ -278,6 +278,154 @@
     <script src="js/progress.js" defer></script>
     <script src="js/navigation.js" defer></script>
     <script src="js/file-system.js" defer></script>
+/**
+ * DEBUG SCRIPT - Add this temporarily to test button functionality
+ * Add this script tag to your index.html before the closing </body> tag
+ */
 
+// Wait for DOM to be ready
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🔍 DEBUGGING: DOM loaded, starting tests...');
+    
+    // Test 1: Check if progress script loaded
+    if (window.digitalShieldProgress) {
+        console.log('✅ Progress script loaded successfully');
+        console.log('Progress data:', window.digitalShieldProgress);
+    } else {
+        console.log('❌ Progress script NOT loaded - this will cause button failures');
+    }
+    
+    // Test 2: Check if file-system script loaded
+    if (window.fileSystemManager || typeof fileSystemManager !== 'undefined') {
+        console.log('✅ File system manager loaded');
+    } else {
+        console.log('❌ File system manager NOT loaded');
+    }
+    
+    // Test 3: Find all file buttons
+    const fileButtons = document.querySelectorAll('.file-btn');
+    console.log(`🔍 Found ${fileButtons.length} file buttons`);
+    
+    fileButtons.forEach((button, index) => {
+        const moduleNumber = index + 1;
+        console.log(`Button ${moduleNumber}:`, {
+            text: button.textContent,
+            disabled: button.disabled,
+            hasClickListener: button.onclick !== null
+        });
+    });
+    
+    // Test 4: Check if buttons have proper data attributes
+    const fileFolders = document.querySelectorAll('.file-folder');
+    console.log(`🔍 Found ${fileFolders.length} file folders`);
+    
+    fileFolders.forEach((folder, index) => {
+        const moduleNumber = index + 1;
+        console.log(`Folder ${moduleNumber}:`, {
+            dataModule: folder.dataset.module,
+            hasLockClass: folder.classList.contains('locked'),
+            buttonText: folder.querySelector('.file-btn')?.textContent
+        });
+    });
+    
+    // Test 5: Add temporary click handlers to test functionality
+    console.log('🔧 Adding temporary click handlers...');
+    
+    fileButtons.forEach((button, index) => {
+        const moduleNumber = index + 1;
+        
+        // Remove any existing listeners and add our test handler
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            console.log(`🖱️ Button ${moduleNumber} clicked!`);
+            
+            // Check if module should be accessible
+            if (window.digitalShieldProgress) {
+                const isAccessible = window.digitalShieldProgress.isModuleAccessible ? 
+                    window.digitalShieldProgress.isModuleAccessible(moduleNumber) : 
+                    moduleNumber === 1; // Default: only module 1 accessible
+                
+                if (isAccessible) {
+                    console.log(`✅ Module ${moduleNumber} is accessible - would navigate to module${moduleNumber}.html`);
+                    // For testing, just show alert instead of navigating
+                    alert(`Would open Module ${moduleNumber}: ${button.closest('.file-folder').querySelector('h3').textContent}`);
+                } else {
+                    console.log(`❌ Module ${moduleNumber} is locked`);
+                    alert('🔒 ACCESS DENIED\n\nClearance level insufficient. Complete prerequisite training files to gain access.');
+                }
+            } else {
+                console.log(`⚠️ Progress system not available - allowing access to Module ${moduleNumber}`);
+                alert(`Progress system not loaded. Would open Module ${moduleNumber}.`);
+            }
+        });
+    });
+    
+    // Test 6: Check admin panel functionality
+    const adminButton = document.querySelector('.admin-access');
+    if (adminButton) {
+        console.log('✅ Admin button found');
+        adminButton.addEventListener('click', function() {
+            console.log('🔧 Admin panel toggled');
+            const adminPanel = document.getElementById('admin-panel');
+            if (adminPanel) {
+                adminPanel.classList.toggle('hidden');
+            }
+        });
+    } else {
+        console.log('❌ Admin button not found');
+    }
+    
+    // Test 7: Test progress update
+    setTimeout(() => {
+        console.log('🔄 Testing progress update...');
+        if (window.digitalShieldProgress && window.digitalShieldProgress.updateDisplay) {
+            window.digitalShieldProgress.updateDisplay();
+            console.log('✅ Progress display updated');
+        } else {
+            console.log('❌ Cannot update progress display');
+        }
+    }, 1000);
+    
+    console.log('🏁 Debug tests completed. Check console for results.');
+});
+
+// Additional helper functions for manual testing
+window.debugHelpers = {
+    testModule: function(moduleNumber) {
+        console.log(`🧪 Testing module ${moduleNumber} accessibility...`);
+        if (window.digitalShieldProgress) {
+            const accessible = window.digitalShieldProgress.isModuleAccessible ? 
+                window.digitalShieldProgress.isModuleAccessible(moduleNumber) : 
+                moduleNumber === 1;
+            console.log(`Module ${moduleNumber} accessible:`, accessible);
+            return accessible;
+        }
+        return false;
+    },
+    
+    unlockModule: function(moduleNumber) {
+        console.log(`🔓 Manually unlocking module ${moduleNumber}...`);
+        if (window.digitalShieldProgress && window.digitalShieldProgress.completeModule) {
+            window.digitalShieldProgress.completeModule(moduleNumber - 1, 100);
+            window.digitalShieldProgress.updateDisplay();
+            console.log(`✅ Module ${moduleNumber - 1} completed, module ${moduleNumber} should now be accessible`);
+        } else {
+            console.log('❌ Progress system not available');
+        }
+    },
+    
+    resetProgress: function() {
+        console.log('🔄 Resetting all progress...');
+        if (window.digitalShieldProgress && window.digitalShieldProgress.resetProgress) {
+            window.digitalShieldProgress.resetProgress();
+            console.log('✅ Progress reset');
+        } else {
+            localStorage.removeItem('digitalShieldProgress');
+            location.reload();
+        }
+    }
+};
+
+console.log('🛠️ Debug helpers loaded. Use debugHelpers.testModule(1), debugHelpers.unlockModule(2), etc.');
 </body>
 </html>
