@@ -288,6 +288,11 @@ const digitalShieldProgress = {
         return previousModule && previousModule.completed;
     },
 
+    // Alias for compatibility with existing file-system.js
+    isModuleUnlocked(moduleId) {
+        return this.isModuleAccessible(moduleId);
+    },
+
     isModuleCompleted(moduleId) {
         const moduleNum = parseInt(moduleId, 10);
         if (!this.isValidModule(moduleNum)) return false;
@@ -367,6 +372,11 @@ const digitalShieldProgress = {
         this.updateHeaderDisplay();
         this.updateModuleCards();
         this.updateProgressBar();
+    },
+
+    // Compatibility method for file-system.js
+    updateFileFolderStates() {
+        this.updateModuleCards();
     },
 
     updateHeaderDisplay() {
@@ -511,6 +521,27 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Expose to global scope for module access
 window.digitalShieldProgress = digitalShieldProgress;
+
+// Add compatibility aliases for any method name mismatches
+Object.assign(digitalShieldProgress, {
+    // Legacy method names for compatibility
+    isModuleCompleted: digitalShieldProgress.isModuleCompleted,
+    getProgressStats: digitalShieldProgress.getProgressStats,
+    updateFileFolderStates: function() { 
+        this.updateModuleCards(); 
+    },
+    updateOverallStats: function(stats) {
+        this.updateHeaderDisplay();
+    },
+    updateFinalAssessmentState: function(stats) {
+        // This would be handled in file-system.js
+        // Just ensure we don't break if it's called
+    },
+    updateClearanceRequirementState: function() {
+        // This would be handled in file-system.js
+        // Just ensure we don't break if it's called
+    }
+});
 
 // Auto-save progress every 30 seconds
 setInterval(() => {
