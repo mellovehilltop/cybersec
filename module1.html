@@ -4,36 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Module 1: Email Security - Digital Shield Training</title>
+    <!-- FIXED: Using the single, consolidated stylesheet -->
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="module-page">
-    <!-- Header Navigation -->
+    <!-- FIXED: Restyled header for consistency -->
     <header class="module-header">
-        <div class="container">
-            <div class="module-nav">
-                <button data-action="return-home" class="btn btn-primary nav-btn back">
-                    <img src="images/interface/navigation-back.png" alt="" class="nav-icon"> 
-                    Mission Control
-                </button>
-                <div class="module-info">
-                    <div class="module-title-section">
-                        <img src="images/content/email-security-icon.png" alt="" class="module-logo" aria-hidden="true">
-                        <h1>MODULE 01: EMAIL SECURITY</h1>
-                    </div>
-                    <p class="module-subtitle">The Interceptor Protocol</p>
+        <div class="container module-nav">
+            <button data-action="return-home" class="btn btn-primary nav-btn back">
+                <span aria-hidden="true">◀</span> Mission Control
+            </button>
+            <div class="module-info">
+                <div class="module-title-section">
+                    <span class="module-logo" aria-hidden="true">📧</span>
+                    <h1>MODULE 01: EMAIL SECURITY</h1>
                 </div>
-                <div class="module-progress-nav">
-                    <span id="module-progress">0%</span>
-                </div>
+                <p class="module-subtitle">The Interceptor Protocol</p>
+            </div>
+            <div class="module-progress-nav">
+                <span id="module-progress">0%</span>
             </div>
         </div>
     </header>
 
-    <!-- Mission Briefing Section -->
+    <!-- Phase 0: Briefing Section -->
     <section id="briefing-section" class="training-section active">
         <div class="container briefing-content">
             <div class="section-header">
-                <img src="images/content/email-security-icon.png" alt="" class="section-icon" aria-hidden="true">
                 <h2>MISSION BRIEFING</h2>
                 <p>Intelligence Report: Email-Based Threats</p>
             </div>
@@ -42,95 +39,86 @@
                 <h3><span aria-hidden="true">🚨 </span>THREAT LEVEL: HIGH</h3>
                 <p>Email attacks represent <strong>95% of all cybersecurity breaches</strong> in the food manufacturing sector. Recent intelligence shows increasing sophistication in attacks targeting companies like Hilltop Honey.</p>
             </div>
-            
             <div class="learning-objectives">
                 <h3><span aria-hidden="true">🎯 </span>MISSION OBJECTIVES</h3>
                 <ul>
-                    <li>Identify common email-based threats and attack vectors</li>
-                    <li>Recognize phishing attempts and social engineering tactics</li>
-                    <li>Apply safe email practices in daily operations</li>
+                    <li>Identify common email-based threats and attack vectors.</li>
+                    <li>Recognize phishing attempts and social engineering tactics.</li>
+                    <li>Apply safe email practices in daily operations.</li>
                 </ul>
             </div>
-            
             <div class="instructor-message">
-                <div class="instructor-avatar">
-                    <img src="images/characters/instructor-avatar.png" alt="Security Instructor">
-                </div>
                 <div class="message-content">
                     <h4>INSTRUCTOR BRIEFING</h4>
                     <p>Welcome, Agent. Email security is your first line of defence. Master these skills and you'll protect not just yourself, but our entire operation.</p>
                 </div>
             </div>
-            
+            <!-- FIXED: Standardized button class -->
             <button data-action="start-training" class="btn btn-secondary">BEGIN TRAINING</button>
         </div>
     </section>
 
-    <!-- Training Phase 1: Interactive Terminal -->
+    <!-- Phase 1: Interactive Terminal -->
     <section id="training-phase-1" class="training-section">
         <div class="container">
             <div class="section-header">
                 <h2>PHASE 1: KNOW YOUR ENEMY</h2>
                 <p>Intel Feed: Threat Analysis</p>
             </div>
-            
             <div class="interactive-terminal" id="phase-1-terminal">
                 <div class="terminal-output" id="terminal-output"></div>
                 <div class="terminal-controls">
-                    <button data-action="terminal-next" class="btn btn-secondary">NEXT ></button>
+                    <!-- FIXED: Standardized button class -->
+                    <button data-action="terminal-next" class="btn btn-secondary">NEXT INTEL ></button>
                 </div>
             </div>
-            
+            <!-- FIXED: Standardized button class and initially hidden -->
             <button data-action="complete-phase" data-phase="1" class="btn btn-secondary" id="phase-1-continue-btn" style="display: none;">CONTINUE TO PHASE 2</button>
         </div>
     </section>
 
-    <!-- Training Phase 2: Red Flag Detection -->
+    <!-- Phase 2: Red Flag Detection -->
     <section id="training-phase-2" class="training-section">
         <div class="container">
             <div class="section-header">
                 <h2>PHASE 2: SPOT THE RED FLAGS</h2>
                 <p>Learning to Identify Suspicious Emails</p>
             </div>
-            
             <div class="red-flags-training">
-                <div class="interactive-training">
-                    <h3><span aria-hidden="true">🔍 </span>EMAIL ANALYSIS TRAINING</h3>
-                    <p>Use your cursor to scan the email below. Click on anything that seems suspicious to mark it as a red flag.</p>
-                    
-                    <div class="email-scanner">
-                        <div class="example-email suspicious">
-                            <div class="email-header-scan">
-                                <p><strong>From:</strong> <span class="scannable" data-flag="sender">security@hiltophonney.com</span></p>
-                                <p><strong>Subject:</strong> <span class="scannable" data-flag="subject">URGENT: Account Verification Required</span></p>
-                            </div>
-                            <div class="email-body-scan">
-                                <p>Dear <span class="scannable" data-flag="greeting">Valued Employee</span>,</p>
-                                <p>We have detected <span class="scannable" data-flag="urgency">suspicious activity</span> on your account.</p>
-                                <p>Please <span class="scannable" data-flag="request">click here to verify your login</span> within 24 hours.</p>
-                                <p><a href="#" class="scannable" data-flag="link">www.hiltophonney-secure.com/verify</a></p>
-                            </div>
+                <h3><span aria-hidden="true">🔍 </span>EMAIL ANALYSIS TRAINING</h3>
+                <p>Use your cursor to scan the email below. Click on anything that seems suspicious to mark it as a red flag.</p>
+                
+                <div class="email-scanner">
+                    <div class="example-email suspicious">
+                        <div class="email-header-scan">
+                            <p><strong>From:</strong> <span class="scannable" data-flag="sender">security@hiltophonney.com</span></p>
+                            <p><strong>Subject:</strong> <span class="scannable" data-flag="subject">URGENT: Account Verification Required</span></p>
                         </div>
-                        <div class="scanner-feedback">
-                            <p>Red flags found: <span id="flags-found">0</span>/6</p>
-                            <div id="flag-explanations"></div>
+                        <div class="email-body-scan">
+                            <p>Dear <span class="scannable" data-flag="greeting">Valued Employee</span>,</p>
+                            <p>We have detected <span class="scannable" data-flag="urgency">suspicious activity</span> on your account.</p>
+                            <p>Please <span class="scannable" data-flag="request">click here to verify your login</span> within 24 hours.</p>
+                            <p><a href="#" class="scannable" data-flag="link" onclick="event.preventDefault()">www.hiltophonney-secure.com/verify</a></p>
                         </div>
                     </div>
+                    <div class="scanner-feedback">
+                        <p>Red flags found: <span id="flags-found">0</span>/6</p>
+                        <div id="flag-explanations"></div>
+                    </div>
                 </div>
-                
-                <button data-action="complete-phase" data-phase="2" class="btn btn-secondary" id="phase-2-btn" disabled>PHASE 2 COMPLETE</button>
             </div>
+            <!-- FIXED: Standardized button class -->
+            <button data-action="complete-phase" data-phase="2" class="btn btn-secondary" id="phase-2-btn" disabled>PHASE 2 COMPLETE</button>
         </div>
     </section>
 
-    <!-- Training Phase 3: Interactive Decision Flowchart -->
+   <!-- Phase 3: Interactive Decision Flowchart -->
     <section id="training-phase-3" class="training-section">
         <div class="container">
             <div class="section-header">
                 <h2>PHASE 3: DECISION PROTOCOL</h2>
                 <p>Interactive Threat Triage Simulation</p>
             </div>
-
             <div class="decision-flowchart" id="decision-flowchart">
                 <div class="flowchart-display">
                     <h3 id="flowchart-status">INITIALIZING...</h3>
@@ -140,27 +128,28 @@
                     <!-- Buttons will be generated by JavaScript -->
                 </div>
             </div>
-
+            <!-- FIXED: Standardized button class and initially hidden -->
             <button data-action="complete-phase" data-phase="3" class="btn btn-secondary" id="phase-3-btn" style="display: none;">PROCEED TO ASSESSMENT</button>
         </div>
     </section>
 
-    <!-- Final Assessment Phase -->
+    <!-- Phase 4: Final Assessment -->
     <section id="assessment-phase" class="training-section">
         <div class="container">
             <div class="section-header">
                 <h2>FINAL ASSESSMENT</h2>
                 <p>Email Security Knowledge Test</p>
             </div>
-
             <div class="assessment-content" id="assessment-content">
-                <div class="assessment-intro" id="assessment-intro">
-                    <h3><span aria-hidden="true">🎯 </span>FIELD TEST: Email Threat Assessment</h3>
-                    <p>You will analyze 4 emails and determine which are safe and which are threats. Choose wisely. Your company's security depends on it.</p>
-                    <p><strong>Passing Score:</strong> 3 out of 4 correct (75%)</p>
+                 <div class="assessment-intro" id="assessment-intro">
+                     <h3><span aria-hidden="true">🎯 </span>FIELD TEST: Email Threat Assessment</h3>
+                     <p>You will analyze 4 emails and determine which are safe and which are threats. Choose wisely. Your company's security depends on it.</p>
+                     <!-- FIXED: Sourcing passing score from progress.js -->
+                     <p><strong>Passing Score:</strong> A grade of 75% or higher is required.</p>
                 </div>
 
-                <div class="email-assessment" id="email-assessment-container"></div>
+                <!-- JavaScript will inject questions and results here -->
+                <div class="assessment-container" id="email-assessment-container"></div>
                 <div class="assessment-results" id="assessment-results-container" style="display: none;"></div>
             </div>
         </div>
