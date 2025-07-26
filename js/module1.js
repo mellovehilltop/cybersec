@@ -1,11 +1,10 @@
 /**
- * js/module1.js
- * 
- * Manages all interactivity for Module 1: Email Security training.
- * Fixed version that properly integrates with the new progress system
- * and uses data-action attributes consistently.
+ * js/module1.js - FIXED AND UNIFIED
+ *
+ * Manages all interactivity for the Module 1: Email Security training.
+ * This script is now self-contained, cleaned up, and fully integrated
+ * with the new digitalShieldProgress system.
  */
-
 const module1Manager = {
     // --- STATE & CONTENT ---
     redFlagsFound: 0,
@@ -13,254 +12,166 @@ const module1Manager = {
     assessmentScore: 0,
     currentAssessmentEmailIndex: 0,
     currentTerminalStep: -1,
+    currentFlowNode: 'scenario1_start', // Initial state for the flowchart
 
     terminalContent: [
         { type: 'header', text: 'INTEL PACKET 1/4: PHISHING ATTACKS' },
         { type: 'line', text: '<strong>METHOD:</strong> Fraudsters impersonate trusted sources to steal credentials or data.' },
         { type: 'line', text: '<strong>WARNINGS:</strong> Look for generic greetings, urgent language, and suspicious links.' },
         { type: 'header', text: 'INTEL PACKET 2/4: SPEAR PHISHING' },
-        { type: 'line', text: '<strong>METHOD:</strong> Highly targeted, personal attacks using your name, job title, and project details to build trust.' },
+        { type: 'line', text: '<strong>METHOD:</strong> Highly targeted, personal attacks using your name or job title to build trust.' },
         { type: 'line', text: '<strong>WARNINGS:</strong> Watch for unusual requests from familiar contacts, especially those demanding secrecy or speed.' },
         { type: 'header', text: 'INTEL PACKET 3/4: MALWARE ATTACHMENTS' },
-        { type: 'line', text: '<strong>METHOD:</strong> Malicious code hidden inside files like invoices or reports. Often uses names like `invoice.pdf.exe`.' },
+        { type: 'line', text: '<strong>METHOD:</strong> Malicious code hidden inside files like `invoice.pdf.exe`.' },
         { type: 'line', text: '<strong>WARNINGS:</strong> Never open unexpected attachments. Be wary of files that ask you to "Enable Macros".' },
         { type: 'header', text: 'INTEL PACKET 4/4: BUSINESS EMAIL COMPROMISE (BEC)' },
-        { type: 'line', text: '<strong>METHOD:</strong> The attacker poses as a senior executive or a supplier to trick you into making fraudulent payments.' },
-        { type: 'line', text: '<strong>WARNINGS:</strong> Be extremely suspicious of any change in bank details or urgent, out-of-the-blue payment requests.' },
+        { type: 'line', text: '<strong>METHOD:</strong> An attacker poses as a senior executive to trick you into making fraudulent payments.' },
+        { type: 'line', text: '<strong>WARNINGS:</strong> Be extremely suspicious of any change in bank details or urgent, unverified payment requests.' },
         { type: 'header', text: 'ANALYSIS COMPLETE' },
     ],
 
+    flowchartNodes: {
+        'scenario1_start': { status: 'SCENARIO 1/3: UNEXPECTED REQUEST', text: 'You receive an email from `ceo@hilltophoney.co.uk` asking you to urgently buy £200 in gift cards. He says not to call as he is in meetings.', options: [{ text: 'Analyze This Threat', next: 'scenario1_q1' }] },
+        'scenario1_q1': { status: 'DECISION POINT 1', text: 'Is this an unusual financial request combined with pressure not to verify?', options: [{ text: 'YES - This is a classic BEC tactic', next: 'scenario1_q2' }, { text: 'NO - The CEO often asks for this', next: 'scenario1_fail' }] },
+        'scenario1_q2': { status: 'CORRECT ANALYSIS', text: 'Excellent. You correctly identified a Business Email Compromise attempt. What is the correct protocol?', options: [{ text: 'STOP, do not reply, and REPORT to IT', next: 'scenario2_start' }, { text: 'Reply and ask for clarification', next: 'scenario1_fail' }] },
+        'scenario1_fail': { status: 'PROTOCOL FAILED - RETRYING', text: 'Incorrect. An urgent, un-verifiable request for money is a major red flag. Let\'s try again.', options: [{ text: 'Restart Scenario 1', next: 'scenario1_start' }] },
+        'scenario2_start': { status: 'SCENARIO 2/3: MYSTERIOUS ATTACHMENT', text: 'An email arrives from an unknown contact with the subject "Invoice" and a `.zip` file attached.', options: [{ text: 'Analyze This Threat', next: 'scenario2_q1' }] },
+        'scenario2_q1': { status: 'DECISION POINT 2', text: 'You were not expecting this invoice. What is the safest action?', options: [{ text: 'DELETE the email without opening it', next: 'scenario3_start' }, { text: 'Open the .zip to see if it\'s real', next: 'scenario2_fail' }] },
+        'scenario2_fail': { status: 'PROTOCOL FAILED - RETRYING', text: 'Incorrect. Opening an unexpected attachment, especially a `.zip` file, could deploy malware instantly. The safest action is to delete it. Let\'s try again.', options: [{ text: 'Restart Scenario 2', next: 'scenario2_start' }] },
+        'scenario3_start': { status: 'SCENARIO 3/3: LOGIN REQUIRED', text: 'You get an email from "Microsoft" saying you must click a link to re-validate your password due to a security update.', options: [{ text: 'Analyze This Threat', next: 'scenario3_q1' }] },
+        'scenario3_q1': { status: 'DECISION POINT 3', text: 'What should you do about the link?', options: [{ text: 'Hover over it to check the real destination', next: 'scenario3_q2' }, { text: 'Click it to secure your account quickly', next: 'scenario3_fail' }] },
+        'scenario3_q2': { status: 'CORRECT ANALYSIS', text: 'You hover and see the link goes to `micros0ft-login.ru`. This is a phishing site.', options: [{ text: 'REPORT the email as Phishing', next: 'end_success' }] },
+        'scenario3_fail': { status: 'PROTOCOL FAILED - RETRYING', text: 'Incorrect. Never click a link in an unexpected email asking for credentials. This is the primary way phishing attacks succeed. Let\'s try again.', options: [{ text: 'Restart Scenario 3', next: 'scenario3_start' }] },
+        'end_success': { status: 'PROTOCOL MASTERED', text: 'You have successfully navigated all threat scenarios. Your decision-making skills are sharp.', isConclusion: true, conclusionClass: 'conclusion-safe' }
+    },
+    
     assessmentEmails: [
-        { 
-            from: "supplier@honeyextractors.co.uk", 
-            subject: "Updated Invoice #HE-2024-0847", 
-            body: "Please find attached our updated invoice.<br>Best regards,<br>Honey Extractors", 
-            legitimate: true, 
-            explanation: "Legitimate: A standard business email from a known supplier with specific details." 
-        },
-        { 
-            from: "security@hilltophoney-update.com",
-            subject: "URGENT: Security System Update Required",
-            body: "Dear Employee,<br>Our security system requires immediate updating. Click the link below to verify your access credentials:<br><a href='#'>Verify Account Access</a><br>This must be completed within 2 hours or your access will be suspended.<br>IT Security Team", 
-            legitimate: false, 
-            explanation: "This is a phishing attempt with suspicious domain, generic greeting, urgent time pressure, and requests credentials." 
-        },
-        { 
-            from: "production@hilltophoney.co.uk",
-            subject: "Weekly Production Report - Week 29",
-            body: "Hi Team,<br>Please find this week's production summary:<br>- Honey processed: 3,247 litres<br>- Quality control: 100% pass rate<br>- Next week's targets attached<br>Any questions, let me know.<br>Production Team", 
-            legitimate: true, 
-            explanation: "This is a legitimate internal email with normal business content, proper domain, and expected communication pattern." 
-        },
-        { 
-            from: "supplier@premiumhoney.co.uk",
-            subject: "Invoice Payment - Account Details Update",
-            body: "Dear Hilltop Honey,<br>Thank you for your recent order. Please note our bank details have changed for future payments:<br>New Account: HSBC Bank<br>Sort: 40-12-34<br>Account: 12345678<br>Please update your records.<br>Best regards,<br>Premium Honey Supplies", 
-            legitimate: false, 
-            explanation: "Suspicious request to change payment details. Should be verified through independent communication channels." 
-        }
+        { from: "security@hilltophoney-update.com", subject: "URGENT: Security System Update Required", body: "Dear Employee,<br><br>Our security system requires immediate updating. Click the link below to verify your access credentials:<br><br><a href='#'>Verify Account Access</a><br><br>This must be completed within 2 hours or your access will be suspended.<br><br>IT Security Team", legitimate: false, explanation: "This is a phishing attempt. It uses a suspicious domain ('-update.com'), a generic greeting, urgent time pressure, and asks for credentials via a link." },
+        { from: "production@hilltophoney.co.uk", subject: "Weekly Production Report - Week 29", body: "Hi Team,<br><br>Please find this week's production summary attached. Any questions, let me know.<br><br>Production Team", legitimate: true, explanation: "This is a legitimate internal email. It uses the correct domain and follows a normal, expected business communication pattern." },
+        { from: "supplier@premiumhoney.co.uk", subject: "Invoice Payment - Account Details Update", body: "Dear Hilltop Honey,<br><br>Please note our bank details have changed for future payments. Please update your records with the new details attached.<br><br>Best regards,<br>Premium Honey Supplies", legitimate: false, explanation: "This is a suspicious request to change payment details, a common tactic for fraud. Such requests must always be verified through an independent, trusted channel (like a phone call to a known number)." },
+        { from: "hr@hilltophoney.co.uk", subject: "Holiday Policy Update", body: "Dear all,<br><br>A reminder that the new holiday booking policy is now in effect. Please see the details on the company intranet.<br><br>Thanks,<br>HR Department", legitimate: true, explanation: "This is a legitimate internal HR communication. It refers to an internal resource (intranet) and does not ask for urgent action or sensitive information." }
     ],
 
-    // Content for Phase 3 Flowchart
-    currentFlowNode: 'scenario1_start',
-    flowchartNodes: {
-        // --- SCENARIO 1: The Unexpected Request ---
-        'scenario1_start': {
-            status: 'SCENARIO 1/3: UNEXPECTED REQUEST',
-            text: 'You receive an email from `ceo@hilltophoney.co.uk` asking you to urgently buy £200 in gift cards. He says not to call as he is in meetings.',
-            options: [ { text: 'Analyze This Threat', next: 'scenario1_q1' } ]
-        },
-        'scenario1_q1': {
-            status: 'DECISION POINT 1',
-            text: 'Is this an unusual financial request combined with pressure not to verify?',
-            options: [
-                { text: 'YES - This is a classic BEC tactic', next: 'scenario1_q2' },
-                { text: 'NO - The CEO often asks for this', next: 'scenario1_fail' }
-            ]
-        },
-        'scenario1_q2': {
-            status: 'CORRECT ANALYSIS',
-            text: 'Excellent. You correctly identified a Business Email Compromise attempt. What is the correct protocol?',
-            options: [
-                { text: 'STOP, do not reply, and REPORT to IT', next: 'scenario2_start' },
-                { text: 'Reply and ask for clarification', next: 'scenario1_fail' }
-            ]
-        },
-        'scenario1_fail': {
-            status: 'PROTOCOL FAILED - RETRYING',
-            text: 'Incorrect. An urgent, un-verifiable request for money is a major red flag. Let\'s try again.',
-            options: [ { text: 'Restart Scenario 1', next: 'scenario1_start' } ]
-        },
-        // --- SCENARIO 2: The Mysterious Attachment ---
-        'scenario2_start': {
-            status: 'SCENARIO 2/3: MYSTERIOUS ATTACHMENT',
-            text: 'An email arrives from an unknown contact with the subject "Invoice" and a `.zip` file attached.',
-            options: [ { text: 'Analyze This Threat', next: 'scenario2_q1' } ]
-        },
-        'scenario2_q1': {
-            status: 'DECISION POINT 2',
-            text: 'You were not expecting this invoice. What is the safest action?',
-            options: [
-                { text: 'DELETE the email without opening it', next: 'scenario3_start' },
-                { text: 'Open the .zip to see if it\'s real', next: 'scenario2_fail' }
-            ]
-        },
-        'scenario2_fail': {
-            status: 'PROTOCOL FAILED - RETRYING',
-            text: 'Incorrect. Opening an unexpected attachment, especially a `.zip` file, could deploy malware instantly. The safest action is to delete it. Let\'s try again.',
-            options: [ { text: 'Restart Scenario 2', next: 'scenario2_start' } ]
-        },
-        // --- SCENARIO 3: The "Login Required" Link ---
-        'scenario3_start': {
-            status: 'SCENARIO 3/3: LOGIN REQUIRED',
-            text: 'You get an email from "Microsoft" saying you must click a link to re-validate your password due to a security update.',
-            options: [ { text: 'Analyze This Threat', next: 'scenario3_q1' } ]
-        },
-        'scenario3_q1': {
-            status: 'DECISION POINT 3',
-            text: 'What should you do about the link?',
-            options: [
-                { text: 'Hover over it to check the real destination', next: 'scenario3_q2' },
-                { text: 'Click it to secure your account quickly', next: 'scenario3_fail' }
-            ]
-        },
-        'scenario3_q2': {
-            status: 'CORRECT ANALYSIS',
-            text: 'You hover and see the link goes to `micros0ft-login.ru`. This is a phishing site.',
-            options: [
-                { text: 'REPORT the email as Phishing', next: 'end_success' }
-            ]
-        },
-        'scenario3_fail': {
-            status: 'PROTOCOL FAILED - RETRYING',
-            text: 'Incorrect. Never click a link in an unexpected email asking for credentials. This is the primary way phishing attacks succeed. Let\'s try again.',
-            options: [ { text: 'Restart Scenario 3', next: 'scenario3_start' } ]
-        },
-        // --- End Node ---
-        'end_success': {
-            status: 'PROTOCOL MASTERED',
-            text: 'You have successfully navigated all threat scenarios. Your decision-making skills are sharp.',
-            isConclusion: true,
-            conclusionClass: 'conclusion-safe'
-        }
-    },
-
-    // --- DOM CACHE ---
     dom: {},
 
-    // --- INITIALIZATION ---
     init() {
         this.cacheDOMElements();
         this.bindEvents();
-        this.updateProgress(1);
+        this.updateProgress(1); // Set initial progress to 0% (step 1 of 5)
     },
 
     cacheDOMElements() {
-        // Fixed: Corrected element IDs to match HTML
         this.dom.sections = document.querySelectorAll('.training-section');
         this.dom.moduleProgress = document.getElementById('module-progress');
+        this.dom.actionButtons = document.querySelectorAll('[data-action]');
         
-        // Phase 1 Terminal
+        // Phase 1
         this.dom.terminalOutput = document.getElementById('terminal-output');
+        this.dom.terminalNextBtn = document.querySelector('[data-action="terminal-next"]');
         this.dom.phase1ContinueBtn = document.getElementById('phase-1-continue-btn');
         
-        // Phase 2 Red Flags
+        // Phase 2
         this.dom.scannableElements = document.querySelectorAll('.scannable');
         this.dom.flagsFound = document.getElementById('flags-found');
         this.dom.flagExplanations = document.getElementById('flag-explanations');
         this.dom.phase2Btn = document.getElementById('phase-2-btn');
         
-        // Phase 3 Flowchart
+        // Phase 3
         this.dom.flowchart = document.getElementById('decision-flowchart');
         this.dom.flowchartStatus = document.getElementById('flowchart-status');
         this.dom.flowchartText = document.getElementById('flowchart-text');
         this.dom.flowchartActions = document.getElementById('flowchart-actions');
         this.dom.phase3Btn = document.getElementById('phase-3-btn');
-        
-        // Assessment
+
+        // Phase 4 (Assessment)
         this.dom.assessmentContainer = document.getElementById('email-assessment-container');
         this.dom.resultsContainer = document.getElementById('assessment-results-container');
     },
 
     bindEvents() {
-        // Fixed: Use event delegation for data-action buttons
-        document.addEventListener('click', (e) => {
-            const button = e.target.closest('[data-action]');
-            if (button) {
-                this.handleAction(button.dataset);
-            }
-            
-            // Handle assessment choices
-            if (e.target.matches('[data-choice]')) {
-                this.handleAssessmentChoice(e.target.dataset.choice === 'true');
-            }
-            
-            // Handle flowchart choices
+        // Centralized event handler for all data-action buttons
+        this.dom.actionButtons.forEach(btn => {
+            btn.addEventListener('click', (e) => this.handleAction(e.currentTarget.dataset));
+        });
+
+        // Phase 2: Red Flag scanner
+        this.dom.scannableElements.forEach(el => {
+            el.addEventListener('click', (e) => this.handleRedFlagClick(e.currentTarget));
+        });
+
+        // Phase 3: Flowchart choices
+        this.dom.flowchartActions.addEventListener('click', (e) => {
             if (e.target.matches('[data-next]')) {
                 this.handleFlowchartChoice(e.target.dataset.next);
             }
-            
-            // Handle scannable elements
-            const scannable = e.target.closest('.scannable');
-            if (scannable) {
-                this.handleRedFlagClick(scannable);
+        });
+
+        // Phase 4: Assessment choices
+        this.dom.assessmentContainer.addEventListener('click', (e) => {
+            if (e.target.matches('[data-choice]')) {
+                this.handleAssessmentChoice(e.target.dataset.choice === 'true');
             }
         });
     },
 
-    // --- EVENT HANDLERS & CORE LOGIC ---
     handleAction(dataset) {
         const { action, phase } = dataset;
-        
         switch (action) {
-            case 'return-home': 
-                window.location.href = 'index.html'; 
+            case 'return-home':
+                window.location.href = 'index.html';
                 break;
-                
             case 'start-training':
+                // FIXED: Notify the progress tracker that the module has started
+                if (window.digitalShieldProgress) {
+                    window.digitalShieldProgress.startModule(1);
+                }
                 this.showSection('training-phase-1');
                 this.updateProgress(2);
                 this.renderNextTerminalLine();
                 break;
-                
-            case 'terminal-next': 
-                this.renderNextTerminalLine(); 
+            case 'terminal-next':
+                this.renderNextTerminalLine();
                 break;
-                
-            case 'complete-phase': 
-                this.completePhase(parseInt(phase, 10)); 
+            case 'complete-phase':
+                this.completePhase(parseInt(phase, 10));
                 break;
-                
-            case 'complete-module': 
-                this.completeModule(); 
+            case 'complete-module':
+                this.completeModule();
                 break;
         }
     },
+
+    completePhase(phase) {
+        // Phases are 1-based, progress steps are 1-5
+        this.updateProgress(phase + 2); 
+        
+        if (phase === 1) {
+            this.showSection('training-phase-2');
+        } else if (phase === 2) {
+            this.showSection('training-phase-3');
+            // FIXED: Render the first node of the flowchart
+            this.renderFlowNode(); 
+        } else if (phase === 3) {
+            this.showSection('assessment-phase');
+            // FIXED: Render the first assessment question (THE CRITICAL BUG FIX)
+            this.renderAssessmentEmail(); 
+        }
+    },
+    
+    // --- PHASE-SPECIFIC LOGIC ---
 
     showSection(sectionId) {
-        this.dom.sections.forEach(section => {
-            section.classList.remove('active');
-        });
-        
-        const targetSection = document.getElementById(sectionId);
-        if (targetSection) {
-            targetSection.classList.add('active');
-        }
+        this.dom.sections.forEach(section => section.classList.remove('active'));
+        document.getElementById(sectionId)?.classList.add('active');
     },
 
-    updateProgress(step) {
-        const percentage = Math.round(((step - 1) / 4) * 100);
+    updateProgress(step) { // 5 steps: Briefing, P1, P2, P3, Assessment
+        const percentage = Math.round(((step - 1) / 5) * 100);
         this.dom.moduleProgress.textContent = `${percentage}%`;
-        
-        // Update global progress
-        if (window.digitalShieldProgress) {
-            window.digitalShieldProgress.updateModulePhase(1, step);
-        }
     },
 
     renderNextTerminalLine() {
         this.currentTerminalStep++;
-        
         if (this.currentTerminalStep < this.terminalContent.length) {
             const stepData = this.terminalContent[this.currentTerminalStep];
             const newLine = document.createElement('div');
@@ -269,34 +180,28 @@ const module1Manager = {
             this.dom.terminalOutput.appendChild(newLine);
             this.dom.terminalOutput.scrollTop = this.dom.terminalOutput.scrollHeight;
         }
-        
         if (this.currentTerminalStep >= this.terminalContent.length - 1) {
-            const nextBtn = document.querySelector('[data-action="terminal-next"]');
-            if (nextBtn) nextBtn.style.display = 'none';
+            this.dom.terminalNextBtn.style.display = 'none';
             this.dom.phase1ContinueBtn.style.display = 'block';
         }
     },
 
     handleRedFlagClick(element) {
         if (element.classList.contains('found')) return;
-        
         element.classList.add('found');
         this.redFlagsFound++;
         this.dom.flagsFound.textContent = this.redFlagsFound;
-        
         const explanations = {
             'sender': 'Misspelled domain name.',
             'subject': 'Creates false urgency.',
-            'greeting': 'Generic greeting.',
+            'greeting': 'Generic, non-personal greeting.',
             'urgency': 'Claims of suspicious activity to cause panic.',
-            'request': 'Asks for login credentials.',
+            'request': 'Asks for login credentials via a link.',
             'link': 'Hovering would reveal a suspicious URL.'
         };
-        
         const p = document.createElement('p');
         p.innerHTML = `<strong>FLAGGED:</strong> ${explanations[element.dataset.flag]}`;
         this.dom.flagExplanations.appendChild(p);
-        
         if (this.redFlagsFound >= this.totalRedFlags) {
             this.dom.phase2Btn.disabled = false;
         }
@@ -309,12 +214,11 @@ const module1Manager = {
 
     renderFlowNode() {
         const node = this.flowchartNodes[this.currentFlowNode];
+        if (!node) return;
         this.dom.flowchartStatus.textContent = node.status;
         this.dom.flowchartText.innerHTML = node.text;
         this.dom.flowchartActions.innerHTML = '';
-        
         this.dom.flowchart.className = 'decision-flowchart';
-        
         if (node.isConclusion) {
             this.dom.flowchart.classList.add(node.conclusionClass);
             this.dom.phase3Btn.style.display = 'block';
@@ -332,28 +236,22 @@ const module1Manager = {
     handleAssessmentChoice(userChoice) {
         const email = this.assessmentEmails[this.currentAssessmentEmailIndex];
         const isCorrect = (userChoice === email.legitimate);
+        if (isCorrect) { this.assessmentScore += 25; }
         
-        if (isCorrect) { 
-            this.assessmentScore += 25; 
-        }
+        this.showEmailFeedback(email, isCorrect);
         
-        this.showEmailFeedback(email, userChoice, isCorrect);
         this.currentAssessmentEmailIndex++;
         
-        // Disable buttons after choice
-        this.dom.assessmentContainer.querySelectorAll('button').forEach(btn => {
-            btn.disabled = true;
-        });
-        
-        setTimeout(() => this.renderAssessmentEmail(), 3000);
+        setTimeout(() => {
+            if (this.currentAssessmentEmailIndex >= this.assessmentEmails.length) {
+                this.showAssessmentResults();
+            } else {
+                this.renderAssessmentEmail();
+            }
+        }, 3000); // Wait 3 seconds to show the next question/results
     },
 
     renderAssessmentEmail() {
-        if (this.currentAssessmentEmailIndex >= this.assessmentEmails.length) {
-            this.showAssessmentResults();
-            return;
-        }
-        
         const email = this.assessmentEmails[this.currentAssessmentEmailIndex];
         this.dom.assessmentContainer.innerHTML = `
             <div class="assessment-email">
@@ -370,60 +268,42 @@ const module1Manager = {
             </div>`;
     },
 
-    showEmailFeedback(email, userChoice, isCorrect) {
+    showEmailFeedback(email, isCorrect) {
         const feedbackClass = isCorrect ? 'correct' : 'incorrect';
         const resultText = isCorrect ? 'CORRECT!' : 'INCORRECT';
-        
-        const feedbackDiv = document.createElement('div');
-        feedbackDiv.className = `assessment-feedback ${feedbackClass}`;
-        feedbackDiv.innerHTML = `
-            <h3>${resultText}</h3>
-            <p>${email.explanation}</p>
+        this.dom.assessmentContainer.innerHTML = `
+            <div class="assessment-feedback ${feedbackClass}">
+                <h3>${resultText}</h3>
+                <p>${email.explanation}</p>
+            </div>
         `;
-        
-        this.dom.assessmentContainer.querySelector('.assessment-email').appendChild(feedbackDiv);
     },
 
     showAssessmentResults() {
-        this.dom.assessmentContainer.innerHTML = '';
-        const passed = this.assessmentScore >= 75;
-        
+        this.dom.assessmentContainer.style.display = 'none';
+        const passed = this.assessmentScore >= window.digitalShieldProgress.passingScore;
         this.dom.resultsContainer.innerHTML = `
             <div class="assessment-completion">
                 <h2>ASSESSMENT COMPLETE</h2>
-                <p>You scored ${this.assessmentScore}%</p>
-                <p><strong>Status: ${passed ? 'PASSED' : 'FAILED'}</strong></p>
-                <button data-action="complete-module" class="btn btn-secondary">COMPLETE MODULE 1</button>
+                <p class="final-score">You scored: ${this.assessmentScore}%</p>
+                <p class="final-status ${passed ? 'passed' : 'failed'}">Status: ${passed ? 'PASSED' : 'FAILED'}</p>
+                <p>${passed ? 'Excellent work, Agent. Your situational awareness is sharp.' : 'You did not meet the passing score. Review the material and try again.'}</p>
+                <button data-action="complete-module" class="btn btn-secondary">COMPLETE MODULE & RETURN</button>
             </div>`;
-        
         this.dom.resultsContainer.style.display = 'block';
     },
-
-    completePhase(phase) {
-        const nextPhase = phase + 1;
-        this.updateProgress(nextPhase + 1);
-        
-        if (phase === 1) {
-            this.showSection('training-phase-2');
-        } else if (phase === 2) {
-            this.showSection('training-phase-3');
-            this.renderFlowNode(); 
-        } else if (phase === 3) {
-            this.showSection('assessment-phase');
-            this.renderAssessmentEmail();
-        }
-    },
-
+    
     completeModule() {
         if (window.digitalShieldProgress) {
             window.digitalShieldProgress.completeModule(1, this.assessmentScore);
         }
-        alert('Module 1 complete! Returning to Mission Control.');
+        // Give the user a confirmation before redirecting
+        alert('Progress saved. Returning to Mission Control.');
         window.location.href = 'index.html';
     }
 };
 
-// Initialize when DOM is ready
-document.addEventListener('DOMContentLoaded', function() {
+// Initialize the module manager when the DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
     module1Manager.init();
 });
