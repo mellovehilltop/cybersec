@@ -72,17 +72,24 @@
             <h2>PHASE 1: THREAT ANALYSIS</h2>
             <p>Common Password Attack Vectors</p>
         </div>
-        <div class="threat-card">
-            <div class="threat-header"><div class="threat-icon">💥</div><h3>BRUTE FORCE</h3><span class="threat-level critical">CRITICAL</span></div>
-            <div class="threat-content"><p>Automated tools try millions of password combinations per second. Long, complex passwords are the only defense.</p></div>
-        </div>
-        <div class="threat-card">
-            <div class="threat-header"><div class="threat-icon">📖</div><h3>DICTIONARY ATTACKS</h3><span class="threat-level high">HIGH</span></div>
-            <div class="threat-content"><p>Uses lists of common words, names, and simple patterns. This is why "Password123" fails instantly.</p></div>
-        </div>
-        <div class="threat-card">
-            <div class="threat-header"><div class="threat-icon">♻️</div><h3>CREDENTIAL STUFFING</h3><span class="threat-level critical">CRITICAL</span></div>
-            <div class="threat-content"><p>Attackers use leaked passwords from other site breaches to try and access your accounts. This is why unique passwords for every site are essential.</p></div>
+        <!-- FIX: Added a wrapper for the grid layout -->
+        <div class="threat-cards-container">
+            <div class="threat-card">
+                <div class="threat-header"><div class="threat-icon">💥</div><h3>BRUTE FORCE</h3><span class="threat-level critical">CRITICAL</span></div>
+                <div class="threat-content"><p>Automated tools try millions of password combinations per second. Long, complex passwords are the only defense.</p></div>
+            </div>
+            <div class="threat-card">
+                <div class="threat-header"><div class="threat-icon">📖</div><h3>DICTIONARY ATTACKS</h3><span class="threat-level high">HIGH</span></div>
+                <div class="threat-content"><p>Uses lists of common words, names, and simple patterns. This is why "Password123" fails instantly.</p></div>
+            </div>
+            <div class="threat-card">
+                <div class="threat-header"><div class="threat-icon">♻️</div><h3>CREDENTIAL STUFFING</h3><span class="threat-level critical">CRITICAL</span></div>
+                <div class="threat-content"><p>Attackers use leaked passwords from other site breaches to try and access your accounts. This is why unique passwords for every site are essential.</p></div>
+            </div>
+            <div class="threat-card">
+                <div class="threat-header"><div class="threat-icon">👀</div><h3>SHOULDER SURFING</h3><span class="threat-level medium">MEDIUM</span></div>
+                <div class="threat-content"><p>Physically watching someone type their password. Be aware of your surroundings.</p></div>
+            </div>
         </div>
         <div class="common-passwords">
             <h3>⚠️ AVOID THESE COMMON PASSWORDS</h3>
@@ -126,7 +133,7 @@
             <h2>PHASE 3: VAULT TESTING LAB</h2>
             <p>Interactive Password Strength Analysis</p>
         </div>
-        <div class="digital-vault unlocked" id="vault-status">
+        <div class="digital-vault" id="vault-status"> <!-- Class will be toggled by JS -->
             <img src="images/content/password-security-icon.png" alt="Digital Vault" class="vault-icon" id="vault-icon">
         </div>
         <div class="password-input-container">
@@ -139,7 +146,7 @@
         <div class="test-passwords">
             <h4>Try These Examples:</h4>
             <div class="test-btn-container" id="test-btn-container">
-                <!-- Buttons added for JS interaction -->
+                <!-- FIX: Added the missing data-password attribute to each button -->
                 <button data-action="test-example" data-password="password" class="btn test-btn weak">"password"</button>
                 <button data-action="test-example" data-password="Password123" class="btn test-btn fair">"Password123"</button>
                 <button data-action="test-example" data-password="H0n3y!B33$2024" class="btn test-btn good">"H0n3y!B33$2024"</button>
