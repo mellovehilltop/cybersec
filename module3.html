@@ -15,7 +15,6 @@
         </button>
         <div class="module-info">
             <div class="module-title-section">
-                <!-- Using consistent icon from progress.js -->
                 <span class="module-logo" aria-hidden="true">🌐</span>
                 <h1>MODULE 03: INTERNET SECURITY</h1>
             </div>
@@ -45,6 +44,7 @@
                     <li>Identify secure websites using URL indicators (HTTPS).</li>
                     <li>Recognise common web threats like phishing sites.</li>
                     <li>Understand the basics of SSL/TLS certificates.</li>
+                    <li>Spot red flags on fraudulent websites.</li>
                 </ul>
             </div>
             <div class="instructor-message">
@@ -56,72 +56,34 @@
                     <p>The web is full of traps. A single wrong click can compromise our entire network. Stay sharp, and trust your training.</p>
                 </div>
             </div>
-            <!-- FIXED: Button text -->
             <button data-action="start-training" class="btn btn-secondary">BEGIN TRAINING</button>
         </div>
     </div>
 </section>
 
-<!-- Training Phase 1: Web Security Education -->
+<!-- Phase 1: Web Security Education -->
 <section id="training-phase-1" class="training-section">
     <div class="container">
-        <div class="section-header">
-            <h2>PHASE 1: WEB SECURITY BASICS</h2>
-            <p>Learn to identify safe, suspicious, and dangerous websites.</p>
-        </div>
+        <div class="section-header"><h2>PHASE 1: WEB SECURITY BASICS</h2><p>Learn to identify safe, suspicious, and dangerous websites.</p></div>
         <div class="education-content">
-            <div class="security-category safe-sites">
-                <h3>✅ SAFE WEBSITES</h3>
-                <ul>
-                    <li><strong>HTTPS:</strong> Look for "https://" and the padlock icon.</li>
-                    <li><strong>Official Domains:</strong> hilltophoney.co.uk, gov.uk</li>
-                    <li><strong>Correct Spelling:</strong> No typos in company names.</li>
-                </ul>
-                <div class="example-box safe"><strong>Example:</strong> https://www.hilltophoney.co.uk</div>
-            </div>
-            <div class="security-category suspicious-sites">
-                <h3>⚠️ SUSPICIOUS WEBSITES</h3>
-                <ul>
-                    <li><strong>HTTP Only:</strong> No 's' means data is not encrypted.</li>
-                    <li><strong>Similar Domains:</strong> amazon-deals.org (not amazon.co.uk).</li>
-                    <li><strong>Unusual Extensions:</strong> .tk, .biz, .info can be risky.</li>
-                </ul>
-                <div class="example-box suspicious"><strong>Example:</strong> http://hilltop-honey-suppliers.net</div>
-            </div>
-            <div class="security-category dangerous-sites">
-                <h3>🚫 DANGEROUS WEBSITES</h3>
-                <ul>
-                    <li><strong>Misspelled Domains:</strong> hiltophoney.tk (missing 'l').</li>
-                    <li><strong>IP Addresses as links:</strong> http://192.168.4.23/login</li>
-                    <li><strong>Complex/Long URLs:</strong> ...security-check.tk</li>
-                </ul>
-                <div class="example-box dangerous"><strong>Example:</strong> https://hiltophoney.tk/urgent-payment</div>
-            </div>
+            <div class="security-category safe-sites"><h3>✅ SAFE WEBSITES</h3><ul><li><strong>HTTPS:</strong> Look for "https://" and the padlock icon.</li><li><strong>Official Domains:</strong> hilltophoney.co.uk, gov.uk</li><li><strong>Correct Spelling:</strong> No typos in company names.</li></ul><div class="example-box safe"><strong>Example:</strong> https://www.hilltophoney.co.uk</div></div>
+            <div class="security-category suspicious-sites"><h3>⚠️ SUSPICIOUS WEBSITES</h3><ul><li><strong>HTTP Only:</strong> No 's' means data is not encrypted.</li><li><strong>Similar Domains:</strong> amazon-deals.org (not amazon.co.uk).</li><li><strong>Unusual Extensions:</strong> .tk, .biz, .info can be risky.</li></ul><div class="example-box suspicious"><strong>Example:</strong> http://hilltop-honey-suppliers.net</div></div>
+            <div class="security-category dangerous-sites"><h3>🚫 DANGEROUS WEBSITES</h3><ul><li><strong>Misspelled Domains:</strong> hiltophoney.tk (missing 'l').</li><li><strong>IP Addresses as links:</strong> http://192.168.4.23/login</li><li><strong>Complex/Long URLs:</strong> ...security-check.tk</li></ul><div class="example-box dangerous"><strong>Example:</strong> https://hiltophoney.tk/urgent-payment</div></div>
         </div>
-        <!-- FIXED: Combined phase 1a and 1b buttons into a single flow -->
         <button data-action="complete-phase" data-phase="1" class="btn btn-secondary">CONTINUE TO URL DETECTIVE</button>
     </div>
 </section>
 
-<!-- Training Phase 2: URL Detective Game -->
+<!-- Phase 2: URL Detective Game -->
 <section id="training-phase-2" class="training-section">
     <div class="container">
-        <div class="section-header">
-            <h2>PHASE 2: URL DETECTIVE GAME</h2>
-            <p>Test your knowledge! Sort these URLs into the correct categories.</p>
-        </div>
+        <div class="section-header"><h2>PHASE 2: URL DETECTIVE GAME</h2><p>Test your knowledge! Sort these URLs into the correct categories.</p></div>
         <div class="url-detective-game">
             <div class="url-sorting-pool" id="url-sorting-pool"></div>
             <div class="url-drop-zones">
-                <div class="url-drop-zone safe" data-category="safe">
-                    <h4>✅ SAFE</h4><ul class="url-list"></ul>
-                </div>
-                <div class="url-drop-zone suspicious" data-category="suspicious">
-                    <h4>⚠️ SUSPICIOUS</h4><ul class="url-list"></ul>
-                </div>
-                <div class="url-drop-zone dangerous" data-category="dangerous">
-                    <h4>🚫 DANGEROUS</h4><ul class="url-list"></ul>
-                </div>
+                <div class="url-drop-zone safe" data-category="safe"><h4>✅ SAFE</h4><ul class="url-list"></ul></div>
+                <div class="url-drop-zone suspicious" data-category="suspicious"><h4>⚠️ SUSPICIOUS</h4><ul class="url-list"></ul></div>
+                <div class="url-drop-zone dangerous" data-category="dangerous"><h4>🚫 DANGEROUS</h4><ul class="url-list"></ul></div>
             </div>
         </div>
         <div id="url-feedback" class="feedback-box">Select a URL from the top pool to begin sorting.</div>
@@ -129,32 +91,42 @@
     </div>
 </section>
 
-<!-- Training Phase 3: Certificate Inspector -->
+<!-- Phase 3: Improved Certificate Inspector -->
 <section id="training-phase-3" class="training-section">
     <div class="container">
-        <div class="section-header">
-            <h2>PHASE 3: CERTIFICATE INSPECTOR</h2>
-            <p>Click each certificate to inspect it and learn about its security indicators.</p>
-        </div>
+        <div class="section-header"><h2>PHASE 3: CERTIFICATE INSPECTOR</h2><p>Inspect each certificate and decide if you should trust the website.</p></div>
         <div class="certificate-examples" id="certificate-examples"></div>
-        <div id="cert-feedback" class="feedback-box">Click a certificate to inspect it.</div>
-        <button data-action="complete-phase" data-phase="3" class="btn btn-secondary" id="phase-3-btn" disabled>PROCEED TO FINAL ASSESSMENT</button>
+        <div id="cert-feedback" class="feedback-box">Select a certificate and make a decision.</div>
+        <button data-action="complete-phase" data-phase="3" class="btn btn-secondary" id="phase-3-btn" disabled>CONTINUE TO RED FLAG HUNT</button>
     </div>
 </section>
 
-<!-- Final Assessment -->
+<!-- NEW Phase 4: Red Flag Hunt -->
+<section id="training-phase-4" class="training-section">
+    <div class="container">
+        <div class="section-header">
+            <h2>PHASE 4: RED FLAG HUNT</h2>
+            <p>Find the security warning signs on this fake website. Find all the red flags!</p>
+        </div>
+        <div class="redflag-game-info">
+            <div class="score-panel">
+                <span class="score-label">Flags Found: <span id="flags-found">0</span> / <span id="total-flags">4</span></span>
+            </div>
+        </div>
+        <div class="website-image-container" id="website-image-container">
+            <!-- Website image with hotspots will be generated by JavaScript -->
+        </div>
+        <div id="redflag-feedback" class="feedback-box">Click on anything that looks suspicious or dangerous.</div>
+        <button data-action="complete-phase" data-phase="4" class="btn btn-secondary" id="phase-4-btn" disabled>PROCEED TO FINAL ASSESSMENT</button>
+    </div>
+</section>
+
+<!-- Final Assessment (Phase 5) -->
 <section id="assessment-phase" class="training-section">
     <div class="container">
         <div class="assessment-content" id="assessment-wrapper">
-             <div class="section-header">
-                <h2>FINAL ASSESSMENT</h2>
-                <p>Internet Security Field Test</p>
-            </div>
+             <div class="section-header"><h2>FINAL ASSESSMENT</h2><p>Internet Security Field Test</p></div>
             <div id="assessment-challenges"></div>
-            <div class="assessment-score" style="display: none;">
-                <h3>Assessment Score: <span id="final-score">0/4</span></h3>
-                <div id="score-feedback"></div>
-            </div>
         </div>
     </div>
 </section>
