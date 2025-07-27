@@ -1,9 +1,10 @@
 /**
- * js/module2.js - REWRITTEN & UPGRADED
+ * js/module2.js - FINALIZED VERSION v2
  *
- * Manages all interactivity for the Module 2: Password Security training.
- * This script is now self-contained, robust, and fully integrated
- * with the new digitalShieldProgress system.
+ * FIXES:
+ * - Example password buttons in Phase 3 are now functional.
+ * - Final assessment content now renders correctly.
+ * - All previous fixes retained for a stable module.
  */
 const module2Manager = {
     // --- STATE & CONTENT ---
@@ -19,39 +20,33 @@ const module2Manager = {
         this.cacheDOMElements();
         this.bindEvents();
         this.renderStaticContent();
-        this.updateProgress(1); // Set initial progress to 0%
-        this.testPasswordStrength(); // Initial call to set criteria
+        this.updateProgress(1);
+        this.testPasswordStrength();
     },
 
     cacheDOMElements() {
         this.dom.moduleProgress = document.getElementById('module-progress');
-        // Phase 1
         this.dom.passwordGrid = document.getElementById('password-grid');
-        // Phase 3
         this.dom.passwordTester = document.getElementById('password-tester');
         this.dom.strengthBar = document.getElementById('strength-bar');
         this.dom.passwordFeedback = document.getElementById('password-feedback');
         this.dom.vaultStatus = document.getElementById('vault-status');
         this.dom.criteriaList = document.getElementById('criteria-list');
         this.dom.phase3Btn = document.getElementById('phase-3-btn');
-        // Assessment
         this.dom.assessmentWrapper = document.getElementById('assessment-wrapper');
-        this.dom.assessmentChallenges = document.getElementById('assessment-challenges');
         this.dom.finalScore = document.getElementById('final-score');
         this.dom.scoreFeedback = document.getElementById('score-feedback');
         this.dom.completeBtn = document.getElementById('complete-btn');
     },
 
     bindEvents() {
-        // Use event delegation for all buttons
         document.body.addEventListener('click', (e) => {
             const actionTarget = e.target.closest('[data-action]');
             if (actionTarget) {
-                e.preventDefault(); // Prevent default button behavior
+                e.preventDefault();
                 this.handleAction(actionTarget.dataset);
             }
         });
-
         if (this.dom.passwordTester) {
             this.dom.passwordTester.addEventListener('input', () => this.testPasswordStrength());
         }
@@ -84,7 +79,7 @@ const module2Manager = {
         document.getElementById(sectionId)?.classList.add('active');
     },
 
-    updateProgress(step) { // 5 steps total
+    updateProgress(step) {
         const percentage = Math.round(((step - 1) / 5) * 100);
         this.dom.moduleProgress.textContent = `${percentage}%`;
     },
@@ -102,7 +97,6 @@ const module2Manager = {
     testPasswordStrength() {
         const password = this.dom.passwordTester.value;
         const strength = this.calculatePasswordStrength(password);
-
         this.dom.strengthBar.className = `strength-fill strength-${strength.level}`;
         this.dom.passwordFeedback.innerHTML = password ? `<p><strong>Strength:</strong> ${strength.description}</p>` : '';
         this.dom.vaultStatus.classList.toggle('unlocked', strength.level === 'strong');
@@ -118,8 +112,7 @@ const module2Manager = {
         if (/[a-z]/.test(password)) score += 20;
         if (/[0-9]/.test(password)) score += 20;
         if (/[^A-Za-z0-9]/.test(password)) score += 20;
-        if (this.commonPasswords.includes(password.toLowerCase())) score = 0; // Instant fail if common
-
+        if (this.commonPasswords.includes(password.toLowerCase())) score = 0;
         if (score >= 90) return { level: 'strong', description: 'VAULT-GRADE' };
         if (score >= 75) return { level: 'good', description: 'GOOD' };
         if (score >= 50) return { level: 'fair', description: 'FAIR' };
@@ -149,13 +142,18 @@ const module2Manager = {
         this.dom.passwordTester.focus();
     },
 
+    // FIX: This is the corrected assessment rendering function.
     renderAssessment(){
+        // Get the container *inside* the function, after it's visible.
+        const challengesContainer = document.getElementById('assessment-challenges');
+        if (!challengesContainer) return;
+
         const challenges = [
             { id: 1, title: 'Challenge 1: Identify the Threat', question: 'An attacker uses a massive list of leaked passwords from other websites to try and log into your account. What is this attack called?', options: [{ text: 'A) Brute Force', answer: 'A' }, { text: 'B) Phishing', answer: 'B' }, { text: 'C) Credential Stuffing', answer: 'C' }], correctAnswer: 'C' },
             { id: 2, title: 'Challenge 2: Create a Secure Password', question: 'Create a password that meets all security requirements.', isCustom: true },
             { id: 3, title: 'Challenge 3: Password Reuse', question: 'You use a very strong, unique password for your work email. Is it safe to also use this password for a non-critical social media account?', options: [{ text: 'YES - It\'s a strong password', answer: 'A' }, { text: 'NO - Every account needs a unique password', answer: 'B' }], correctAnswer: 'B' }
         ];
-        this.dom.assessmentChallenges.innerHTML = challenges.map(c => `
+        challengesContainer.innerHTML = challenges.map(c => `
             <div class="challenge-card" id="challenge-${c.id}">
                 <h4>${c.title}</h4>
                 <p>${c.question}</p>
@@ -167,9 +165,7 @@ const module2Manager = {
     answerChallenge(challengeId, answer) {
         const resultDiv = document.getElementById(`result-${challengeId}`);
         document.querySelectorAll(`#challenge-${challengeId} button`).forEach(b => b.disabled = true);
-        
         const isCorrect = (challengeId === '1' && answer === 'C') || (challengeId === '3' && answer === 'B');
-        
         if (isCorrect) {
             resultDiv.innerHTML = '<p style="color: var(--success-color);">✅ Correct! Excellent knowledge.</p>';
             this.challengeScores[parseInt(challengeId) - 1] = true;
@@ -184,7 +180,6 @@ const module2Manager = {
         const password = passwordInput.value;
         const resultDiv = document.getElementById('result-2');
         const strength = this.calculatePasswordStrength(password);
-        
         if (strength.level === 'strong') {
             resultDiv.innerHTML = `<p style="color: var(--success-color);">✅ VAULT-GRADE! This is an excellent, secure password.</p>`;
             this.challengeScores[1] = true;
