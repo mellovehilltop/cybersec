@@ -35,7 +35,7 @@ const module3Manager = {
         { domain: "hilltophoney.tk", valid: false, issuer: "Unknown Authority", expiry: "Expired", expl: "This is a DANGEROUS certificate. It is expired and from an untrusted source." }
     ],
     
-    // CORRECTED: Red Flag Hunt data with accurate coordinates based on images
+    // CORRECTED: Red Flag Hunt data with final accurate coordinates
     redFlagWebsites: [
         {
             image: "images/module3/fake-supplier-site.jpg",
@@ -43,7 +43,7 @@ const module3Manager = {
                 { id: "url", x: 15, y: 6, width: 35, height: 6, expl: "Spotted! The URL uses HTTP and a suspicious '.tk' domain." },
                 { id: "logo", x: 35, y: 20, width: 30, height: 15, expl: "Good catch! The 'HoneySuppliers.tk' logo reveals the fake domain." },
                 { id: "verification", x: 20, y: 55, width: 60, height: 10, expl: "Excellent! This fake 'verification' message is designed to build false trust." },
-                { id: "download", x: 30, y: 80, width: 40, height: 8, expl: "Perfect! Never download unexpected files from suspicious websites." }
+                { id: "download", x: 30, y: 88, width: 40, height: 8, expl: "Perfect! Never download unexpected files from suspicious websites." }
             ]
         },
         {
@@ -58,9 +58,9 @@ const module3Manager = {
         {
             image: "images/module3/fake-payment-site.jpg",
             redFlags: [
-                { id: "complex-url", x: 15, y: 5, width: 60, height: 6, expl: "Spotted! This complex URL is designed to look official but is not." },
-                { id: "poor-design", x: 10, y: 25, width: 80, height: 60, expl: "Correct! Poor grammar, blurry images, and unprofessional design are all warning signs." },
-                { id: "urgent-message", x: 20, y: 88, width: 60, height: 10, expl: "Well done! Urgent payment demands are a classic phishing tactic." }
+                { id: "complex-url", x: 20, y: 8, width: 60, height: 6, expl: "Spotted! This complex URL is designed to look official but is not." },
+                { id: "payment-portal", x: 25, y: 30, width: 50, height: 25, expl: "Good catch! This fake 'Payment Portal' header is trying to look official." },
+                { id: "update-button", x: 30, y: 70, width: 40, height: 10, expl: "Well done! Clicking suspicious 'Update' buttons can lead to malware or phishing." }
             ]
         }
     ],
@@ -88,8 +88,31 @@ const module3Manager = {
         requiredElements.forEach(id => {
             if (!document.getElementById(id)) {
                 console.warn(`Required element missing: ${id}`);
+                
+                // Special handling for assessment-wrapper - create it if missing
+                if (id === 'assessment-wrapper' && !document.getElementById(id)) {
+                    const wrapper = document.createElement('div');
+                    wrapper.id = 'assessment-wrapper';
+                    wrapper.className = 'training-section';
+                    wrapper.style.display = 'none';
+                    document.querySelector('.module-content')?.appendChild(wrapper);
+                    console.log('Created missing assessment-wrapper');
+                }
             }
         });
+        
+        // Special handler for the assessment button if it has a specific ID
+        setTimeout(() => {
+            const assessBtn = document.getElementById('phase-4-btn');
+            if (assessBtn) {
+                console.log('Found phase-4-btn, adding direct click handler');
+                assessBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    console.log('Phase 4 button clicked directly');
+                    this.completePhase(4);
+                });
+            }
+        }, 1000);
         
         console.log('Module 3 Manager initialized');
     },
@@ -97,18 +120,32 @@ const module3Manager = {
     cacheDOMElements() {
         this.dom.moduleProgress = document.getElementById('module-progress');
         this.dom.assessmentWrapper = document.getElementById('assessment-wrapper');
+        
+        if (!this.dom.assessmentWrapper) {
+            console.warn('Assessment wrapper not found during initialization');
+        }
     },
 
     bindEvents() {
         document.addEventListener('click', (e) => {
-            if (e.target.tagName === 'BUTTON' && e.target.dataset.action) {
-                e.preventDefault();
-                this.handleAction(e.target.dataset);
+            if (e.target.tagName === 'BUTTON') {
+                // Check for data-action attribute
+                if (e.target.dataset.action) {
+                    e.preventDefault();
+                    this.handleAction(e.target.dataset);
+                }
+                // Also check for specific button text (fallback)
+                else if (e.target.textContent.includes('PROCEED TO FINAL ASSESSMENT')) {
+                    e.preventDefault();
+                    console.log('Final assessment button clicked');
+                    this.handleAction({ action: 'complete-phase', phase: '4' });
+                }
             }
         });
     },
 
     handleAction(dataset) {
+        console.log('Handling action:', dataset);
         switch (dataset.action) {
             case 'return-home':
                 window.location.href = 'index.html';
@@ -119,7 +156,9 @@ const module3Manager = {
                 this.updateProgress(2);
                 break;
             case 'complete-phase':
-                this.completePhase(parseInt(dataset.phase, 10));
+                const phase = parseInt(dataset.phase, 10);
+                console.log('Completing phase number:', phase);
+                this.completePhase(phase);
                 break;
             case 'complete-module':
                 this.completeModule();
@@ -127,17 +166,48 @@ const module3Manager = {
             case 'next-website':
                 // Increment the index before rendering the next website
                 this.currentWebsiteIndex++;
+                console.log('Moving to website:', this.currentWebsiteIndex + 1);
                 this.renderNextWebsite();
                 break;
             case 'redo-training':
                 window.location.reload();
                 break;
+            default:
+                console.warn('Unknown action:', dataset.action);
         }
     },
 
     showSection(sectionId) {
-        document.querySelectorAll('.training-section').forEach(section => section.classList.remove('active'));
-        document.getElementById(sectionId)?.classList.add('active');
+        console.log('Showing section:', sectionId);
+        
+        // Special handling for assessment
+        if (sectionId === 'training-phase-5' || sectionId === 'assessment-wrapper') {
+            // Hide all training sections
+            document.querySelectorAll('.training-section').forEach(section => {
+                if (section.id !== 'assessment-wrapper') {
+                    section.style.display = 'none';
+                    section.classList.remove('active');
+                }
+            });
+            
+            // Show assessment wrapper
+            const assessmentWrapper = document.getElementById('assessment-wrapper');
+            if (assessmentWrapper) {
+                assessmentWrapper.style.display = 'block';
+                assessmentWrapper.classList.add('active');
+                console.log('Assessment wrapper shown');
+            } else {
+                console.error('Assessment wrapper not found when trying to show it!');
+            }
+        } else {
+            // Normal section showing
+            document.querySelectorAll('.training-section').forEach(section => {
+                section.classList.remove('active');
+                if (section.id === sectionId) {
+                    section.classList.add('active');
+                }
+            });
+        }
     },
 
     updateProgress(step) {
@@ -150,23 +220,38 @@ const module3Manager = {
         console.log('Completing phase:', phase);
         this.updateProgress(phase + 2);
         const nextPhase = phase + 1;
-        this.showSection(`training-phase-${nextPhase}`);
         
-        if (nextPhase === 2) {
-            console.log('Starting URL Detective Game');
-            this.renderURLDetectiveGame();
-        }
-        if (nextPhase === 3) {
-            console.log('Starting Certificate Inspector');
-            this.renderCertificateInspector();
-        }
-        if (nextPhase === 4) {
-            console.log('Starting Red Flag Hunt');
-            this.renderRedFlagHunt();
-        }
+        // For assessment phase, handle differently
         if (nextPhase === 5) {
-            console.log('Starting Assessment');
-            this.renderAssessment();
+            console.log('Starting Assessment - special handling');
+            // Hide all training sections
+            document.querySelectorAll('.training-section').forEach(section => {
+                section.style.display = 'none';
+            });
+            // Show assessment wrapper
+            const assessmentWrapper = document.getElementById('assessment-wrapper');
+            if (assessmentWrapper) {
+                assessmentWrapper.style.display = 'block';
+                this.renderAssessment();
+            } else {
+                console.error('Assessment wrapper not found!');
+            }
+        } else {
+            // Normal phase transition
+            this.showSection(`training-phase-${nextPhase}`);
+            
+            if (nextPhase === 2) {
+                console.log('Starting URL Detective Game');
+                this.renderURLDetectiveGame();
+            }
+            if (nextPhase === 3) {
+                console.log('Starting Certificate Inspector');
+                this.renderCertificateInspector();
+            }
+            if (nextPhase === 4) {
+                console.log('Starting Red Flag Hunt');
+                this.renderRedFlagHunt();
+            }
         }
     },
 
@@ -299,7 +384,7 @@ const module3Manager = {
                 hotspot.classList.add('found');
                 const flagData = info.redFlags.find(f => f.id === hotspot.dataset.id);
                 document.getElementById('redflag-feedback').innerHTML = 
-                    `<p style="color:var(--success-color)">Spotted!</p><p>${flagData.expl}</p>`;
+                    `<p style="color:var(--success-color, #28a745)">Spotted!</p><p>${flagData.expl}</p>`;
                 flagsFoundOnThisSite++;
                 document.getElementById('flags-found').textContent = flagsFoundOnThisSite;
                 
@@ -318,10 +403,14 @@ const module3Manager = {
                     } else {
                         // This was the last website
                         document.getElementById('redflag-feedback').innerHTML = 
-                            '<p style="color:var(--success-color)">Excellent! All red flags on all sites found.</p>';
+                            '<p style="color:var(--success-color, #28a745)">Excellent! All red flags on all sites found.</p>';
                         const phase4Btn = document.getElementById('phase-4-btn');
                         if (phase4Btn) {
                             phase4Btn.disabled = false;
+                            // Ensure it has the correct attributes
+                            phase4Btn.setAttribute('data-action', 'complete-phase');
+                            phase4Btn.setAttribute('data-phase', '4');
+                            console.log('Phase 4 button enabled');
                         } else {
                             console.error('Phase 4 button not found!');
                         }
@@ -332,14 +421,58 @@ const module3Manager = {
     },
 
     renderAssessment() {
+        console.log('Rendering assessment...');
         this.currentAssessmentQuestion = 0;
         this.assessmentScore = 0;
+        
+        // Try multiple ways to find the assessment wrapper
+        let assessmentWrapper = this.dom.assessmentWrapper || 
+                               document.getElementById('assessment-wrapper') ||
+                               document.querySelector('.assessment-wrapper');
+        
+        // If still not found, try to find the main content area and create the wrapper
+        if (!assessmentWrapper) {
+            console.warn('Assessment wrapper not found, creating one...');
+            const mainContent = document.querySelector('.module-content') || 
+                              document.querySelector('main') || 
+                              document.body;
+            
+            assessmentWrapper = document.createElement('div');
+            assessmentWrapper.id = 'assessment-wrapper';
+            assessmentWrapper.className = 'training-section active';
+            mainContent.appendChild(assessmentWrapper);
+        }
+        
+        // Clear any existing content and set up the assessment structure
+        assessmentWrapper.innerHTML = `
+            <div class="section-header">
+                <h2>FINAL ASSESSMENT</h2>
+                <p>Answer the following questions to complete Module 3</p>
+            </div>
+            <div id="assessment-challenges"></div>
+        `;
+        
+        // Make sure it's visible
+        assessmentWrapper.style.display = 'block';
+        
+        // Cache the reference
+        this.dom.assessmentWrapper = assessmentWrapper;
+        
         this.renderNextAssessmentQuestion();
     },
 
     renderNextAssessmentQuestion() {
+        console.log('Rendering question:', this.currentAssessmentQuestion + 1);
         const challengesContainer = document.getElementById('assessment-challenges');
-        if (!challengesContainer) return;
+        if (!challengesContainer) {
+            console.error('Assessment challenges container not found!');
+            // Try to create it
+            const wrapper = this.dom.assessmentWrapper || document.getElementById('assessment-wrapper');
+            if (wrapper && !wrapper.querySelector('#assessment-challenges')) {
+                wrapper.innerHTML += '<div id="assessment-challenges"></div>';
+            }
+            return;
+        }
         
         if (this.currentAssessmentQuestion >= this.assessmentQuestions.length) {
             this.showAssessmentResults();
@@ -364,19 +497,30 @@ const module3Manager = {
     },
 
     answerAssessment(selectedIndex) {
+        console.log('Answer selected:', selectedIndex);
         const q = this.assessmentQuestions[this.currentAssessmentQuestion];
         const resultDiv = document.querySelector('.challenge-result');
+        
+        if (!resultDiv) {
+            console.error('Challenge result div not found');
+            return;
+        }
+        
         document.querySelectorAll('.challenge-options button').forEach(b => b.disabled = true);
         
         if (selectedIndex === q.correct) {
             this.assessmentScore++;
-            resultDiv.innerHTML = `<p style="color:var(--success-color)">✅ Correct! ${q.expl}</p>`;
+            resultDiv.innerHTML = `<p style="color:var(--success-color, #28a745)">✅ Correct! ${q.expl}</p>`;
         } else {
-            resultDiv.innerHTML = `<p style="color:var(--danger-color)">❌ Incorrect. ${q.expl}</p>`;
+            resultDiv.innerHTML = `<p style="color:var(--danger-color, #dc3545)">❌ Incorrect. ${q.expl}</p>`;
         }
         
         this.currentAssessmentQuestion++;
-        setTimeout(() => this.renderNextAssessmentQuestion(), 3000);
+        console.log('Moving to question:', this.currentAssessmentQuestion + 1);
+        
+        setTimeout(() => {
+            this.renderNextAssessmentQuestion();
+        }, 3000);
     },
 
     showAssessmentResults() {
@@ -397,7 +541,9 @@ const module3Manager = {
             <div class="assessment-completion">
                 ${badgeHTML}
                 <h3 class="final-score">You scored: ${score}/${total}</h3>
-                <p class="final-status ${passed ? 'passed' : 'failed'}">Status: ${passed ? 'PASSED' : 'FAILED'}</p>
+                <p class="final-status" style="color: ${passed ? 'var(--success-color, #28a745)' : 'var(--danger-color, #dc3545)'}">
+                    Status: ${passed ? 'PASSED' : 'FAILED'}
+                </p>
                 <p>${passed ? 'Excellent work, Agent!' : 'Review the material and try again.'}</p>
                 <button data-action="${passed ? 'complete-module' : 'redo-training'}" class="btn btn-secondary">
                     ${passed ? 'COMPLETE MODULE' : 'REDO TRAINING'}
@@ -412,9 +558,43 @@ const module3Manager = {
         }
         alert('Module 3 complete! Progress saved. Returning to Mission Control.');
         window.location.href = 'index.html';
+    },
+    
+    // Debug function - can be called from console
+    debugStartAssessment() {
+        console.log('DEBUG: Manually starting assessment');
+        this.completePhase(4);
+    },
+    
+    // Debug function to check current state
+    debugState() {
+        console.log('Current Module 3 State:');
+        console.log('- URLs sorted:', this.correctlySorted);
+        console.log('- Certificates decided:', this.certificatesDecided);
+        console.log('- Current website index:', this.currentWebsiteIndex);
+        console.log('- Assessment question:', this.currentAssessmentQuestion);
+        console.log('- Assessment score:', this.assessmentScore);
+        console.log('- DOM elements:', {
+            moduleProgress: !!this.dom.moduleProgress,
+            assessmentWrapper: !!this.dom.assessmentWrapper
+        });
+        
+        // Check for important buttons
+        const buttons = {
+            'phase-4-btn': document.getElementById('phase-4-btn'),
+            'next-website-btn': document.getElementById('next-website-btn'),
+            'assessment button': document.querySelector('button[data-action="complete-phase"][data-phase="4"]'),
+            'proceed button': Array.from(document.querySelectorAll('button')).find(b => b.textContent.includes('PROCEED TO FINAL ASSESSMENT'))
+        };
+        
+        console.log('- Important buttons:', buttons);
     }
 };
 
 document.addEventListener('DOMContentLoaded', () => {
     module3Manager.init();
+    
+    // Make module3Manager globally accessible for debugging
+    window.module3Manager = module3Manager;
+    console.log('Module 3 loaded. You can use window.module3Manager.debugStartAssessment() to manually start the assessment.');
 });
