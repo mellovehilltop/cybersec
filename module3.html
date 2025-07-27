@@ -3,46 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Module 3: Internet Security - Digital Shield Training</title>
+    <title>Module 2: Password Security - Digital Shield Training</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body class="module-page">
-    <!-- Header Navigation -->
-    <header class="module-header">
-    <div class="container">
-        <div class="module-nav">
-            <button data-action="return-home" class="btn btn-primary nav-btn back">
-                <img src="images/interface/navigation-back.png" alt="" class="nav-icon"> 
-                Mission Control
-            </button>
-            <div class="module-info">
-                <div class="module-title-section">
-                    <img src="images/content/module3-icon.png" alt="" class="module-logo">
-                    <h1>MODULE 03: INTERNET SECURITY</h1>
-                </div>
-                <p class="module-subtitle">The Digital Navigator Protocol</p>
+
+<header class="module-header">
+
+    <div class="container module-nav">
+
+        <button data-action="return-home" class="btn btn-primary nav-btn back">
+            <span aria-hidden="true">◀</span> Mission Control
+        </button>
+        <div class="module-info">
+            <div class="module-title-section">
+ <img src="images/content/module3-icon.png" alt="" class="module-logo">
+                <h1>MODULE 03: INTERNET SECURITY</h1>
             </div>
-            <div class="module-progress-nav">
-                <span id="module-progress">0%</span>
-            </div>
+            <p class="module-subtitle">The Digital Navigator Protocol</p>
+       </div>
+        <div class="module-progress-nav">
+            <span id="module-progress">0%</span>
         </div>
     </div>
 </header>
 
-    <!-- Mission Briefing Section -->
-    <section id="briefing-section" class="training-section active">
-        <div class="container briefing-content">
+<!-- Briefing Section -->
+<section id="briefing-section" class="training-section active">
+    <div class="container">
+        <!-- FIXED: Added briefing-content wrapper -->
+        <div class="briefing-content">
             <div class="section-header">
-                <img src="images/module3/module3-icon.png" alt="" class="section-icon">
                 <h2>MISSION BRIEFING</h2>
                 <p>Threat Assessment: Malicious Web Presence</p>
             </div>
+            
             <div class="threat-assessment">
-                <h3><span aria-hidden="true">🚨 </span>THREAT LEVEL: HIGH</h3>
-                <p>Fake supplier websites are targeting Hilltop Honey to intercept payments and steal credentials. Your mission is to learn how to distinguish legitimate sites from malicious ones.</p>
+                <h3><span aria-hidden="true">🚨</span> HREAT LEVEL: HIGH</h3>
+                <p><strong>Fake supplier websites are targeting Hilltop Honey to intercept payments and steal credentials. Your mission is to learn how to distinguish legitimate sites from malicious ones.</p>
             </div>
+
             <div class="learning-objectives">
-                <h3><span aria-hidden="true">🎯 </span>MISSION OBJECTIVES</h3>
+                <h3><span aria-hidden="true">🎯</span> MISSION OBJECTIVES</h3>
                 <ul>
                     <li>Identify secure websites using URL indicators (HTTPS)</li>
                     <li>Recognise common web threats like phishing sites</li>
@@ -51,9 +54,20 @@
                     <li>Apply company internet policies correctly</li>
                 </ul>
             </div>
-            <button data-action="start-training" class="btn btn-secondary">ACCEPT MISSION</button>
+            
+            <div class="instructor-message">
+                <div class="instructor-avatar">
+                    <img src="images/characters/instructor-avatar.png" alt="Security Instructor">
+                </div>
+                <div class="message-content">
+                    <h4>INSTRUCTOR BRIEFING</h4>
+                    <p>Multiple fake supplier websites have appeared - agents must identify which are legitimate</p>
+                </div>
+            </div>
+            <button data-action="start-training" class="btn btn-secondary">BEGIN VAULT TRAINING</button>
         </div>
-    </section>
+    </div>
+</section>
 
     <!-- Training Phase 1A: Web Security Education -->
     <section id="training-phase-1a" class="training-section">
