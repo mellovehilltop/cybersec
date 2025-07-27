@@ -1471,4 +1471,38 @@ p {
 .challenge-card h4 { color: var(--primary-color); }
 .challenge-options { display: flex; flex-direction: column; gap: var(--spacing-sm); margin-top: var(--spacing-md); }
 .challenge-result { margin-top: var(--spacing-md); font-weight: bold; }
-.assessment-score { text-align: center; }
+.assessment-score { text-align: center; } 
+/* ========================================
+   MODULE 2 - FIXES & ENHANCEMENTS (Round 2)
+   ======================================== */
+
+/* FIX: Creates a responsive grid for threat cards to prevent scrolling */
+.threat-cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-xl);
+}
+
+/* FIX: Slightly larger, more readable text inside threat cards */
+.threat-card .threat-content p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+/* FIX: Correctly formats the passphrase method as a numbered list */
+.passphrase-method ol {
+  list-style: decimal; /* Use standard numbers */
+  margin-left: var(--spacing-xl); /* Indent the list */
+  padding-left: var(--spacing-md);
+  margin-top: var(--spacing-md);
+}
+
+.passphrase-method li {
+  margin-bottom: var(--spacing-md);
+  font-size: 1.1rem;
+}
+
+.passphrase-method li strong {
+  color: var(--primary-color);
+}
