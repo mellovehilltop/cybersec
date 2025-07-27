@@ -136,23 +136,24 @@
     </section>
 
     <!-- Phase 4: Final Assessment -->
-    <section id="assessment-phase" class="training-section">
-        <div class="container">
-            <div class="assessment-content" id="assessment-content">
-                 <div class="section-header">
-                    <h2>FINAL ASSESSMENT</h2>
-                    <p>Email Security Knowledge Test</p>
-                </div>
-                 <div class="assessment-intro" id="assessment-intro">
-                     <h3><span aria-hidden="true">🎯 </span>FIELD TEST: Email Threat Assessment</h3>
-                     <p>You will analyze 4 emails and determine which are safe and which are threats. Choose wisely. Your company's security depends on it.</p>
-                     <p><strong>Passing Score:</strong> A grade of 75% or higher is required.</p>
-                </div>
-                <div class="assessment-container" id="email-assessment-container"></div>
-                <div class="assessment-results" id="assessment-results-container" style="display: none;"></div>
+<section id="assessment-phase" class="training-section">
+    <div class="container">
+        <!-- FIX: Added a static wrapper ID for event delegation -->
+        <div class="assessment-content" id="assessment-wrapper">
+             <div class="section-header">
+                <h2>FINAL ASSESSMENT</h2>
+                <p>Email Security Knowledge Test</p>
             </div>
+             <div class="assessment-intro" id="assessment-intro">
+                 <h3><span aria-hidden="true">🎯 </span>FIELD TEST: Email Threat Assessment</h3>
+                 <p>You will analyze 4 emails and determine which are safe and which are threats. Choose wisely. Your company's security depends on it.</p>
+                 <p><strong>Passing Score:</strong> A grade of 75% or higher is required.</p>
+            </div>
+            <div class="assessment-container" id="email-assessment-container"></div>
+            <div class="assessment-results" id="assessment-results-container" style="display: none;"></div>
         </div>
-    </section>
+    </div>
+</section>
 
     <!-- SCRIPTS -->
     <script src="js/progress.js" defer></script>
