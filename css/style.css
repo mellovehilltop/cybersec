@@ -1635,3 +1635,69 @@ p {
 }
 .feedback-box.correct { background: rgba(0, 255, 0, 0.1); color: var(--success-color); }
 .feedback-box.incorrect { background: rgba(231, 76, 60, 0.1); color: var(--danger-color); }
+/* ========================================
+   MODULE 3 - ENHANCEMENTS & NEW PHASES (NEW)
+   ======================================== */
+
+/* Phase 3: Improved Certificate Inspector */
+.certificate-card .cert-decision {
+  margin-top: var(--spacing-md);
+  padding-top: var(--spacing-md);
+  border-top: 1px solid var(--border-dark);
+  display: flex;
+  gap: var(--spacing-md);
+  justify-content: center;
+}
+/* Hide decision buttons after one is clicked */
+.certificate-card.revealed .cert-decision {
+  display: none;
+}
+
+/* Phase 4: Red Flag Hunt */
+.redflag-game-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(0,0,0,0.2);
+  padding: var(--spacing-md);
+  border-radius: 8px;
+  margin-bottom: var(--spacing-lg);
+}
+.score-panel {
+  display: flex;
+  gap: var(--spacing-xl);
+  font-family: var(--font-secondary);
+}
+.score-label {
+  color: var(--text-secondary);
+}
+.score-panel span {
+  font-weight: bold;
+  color: var(--primary-color);
+}
+.website-image-container {
+  position: relative;
+  width: 100%;
+  max-width: 1000px; /* Adjust as needed */
+  margin: 0 auto;
+  border: 3px solid var(--border-secondary);
+}
+.website-screenshot {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.red-flag-hotspot {
+  position: absolute;
+  border: 3px dashed rgba(255, 0, 0, 0.7);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.red-flag-hotspot:hover {
+  background: rgba(255, 0, 0, 0.3);
+}
+.red-flag-hotspot.found {
+  border: 3px solid var(--success-color);
+  background: rgba(0, 255, 0, 0.3);
+  cursor: default;
+}
