@@ -11,10 +11,46 @@ const module3Manager = {
     currentAssessmentQuestion: 0,
 
     urlExamples: [
-        { url: "https://www.hilltophoney.co.uk/contact", cat: "safe", expl: "Correct! HTTPS and the official domain are good signs." },
-        { url: "http://hilltop-honey-suppliers.net/login", cat: "suspicious", expl: "Correct! HTTP is not secure and '.net' is not our official domain for suppliers." },
-        { url: "https://hiltophoney.tk/urgent-payment", cat: "dangerous", expl: "Correct! Misspelled domain ('hiltop') and a .tk extension are major red flags." },
-        { url: "https://royalmail.com/track-and-trace", cat: "safe", expl: "Correct! A legitimate, secure URL for a known service." }
+            { 
+        url: "https://www.hilltophoney.co.uk/contact", 
+        category: "safe", 
+        explanation: "Correct! HTTPS and the official company domain are good signs." 
+    },
+    { 
+        url: "http://hilltop-honey-suppliers.net/login", 
+        category: "suspicious", 
+        explanation: "Correct! HTTP (not secure) and '-suppliers.net' is not our official domain." 
+    },
+    { 
+        url: "https://hiltophoney.tk/urgent-payment", 
+        category: "dangerous", 
+        explanation: "Correct! Misspelled domain ('hiltop') and unusual .tk domain are major red flags." 
+    },
+    { 
+        url: "https://royalmail.com/track-and-trace", 
+        category: "safe", 
+        explanation: "Correct! This is a legitimate, secure URL for a known service." 
+    },
+    { 
+        url: "http://192.168.4.23/downloads/update.exe", 
+        category: "dangerous", 
+        explanation: "Correct! Direct IP address URL for a download is extremely dangerous." 
+    },
+    { 
+        url: "https://www.amazon-deals.org", 
+        category: "suspicious", 
+        explanation: "Correct! While it has HTTPS, 'amazon-deals.org' is not the real Amazon domain." 
+    },
+    { 
+        url: "https://hilltop-honey.co.uk-security.tk", 
+        category: "dangerous", 
+        explanation: "Correct! Fake domain attempting to look official with unusual subdomain structure." 
+    },
+    { 
+        url: "https://www.gov.uk/business-support", 
+        category: "safe", 
+        explanation: "Correct! Official government website with proper HTTPS security." 
+    }
     ],
     certificates: [
         { domain: "hilltophoney.co.uk", valid: true, expl: "This is a valid certificate. It's issued by a trusted authority (e.g., Let's Encrypt) and the domain name matches exactly." },
