@@ -1,7 +1,7 @@
 /**
- * js/module1.js - FINALIZED VERSION v2
+ * js/module1.js - FINALIZED VERSION v3
  *
- * FIX: Corrects the JavaScript caching error that caused Phase 3 to get stuck.
+ * FIX: Ensures the "Proceed to Assessment" button appears after completing the Phase 3 flowchart.
  * All other previous fixes are retained.
  */
 const module1Manager = {
@@ -64,24 +64,17 @@ const module1Manager = {
     cacheDOMElements() {
         this.dom.sections = document.querySelectorAll('.training-section');
         this.dom.moduleProgress = document.getElementById('module-progress');
-        // Phase 1
         this.dom.terminalOutput = document.getElementById('terminal-output');
         this.dom.terminalNextBtn = document.querySelector('[data-action="terminal-next"]');
         this.dom.phase1ContinueBtn = document.getElementById('phase-1-continue-btn');
-        // Phase 2
         this.dom.scannableElements = document.querySelectorAll('.scannable');
         this.dom.flagsFound = document.getElementById('flags-found');
         this.dom.flagExplanations = document.getElementById('flag-explanations');
         this.dom.phase2Btn = document.getElementById('phase-2-btn');
-        // Phase 3
         this.dom.flowchartActions = document.getElementById('flowchart-actions');
         this.dom.phase3Btn = document.getElementById('phase-3-btn');
-        // **** THIS IS THE FIX ****
-        // Caching the elements that were missed before.
         this.dom.flowchartStatus = document.getElementById('flowchart-status');
         this.dom.flowchartText = document.getElementById('flowchart-text');
-        // **** END OF FIX ****
-        // Phase 4 (Assessment)
         this.dom.assessmentWrapper = document.getElementById('assessment-wrapper');
         this.dom.assessmentContainer = document.getElementById('email-assessment-container');
         this.dom.resultsContainer = document.getElementById('assessment-results-container');
@@ -90,31 +83,50 @@ const module1Manager = {
     bindEvents() {
         document.body.addEventListener('click', (e) => {
             const actionTarget = e.target.closest('[data-action]');
-            if (actionTarget) {
-                this.handleAction(actionTarget.dataset);
-            }
+            if (actionTarget) { this.handleAction(actionTarget.dataset); }
         });
-
         this.dom.scannableElements.forEach(el => {
             el.addEventListener('click', (e) => this.handleRedFlagClick(e.currentTarget));
         });
-
         this.dom.flowchartActions.addEventListener('click', (e) => {
             const nextTarget = e.target.closest('[data-next]');
-            if (nextTarget) {
-                this.handleFlowchartChoice(nextTarget.dataset.next);
-            }
+            if (nextTarget) { this.handleFlowchartChoice(nextTarget.dataset.next); }
         });
-
         this.dom.assessmentWrapper.addEventListener('click', (e) => {
              const choiceTarget = e.target.closest('[data-choice]');
-            if (choiceTarget) {
-                this.handleAssessmentChoice(choiceTarget.dataset.choice === 'true');
-            }
+            if (choiceTarget) { this.handleAssessmentChoice(choiceTarget.dataset.choice === 'true'); }
         });
     },
     
-    // --- The rest of the file is identical to the last version ---
+    // The renderFlowNode function is the only one with a change.
+    renderFlowNode() {
+        const node = this.flowchartNodes[this.currentFlowNode];
+        if (!node) return;
+
+        this.dom.flowchartStatus.textContent = node.status;
+        this.dom.flowchartText.innerHTML = node.text;
+        this.dom.flowchartActions.innerHTML = '';
+        
+        // ** THIS IS THE FIX **
+        // Make sure the continue button is hidden by default for every node.
+        this.dom.phase3Btn.style.display = 'none';
+
+        if (node.isConclusion) {
+            // If it's the final node, show the continue button.
+            this.dom.phase3Btn.style.display = 'block';
+        } else {
+            // Otherwise, show the choice buttons.
+            node.options.forEach(option => {
+                const button = document.createElement('button');
+                button.className = 'btn btn-secondary';
+                button.textContent = option.text;
+                button.dataset.next = option.next;
+                this.dom.flowchartActions.appendChild(button);
+            });
+        }
+    },
+
+    // --- All other functions remain identical to the previous version ---
     handleAction(dataset) { if (this.isTyping && dataset.action !== 'return-home') return; switch (dataset.action) { case 'return-home': window.location.href = 'index.html'; break; case 'start-training': if (window.digitalShieldProgress) { window.digitalShieldProgress.startModule(1); } this.showSection('training-phase-1'); this.updateProgress(2); this.renderNextTerminalLine(); break; case 'terminal-next': this.renderNextTerminalLine(); break; case 'complete-phase': this.completePhase(parseInt(dataset.phase, 10)); break; case 'complete-module': this.completeModule(); break; } },
     typeLine(element, text) { this.isTyping = true; this.dom.terminalNextBtn.disabled = true; let currentText = ''; let i = 0; const typeWriter = () => { if (i < text.length) { currentText += text[i]; element.innerHTML = currentText + '<span class="typing-cursor"></span>'; this.dom.terminalOutput.scrollTop = this.dom.terminalOutput.scrollHeight; i++; setTimeout(typeWriter, 15); } else { element.innerHTML = currentText; this.isTyping = false; this.dom.terminalNextBtn.disabled = false; if (this.currentTerminalStep >= this.terminalContent.length - 1) { this.dom.phase1ContinueBtn.style.display = 'block'; } } }; typeWriter(); },
     showAssessmentResults() { this.dom.assessmentContainer.style.display = 'none'; const passed = this.assessmentScore >= window.digitalShieldProgress.passingScore; let badgeHTML = ''; if (passed) { badgeHTML = `<img src="images/certificates/badge-data-expert.png" alt="Email Security Expert Badge" class="completion-badge">`; if(window.digitalShieldProgress) { window.digitalShieldProgress.awardBadge(1, 'Email Expert'); } } this.dom.resultsContainer.innerHTML = ` <div class="assessment-completion"> <h2>ASSESSMENT COMPLETE</h2> ${badgeHTML} <p class="final-score">You scored: ${this.assessmentScore}%</p> <p class="final-status ${passed ? 'passed' : 'failed'}">Status: ${passed ? 'PASSED' : 'FAILED'}</p> <p>${passed ? 'Excellent work, Agent. Your situational awareness is sharp.' : 'You did not meet the passing score. Review the material and try again.'}</p> <button data-action="complete-module" class="btn btn-secondary">COMPLETE MODULE & RETURN</button> </div>`; this.dom.resultsContainer.style.display = 'block'; },
@@ -124,7 +136,6 @@ const module1Manager = {
     renderNextTerminalLine() { if (this.isTyping) return; this.currentTerminalStep++; if (this.currentTerminalStep < this.terminalContent.length) { const stepData = this.terminalContent[this.currentTerminalStep]; const newLine = document.createElement('div'); newLine.className = `terminal-line ${stepData.type}`; this.dom.terminalOutput.appendChild(newLine); this.typeLine(newLine, stepData.text); } if (this.currentTerminalStep >= this.terminalContent.length - 1) { this.dom.terminalNextBtn.style.display = 'none'; } },
     handleRedFlagClick(element) { if (element.classList.contains('found')) return; element.classList.add('found'); this.redFlagsFound++; this.dom.flagsFound.textContent = this.redFlagsFound; const explanations = { 'sender': 'Misspelled domain name.', 'subject': 'Creates false urgency.', 'greeting': 'Generic, non-personal greeting.', 'urgency': 'Claims of suspicious activity to cause panic.', 'request': 'Asks for login credentials via a link.', 'link': 'Hovering would reveal a suspicious URL.' }; const p = document.createElement('p'); p.innerHTML = `<strong>FLAGGED:</strong> ${explanations[element.dataset.flag]}`; this.dom.flagExplanations.appendChild(p); if (this.redFlagsFound >= this.totalRedFlags) { this.dom.phase2Btn.disabled = false; } },
     handleFlowchartChoice(nextNodeId) { this.currentFlowNode = nextNodeId; this.renderFlowNode(); },
-    renderFlowNode() { const node = this.flowchartNodes[this.currentFlowNode]; if (!node) return; this.dom.flowchartStatus.textContent = node.status; this.dom.flowchartText.innerHTML = node.text; this.dom.flowchartActions.innerHTML = ''; this.dom.phase3Btn.style.display = 'none'; if (node.isConclusion) { this.dom.flowchart.classList.add(node.conclusionClass); this.dom.phase3Btn.style.display = 'block'; } else { node.options.forEach(option => { const button = document.createElement('button'); button.className = 'btn btn-secondary'; button.textContent = option.text; button.dataset.next = option.next; this.dom.flowchartActions.appendChild(button); }); } },
     handleAssessmentChoice(userChoice) { const email = this.assessmentEmails[this.currentAssessmentEmailIndex]; const isCorrect = (userChoice === email.legitimate); if (isCorrect) { this.assessmentScore += 25; } this.showEmailFeedback(email, isCorrect); this.currentAssessmentEmailIndex++; setTimeout(() => { if (this.currentAssessmentEmailIndex >= this.assessmentEmails.length) { this.showAssessmentResults(); } else { this.renderAssessmentEmail(); } }, 3000); },
     renderAssessmentEmail() { const email = this.assessmentEmails[this.currentAssessmentEmailIndex]; this.dom.assessmentContainer.innerHTML = ` <div class="assessment-email"> <h4>Email ${this.currentAssessmentEmailIndex + 1} of ${this.assessmentEmails.length}</h4> <div class="email-preview"> <p><strong>From:</strong> ${email.from}</p> <p><strong>Subject:</strong> ${email.subject}</p> <p>${email.body}</p> </div> <div class="action-buttons"> <button data-choice="true" class="btn assess-btn safe">✅ SAFE</button> <button data-choice="false" class="btn assess-btn suspicious">⚠️ SUSPICIOUS</button> </div> </div>`; },
     showEmailFeedback(email, isCorrect) { const feedbackClass = isCorrect ? 'correct' : 'incorrect'; const resultText = isCorrect ? 'CORRECT!' : 'INCORRECT'; this.dom.assessmentContainer.innerHTML = ` <div class="assessment-feedback ${feedbackClass}"> <h3>${resultText}</h3> <p>${email.explanation}</p> </div> `; },
