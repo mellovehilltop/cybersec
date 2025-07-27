@@ -1,14 +1,13 @@
 /**
- * js/module3.js - DEFINITIVE FINAL VERSION
+ * js/module3.js - CORRECTED VERSION
  *
- * - RESTORED: All original data for URL Detective, Certificate Inspector, and the 3 Red Flag Hunt websites.
- * - FIXED: Certificate Inspector now displays all details and gives correct feedback.
- * - FIXED: Red Flag Hunt now correctly cycles through all 3 websites.
- * - FIXED: Final Assessment now renders correctly.
- * - All functionality is now complete, stable, and consistent.
+ * - FIXED: Red Flag Hunt coordinates updated to match requirements
+ * - FIXED: Certificate Inspector now uses correct property name
+ * - FIXED: Third website now shows up properly
+ * - All functionality is complete and working
  */
 const module3Manager = {
-    // --- STATE & CONTENT (RESTORED & CORRECTED) ---
+    // --- STATE & CONTENT ---
     selectedURL: null,
     correctlySorted: 0,
     certificatesDecided: 0,
@@ -16,7 +15,7 @@ const module3Manager = {
     assessmentScore: 0,
     currentAssessmentQuestion: 0,
 
-    // RESTORED: Full list of 8 URL examples
+    // Full list of 8 URL examples
     urlExamples: [
         { url: "https://www.hilltophoney.co.uk/contact", cat: "safe", expl: "Correct! HTTPS and the official domain are good signs." },
         { url: "http://hilltop-honey-suppliers.net/login", cat: "suspicious", expl: "Correct! HTTP is not secure and '.net' is not our official domain for suppliers." },
@@ -27,41 +26,45 @@ const module3Manager = {
         { url: "https://hilltop-honey.co.uk-security.tk", cat: "dangerous", expl: "Correct! This is a subdomain hijacking attempt where the real domain is '.tk'."},
         { url: "https://www.gov.uk/business-support", cat: "safe", expl: "Correct! Official government websites are trustworthy." }
     ],
-    // RESTORED: Full certificate data from original file
+    
+    // Certificate data
     certificates: [
         { domain: "hilltophoney.co.uk", valid: true, issuer: "Let's Encrypt Authority", expiry: "Valid", expl: "This is a VALID certificate. It's issued by a trusted authority and the domain name matches exactly." },
         { domain: "hiltop-honey.net", valid: false, issuer: "Self-signed", expiry: "Invalid", expl: "This is an INVALID certificate. A 'self-signed' certificate means it wasn't verified by a trusted authority and should not be trusted for business." },
         { domain: "suppliers.hilltophoney.co.uk", valid: true, issuer: "DigiCert Inc", expiry: "Valid", expl: "This is a VALID certificate for a proper subdomain. It is secure." },
         { domain: "hilltophoney.tk", valid: false, issuer: "Unknown Authority", expiry: "Expired", expl: "This is a DANGEROUS certificate. It is expired and from an untrusted source." }
     ],
-    // RESTORED & CORRECTED: Full Red Flag Hunt data with original coordinates
+    
+    // CORRECTED: Red Flag Hunt data with proper coordinates
     redFlagWebsites: [
         {
             image: "images/module3/fake-supplier-site.jpg",
             redFlags: [
-                { id: "url", x: 18, y: 12, width: 60, height: 8, expl: "Spotted! The URL uses HTTP and a suspicious '.tk' domain." },
-                { id: "urgent", x: 25, y: 60, width: 50, height: 10, expl: "Excellent! Urgent language is a classic tactic to make you act without thinking." },
-                { id: "download", x: 33, y: 86, width: 34, height: 6, expl: "Perfect! Never download unexpected '.exe' files from a website." },
-                { id: "logo", x: 25, y: 32, width: 50, height: 12, expl: "Good catch! A blurry, low-quality logo is a sign of a fake site." }
+                { id: "url", x: 29.56, y: 1.10, width: 40.77, height: 4.39, expl: "Spotted! The URL uses HTTP and a suspicious '.tk' domain." },
+                { id: "logo", x: 34.65, y: 21.95, width: 30.58, height: 10.98, expl: "Good catch! The 'HoneySuppliers.tk' logo reveals the fake domain." },
+                { id: "verification", x: 24.46, y: 38.43, width: 50.97, height: 16.47, expl: "Excellent! This fake 'verification' message is designed to build false trust." },
+                { id: "download", x: 35, y: 85.5, width: 30, height: 5, expl: "Perfect! Never download unexpected files from suspicious websites." }
             ]
         },
         {
             image: "images/module3/fake-software-site.jpg", 
             redFlags: [
-                { id: "cert-warning", x: 0, y: 0, width: 100, height: 10, expl: "Correct! A browser certificate warning should never be ignored." },
-                { id: "contradiction", x: 25, y: 35, width: 50, height: 10, expl: "'Free Premium Software' is a red flag. Legitimate premium software is rarely free." },
-                { id: "personal-info", x: 60, y: 50, width: 35, height: 25, expl: "Good eye! Asking for sensitive bank details for a 'free' download is highly suspicious." },
-                { id: "exe-direct", x: 30, y: 80, width: 40, height: 8, expl: "Correct! A direct download link to an '.exe' file is very risky." }
+                { id: "cert-warning", x: 0, y: 0, width: 100, height: 5, expl: "Correct! A browser certificate warning should never be ignored." },
+                { id: "banner", x: 0, y: 20, width: 100, height: 10, expl: "Good eye! 'Free Premium Software' is contradictory and suspicious." },
+                { id: "input-fields", x: 5, y: 40, width: 90, height: 15, expl: "Spotted! Asking for company and bank details for 'free' software is a major red flag." },
+                { id: "download-button", x: 70, y: 85, width: 20, height: 10, expl: "Correct! A suspicious download button on an untrusted site is dangerous." }
             ]
         },
         {
             image: "images/module3/fake-payment-site.jpg",
             redFlags: [
                 { id: "complex-url", x: 15, y: 8, width: 60, height: 6, expl: "Spotted! This complex URL is designed to look official but is not." },
-                { id: "poor-design", x: 10, y: 25, width: 80, height: 60, expl: "Correct! Poor grammar, blurry images, and unprofessional design are all warning signs." }
+                { id: "poor-design", x: 10, y: 25, width: 80, height: 60, expl: "Correct! Poor grammar, blurry images, and unprofessional design are all warning signs." },
+                { id: "urgent-message", x: 20, y: 90, width: 60, height: 8, expl: "Well done! Urgent payment demands are a classic phishing tactic." }
             ]
         }
     ],
+    
     assessmentQuestions: [
         { q: "Evaluate this URL: https://organic-honey-suppliers.co.uk", opts: ["Safe to proceed", "Suspicious - verify independently", "Dangerous - obvious phishing"], correct: 1, expl: "Correct. While it seems safe, new supplier sites must always be independently verified first." },
         { q: "Which download source is safest?", opts: ["http://free-accounting.net/download.exe", "https://www.sage.com/en-gb/products/", "A link from a tech blog review"], correct: 1, expl: "Correct. Always download from the official vendor website (Sage.com)." },
@@ -70,12 +73,61 @@ const module3Manager = {
     ],
     dom: {},
 
-    init() { /* ... Unchanged ... */ },
-    cacheDOMElements() { /* ... Unchanged ... */ },
-    bindEvents() { /* ... Unchanged ... */ },
-    handleAction(dataset) { /* ... Unchanged ... */ },
-    showSection(sectionId) { /* ... Unchanged ... */ },
-    updateProgress(step) { /* ... Unchanged ... */ },
+    init() {
+        this.cacheDOMElements();
+        this.bindEvents();
+        this.updateProgress(1);
+    },
+
+    cacheDOMElements() {
+        this.dom.moduleProgress = document.getElementById('module-progress');
+        this.dom.assessmentWrapper = document.getElementById('assessment-wrapper');
+    },
+
+    bindEvents() {
+        document.addEventListener('click', (e) => {
+            if (e.target.tagName === 'BUTTON' && e.target.dataset.action) {
+                e.preventDefault();
+                this.handleAction(e.target.dataset);
+            }
+        });
+    },
+
+    handleAction(dataset) {
+        switch (dataset.action) {
+            case 'return-home':
+                window.location.href = 'index.html';
+                break;
+            case 'start-training':
+                if (window.digitalShieldProgress) window.digitalShieldProgress.startModule(3);
+                this.showSection('training-phase-1');
+                this.updateProgress(2);
+                break;
+            case 'complete-phase':
+                this.completePhase(parseInt(dataset.phase, 10));
+                break;
+            case 'complete-module':
+                this.completeModule();
+                break;
+            case 'next-website':
+                this.renderNextWebsite();
+                break;
+            case 'redo-training':
+                window.location.reload();
+                break;
+        }
+    },
+
+    showSection(sectionId) {
+        document.querySelectorAll('.training-section').forEach(section => section.classList.remove('active'));
+        document.getElementById(sectionId)?.classList.add('active');
+    },
+
+    updateProgress(step) {
+        const totalSteps = 7;
+        const percentage = Math.round(((step - 1) / (totalSteps - 1)) * 100);
+        this.dom.moduleProgress.textContent = `${percentage}%`;
+    },
 
     completePhase(phase) {
         this.updateProgress(phase + 2);
@@ -91,8 +143,10 @@ const module3Manager = {
     renderURLDetectiveGame() {
         this.correctlySorted = 0;
         const pool = document.getElementById('url-sorting-pool');
-        if(!pool) return;
-        pool.innerHTML = this.urlExamples.map((item, i) => `<div class="url-item" data-index="${i}">${item.url}</div>`).join('');
+        if (!pool) return;
+        pool.innerHTML = this.urlExamples.map((item, i) => 
+            `<div class="url-item" data-index="${i}">${item.url}</div>`
+        ).join('');
         pool.addEventListener('click', e => {
             if (e.target.classList.contains('url-item')) this.selectURL(e.target);
         });
@@ -101,7 +155,13 @@ const module3Manager = {
         });
     },
 
-    selectURL(el) { /* ... Unchanged ... */ },
+    selectURL(el) {
+        const selected = document.querySelector('.url-item.selected');
+        if (selected) selected.classList.remove('selected');
+        this.selectedURL = el;
+        el.classList.add('selected');
+        document.getElementById('url-feedback').textContent = "Now click a category box to place it.";
+    },
 
     placeURL(zone) {
         if (!this.selectedURL) return;
@@ -128,8 +188,7 @@ const module3Manager = {
     renderCertificateInspector() {
         this.certificatesDecided = 0;
         const container = document.getElementById('certificate-examples');
-        if(!container) return;
-        // FIX: Using the full, restored certificate data
+        if (!container) return;
         container.innerHTML = this.certificates.map((cert, i) => `
             <div class="certificate-card" data-index="${i}">
                 <div class="certificate-header">
@@ -148,7 +207,7 @@ const module3Manager = {
             const card = e.target.closest('.certificate-card');
             const button = e.target.closest('button');
             if (card && button && !card.classList.contains('revealed')) {
-                const decision = button.textContent.includes('Trust');
+                const decision = button.textContent.includes('Trust') && !button.textContent.includes('Not');
                 this.decideCertificate(card, decision);
             }
         });
@@ -160,12 +219,12 @@ const module3Manager = {
         const feedback = document.getElementById('cert-feedback');
         const correctDecision = (userTrusts === certData.valid);
         
-        // FIX: Clear and consistent feedback logic that shows the explanation
+        // FIXED: Using correct property name 'expl' instead of 'explanation'
         if (correctDecision) {
-            feedback.textContent = `✅ CORRECT! ${certData.explanation}`;
+            feedback.textContent = `✅ CORRECT! ${certData.expl}`;
             feedback.className = 'feedback-box correct';
         } else {
-            feedback.textContent = `❌ INCORRECT. Let's review why: ${certData.explanation}`;
+            feedback.textContent = `❌ INCORRECT. Let's review why: ${certData.expl}`;
             feedback.className = 'feedback-box incorrect';
         }
 
@@ -180,36 +239,134 @@ const module3Manager = {
         this.renderNextWebsite();
     },
     
-    renderNextWebsite() { /* ... Unchanged from previous version, as it correctly cycles now ... */ },
-    renderAssessment() { /* ... Unchanged ... */ },
-    renderNextAssessmentQuestion() { /* ... Unchanged ... */ },
-    answerAssessment(selectedIndex) { /* ... Unchanged ... */ },
-    showAssessmentResults() { /* ... Unchanged ... */ },
-    completeModule() { /* ... Unchanged ... */ }
-};
-
-// --- INITIALIZER AND UNCHANGED HELPER FUNCTIONS ---
-module3Manager.init = function() { this.cacheDOMElements(); this.bindEvents(); this.updateProgress(1); };
-
-module3Manager.bindEvents = function() {
-    document.addEventListener('click', (e) => {
-        if (e.target.tagName === 'BUTTON' && e.target.dataset.action) {
-            e.preventDefault();
-            this.handleAction(e.target.dataset);
+    renderNextWebsite() {
+        if (this.currentWebsiteIndex >= this.redFlagWebsites.length) {
+            // All websites completed
+            return;
         }
-    });
+        
+        const info = this.redFlagWebsites[this.currentWebsiteIndex];
+        document.getElementById('current-website').textContent = `${this.currentWebsiteIndex + 1} / ${this.redFlagWebsites.length}`;
+        document.getElementById('flags-found').textContent = 0;
+        document.getElementById('total-flags').textContent = info.redFlags.length;
+        document.getElementById('next-website-btn').style.display = 'none';
+        document.getElementById('redflag-feedback').textContent = "Click on anything that looks suspicious or dangerous on the website.";
+        
+        const container = document.getElementById('website-image-container');
+        container.innerHTML = `
+            <img src="${info.image}" alt="Fake Website Screenshot" class="website-screenshot">
+            ${info.redFlags.map(flag => 
+                `<div class="red-flag-hotspot" data-id="${flag.id}" 
+                      style="left:${flag.x}%; top:${flag.y}%; width:${flag.width}%; height:${flag.height}%;"></div>`
+            ).join('')}`;
+        
+        let flagsFoundOnThisSite = 0;
+        container.onclick = (e) => {
+            const hotspot = e.target.closest('.red-flag-hotspot');
+            if (hotspot && !hotspot.classList.contains('found')) {
+                hotspot.classList.add('found');
+                const flagData = info.redFlags.find(f => f.id === hotspot.dataset.id);
+                document.getElementById('redflag-feedback').innerHTML = 
+                    `<p style="color:var(--success-color)">Spotted!</p><p>${flagData.expl}</p>`;
+                flagsFoundOnThisSite++;
+                document.getElementById('flags-found').textContent = flagsFoundOnThisSite;
+                
+                if (flagsFoundOnThisSite === info.redFlags.length) {
+                    if (this.currentWebsiteIndex < this.redFlagWebsites.length - 1) {
+                        document.getElementById('next-website-btn').style.display = 'block';
+                    } else {
+                        document.getElementById('redflag-feedback').textContent = "Excellent! All red flags on all sites found.";
+                        document.getElementById('phase-4-btn').disabled = false;
+                    }
+                }
+            }
+        };
+        this.currentWebsiteIndex++;
+    },
+
+    renderAssessment() {
+        this.currentAssessmentQuestion = 0;
+        this.assessmentScore = 0;
+        this.renderNextAssessmentQuestion();
+    },
+
+    renderNextAssessmentQuestion() {
+        const challengesContainer = document.getElementById('assessment-challenges');
+        if (!challengesContainer) return;
+        
+        if (this.currentAssessmentQuestion >= this.assessmentQuestions.length) {
+            this.showAssessmentResults();
+            return;
+        }
+        
+        const q = this.assessmentQuestions[this.currentAssessmentQuestion];
+        challengesContainer.innerHTML = `
+            <div class="challenge-card">
+                <h4>Question ${this.currentAssessmentQuestion + 1}/${this.assessmentQuestions.length}: ${q.q}</h4>
+                <div class="challenge-options">
+                    ${q.opts.map((opt, i) => `<button data-index="${i}" class="btn btn-secondary">${opt}</button>`).join('')}
+                </div>
+                <div class="challenge-result"></div>
+            </div>`;
+        
+        challengesContainer.querySelector('.challenge-options').onclick = (e) => {
+            if (e.target.tagName === 'BUTTON') {
+                this.answerAssessment(parseInt(e.target.dataset.index));
+            }
+        };
+    },
+
+    answerAssessment(selectedIndex) {
+        const q = this.assessmentQuestions[this.currentAssessmentQuestion];
+        const resultDiv = document.querySelector('.challenge-result');
+        document.querySelectorAll('.challenge-options button').forEach(b => b.disabled = true);
+        
+        if (selectedIndex === q.correct) {
+            this.assessmentScore++;
+            resultDiv.innerHTML = `<p style="color:var(--success-color)">✅ Correct! ${q.expl}</p>`;
+        } else {
+            resultDiv.innerHTML = `<p style="color:var(--danger-color)">❌ Incorrect. ${q.expl}</p>`;
+        }
+        
+        this.currentAssessmentQuestion++;
+        setTimeout(() => this.renderNextAssessmentQuestion(), 3000);
+    },
+
+    showAssessmentResults() {
+        const score = this.assessmentScore;
+        const total = this.assessmentQuestions.length;
+        const passed = score / total >= 0.75;
+        let badgeHTML = '';
+        
+        if (passed) {
+            badgeHTML = `<img src="images/certificates/badge-internet-expert.png" alt="Internet Expert Badge" class="completion-badge">`;
+            if (window.digitalShieldProgress) {
+                window.digitalShieldProgress.awardBadge(3, 'Digital Navigator');
+            }
+        }
+        
+        this.dom.assessmentWrapper.innerHTML = `
+            <div class="section-header"><h2>ASSESSMENT COMPLETE</h2></div>
+            <div class="assessment-completion">
+                ${badgeHTML}
+                <h3 class="final-score">You scored: ${score}/${total}</h3>
+                <p class="final-status ${passed ? 'passed' : 'failed'}">Status: ${passed ? 'PASSED' : 'FAILED'}</p>
+                <p>${passed ? 'Excellent work, Agent!' : 'Review the material and try again.'}</p>
+                <button data-action="${passed ? 'complete-module' : 'redo-training'}" class="btn btn-secondary">
+                    ${passed ? 'COMPLETE MODULE' : 'REDO TRAINING'}
+                </button>
+            </div>`;
+    },
+
+    completeModule() {
+        if (window.digitalShieldProgress) {
+            const finalScore = Math.round((this.assessmentScore / this.assessmentQuestions.length) * 100);
+            window.digitalShieldProgress.completeModule(3, finalScore);
+        }
+        alert('Module 3 complete! Progress saved. Returning to Mission Control.');
+        window.location.href = 'index.html';
+    }
 };
-module3Manager.cacheDOMElements = function() { this.dom.moduleProgress = document.getElementById('module-progress'); this.dom.assessmentWrapper = document.getElementById('assessment-wrapper'); };
-module3Manager.handleAction = function(dataset) { switch (dataset.action) { case 'return-home': window.location.href = 'index.html'; break; case 'start-training': if (window.digitalShieldProgress) window.digitalShieldProgress.startModule(3); this.showSection('training-phase-1'); this.updateProgress(2); break; case 'complete-phase': this.completePhase(parseInt(dataset.phase, 10)); break; case 'complete-module': this.completeModule(); break; case 'next-website': this.renderNextWebsite(); break; case 'redo-training': window.location.reload(); break; } };
-module3Manager.showSection = function(sectionId) { document.querySelectorAll('.training-section').forEach(section => section.classList.remove('active')); document.getElementById(sectionId)?.classList.add('active'); };
-module3Manager.updateProgress = function(step) { const totalSteps = 7; const percentage = Math.round(((step - 1) / (totalSteps -1)) * 100); this.dom.moduleProgress.textContent = `${percentage}%`; };
-module3Manager.selectURL = function(el) { const selected = document.querySelector('.url-item.selected'); if (selected) selected.classList.remove('selected'); this.selectedURL = el; el.classList.add('selected'); document.getElementById('url-feedback').textContent = "Now click a category box to place it."; };
-module3Manager.renderNextWebsite = function() { const info = this.redFlagWebsites[this.currentWebsiteIndex]; if (!info) return; document.getElementById('current-website').textContent = `${this.currentWebsiteIndex + 1} / ${this.redFlagWebsites.length}`; document.getElementById('flags-found').textContent = 0; document.getElementById('total-flags').textContent = info.redFlags.length; document.getElementById('next-website-btn').style.display = 'none'; document.getElementById('redflag-feedback').textContent = "Click on anything that looks suspicious or dangerous on the website."; const container = document.getElementById('website-image-container'); container.innerHTML = `<img src="${info.image}" alt="Fake Website Screenshot" class="website-screenshot">${info.redFlags.map(flag => `<div class="red-flag-hotspot" data-id="${flag.id}" style="left:${flag.x}%; top:${flag.y}%; width:${flag.width}%; height:${flag.height}%;"></div>`).join('')}`; let flagsFoundOnThisSite = 0; container.onclick = (e) => { const hotspot = e.target.closest('.red-flag-hotspot'); if (hotspot && !hotspot.classList.contains('found')) { hotspot.classList.add('found'); const flagData = info.redFlags.find(f => f.id === hotspot.dataset.id); document.getElementById('redflag-feedback').innerHTML = `<p style="color:var(--success-color)">Spotted!</p><p>${flagData.expl}</p>`; flagsFoundOnThisSite++; document.getElementById('flags-found').textContent = flagsFoundOnThisSite; if (flagsFoundOnThisSite === info.redFlags.length) { if (this.currentWebsiteIndex < this.redFlagWebsites.length - 1) { document.getElementById('next-website-btn').style.display = 'block'; } else { document.getElementById('redflag-feedback').textContent = "Excellent! All red flags on all sites found."; document.getElementById('phase-4-btn').disabled = false; } } } }; this.currentWebsiteIndex++; };
-module3Manager.renderAssessment = function() { this.currentAssessmentQuestion = 0; this.assessmentScore = 0; this.renderNextAssessmentQuestion(); };
-module3Manager.renderNextAssessmentQuestion = function() { const challengesContainer = document.getElementById('assessment-challenges'); if (!challengesContainer) return; if (this.currentAssessmentQuestion >= this.assessmentQuestions.length) { this.showAssessmentResults(); return; } const q = this.assessmentQuestions[this.currentAssessmentQuestion]; challengesContainer.innerHTML = `<div class="challenge-card"><h4>Question ${this.currentAssessmentQuestion + 1}/${this.assessmentQuestions.length}: ${q.q}</h4><div class="challenge-options">${q.opts.map((opt, i) => `<button data-index="${i}" class="btn btn-secondary">${opt}</button>`).join('')}</div><div class="challenge-result"></div></div>`; challengesContainer.querySelector('.challenge-options').onclick = (e) => { if(e.target.tagName === 'BUTTON') this.answerAssessment(parseInt(e.target.dataset.index)); }; };
-module3Manager.answerAssessment = function(selectedIndex) { const q = this.assessmentQuestions[this.currentAssessmentQuestion]; const resultDiv = document.querySelector('.challenge-result'); document.querySelectorAll('.challenge-options button').forEach(b => b.disabled = true); if (selectedIndex === q.correct) { this.assessmentScore++; resultDiv.innerHTML = `<p style="color:var(--success-color)">✅ Correct! ${q.expl}</p>`; } else { resultDiv.innerHTML = `<p style="color:var(--danger-color)">❌ Incorrect. ${q.expl}</p>`; } this.currentAssessmentQuestion++; setTimeout(() => this.renderNextAssessmentQuestion(), 3000); };
-module3Manager.showAssessmentResults = function() { const score = this.assessmentScore; const total = this.assessmentQuestions.length; const passed = score / total >= 0.75; let badgeHTML = ''; if (passed) { badgeHTML = `<img src="images/certificates/badge-internet-expert.png" alt="Internet Expert Badge" class="completion-badge">`; if (window.digitalShieldProgress) window.digitalShieldProgress.awardBadge(3, 'Digital Navigator'); } this.dom.assessmentWrapper.innerHTML = `<div class="section-header"><h2>ASSESSMENT COMPLETE</h2></div><div class="assessment-completion">${badgeHTML}<h3 class="final-score">You scored: ${score}/${total}</h3><p class="final-status ${passed ? 'passed' : 'failed'}">Status: ${passed ? 'PASSED' : 'FAILED'}</p><p>${passed ? 'Excellent work, Agent!' : 'Review the material and try again.'}</p><button data-action="${passed ? 'complete-module' : 'redo-training'}" class="btn btn-secondary">${passed ? 'COMPLETE MODULE' : 'REDO TRAINING'}</button></div>`; };
-module3Manager.completeModule = function() { if (window.digitalShieldProgress) { const finalScore = Math.round((this.assessmentScore / this.assessmentQuestions.length) * 100); window.digitalShieldProgress.completeModule(3, finalScore); } alert('Module 3 complete! Progress saved. Returning to Mission Control.'); window.location.href = 'index.html'; };
 
 document.addEventListener('DOMContentLoaded', () => {
     module3Manager.init();
