@@ -1308,3 +1308,167 @@ p {
   height: auto;
   filter: drop-shadow(0 0 10px var(--secondary-color));
 }
+/* ========================================
+   MODULE 2 - PASSWORD SECURITY STYLES (NEW)
+   ======================================== */
+
+/* Phase 1: Threat Analysis */
+.threat-card {
+  background: rgba(0,0,0,0.2);
+  border: 1px solid var(--border-secondary);
+  border-left: 5px solid var(--danger-color);
+  padding: var(--spacing-lg);
+  border-radius: 8px;
+  margin-bottom: var(--spacing-lg);
+}
+.threat-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+}
+.threat-icon { font-size: 1.5rem; }
+.threat-header h3 {
+  color: var(--text-primary);
+  font-size: 1.3rem;
+  margin: 0;
+  flex-grow: 1;
+}
+.threat-level {
+  font-size: 0.8rem;
+  font-weight: bold;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: 20px;
+  color: #fff;
+}
+.threat-level.high { background: var(--warning-color); }
+.threat-level.medium { background: var(--secondary-color); }
+.threat-level.critical { background: var(--danger-color); }
+
+.common-passwords {
+  margin-top: var(--spacing-xl);
+  text-align: center;
+}
+.common-passwords h3 { color: var(--secondary-color); font-size: 1.2rem; }
+.password-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: var(--spacing-sm);
+  background: rgba(0,0,0,0.2);
+  padding: var(--spacing-md);
+  border-radius: 5px;
+  font-family: var(--font-secondary);
+}
+
+/* Phase 2: Best Practices */
+.password-tips {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-xl);
+}
+.tip-card {
+  background: rgba(0,0,0,0.2);
+  padding: var(--spacing-lg);
+  text-align: center;
+  border-radius: 8px;
+  border-top: 4px solid var(--primary-color);
+}
+.tip-icon { font-size: 2.5rem; margin-bottom: var(--spacing-md); }
+.tip-card h4 { color: var(--primary-color); font-size: 1.2rem; }
+
+.password-examples {
+  display: flex;
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-xl);
+}
+.example-card {
+  flex: 1;
+  padding: var(--spacing-lg);
+  border-radius: 8px;
+}
+.example-card.weak-example { border: 2px solid var(--danger-color); }
+.example-card.strong-example { border: 2px solid var(--success-color); }
+.example-card h4 { margin-bottom: var(--spacing-md); }
+.example-card.weak-example h4 { color: var(--danger-color); }
+.example-card.strong-example h4 { color: var(--success-color); }
+.example-card ul { list-style: none; font-family: var(--font-secondary); }
+
+/* Phase 3: Vault Tester */
+.digital-vault { text-align: center; margin-bottom: var(--spacing-md); }
+.vault-icon {
+  width: 100px;
+  transition: filter var(--transition-normal);
+  filter: drop-shadow(0 0 15px #f00); /* Red glow for locked */
+}
+.digital-vault.unlocked .vault-icon {
+  filter: drop-shadow(0 0 15px #0f0); /* Green glow for unlocked */
+}
+
+.password-input-container {
+  position: relative;
+  max-width: 500px;
+  margin: 0 auto var(--spacing-md) auto;
+}
+.password-input {
+  width: 100%;
+  padding: var(--spacing-md);
+  font-size: 1.1rem;
+  border-radius: 5px;
+  border: 2px solid var(--border-secondary);
+  background: #fff;
+  color: #000;
+}
+.password-toggle-btn {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.password-strength-meter {
+  height: 10px;
+  background: var(--border-dark);
+  border-radius: 5px;
+  max-width: 500px;
+  margin: 0 auto var(--spacing-md) auto;
+  overflow: hidden;
+}
+.strength-fill {
+  height: 100%;
+  width: 0;
+  border-radius: 5px;
+  transition: width 0.3s ease, background-color 0.3s ease;
+}
+.strength-fill.strength-weak { width: 25%; background: var(--danger-color); }
+.strength-fill.strength-fair { width: 50%; background: var(--secondary-color); }
+.strength-fill.strength-good { width: 75%; background: var(--primary-color); }
+.strength-fill.strength-strong { width: 100%; background: var(--success-color); }
+
+.password-feedback { text-align: center; min-height: 2em; }
+.strength-criteria { max-width: 500px; margin: 0 auto var(--spacing-xl) auto; }
+.criteria-list { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-sm); }
+.criteria-item { padding: var(--spacing-xs); border-radius: 3px; }
+.criteria-item.fail { color: var(--text-medium); }
+.criteria-item.pass { color: var(--success-color); font-weight: bold; }
+
+.test-passwords { text-align: center; }
+.test-btn-container { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--spacing-md); margin-top: var(--spacing-md); }
+.test-btn { width: auto; min-height: auto; font-size: 0.9rem; padding: var(--spacing-sm) var(--spacing-md); }
+
+/* Phase 4: Assessment */
+.assessment-challenges { display: grid; gap: var(--spacing-lg); margin-bottom: var(--spacing-xl); }
+.challenge-card {
+  background: rgba(0,0,0,0.2);
+  padding: var(--spacing-lg);
+  border-radius: 8px;
+  border: 1px solid var(--border-secondary);
+}
+.challenge-card h4 { color: var(--primary-color); }
+.challenge-options { display: flex; flex-direction: column; gap: var(--spacing-sm); margin-top: var(--spacing-md); }
+.challenge-result { margin-top: var(--spacing-md); font-weight: bold; }
+.assessment-score { text-align: center; }
