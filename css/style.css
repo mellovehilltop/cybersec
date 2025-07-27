@@ -1275,3 +1275,36 @@ p {
 .final-score { font-size: 2rem; font-weight: bold; color: var(--secondary-color); }
 .final-status.passed { color: var(--success-color); }
 .final-status.failed { color: var(--danger-color); }
+/* FIX: Corrects the jumbled header layout */
+.module-nav {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr; /* Back Btn | Title | Progress */
+  align-items: center;
+  gap: var(--spacing-lg);
+}
+
+.module-nav .nav-btn.back {
+  justify-self: start; /* Aligns the button to the left */
+}
+
+.module-info {
+  text-align: center; /* Centers the title block */
+}
+
+.module-progress-nav {
+  justify-self: end; /* Aligns the progress text to the right */
+}
+
+/* FIX: Aligns the subtitle correctly under the centered title */
+.module-subtitle {
+  margin-left: 0; /* Remove the old alignment rule */
+}
+
+/* NEW: Styling for the completion badge on the results screen */
+.completion-badge {
+  display: block;
+  margin: var(--spacing-lg) auto;
+  width: 150px;
+  height: auto;
+  filter: drop-shadow(0 0 10px var(--secondary-color));
+}
