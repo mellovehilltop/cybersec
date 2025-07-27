@@ -190,6 +190,15 @@ const module3Manager = {
 
 // --- INITIALIZER AND UNCHANGED HELPER FUNCTIONS ---
 module3Manager.init = function() { this.cacheDOMElements(); this.bindEvents(); this.updateProgress(1); };
+
+module3Manager.bindEvents = function() {
+    document.addEventListener('click', (e) => {
+        if (e.target.tagName === 'BUTTON' && e.target.dataset.action) {
+            e.preventDefault();
+            this.handleAction(e.target.dataset);
+        }
+    });
+};
 module3Manager.cacheDOMElements = function() { this.dom.moduleProgress = document.getElementById('module-progress'); this.dom.assessmentWrapper = document.getElementById('assessment-wrapper'); };
 module3Manager.handleAction = function(dataset) { switch (dataset.action) { case 'return-home': window.location.href = 'index.html'; break; case 'start-training': if (window.digitalShieldProgress) window.digitalShieldProgress.startModule(3); this.showSection('training-phase-1'); this.updateProgress(2); break; case 'complete-phase': this.completePhase(parseInt(dataset.phase, 10)); break; case 'complete-module': this.completeModule(); break; case 'next-website': this.renderNextWebsite(); break; case 'redo-training': window.location.reload(); break; } };
 module3Manager.showSection = function(sectionId) { document.querySelectorAll('.training-section').forEach(section => section.classList.remove('active')); document.getElementById(sectionId)?.classList.add('active'); };
