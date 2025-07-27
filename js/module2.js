@@ -1,9 +1,5 @@
 /**
- * js/module2.js - FINALIZED VERSION v3
- *
- * FIXES:
- * - Prevents getting stuck on the final assessment question.
- * - Implements a "Redo Training" path for users who fail the assessment.
+ * js/module2.js - FINALIZED VERSION v4
  */
 const module2Manager = {
     // --- STATE & CONTENT ---
@@ -68,14 +64,14 @@ const module2Manager = {
             case 'answer-challenge': this.answerChallenge(challengeId, answer); break;
             case 'validate-custom': this.validateCustomPassword(); break;
             case 'next-challenge': this.renderNextChallenge(); break;
-            case 'redo-training': window.location.reload(); break; // NEW: Redo action
+            case 'redo-training': window.location.reload(); break;
         }
     },
     
-    // --- ASSESSMENT LOGIC (REFACTORED) ---
+    // --- ASSESSMENT LOGIC ---
     renderAssessment() {
         this.currentChallengeIndex = 0;
-        this.challengeScores = [false, false, false]; // Reset scores
+        this.challengeScores = [false, false, false];
         this.renderNextChallenge();
     },
 
@@ -101,20 +97,15 @@ const module2Manager = {
         const resultDiv = document.getElementById(`result-${challengeId}`);
         const challengeCard = document.getElementById(`challenge-${challengeId}`);
         challengeCard.querySelectorAll('button').forEach(b => b.disabled = true);
-        
         const challenge = this.challenges.find(c => c.id == challengeId);
         const isCorrect = (answer === challenge.correctAnswer);
-        
         if (isCorrect) {
             resultDiv.innerHTML = '<p style="color: var(--success-color);">✅ Correct! Excellent knowledge.</p>';
             this.challengeScores[challengeId - 1] = true;
         } else {
             resultDiv.innerHTML = `<p style="color: var(--danger-color);">❌ Incorrect. The correct answer was ${challenge.correctAnswer}.</p>`;
         }
-        
         this.currentChallengeIndex++;
-        
-        // FIX: Check if it's the last question. If so, show score. Otherwise, show continue button.
         if (this.currentChallengeIndex >= this.challenges.length) {
             resultDiv.innerHTML += `<button data-action="next-challenge" class="btn btn-secondary" style="margin-top: 1rem;">Show Final Score</button>`;
         } else {
@@ -127,52 +118,61 @@ const module2Manager = {
         const password = passwordInput.value;
         const resultDiv = document.getElementById('result-2');
         const strength = this.calculatePasswordStrength(password);
-        
         if (strength.level === 'strong') {
             resultDiv.innerHTML = `<p style="color: var(--success-color);">✅ VAULT-GRADE! This is an excellent, secure password.</p>`;
             this.challengeScores[1] = true;
         } else {
             resultDiv.innerHTML = `<p style="color: var(--danger-color);">❌ This password is too weak. For the assessment, we require a VAULT-GRADE password.</p>`;
-            this.challengeScores[1] = false; // Mark as incorrect if not strong
+            this.challengeScores[1] = false;
         }
-        
         passwordInput.disabled = true;
         document.querySelector('#challenge-2 button').disabled = true;
         this.currentChallengeIndex++;
         resultDiv.innerHTML += `<button data-action="next-challenge" class="btn btn-secondary" style="margin-top: 1rem;">Next Challenge</button>`;
     },
 
+    // **** THIS IS THE ONLY FUNCTION THAT HAS CHANGED ****
     showFinalScore() {
         const assessmentChallenges = document.getElementById('assessment-challenges');
-        if (assessmentChallenges) assessmentChallenges.innerHTML = ''; // Clear the last challenge
-        
+        const finalScoreDisplay = document.querySelector('.assessment-score');
+        const completeBtnContainer = document.getElementById('assessment-wrapper'); // We'll add the button here
+
+        if (assessmentChallenges) assessmentChallenges.innerHTML = '';
+        if (finalScoreDisplay) finalScoreDisplay.style.display = 'none';
+
         const score = this.challengeScores.filter(Boolean).length;
-        const finalScore = document.getElementById('final-score');
-        const scoreFeedback = document.getElementById('score-feedback');
-        const completeBtn = document.getElementById('complete-btn');
+        const passed = score >= 2;
+        let badgeHTML = '';
+        let resultHTML = '';
 
-        if (finalScore) finalScore.textContent = `${score}/3`;
-
-        // FIX: Implement the "Pass/Fail/Redo" logic
-        if (score >= 2) {
-            if (scoreFeedback) scoreFeedback.innerHTML = '<p style="color: var(--success-color);">🎉 MISSION ACCOMPLISHED! Your password protocol knowledge is certified.</p>';
-            if (completeBtn) {
-                completeBtn.textContent = 'COMPLETE MODULE & RETURN';
-                completeBtn.dataset.action = 'complete-module';
-                completeBtn.disabled = false;
-            }
-            if(window.digitalShieldProgress) {
+        if (passed) {
+            badgeHTML = `<img src="images/certificates/badge-password-expert.png" alt="Password Expert Badge" class="completion-badge">`;
+            if (window.digitalShieldProgress) {
                 window.digitalShieldProgress.awardBadge(2, 'Vault Guardian');
             }
+            resultHTML = `
+                ${badgeHTML}
+                <h3 class="final-score">Score: ${score}/3</h3>
+                <p class="final-status passed">Status: PASSED</p>
+                <p>Excellent work, Agent. Your password protocol knowledge is certified.</p>
+                <button data-action="complete-module" class="btn btn-secondary">COMPLETE MODULE & RETURN</button>
+            `;
         } else {
-            if (scoreFeedback) scoreFeedback.innerHTML = '<p style="color: var(--danger-color);">Mission Incomplete. You have not demonstrated sufficient knowledge. Please review the training material again.</p>';
-            if (completeBtn) {
-                completeBtn.textContent = 'REDO TRAINING';
-                completeBtn.dataset.action = 'redo-training'; // Change button action
-                completeBtn.disabled = false;
-            }
+            resultHTML = `
+                <h3 class="final-score">Score: ${score}/3</h3>
+                <p class="final-status failed">Status: FAILED</p>
+                <p>You have not demonstrated sufficient knowledge. Please review the training material again.</p>
+                <button data-action="redo-training" class="btn btn-secondary">REDO TRAINING</button>
+            `;
         }
-        if (this.dom.finalScoreDisplay) this.dom.finalScoreDisplay.style.display = 'block';
+        
+        // Replace the entire content of the assessment wrapper with the final results.
+        if (completeBtnContainer) {
+            const sectionHeader = completeBtnContainer.querySelector('.section-header');
+            completeBtnContainer.innerHTML = ''; // Clear everything
+            completeBtnContainer.appendChild(sectionHeader); // Put the header back
+            completeBtnContainer.innerHTML += `<div class="assessment-completion">${resultHTML}</div>`;
+        }
     },
     
     // --- The rest of the functions are unchanged and correct ---
