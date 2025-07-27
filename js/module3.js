@@ -35,32 +35,32 @@ const module3Manager = {
         { domain: "hilltophoney.tk", valid: false, issuer: "Unknown Authority", expiry: "Expired", expl: "This is a DANGEROUS certificate. It is expired and from an untrusted source." }
     ],
     
-    // CORRECTED: Red Flag Hunt data with proper coordinates
+    // CORRECTED: Red Flag Hunt data with accurate coordinates based on images
     redFlagWebsites: [
         {
             image: "images/module3/fake-supplier-site.jpg",
             redFlags: [
-                { id: "url", x: 29.56, y: 1.10, width: 40.77, height: 4.39, expl: "Spotted! The URL uses HTTP and a suspicious '.tk' domain." },
-                { id: "logo", x: 34.65, y: 21.95, width: 30.58, height: 10.98, expl: "Good catch! The 'HoneySuppliers.tk' logo reveals the fake domain." },
-                { id: "verification", x: 24.46, y: 38.43, width: 50.97, height: 16.47, expl: "Excellent! This fake 'verification' message is designed to build false trust." },
-                { id: "download", x: 35, y: 85.5, width: 30, height: 5, expl: "Perfect! Never download unexpected files from suspicious websites." }
+                { id: "url", x: 15, y: 6, width: 35, height: 6, expl: "Spotted! The URL uses HTTP and a suspicious '.tk' domain." },
+                { id: "logo", x: 35, y: 20, width: 30, height: 15, expl: "Good catch! The 'HoneySuppliers.tk' logo reveals the fake domain." },
+                { id: "verification", x: 20, y: 55, width: 60, height: 10, expl: "Excellent! This fake 'verification' message is designed to build false trust." },
+                { id: "download", x: 30, y: 80, width: 40, height: 8, expl: "Perfect! Never download unexpected files from suspicious websites." }
             ]
         },
         {
             image: "images/module3/fake-software-site.jpg", 
             redFlags: [
-                { id: "cert-warning", x: 0, y: 0, width: 100, height: 5, expl: "Correct! A browser certificate warning should never be ignored." },
-                { id: "banner", x: 0, y: 20, width: 100, height: 10, expl: "Good eye! 'Free Premium Software' is contradictory and suspicious." },
-                { id: "input-fields", x: 5, y: 40, width: 90, height: 15, expl: "Spotted! Asking for company and bank details for 'free' software is a major red flag." },
-                { id: "download-button", x: 70, y: 85, width: 20, height: 10, expl: "Correct! A suspicious download button on an untrusted site is dangerous." }
+                { id: "cert-warning", x: 0, y: 3, width: 100, height: 8, expl: "Correct! A browser certificate warning should never be ignored." },
+                { id: "banner", x: 15, y: 35, width: 70, height: 15, expl: "Good eye! 'Free Premium Software' is contradictory and suspicious." },
+                { id: "input-fields", x: 20, y: 60, width: 60, height: 20, expl: "Spotted! Asking for company and bank details for 'free' software is a major red flag." },
+                { id: "download-button", x: 55, y: 85, width: 25, height: 10, expl: "Correct! A suspicious download button on an untrusted site is dangerous." }
             ]
         },
         {
             image: "images/module3/fake-payment-site.jpg",
             redFlags: [
-                { id: "complex-url", x: 15, y: 8, width: 60, height: 6, expl: "Spotted! This complex URL is designed to look official but is not." },
+                { id: "complex-url", x: 15, y: 5, width: 60, height: 6, expl: "Spotted! This complex URL is designed to look official but is not." },
                 { id: "poor-design", x: 10, y: 25, width: 80, height: 60, expl: "Correct! Poor grammar, blurry images, and unprofessional design are all warning signs." },
-                { id: "urgent-message", x: 20, y: 90, width: 60, height: 8, expl: "Well done! Urgent payment demands are a classic phishing tactic." }
+                { id: "urgent-message", x: 20, y: 88, width: 60, height: 10, expl: "Well done! Urgent payment demands are a classic phishing tactic." }
             ]
         }
     ],
@@ -74,9 +74,24 @@ const module3Manager = {
     dom: {},
 
     init() {
+        console.log('Module 3 Manager initializing...');
         this.cacheDOMElements();
         this.bindEvents();
         this.updateProgress(1);
+        
+        // Ensure all required elements exist
+        const requiredElements = [
+            'url-sorting-pool', 'certificate-examples', 'website-image-container',
+            'assessment-challenges', 'module-progress', 'assessment-wrapper'
+        ];
+        
+        requiredElements.forEach(id => {
+            if (!document.getElementById(id)) {
+                console.warn(`Required element missing: ${id}`);
+            }
+        });
+        
+        console.log('Module 3 Manager initialized');
     },
 
     cacheDOMElements() {
@@ -110,6 +125,8 @@ const module3Manager = {
                 this.completeModule();
                 break;
             case 'next-website':
+                // Increment the index before rendering the next website
+                this.currentWebsiteIndex++;
                 this.renderNextWebsite();
                 break;
             case 'redo-training':
@@ -130,14 +147,27 @@ const module3Manager = {
     },
 
     completePhase(phase) {
+        console.log('Completing phase:', phase);
         this.updateProgress(phase + 2);
         const nextPhase = phase + 1;
         this.showSection(`training-phase-${nextPhase}`);
         
-        if (nextPhase === 2) this.renderURLDetectiveGame();
-        if (nextPhase === 3) this.renderCertificateInspector();
-        if (nextPhase === 4) this.renderRedFlagHunt();
-        if (nextPhase === 5) this.renderAssessment();
+        if (nextPhase === 2) {
+            console.log('Starting URL Detective Game');
+            this.renderURLDetectiveGame();
+        }
+        if (nextPhase === 3) {
+            console.log('Starting Certificate Inspector');
+            this.renderCertificateInspector();
+        }
+        if (nextPhase === 4) {
+            console.log('Starting Red Flag Hunt');
+            this.renderRedFlagHunt();
+        }
+        if (nextPhase === 5) {
+            console.log('Starting Assessment');
+            this.renderAssessment();
+        }
     },
 
     renderURLDetectiveGame() {
@@ -235,17 +265,19 @@ const module3Manager = {
     },
 
     renderRedFlagHunt() {
+        console.log('Starting Red Flag Hunt');
         this.currentWebsiteIndex = 0;
         this.renderNextWebsite();
     },
     
     renderNextWebsite() {
-        if (this.currentWebsiteIndex >= this.redFlagWebsites.length) {
-            // All websites completed
+        // Use the current index without incrementing yet
+        const info = this.redFlagWebsites[this.currentWebsiteIndex];
+        if (!info) {
+            console.error('No website found at index:', this.currentWebsiteIndex);
             return;
         }
         
-        const info = this.redFlagWebsites[this.currentWebsiteIndex];
         document.getElementById('current-website').textContent = `${this.currentWebsiteIndex + 1} / ${this.redFlagWebsites.length}`;
         document.getElementById('flags-found').textContent = 0;
         document.getElementById('total-flags').textContent = info.redFlags.length;
@@ -272,16 +304,31 @@ const module3Manager = {
                 document.getElementById('flags-found').textContent = flagsFoundOnThisSite;
                 
                 if (flagsFoundOnThisSite === info.redFlags.length) {
+                    // All flags found on this website
                     if (this.currentWebsiteIndex < this.redFlagWebsites.length - 1) {
-                        document.getElementById('next-website-btn').style.display = 'block';
+                        // More websites to go
+                        const nextBtn = document.getElementById('next-website-btn');
+                        if (nextBtn) {
+                            nextBtn.style.display = 'block';
+                            // Ensure the button has the correct data-action
+                            nextBtn.setAttribute('data-action', 'next-website');
+                        }
+                        document.getElementById('redflag-feedback').innerHTML += 
+                            '<p>Great job! Click "Next Website" to continue.</p>';
                     } else {
-                        document.getElementById('redflag-feedback').textContent = "Excellent! All red flags on all sites found.";
-                        document.getElementById('phase-4-btn').disabled = false;
+                        // This was the last website
+                        document.getElementById('redflag-feedback').innerHTML = 
+                            '<p style="color:var(--success-color)">Excellent! All red flags on all sites found.</p>';
+                        const phase4Btn = document.getElementById('phase-4-btn');
+                        if (phase4Btn) {
+                            phase4Btn.disabled = false;
+                        } else {
+                            console.error('Phase 4 button not found!');
+                        }
                     }
                 }
             }
         };
-        this.currentWebsiteIndex++;
     },
 
     renderAssessment() {
