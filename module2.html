@@ -7,199 +7,170 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="module-page">
+<!-- FIXED: Corrected header structure -->
 <header class="module-header">
-    <div class="container">
-         <div class="container module-nav">
-            <button data-action="return-home" class="btn btn-primary nav-btn back">
-             <span aria-hidden="true">◀</span> Mission Control
-            </button>
-            <div class="module-info">
-                <div class="module-title-section">
-                    <img src="images/content/password-security-icon.png" alt="" class="module-logo">
-                    <h1>MODULE 02: PASSWORD SECURITY</h1>
-                </div>
-                <p class="module-subtitle">The Vault Guardian Protocol</p>
-           </div>
-            <div class="module-progress-nav">
-                <span id="module-progress">0%</span>
+    <div class="container module-nav">
+        <button data-action="return-home" class="btn btn-primary nav-btn back">
+            <span aria-hidden="true">◀</span> Mission Control
+        </button>
+        <div class="module-info">
+            <div class="module-title-section">
+                <!-- Using the icon from progress.js for consistency -->
+                <span class="module-logo" aria-hidden="true">🔐</span>
+                <h1>MODULE 02: PASSWORD SECURITY</h1>
             </div>
+            <p class="module-subtitle">The Vault Guardian Protocol</p>
+       </div>
+        <div class="module-progress-nav">
+            <span id="module-progress">0%</span>
         </div>
+    </div>
 </header>
 
-      <section id="briefing-section" class="training-section active">
-        <div class="container">
+<!-- Briefing Section -->
+<section id="briefing-section" class="training-section active">
+    <div class="container">
+        <!-- FIXED: Added briefing-content wrapper -->
+        <div class="briefing-content">
             <div class="section-header">
-                <img src="images/content/password-security-icon.png" alt="Password Security" class="section-icon">
                 <h2>MISSION BRIEFING</h2>
                 <p>Intelligence Report: Password Vulnerabilities</p>
             </div>
             
-            <div class="briefing-content">
-                <div class="threat-assessment">
-                    <h3>🚨 THREAT LEVEL: CRITICAL</h3>
-                    <p><strong>81% of data breaches</strong> are caused by weak or stolen passwords. In the food manufacturing sector, this represents the highest risk to our operations, customer data, and production systems.</p>
-                    
-                    <div class="vault-container">
-                        <div class="digital-vault">
-                            <img src="images/content/password-security-icon.png" alt="Digital Vault" class="vault-icon">
-                        </div>
-                        <p><strong>Your passwords are the keys to our digital kingdom.</strong></p>
-                    </div>
-                    
-                    <div class="briefing-stats">
-                        <div class="stat-card">
-                            <h4>2.3 BILLION</h4>
-                            <p>Passwords exposed in data breaches in 2023</p>
-                        </div>
-                        <div class="stat-card">
-                            <h4>3 SECONDS</h4>
-                            <p>Average time to crack "password123"</p>
-                        </div>
-                        <div class="stat-card">
-                            <h4>£3.86 MILLION</h4>
-                            <p>Average cost of a data breach in the UK</p>
-                        </div>
-                    </div>
-                     </div>
-                    <div class="instructor-message">
-                        <div class="instructor-avatar">
-                            <img src="images/characters/instructor-avatar.png" alt="Security Instructor">
-                        </div>
-                        <div class="message-content">
-                            <h4>INSTRUCTOR BRIEFING</h4>
-                            <div class="mission-objective">
-                                <h3>🎯 MISSION OBJECTIVE</h3>
-                                <p>Master password security protocols to protect Hilltop Honey's digital assets. You will learn to create unbreakable passwords, recognize password threats, and implement secure password management practices.</p>
-                                <p><strong>Remember:</strong> Every weak password is an open door for cyber criminals. Lock them out completely.</p>
-                            </div>
-                        </div>
-                    </div>
+            <div class="threat-assessment">
+                <h3><span aria-hidden="true">🚨</span> THREAT LEVEL: CRITICAL</h3>
+                <p><strong>81% of all data breaches</strong> are caused by weak or stolen passwords. This represents the single highest risk to our operations, customer data, and production systems.</p>
+            </div>
+
             <div class="learning-objectives">
-                <h3><span aria-hidden="true">🎯 </span>MISSION OBJECTIVE</h3>
-                <p>Master password security to protect Hilltop Honey's digital assets. You will learn to create unbreakable passwords, recognize threats, and implement secure password management.</p>
+                <h3><span aria-hidden="true">🎯</span> MISSION OBJECTIVES</h3>
+                <ul>
+                    <li>Understand common password attack vectors.</li>
+                    <li>Learn the principles of creating strong, memorable passwords.</li>
+                    <li>Apply best practices for secure password management.</li>
+                </ul>
+            </div>
+            
+            <div class="instructor-message">
+                <div class="instructor-avatar">
+                    <img src="images/characters/instructor-avatar.png" alt="Security Instructor">
+                </div>
+                <div class="message-content">
+                    <h4>INSTRUCTOR BRIEFING</h4>
+                    <p>Your passwords are the keys to our digital kingdom. Every weak password is an open door for our adversaries. Let's learn to lock them out completely.</p>
+                </div>
             </div>
             <button data-action="start-training" class="btn btn-secondary">BEGIN VAULT TRAINING</button>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Training Phase 1: Password Threats -->
-    <section id="training-phase-1" class="training-section">
-        <div class="container">
-            <div class="section-header">
-                <h2>PHASE 1: THREAT ANALYSIS</h2>
-                <p>Common Password Attack Vectors</p>
-            </div>
-            <div class="learning-cards">
-                <div class="threat-card">
-                    <div class="threat-header"><div class="threat-icon">💥</div><h3>BRUTE FORCE</h3><span class="threat-level high">HIGH</span></div>
-                    <div class="threat-content"><p>Automated tools try millions of combinations per second. Long, complex passwords are the only defense.</p></div>
-                </div>
-                <div class="threat-card">
-                    <div class="threat-header"><div class="threat-icon">📖</div><h3>DICTIONARY ATTACKS</h3><span class="threat-level medium">MEDIUM</span></div>
-                    <div class="threat-content"><p>Uses lists of common words and names. Avoid using real words in your passwords.</p></div>
-                </div>
-                <div class="threat-card">
-                    <div class="threat-header"><div class="threat-icon">♻️</div><h3>CREDENTIAL STUFFING</h3><span class="threat-level critical">CRITICAL</span></div>
-                    <div class="threat-content"><p>Uses leaked passwords from other site breaches. This is why unique passwords for every site are essential.</p></div>
-                </div>
-                <div class="threat-card">
-                    <div class="threat-header"><div class="threat-icon">👀</div><h3>SHOULDER SURFING</h3><span class="threat-level medium">MEDIUM</span></div>
-                    <div class="threat-content"><p>Physically watching someone type their password. Be aware of your surroundings in public spaces.</p></div>
-                </div>
-            </div>
-            <div class="common-passwords">
-                <h3>⚠️ COMMON PASSWORDS (AUTO-FAIL)</h3>
-                <div class="password-grid"></div>
-            </div>
-            <button data-action="complete-phase" data-phase="1" class="btn btn-secondary">CONTINUE TO PHASE 2</button>
+<!-- Training Phase 1: Password Threats -->
+<section id="training-phase-1" class="training-section">
+    <div class="container">
+        <div class="section-header">
+            <h2>PHASE 1: THREAT ANALYSIS</h2>
+            <p>Common Password Attack Vectors</p>
         </div>
-    </section>
-
-    <!-- Training Phase 2: Password Best Practices -->
-    <section id="training-phase-2" class="training-section">
-        <div class="container">
-            <div class="section-header">
-                <h2>PHASE 2: SECURITY PROTOCOLS</h2>
-                <p>Password Best Practices</p>
-            </div>
-            <div class="password-tips">
-                <div class="tip-card"><div class="tip-icon">📏</div><h4>LENGTH MATTERS</h4><p>Use at least 12 characters. Every additional character exponentially increases security.</p></div>
-                <div class="tip-card"><div class="tip-icon">🔀</div><h4>MIX IT UP</h4><p>Combine uppercase, lowercase, numbers, and symbols for maximum strength.</p></div>
-                <div class="tip-card"><div class="tip-icon">🚫</div><h4>BE UNIQUE</h4><p>Every account needs its own password. Never reuse passwords across sites.</p></div>
-            </div>
-            <div class="password-examples">
-                <div class="example-card weak-example"><h4>❌ WEAK PASSWORDS</h4><ul><li>password123</li><li>john1985</li></ul></div>
-                <div class="example-card strong-example"><h4>✅ STRONG PASSWORDS</h4><ul><li>H0n3y!B33$2024#</li><li>Th3-G0ld3n-Hiv3!</li></ul></div>
-            </div>
-
-            <!-- ADD THIS ENTIRE DIV BACK IN -->
-            <div class="passphrase-method">
-                <h3><span aria-hidden="true">🗝️ </span>THE PASSPHRASE METHOD</h3>
-                <p>A great way to create memorable yet secure passwords:</p>
-                <ol>
-                    <li><strong>Pick 3-4 random words:</strong> "Honey Mountain Dancing Robot"</li>
-                    <li><strong>Add numbers & symbols:</strong> "Honey!Mountain#Dancing$Robot2024"</li>
-                    <li><strong>Make substitutions:</strong> "H0n3y!M0unt@in#D@nc1ng$R0b0t2024"</li>
-                </ol>
-            </div>
-
-            <button data-action="complete-phase" data-phase="2" class="btn btn-secondary">CONTINUE TO STRENGTH TESTING</button>
+        <div class="threat-card">
+            <div class="threat-header"><div class="threat-icon">💥</div><h3>BRUTE FORCE</h3><span class="threat-level critical">CRITICAL</span></div>
+            <div class="threat-content"><p>Automated tools try millions of password combinations per second. Long, complex passwords are the only defense.</p></div>
         </div>
-    </section>
-
-    <!-- Training Phase 3: Password Strength Testing -->
-    <section id="training-phase-3" class="training-section">
-        <div class="container">
-            <div class="section-header">
-                <h2>PHASE 3: VAULT TESTING LAB</h2>
-                <p>Interactive Password Strength Analysis</p>
-            </div>
-            <div class="vault-container">
-                <div class="digital-vault" id="vault-status">
-                    <img src="images/content/password-security-icon.png" alt="Digital Vault" class="vault-icon" id="vault-icon">
-                </div>
-            </div>
-            <div class="password-input-container">
-                <input type="password" id="password-tester" class="password-input" placeholder="Enter password to test...">
-                <button data-action="toggle-visibility" class="password-toggle-btn" aria-label="Toggle password visibility">👁️</button>
-            </div>
-            <div class="password-strength-meter"><div id="strength-bar" class="strength-fill"></div></div>
-            <div class="password-feedback" id="password-feedback"></div>
-            <div class="strength-criteria"><div class="criteria-list"></div></div>
-            <div class="test-passwords">
-                <h4>Try These Examples:</h4>
-                <div class="test-btn-container">
-                    <button data-action="test-example" data-password="password" class="btn test-btn weak">password</button>
-                    <button data-action="test-example" data-password="Password123" class="btn test-btn weak">Password123</button>
-                    <button data-action="test-example" data-password="MySecureP@ss2024" class="btn test-btn good">MySecureP@ss2024</button>
-                    <button data-action="test-example" data-password="H0n3y!B33$Ar3-Sw33t&G0ld3n#2024" class="btn test-btn strong">H0n3y!B33$Ar3-Sw33t&G0ld3n#2024</button>
-                </div>
-            </div>
-
-            <button data-action="complete-phase" data-phase="3" class="btn btn-secondary" id="phase-3-btn" disabled>VAULT SECURED - CONTINUE</button>
+        <div class="threat-card">
+            <div class="threat-header"><div class="threat-icon">📖</div><h3>DICTIONARY ATTACKS</h3><span class="threat-level high">HIGH</span></div>
+            <div class="threat-content"><p>Uses lists of common words, names, and simple patterns. This is why "Password123" fails instantly.</p></div>
         </div>
-    </section>
+        <div class="threat-card">
+            <div class="threat-header"><div class="threat-icon">♻️</div><h3>CREDENTIAL STUFFING</h3><span class="threat-level critical">CRITICAL</span></div>
+            <div class="threat-content"><p>Attackers use leaked passwords from other site breaches to try and access your accounts. This is why unique passwords for every site are essential.</p></div>
+        </div>
+        <div class="common-passwords">
+            <h3>⚠️ AVOID THESE COMMON PASSWORDS</h3>
+            <div class="password-grid" id="password-grid">
+                <!-- JS will populate this -->
+            </div>
+        </div>
+        <button data-action="complete-phase" data-phase="1" class="btn btn-secondary">CONTINUE TO PHASE 2</button>
+    </div>
+</section>
 
-    <!-- Final Assessment Phase -->
-    <section id="assessment-phase" class="training-section">
-        <div class="container">
-            <div class="section-header">
+<!-- Training Phase 2: Password Best Practices -->
+<section id="training-phase-2" class="training-section">
+    <div class="container">
+        <div class="section-header">
+            <h2>PHASE 2: THE VAULT PROTOCOL</h2>
+            <p>Creating Unbreakable Passwords</p>
+        </div>
+        <div class="password-tips">
+            <div class="tip-card"><div class="tip-icon">📏</div><h4>LENGTH MATTERS</h4><p>Use at least 12-14 characters. Every additional character exponentially increases security.</p></div>
+            <div class="tip-card"><div class="tip-icon">🔀</div><h4>MIX IT UP</h4><p>Combine uppercase, lowercase, numbers (0-9), and symbols (!@#$).</p></div>
+            <div class="tip-card"><div class="tip-icon">🚫</div><h4>BE UNIQUE</h4><p>Every critical account needs its own password. Never reuse passwords.</p></div>
+        </div>
+        <div class="passphrase-method">
+            <h3><span aria-hidden="true">🗝️</span> THE PASSPHRASE METHOD</h3>
+            <p>A great way to create memorable yet secure passwords:</p>
+            <ol>
+                <li><strong>Pick 3-4 random words:</strong> "Honey Mountain Dancing Robot"</li>
+                <li><strong>Add numbers & symbols:</strong> "Honey!Mountain#Dancing$Robot2024"</li>
+                <li><strong>Make substitutions:</strong> "H0n3y!M0unt@in#D@nc1ng$R0b0t2024"</li>
+            </ol>
+        </div>
+        <button data-action="complete-phase" data-phase="2" class="btn btn-secondary">CONTINUE TO STRENGTH TESTING</button>
+    </div>
+</section>
+
+<!-- Training Phase 3: Password Strength Testing -->
+<section id="training-phase-3" class="training-section">
+    <div class="container">
+        <div class="section-header">
+            <h2>PHASE 3: VAULT TESTING LAB</h2>
+            <p>Interactive Password Strength Analysis</p>
+        </div>
+        <div class="digital-vault unlocked" id="vault-status">
+            <img src="images/content/password-security-icon.png" alt="Digital Vault" class="vault-icon" id="vault-icon">
+        </div>
+        <div class="password-input-container">
+            <input type="password" id="password-tester" class="password-input" placeholder="Enter password to test...">
+            <button data-action="toggle-visibility" class="password-toggle-btn" aria-label="Toggle password visibility">👁️</button>
+        </div>
+        <div class="password-strength-meter"><div id="strength-bar" class="strength-fill"></div></div>
+        <div class="password-feedback" id="password-feedback"></div>
+        <div class="strength-criteria"><div class="criteria-list" id="criteria-list"></div></div>
+        <div class="test-passwords">
+            <h4>Try These Examples:</h4>
+            <div class="test-btn-container" id="test-btn-container">
+                <!-- Buttons added for JS interaction -->
+                <button data-action="test-example" data-password="password" class="btn test-btn weak">"password"</button>
+                <button data-action="test-example" data-password="Password123" class="btn test-btn fair">"Password123"</button>
+                <button data-action="test-example" data-password="H0n3y!B33$2024" class="btn test-btn good">"H0n3y!B33$2024"</button>
+            </div>
+        </div>
+        <button data-action="complete-phase" data-phase="3" class="btn btn-secondary" id="phase-3-btn" disabled>VAULT SECURED - CONTINUE</button>
+    </div>
+</section>
+
+<!-- Final Assessment Phase -->
+<section id="assessment-phase" class="training-section">
+    <div class="container">
+        <div class="assessment-content" id="assessment-wrapper">
+             <div class="section-header">
                 <h2>FINAL ASSESSMENT</h2>
-                <p>Password Security Knowledge Test</p>
+                <p>Password Security Field Test</p>
             </div>
-            <div class="assessment-content">
-                <div class="assessment-challenges"></div>
-                <div class="assessment-score">
-                    <h3>Assessment Score: <span id="final-score">0/3</span></h3>
-                    <div id="score-feedback"></div>
-                </div>
-                <button data-action="complete-module" class="btn btn-secondary" id="complete-btn" disabled>COMPLETE MISSION</button>
+            <div id="assessment-challenges">
+                <!-- JS will populate this -->
             </div>
+            <div class="assessment-score">
+                <h3>Assessment Score: <span id="final-score">0/3</span></h3>
+                <div id="score-feedback"></div>
+            </div>
+            <button data-action="complete-module" class="btn btn-secondary" id="complete-btn" disabled>COMPLETE MODULE & RETURN</button>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- SCRIPTS -->
-    <script src="js/progress.js" defer></script>
-    <script src="js/module2.js" defer></script>
+<!-- SCRIPTS -->
+<script src="js/progress.js" defer></script>
+<script src="js/module2.js" defer></script>
 </body>
 </html>
