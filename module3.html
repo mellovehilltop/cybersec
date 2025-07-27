@@ -64,11 +64,44 @@
 <!-- Phase 1: Web Security Education -->
 <section id="training-phase-1" class="training-section">
     <div class="container">
-        <div class="section-header"><h2>PHASE 1: WEB SECURITY BASICS</h2><p>Learn to identify safe, suspicious, and dangerous websites.</p></div>
+        <div class="section-header">
+            <h2>PHASE 1: WEB SECURITY BASICS</h2>
+            <p>Learn to identify safe, suspicious, and dangerous websites.</p>
+        </div>
         <div class="education-content">
-            <div class="security-category safe-sites"><h3>✅ SAFE WEBSITES</h3><ul><li><strong>HTTPS:</strong> Look for "https://" and the padlock icon.</li><li><strong>Official Domains:</strong> hilltophoney.co.uk, gov.uk</li><li><strong>Correct Spelling:</strong> No typos in company names.</li></ul><div class="example-box safe"><strong>Example:</strong> https://www.hilltophoney.co.uk</div></div>
-            <div class="security-category suspicious-sites"><h3>⚠️ SUSPICIOUS WEBSITES</h3><ul><li><strong>HTTP Only:</strong> No 's' means data is not encrypted.</li><li><strong>Similar Domains:</strong> amazon-deals.org (not amazon.co.uk).</li><li><strong>Unusual Extensions:</strong> .tk, .biz, .info can be risky.</li></ul><div class="example-box suspicious"><strong>Example:</strong> http://hilltop-honey-suppliers.net</div></div>
-            <div class="security-category dangerous-sites"><h3>🚫 DANGEROUS WEBSITES</h3><ul><li><strong>Misspelled Domains:</strong> hiltophoney.tk (missing 'l').</li><li><strong>IP Addresses as links:</strong> http://192.168.4.23/login</li><li><strong>Complex/Long URLs:</strong> ...security-check.tk</li></ul><div class="example-box dangerous"><strong>Example:</strong> https://hiltophoney.tk/urgent-payment</div></div>
+            <div class="security-category safe-sites">
+                <h3>✅ SAFE WEBSITES</h3>
+                <ul>
+                    <li><strong>HTTPS:</strong> Look for "https://" and the padlock icon.</li>
+                    <li><strong>Official Domains:</strong> hilltophoney.co.uk, gov.uk</li>
+                    <li><strong>Correct Spelling:</strong> No typos in company names.</li>
+                </ul>
+                <div class="example-box safe">
+                    <strong>Example:</strong> https://www.hilltophoney.co.uk
+                </div>
+            </div>
+            <div class="security-category suspicious-sites">
+                <h3>⚠️ SUSPICIOUS WEBSITES</h3>
+                <ul>
+                    <li><strong>HTTP Only:</strong> No 's' means data is not encrypted.</li>
+                    <li><strong>Similar Domains:</strong> amazon-deals.org (not amazon.co.uk).</li>
+                    <li><strong>Unusual Extensions:</strong> .tk, .biz, .info can be risky.</li>
+                </ul>
+                <div class="example-box suspicious">
+                    <strong>Example:</strong> http://hilltop-honey-suppliers.net
+                </div>
+            </div>
+            <div class="security-category dangerous-sites">
+                <h3>🚫 DANGEROUS WEBSITES</h3>
+                <ul>
+                    <li><strong>Misspelled Domains:</strong> hiltophoney.tk (missing 'l').</li>
+                    <li><strong>IP Addresses as links:</strong> http://192.168.4.23/login</li>
+                    <li><strong>Complex/Long URLs:</strong> ...security-check.tk</li>
+                </ul>
+                <div class="example-box dangerous">
+                    <strong>Example:</strong> https://hiltophoney.tk/urgent-payment
+                </div>
+            </div>
         </div>
         <button data-action="complete-phase" data-phase="1" class="btn btn-secondary">CONTINUE TO URL DETECTIVE</button>
     </div>
@@ -77,27 +110,54 @@
 <!-- Phase 2: URL Detective Game -->
 <section id="training-phase-2" class="training-section">
     <div class="container">
-        <div class="section-header"><h2>PHASE 2: URL DETECTIVE GAME</h2><p>Test your knowledge! Sort these URLs into the correct categories.</p></div>
+        <div class="section-header">
+            <h2>PHASE 2: URL DETECTIVE GAME</h2>
+            <p>Test your knowledge! Sort these URLs into the correct categories.</p>
+        </div>
         <div class="url-detective-game">
-            <div class="url-sorting-pool" id="url-sorting-pool"></div>
+            <div class="url-sorting-pool" id="url-sorting-pool">
+                <!-- URLs will be populated by JavaScript -->
+            </div>
             <div class="url-drop-zones">
-                <div class="url-drop-zone safe" data-category="safe"><h4>✅ SAFE</h4><ul class="url-list"></ul></div>
-                <div class="url-drop-zone suspicious" data-category="suspicious"><h4>⚠️ SUSPICIOUS</h4><ul class="url-list"></ul></div>
-                <div class="url-drop-zone dangerous" data-category="dangerous"><h4>🚫 DANGEROUS</h4><ul class="url-list"></ul></div>
+                <div class="url-drop-zone safe" data-category="safe">
+                    <h4>✅ SAFE</h4>
+                    <ul class="url-list"></ul>
+                </div>
+                <div class="url-drop-zone suspicious" data-category="suspicious">
+                    <h4>⚠️ SUSPICIOUS</h4>
+                    <ul class="url-list"></ul>
+                </div>
+                <div class="url-drop-zone dangerous" data-category="dangerous">
+                    <h4>🚫 DANGEROUS</h4>
+                    <ul class="url-list"></ul>
+                </div>
             </div>
         </div>
-        <div id="url-feedback" class="feedback-box">Select a URL from the top pool to begin sorting.</div>
-        <button data-action="complete-phase" data-phase="2" class="btn btn-secondary" id="phase-2-btn" disabled>CONTINUE TO CERTIFICATES</button>
+        <div id="url-feedback" class="feedback-box">
+            Select a URL from the top pool to begin sorting.
+        </div>
+        <button data-action="complete-phase" data-phase="2" class="btn btn-secondary" id="phase-2-btn" disabled>
+            CONTINUE TO CERTIFICATES
+        </button>
     </div>
 </section>
 
-<!-- Phase 3: Improved Certificate Inspector -->
+<!-- Phase 3: Certificate Inspector -->
 <section id="training-phase-3" class="training-section">
     <div class="container">
-        <div class="section-header"><h2>PHASE 3: CERTIFICATE INSPECTOR</h2><p>Inspect each certificate and decide if you should trust the website.</p></div>
-        <div class="certificate-examples" id="certificate-examples"></div>
-        <div id="cert-feedback" class="feedback-box">Select a certificate and make a decision.</div>
-        <button data-action="complete-phase" data-phase="3" class="btn btn-secondary" id="phase-3-btn" disabled>CONTINUE TO RED FLAG HUNT</button>
+        <div class="section-header">
+            <h2>PHASE 3: CERTIFICATE INSPECTOR</h2>
+            <p>Inspect each certificate and decide if you should trust the website.</p>
+        </div>
+        <div class="certificate-examples" id="certificate-examples">
+            <!-- Certificates will be populated by JavaScript -->
+        </div>
+        <div id="cert-feedback" class="feedback-box">
+            Select a certificate and make a decision.
+        </div>
+        <button data-action="complete-phase" data-phase="3" class="btn btn-secondary" id="phase-3-btn" disabled>
+            CONTINUE TO RED FLAG HUNT
+        </button>
     </div>
 </section>
 
@@ -108,7 +168,6 @@
             <h2>PHASE 4: RED FLAG HUNT</h2>
             <p>Find the security warning signs on the websites below.</p>
         </div>
-        <!-- FIX: Implementing the new two-column layout -->
         <div class="redflag-hunt-layout">
             <div class="redflag-game-area">
                 <div class="website-image-container" id="website-image-container">
@@ -124,10 +183,14 @@
                 <div id="redflag-feedback" class="feedback-box" style="text-align: left;">
                     Click on anything that looks suspicious or dangerous on the website.
                 </div>
-                <button data-action="next-website" id="next-website-btn" class="btn btn-secondary" style="display: none; width: 100%; margin-top: 1rem;">Next Website</button>
+                <button data-action="next-website" id="next-website-btn" class="btn btn-secondary" style="display: none; width: 100%; margin-top: 1rem;">
+                    Next Website
+                </button>
             </div>
         </div>
-        <button data-action="complete-phase" data-phase="4" class="btn btn-secondary" id="phase-4-btn" disabled>PROCEED TO FINAL ASSESSMENT</button>
+        <button data-action="complete-phase" data-phase="4" class="btn btn-secondary" id="phase-4-btn" disabled>
+            PROCEED TO FINAL ASSESSMENT
+        </button>
     </div>
 </section>
 
@@ -135,8 +198,13 @@
 <section id="assessment-phase" class="training-section">
     <div class="container">
         <div class="assessment-content" id="assessment-wrapper">
-             <div class="section-header"><h2>FINAL ASSESSMENT</h2><p>Internet Security Field Test</p></div>
-            <div id="assessment-challenges"></div>
+             <div class="section-header">
+                <h2>FINAL ASSESSMENT</h2>
+                <p>Internet Security Field Test</p>
+            </div>
+            <div id="assessment-challenges">
+                <!-- Assessment questions will be populated by JavaScript -->
+            </div>
         </div>
     </div>
 </section>
