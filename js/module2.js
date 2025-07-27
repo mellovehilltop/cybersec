@@ -1,8 +1,9 @@
 /**
- * js/module2.js - FINALIZED VERSION v2
+ * js/module2.js - FINALIZED VERSION v3
  *
- * FIX: Prevents getting stuck on incorrect answers in the final assessment
- * by providing a clear path to continue after each question.
+ * FIXES:
+ * - Prevents getting stuck on the final assessment question.
+ * - Implements a "Redo Training" path for users who fail the assessment.
  */
 const module2Manager = {
     // --- STATE & CONTENT ---
@@ -38,10 +39,7 @@ const module2Manager = {
         this.dom.criteriaList = document.getElementById('criteria-list');
         this.dom.phase3Btn = document.getElementById('phase-3-btn');
         this.dom.assessmentWrapper = document.getElementById('assessment-wrapper');
-        this.dom.assessmentChallenges = document.getElementById('assessment-challenges');
-        this.dom.finalScore = document.getElementById('final-score');
-        this.dom.scoreFeedback = document.getElementById('score-feedback');
-        this.dom.completeBtn = document.getElementById('complete-btn');
+        this.dom.finalScoreDisplay = document.querySelector('.assessment-score');
     },
 
     bindEvents() {
@@ -69,13 +67,15 @@ const module2Manager = {
             case 'test-example': this.testExample(password); break;
             case 'answer-challenge': this.answerChallenge(challengeId, answer); break;
             case 'validate-custom': this.validateCustomPassword(); break;
-            case 'next-challenge': this.renderNextChallenge(); break; // NEW ACTION
+            case 'next-challenge': this.renderNextChallenge(); break;
+            case 'redo-training': window.location.reload(); break; // NEW: Redo action
         }
     },
     
     // --- ASSESSMENT LOGIC (REFACTORED) ---
     renderAssessment() {
         this.currentChallengeIndex = 0;
+        this.challengeScores = [false, false, false]; // Reset scores
         this.renderNextChallenge();
     },
 
@@ -85,13 +85,16 @@ const module2Manager = {
             return;
         }
         const c = this.challenges[this.currentChallengeIndex];
-        this.dom.assessmentChallenges.innerHTML = `
-            <div class="challenge-card" id="challenge-${c.id}">
-                <h4>${c.title}</h4>
-                <p>${c.question}</p>
-                ${c.isCustom ? `<div><input type="password" id="custom-password" class="password-input" placeholder="Create your secure password..."><button data-action="validate-custom" class="btn btn-secondary">Test My Password</button></div>` : `<div class="challenge-options">${c.options.map(o => `<button data-action="answer-challenge" data-challenge-id="${c.id}" data-answer="${o.answer}" class="btn btn-secondary">${o.text}</button>`).join('')}</div>`}
-                <div class="challenge-result" id="result-${c.id}"></div>
-            </div>`;
+        const assessmentChallenges = document.getElementById('assessment-challenges');
+        if (assessmentChallenges) {
+            assessmentChallenges.innerHTML = `
+                <div class="challenge-card" id="challenge-${c.id}">
+                    <h4>${c.title}</h4>
+                    <p>${c.question}</p>
+                    ${c.isCustom ? `<div><input type="password" id="custom-password" class="password-input" placeholder="Create your secure password..."><button data-action="validate-custom" class="btn btn-secondary">Test My Password</button></div>` : `<div class="challenge-options">${c.options.map(o => `<button data-action="answer-challenge" data-challenge-id="${c.id}" data-answer="${o.answer}" class="btn btn-secondary">${o.text}</button>`).join('')}</div>`}
+                    <div class="challenge-result" id="result-${c.id}"></div>
+                </div>`;
+        }
     },
     
     answerChallenge(challengeId, answer) {
@@ -106,12 +109,17 @@ const module2Manager = {
             resultDiv.innerHTML = '<p style="color: var(--success-color);">✅ Correct! Excellent knowledge.</p>';
             this.challengeScores[challengeId - 1] = true;
         } else {
-            resultDiv.innerHTML = '<p style="color: var(--danger-color);">❌ Incorrect. The correct answer was ' + challenge.correctAnswer + '. Review the material on attack vectors and password reuse.</p>';
+            resultDiv.innerHTML = `<p style="color: var(--danger-color);">❌ Incorrect. The correct answer was ${challenge.correctAnswer}.</p>`;
         }
-
-        // Add a button to continue
-        resultDiv.innerHTML += `<button data-action="next-challenge" class="btn btn-secondary" style="margin-top: 1rem;">Continue</button>`;
+        
         this.currentChallengeIndex++;
+        
+        // FIX: Check if it's the last question. If so, show score. Otherwise, show continue button.
+        if (this.currentChallengeIndex >= this.challenges.length) {
+            resultDiv.innerHTML += `<button data-action="next-challenge" class="btn btn-secondary" style="margin-top: 1rem;">Show Final Score</button>`;
+        } else {
+            resultDiv.innerHTML += `<button data-action="next-challenge" class="btn btn-secondary" style="margin-top: 1rem;">Next Challenge</button>`;
+        }
     },
 
     validateCustomPassword() {
@@ -124,30 +132,47 @@ const module2Manager = {
             resultDiv.innerHTML = `<p style="color: var(--success-color);">✅ VAULT-GRADE! This is an excellent, secure password.</p>`;
             this.challengeScores[1] = true;
         } else {
-            resultDiv.innerHTML = `<p style="color: var(--danger-color);">❌ This password is too weak. Try making it longer with more mixed characters and symbols.</p><p style="color: var(--success-color);">For the purpose of this assessment, we will count this as passed, but remember to create stronger passwords in the future.</p>`;
-            this.challengeScores[1] = true; // Still pass them to avoid getting stuck
+            resultDiv.innerHTML = `<p style="color: var(--danger-color);">❌ This password is too weak. For the assessment, we require a VAULT-GRADE password.</p>`;
+            this.challengeScores[1] = false; // Mark as incorrect if not strong
         }
         
         passwordInput.disabled = true;
         document.querySelector('#challenge-2 button').disabled = true;
-        resultDiv.innerHTML += `<button data-action="next-challenge" class="btn btn-secondary" style="margin-top: 1rem;">Continue</button>`;
         this.currentChallengeIndex++;
+        resultDiv.innerHTML += `<button data-action="next-challenge" class="btn btn-secondary" style="margin-top: 1rem;">Next Challenge</button>`;
     },
 
     showFinalScore() {
-        this.dom.assessmentChallenges.innerHTML = ''; // Clear the last challenge
+        const assessmentChallenges = document.getElementById('assessment-challenges');
+        if (assessmentChallenges) assessmentChallenges.innerHTML = ''; // Clear the last challenge
+        
         const score = this.challengeScores.filter(Boolean).length;
-        this.dom.finalScore.textContent = `${score}/3`;
-        if (score >= 2) { // Passing score is 2/3
-            this.dom.scoreFeedback.innerHTML = '<p style="color: var(--success-color);">🎉 MISSION ACCOMPLISHED! All security challenges passed.</p>';
-            this.dom.completeBtn.disabled = false;
+        const finalScore = document.getElementById('final-score');
+        const scoreFeedback = document.getElementById('score-feedback');
+        const completeBtn = document.getElementById('complete-btn');
+
+        if (finalScore) finalScore.textContent = `${score}/3`;
+
+        // FIX: Implement the "Pass/Fail/Redo" logic
+        if (score >= 2) {
+            if (scoreFeedback) scoreFeedback.innerHTML = '<p style="color: var(--success-color);">🎉 MISSION ACCOMPLISHED! Your password protocol knowledge is certified.</p>';
+            if (completeBtn) {
+                completeBtn.textContent = 'COMPLETE MODULE & RETURN';
+                completeBtn.dataset.action = 'complete-module';
+                completeBtn.disabled = false;
+            }
             if(window.digitalShieldProgress) {
                 window.digitalShieldProgress.awardBadge(2, 'Vault Guardian');
             }
         } else {
-            this.dom.scoreFeedback.innerHTML = '<p style="color: var(--danger-color);">Mission Incomplete. Review the training material and try again to earn your badge.</p>';
-            this.dom.completeBtn.disabled = false; // Still allow completion
+            if (scoreFeedback) scoreFeedback.innerHTML = '<p style="color: var(--danger-color);">Mission Incomplete. You have not demonstrated sufficient knowledge. Please review the training material again.</p>';
+            if (completeBtn) {
+                completeBtn.textContent = 'REDO TRAINING';
+                completeBtn.dataset.action = 'redo-training'; // Change button action
+                completeBtn.disabled = false;
+            }
         }
+        if (this.dom.finalScoreDisplay) this.dom.finalScoreDisplay.style.display = 'block';
     },
     
     // --- The rest of the functions are unchanged and correct ---
@@ -155,7 +180,7 @@ const module2Manager = {
     showSection(sectionId) { document.querySelectorAll('.training-section').forEach(section => section.classList.remove('active')); document.getElementById(sectionId)?.classList.add('active'); },
     updateProgress(step) { const percentage = Math.round(((step - 1) / 5) * 100); this.dom.moduleProgress.textContent = `${percentage}%`; },
     completePhase(phase) { this.updateProgress(phase + 2); if (phase === 3) { this.showSection('assessment-phase'); this.renderAssessment(); } else { this.showSection(`training-phase-${phase + 1}`); } },
-    testPasswordStrength() { const password = this.dom.passwordTester.value; const strength = this.calculatePasswordStrength(password); this.dom.strengthBar.className = `strength-fill strength-${strength.level}`; this.dom.passwordFeedback.innerHTML = password ? `<p><strong>Strength:</strong> ${strength.description}</p>` : ''; this.dom.vaultStatus.classList.toggle('unlocked', strength.level === 'strong'); this.dom.phase3Btn.disabled = strength.level !== 'strong'; this.updateCriteria(password); },
+    testPasswordStrength() { if(!this.dom.passwordTester) return; const password = this.dom.passwordTester.value; const strength = this.calculatePasswordStrength(password); this.dom.strengthBar.className = `strength-fill strength-${strength.level}`; this.dom.passwordFeedback.innerHTML = password ? `<p><strong>Strength:</strong> ${strength.description}</p>` : ''; this.dom.vaultStatus.classList.toggle('unlocked', strength.level === 'strong'); this.dom.phase3Btn.disabled = strength.level !== 'strong'; this.updateCriteria(password); },
     calculatePasswordStrength(password) { let score = 0; if (!password) return { level: 'none', description: 'Awaiting Input' }; if (password.length >= 14) score += 25; else if (password.length >= 12) score += 15; if (/[A-Z]/.test(password)) score += 20; if (/[a-z]/.test(password)) score += 20; if (/[0-9]/.test(password)) score += 20; if (/[^A-Za-z0-9]/.test(password)) score += 20; if (this.commonPasswords.includes(password.toLowerCase())) score = 0; if (score >= 90) return { level: 'strong', description: 'VAULT-GRADE' }; if (score >= 75) return { level: 'good', description: 'GOOD' }; if (score >= 50) return { level: 'fair', description: 'FAIR' }; return { level: 'weak', description: 'WEAK' }; },
     updateCriteria(password) { const criteria = [ { pass: password.length >= 12, text: 'At least 12 characters' }, { pass: /[A-Z]/.test(password), text: 'Contains uppercase letters' }, { pass: /[a-z]/.test(password), text: 'Contains lowercase letters' }, { pass: /[0-9]/.test(password), text: 'Contains numbers' }, { pass: /[^A-Za-z0-9]/.test(password), text: 'Contains symbols (!@#$)' }, { pass: password.length > 0 && !this.commonPasswords.includes(password.toLowerCase()), text: 'Not a common password' }, ]; this.dom.criteriaList.innerHTML = criteria.map(item => `<div class="criteria-item ${item.pass ? 'pass' : 'fail'}"><span class="check-mark">${item.pass ? '✅' : '❌'}</span> ${item.text}</div>`).join(''); },
     togglePasswordVisibility() { this.passwordVisible = !this.passwordVisible; this.dom.passwordTester.type = this.passwordVisible ? 'text' : 'password'; },
