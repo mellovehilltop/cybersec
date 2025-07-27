@@ -1,5 +1,4 @@
 /**
- * js/module3.js - FIXED & ALIGNED WITH HTML
  */
 const module3Manager = {
     // --- STATE & CONTENT ---
