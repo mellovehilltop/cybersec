@@ -1506,3 +1506,132 @@ p {
 .passphrase-method li strong {
   color: var(--primary-color);
 }
+/* ========================================
+   MODULE 3 - INTERNET SECURITY STYLES (NEW)
+   ======================================== */
+
+/* Phase 1: Education & URL Game */
+.education-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-xl);
+}
+.security-category {
+  background: rgba(0,0,0,0.2);
+  padding: var(--spacing-lg);
+  border-radius: 8px;
+}
+.security-category h3 { font-size: 1.5rem; margin-bottom: var(--spacing-md); }
+.security-category.safe-sites { border-left: 5px solid var(--success-color); }
+.security-category.safe-sites h3 { color: var(--success-color); }
+.security-category.suspicious-sites { border-left: 5px solid var(--secondary-color); }
+.security-category.suspicious-sites h3 { color: var(--secondary-color); }
+.security-category.dangerous-sites { border-left: 5px solid var(--danger-color); }
+.security-category.dangerous-sites h3 { color: var(--danger-color); }
+.category-explanation ul { list-style: none; padding-left: 0; }
+.category-explanation li { margin-bottom: var(--spacing-sm); position: relative; padding-left: 25px; }
+.category-explanation li::before { position: absolute; left: 0; }
+.safe-sites li::before { content: '✅'; }
+.suspicious-sites li::before { content: '⚠️'; }
+.dangerous-sites li::before { content: '🚫'; }
+.example-box {
+  margin-top: var(--spacing-md);
+  padding: var(--spacing-sm);
+  border-radius: 5px;
+  font-family: var(--font-secondary);
+}
+.example-box.safe { background: rgba(0, 255, 0, 0.1); }
+.example-box.suspicious { background: rgba(243, 156, 18, 0.1); }
+.example-box.dangerous { background: rgba(231, 76, 60, 0.1); }
+
+/* URL Detective Game */
+.url-detective-game {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+}
+.url-sorting-pool {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+  justify-content: center;
+  background: rgba(0,0,0,0.2);
+  padding: var(--spacing-lg);
+  border-radius: 8px;
+}
+.url-item {
+  background: var(--bg-secondary);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: 5px;
+  cursor: pointer;
+  border: 2px solid var(--border-secondary);
+  transition: all var(--transition-normal);
+  font-family: var(--font-secondary);
+}
+.url-item:hover { transform: translateY(-3px); border-color: var(--primary-color); }
+.url-item.selected { border-color: var(--secondary-color); background: var(--secondary-color); color: #000; }
+.url-item.correct { display: none; } /* Hide sorted URLs */
+.url-drop-zones {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--spacing-lg);
+}
+.url-drop-zone {
+  background: rgba(0,0,0,0.3);
+  padding: var(--spacing-lg);
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+  border: 2px dashed var(--border-secondary);
+}
+.url-drop-zone h4 { margin-bottom: var(--spacing-sm); }
+.url-drop-zone .url-list li {
+  background: var(--bg-tertiary);
+  margin-top: var(--spacing-sm);
+  padding: var(--spacing-sm);
+  border-radius: 3px;
+  font-family: var(--font-secondary);
+}
+
+/* Phase 2: Certificate Inspector */
+.certificate-examples {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: var(--spacing-lg);
+}
+.certificate-card {
+  background: rgba(0,0,0,0.2);
+  border-radius: 8px;
+  border: 2px solid var(--border-secondary);
+  cursor: pointer;
+  overflow: hidden;
+}
+.certificate-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
+}
+.cert-icon { font-size: 2rem; }
+.cert-icon.valid { color: var(--success-color); }
+.cert-icon.invalid { color: var(--danger-color); }
+.certificate-card.revealed .cert-details { max-height: 200px; padding: var(--spacing-md); }
+.cert-details {
+  max-height: 0;
+  overflow: hidden;
+  transition: all var(--transition-normal);
+  background: rgba(0,0,0,0.3);
+  font-family: var(--font-secondary);
+}
+
+/* General Feedback Box */
+.feedback-box {
+  margin-top: var(--spacing-lg);
+  padding: var(--spacing-md);
+  border-radius: 5px;
+  text-align: center;
+  font-weight: bold;
+}
+.feedback-box.correct { background: rgba(0, 255, 0, 0.1); color: var(--success-color); }
+.feedback-box.incorrect { background: rgba(231, 76, 60, 0.1); color: var(--danger-color); }
