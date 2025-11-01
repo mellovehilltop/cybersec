@@ -220,26 +220,31 @@ const module3Manager = {
         console.log('Completing phase:', phase);
         this.updateProgress(phase + 2);
         const nextPhase = phase + 1;
-        
+
         // For assessment phase, handle differently
         if (nextPhase === 5) {
             console.log('Starting Assessment - special handling');
-            // Hide all training sections
+            // Hide all training sections EXCEPT the assessment wrapper
             document.querySelectorAll('.training-section').forEach(section => {
-                section.style.display = 'none';
+                if (section.id !== 'assessment-wrapper') {
+                    section.style.display = 'none';
+                }
             });
             // Show assessment wrapper
             const assessmentWrapper = document.getElementById('assessment-wrapper');
             if (assessmentWrapper) {
                 assessmentWrapper.style.display = 'block';
+                assessmentWrapper.classList.add('active');
                 this.renderAssessment();
+                // Scroll to top to ensure user sees the assessment
+                window.scrollTo(0, 0);
             } else {
                 console.error('Assessment wrapper not found!');
             }
         } else {
             // Normal phase transition
             this.showSection(`training-phase-${nextPhase}`);
-            
+
             if (nextPhase === 2) {
                 console.log('Starting URL Detective Game');
                 this.renderURLDetectiveGame();
