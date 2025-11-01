@@ -429,25 +429,32 @@ const module3Manager = {
         console.log('Rendering assessment...');
         this.currentAssessmentQuestion = 0;
         this.assessmentScore = 0;
-        
+
         // Try multiple ways to find the assessment wrapper
-        let assessmentWrapper = this.dom.assessmentWrapper || 
+        let assessmentWrapper = this.dom.assessmentWrapper ||
                                document.getElementById('assessment-wrapper') ||
                                document.querySelector('.assessment-wrapper');
-        
+
+        console.log('Assessment wrapper found:', assessmentWrapper);
+
         // If still not found, try to find the main content area and create the wrapper
         if (!assessmentWrapper) {
             console.warn('Assessment wrapper not found, creating one...');
-            const mainContent = document.querySelector('.module-content') || 
-                              document.querySelector('main') || 
+            const mainContent = document.querySelector('.module-content') ||
+                              document.querySelector('main') ||
                               document.body;
-            
+
             assessmentWrapper = document.createElement('div');
             assessmentWrapper.id = 'assessment-wrapper';
             assessmentWrapper.className = 'training-section active';
             mainContent.appendChild(assessmentWrapper);
         }
-        
+
+        // Ensure active class is set (CSS uses display: none !important without it)
+        assessmentWrapper.classList.add('active');
+        console.log('Assessment wrapper classes:', assessmentWrapper.className);
+        console.log('Assessment wrapper display style:', window.getComputedStyle(assessmentWrapper).display);
+
         // Clear any existing content and set up the assessment structure
         assessmentWrapper.innerHTML = `
             <div class="container">
@@ -458,19 +465,19 @@ const module3Manager = {
                 <div id="assessment-challenges"></div>
             </div>
         `;
-        
-        // Make sure it's visible
-        assessmentWrapper.style.display = 'block';
-        
+
         // Cache the reference
         this.dom.assessmentWrapper = assessmentWrapper;
-        
+
+        console.log('About to render first question...');
         this.renderNextAssessmentQuestion();
     },
 
     renderNextAssessmentQuestion() {
         console.log('Rendering question:', this.currentAssessmentQuestion + 1);
         const challengesContainer = document.getElementById('assessment-challenges');
+        console.log('Challenges container found:', challengesContainer);
+
         if (!challengesContainer) {
             console.error('Assessment challenges container not found!');
             // Try to create it
@@ -480,13 +487,15 @@ const module3Manager = {
             }
             return;
         }
-        
+
         if (this.currentAssessmentQuestion >= this.assessmentQuestions.length) {
             this.showAssessmentResults();
             return;
         }
-        
+
         const q = this.assessmentQuestions[this.currentAssessmentQuestion];
+        console.log('Rendering question data:', q);
+
         challengesContainer.innerHTML = `
             <div class="challenge-card">
                 <h4>Question ${this.currentAssessmentQuestion + 1}/${this.assessmentQuestions.length}: ${q.q}</h4>
@@ -495,12 +504,16 @@ const module3Manager = {
                 </div>
                 <div class="challenge-result"></div>
             </div>`;
-        
+
+        console.log('Question HTML inserted, content:', challengesContainer.innerHTML.substring(0, 100));
+
         challengesContainer.querySelector('.challenge-options').onclick = (e) => {
             if (e.target.tagName === 'BUTTON') {
                 this.answerAssessment(parseInt(e.target.dataset.index));
             }
         };
+
+        console.log('Question rendering complete');
     },
 
     answerAssessment(selectedIndex) {
