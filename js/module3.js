@@ -445,11 +445,13 @@ const module3Manager = {
         
         // Clear any existing content and set up the assessment structure
         assessmentWrapper.innerHTML = `
-            <div class="section-header">
-                <h2>FINAL ASSESSMENT</h2>
-                <p>Answer the following questions to complete Module 3</p>
+            <div class="container">
+                <div class="section-header">
+                    <h2>FINAL ASSESSMENT</h2>
+                    <p>Answer the following questions to complete Module 3</p>
+                </div>
+                <div id="assessment-challenges"></div>
             </div>
-            <div id="assessment-challenges"></div>
         `;
         
         // Make sure it's visible
@@ -537,17 +539,19 @@ const module3Manager = {
         }
         
         this.dom.assessmentWrapper.innerHTML = `
-            <div class="section-header"><h2>ASSESSMENT COMPLETE</h2></div>
-            <div class="assessment-completion">
-                ${badgeHTML}
-                <h3 class="final-score">You scored: ${score}/${total}</h3>
-                <p class="final-status" style="color: ${passed ? 'var(--success-color, #28a745)' : 'var(--danger-color, #dc3545)'}">
-                    Status: ${passed ? 'PASSED' : 'FAILED'}
-                </p>
-                <p>${passed ? 'Excellent work, Agent!' : 'Review the material and try again.'}</p>
-                <button data-action="${passed ? 'complete-module' : 'redo-training'}" class="btn btn-secondary">
-                    ${passed ? 'COMPLETE MODULE' : 'REDO TRAINING'}
-                </button>
+            <div class="container">
+                <div class="section-header"><h2>ASSESSMENT COMPLETE</h2></div>
+                <div class="assessment-completion">
+                    ${badgeHTML}
+                    <h3 class="final-score">You scored: ${score}/${total}</h3>
+                    <p class="final-status" style="color: ${passed ? 'var(--success-color, #28a745)' : 'var(--danger-color, #dc3545)'}">
+                        Status: ${passed ? 'PASSED' : 'FAILED'}
+                    </p>
+                    <p>${passed ? 'Excellent work, Agent!' : 'Review the material and try again.'}</p>
+                    <button data-action="${passed ? 'complete-module' : 'redo-training'}" class="btn btn-secondary">
+                        ${passed ? 'COMPLETE MODULE' : 'REDO TRAINING'}
+                    </button>
+                </div>
             </div>`;
     },
 
